@@ -17,7 +17,7 @@ To update your branch with master
  6) `git merge origin master` or you can just go on Github and do it manually
 
 Committing
- ~ add all files `git add --all`
- ~ add specific files `git add <filename>`
- ~ commit with message `git commit -m "<message>"`
- ~ push to Github `git push <branch name>`
+ 1) add all files `git add --all`
+ 2) add specific files `git add <filename>`
+ 3) commit with message `git commit -m "<message>"`
+ 4) push to Github `git push <branch name>`

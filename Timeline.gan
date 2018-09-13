@@ -39,7 +39,8 @@
         <task id="9" name="Configuration Managment" color="#8cb6ce" meeting="false" start="2018-09-07" duration="5" complete="0" thirdDate="2018-09-07" thirdDate-constraint="0" expand="true"/>
         <task id="6" name="Coding Standards" color="#8cb6ce" meeting="false" start="2018-09-07" duration="5" complete="0" thirdDate="2018-09-07" thirdDate-constraint="0" expand="true"/>
         <task id="17" name="Test JavaFX executable" color="#8cb6ce" meeting="false" start="2018-09-09" duration="1" complete="0" thirdDate="2018-09-07" thirdDate-constraint="0" expand="true"/>
-        <task id="19" name="Work Package 1" color="#8cb6ce" meeting="true" start="2018-09-21" duration="0" complete="0" thirdDate="2018-09-07" thirdDate-constraint="0" expand="true"/>
+        <task id="19" name="Work Package 1" color="#8cb6ce" meeting="true" start="2018-09-27" duration="0" complete="0" thirdDate="2018-09-07" thirdDate-constraint="0" expand="true"/>
+        <task id="20" name="Finalize documents" color="#8cb6ce" meeting="false" start="2018-09-12" duration="3" complete="0" thirdDate="2018-09-07" thirdDate-constraint="0" expand="true"/>
     </tasks>
     <resources>
         <resource id="0" name="Sam Birus" function="Default:0" contacts="spb53@pitt.edu" phone=""/>

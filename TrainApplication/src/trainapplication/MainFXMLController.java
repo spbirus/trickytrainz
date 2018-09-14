@@ -22,89 +22,88 @@ import javafx.stage.Stage;
  * @author burri
  */
 public class MainFXMLController implements Initializable {
-    private Stage newStage;
+    private Stage ctcStage = new Stage();
+    private Stage trackControllerStage = new Stage();
+    private Stage trackModelStage = new Stage();
+    private Stage trainControllerStage = new Stage();
+    private Stage trainModelStage = new Stage();
     
    @FXML
     private void handleCTCButton(ActionEvent event) throws IOException {
-        newStage = new Stage();
         
-        if(! newStage.isShowing()) 
+        if(! ctcStage.isShowing()) 
         {
             AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("CTCOffice.fxml"));
             Scene scene = new Scene(page);
-            newStage.setScene(scene);
-            newStage.setTitle("CTC Office");
-            newStage.setResizable(true);
+            ctcStage.setScene(scene);
+            ctcStage.setTitle("CTC Office");
+            ctcStage.setResizable(true);
         
-            newStage.show();
+            ctcStage.show();
         }
         
     }  
     
     @FXML
     private void handleTrackControllerButton(ActionEvent event) throws IOException {
-        newStage = new Stage();
         
-        if(! newStage.isShowing()) 
+        if(! trackControllerStage.isShowing()) 
         {
             AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("TrackController.fxml"));
             Scene scene = new Scene(page);
-            newStage.setScene(scene);
-            newStage.setTitle("Track Controller");
-            newStage.setResizable(true);
+            trackControllerStage.setScene(scene);
+            trackControllerStage.setTitle("Track Controller");
+            trackControllerStage.setResizable(true);
         
-            newStage.show();
+            trackControllerStage.show();
         }
         
     }  
     
     @FXML
     private void handleTrainControllerButton(ActionEvent event) throws IOException {
-        newStage = new Stage();
         
-        if(! newStage.isShowing()) 
+        if(! trainControllerStage.isShowing()) 
         {
             AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("TrainController.fxml"));
             Scene scene = new Scene(page);
-            newStage.setScene(scene);
-            newStage.setTitle("Train Controller");
-            newStage.setResizable(true);
+            trainControllerStage.setScene(scene);
+            trainControllerStage.setTitle("Train Controller");
+            trainControllerStage.setResizable(true);
         
-            newStage.show();
+            trainControllerStage.show();
         }
         
     }  
     
     @FXML
     private void handleTrackModelButton(ActionEvent event) throws IOException {
-        newStage = new Stage();
-        
-        if(! newStage.isShowing()) 
+
+        if(! trackModelStage.isShowing()) 
         {
             AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("TrackModel.fxml"));
             Scene scene = new Scene(page);
-            newStage.setScene(scene);
-            newStage.setTitle("Track Model");
-            newStage.setResizable(true);
+            trackModelStage.setScene(scene);
+            trackModelStage.setTitle("Track Model");
+            trackModelStage.setResizable(true);
         
-            newStage.show();
+            trackModelStage.show();
         }
         
     }  
     
     @FXML
     private void handleTrainModelButton(ActionEvent event) throws IOException {
-        newStage = new Stage();
         
-        if(! newStage.isShowing()) 
+        if(! trainModelStage.isShowing()) 
         {
             AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("TrainModel.fxml"));
             Scene scene = new Scene(page);
-            newStage.setScene(scene);
-            newStage.setTitle("Train Model");
-            newStage.setResizable(true);
+            trainModelStage.setScene(scene);
+            trainModelStage.setTitle("Train Model");
+            trainModelStage.setResizable(true);
         
-            newStage.show();
+            trainModelStage.show();
         }
         
     }  

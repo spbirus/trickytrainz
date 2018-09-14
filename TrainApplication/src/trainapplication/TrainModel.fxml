@@ -10,26 +10,25 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="661.0" prefWidth="792.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="trainapplication.TrainModelController">
+<AnchorPane id="AnchorPane" prefHeight="661.0" prefWidth="792.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrainModelController">
    <children>
-      <Button layoutX="718.0" layoutY="614.0" mnemonicParsing="false" text="Submit" />
-      <TextField layoutX="131.0" layoutY="388.0" prefHeight="26.0" prefWidth="62.0" />
+      <TextField fx:id="passengersLeavingBox" layoutX="147.0" layoutY="459.0" prefHeight="26.0" prefWidth="62.0" />
+      <Button fx:id="submitButton" layoutX="718.0" layoutY="614.0" mnemonicParsing="false" onAction="#onSubmit" text="Submit" />
+      <TextField fx:id="speedLimitBox" layoutX="147.0" layoutY="387.0" prefHeight="26.0" prefWidth="62.0" />
       <Label layoutX="57.0" layoutY="392.0" text="Speed Limit" />
       <Label layoutX="14.0" layoutY="428.0" text="Passengers Entering" />
       <Label layoutX="20.0" layoutY="464.0" text="Passengers leaving" />
-      <TextField layoutX="131.0" layoutY="424.0" prefHeight="26.0" prefWidth="62.0" />
-      <TextField layoutX="131.0" layoutY="460.0" prefHeight="26.0" prefWidth="62.0" />
-      <TextField layoutX="569.0" layoutY="424.0" prefHeight="26.0" prefWidth="62.0" />
-      <TextArea layoutX="67.0" layoutY="56.0" prefHeight="200.0" prefWidth="200.0" />
-      <TextArea layoutX="289.0" layoutY="56.0" prefHeight="200.0" prefWidth="200.0" />
-      <TextArea layoutX="511.0" layoutY="56.0" prefHeight="200.0" prefWidth="200.0" />
+      <TextField fx:id="passengersEnteringBox" layoutX="147.0" layoutY="423.0" prefHeight="26.0" prefWidth="62.0" />
+      <TextField fx:id="authorityBox" layoutX="569.0" layoutY="424.0" prefHeight="26.0" prefWidth="62.0" />
+      <TextArea fx:id="trainInfoBox" layoutX="67.0" layoutY="56.0" prefHeight="213.0" prefWidth="200.0" text="Train info&#10;&#10;Length:&#10;Width:&#10;Height:&#10;Weight:&#10;Max Capacity:&#10;# Cars:&#10;# doors:&#10;Max Accel:&#10;Max Deccel:&#10;" />
+      <TextArea fx:id="trainControllerBox" layoutX="289.0" layoutY="56.0" prefHeight="214.0" prefWidth="200.0" text="Data from train controller&#10;&#10;Station announcement:&#10;Left doors:&#10;Right doors:&#10;Lights:&#10;Brake:&#10;Emergency brake:&#10;Inside temp:&#10;Current power:&#10;&#10;" />
+      <TextArea fx:id="trackModelBox" layoutX="511.0" layoutY="56.0" prefHeight="214.0" prefWidth="200.0" text="Data from track model&#10;&#10;Speed limit:&#10;Authority:&#10;Entering passengers:&#10;Leaving passengers:&#10;Track elevation:&#10;Track grade:" />
       <Label layoutX="89.0" layoutY="292.0" text="Passengers:">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="416.0" layoutY="292.0" text="Power Requestion:">
+      <Label layoutX="416.0" layoutY="292.0" text="Power Requested:">
          <font>
             <Font size="18.0" />
          </font>
@@ -39,31 +38,46 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <TextField layoutX="569.0" layoutY="459.0" prefHeight="26.0" prefWidth="62.0" />
-      <TextField layoutX="569.0" layoutY="494.0" prefHeight="26.0" prefWidth="62.0" />
-      <TextField layoutX="569.0" layoutY="530.0" prefHeight="26.0" prefWidth="62.0" />
-      <TextField layoutX="569.0" layoutY="387.0" prefHeight="26.0" prefWidth="62.0" />
-      <Label layoutX="474.0" layoutY="392.0" text="Track Elevation" />
-      <MenuButton layoutX="18.0" layoutY="14.0" mnemonicParsing="false" text="Train #">
+      <TextField fx:id="temperatureBox" layoutX="569.0" layoutY="459.0" prefHeight="26.0" prefWidth="62.0" />
+      <TextField fx:id="powerRequestBox" layoutX="569.0" layoutY="494.0" prefHeight="26.0" prefWidth="62.0" />
+      <TextField fx:id="announcementBox" layoutX="569.0" layoutY="530.0" prefHeight="26.0" prefWidth="62.0" />
+      <TextField fx:id="trackElevationBox" layoutX="569.0" layoutY="387.0" prefHeight="26.0" prefWidth="62.0" />
+      <Label layoutX="452.0" layoutY="392.0" text="Track Elevation" />
+      <MenuButton fx:id="trainNumDropdown" layoutX="18.0" layoutY="14.0" mnemonicParsing="false" onAction="#onTrainSelectionClick" text="Train #">
         <items>
           <MenuItem mnemonicParsing="false" text="Action 1" />
           <MenuItem mnemonicParsing="false" text="Action 2" />
         </items>
       </MenuButton>
-      <Label layoutX="504.0" layoutY="428.0" text="Authority" />
-      <Label layoutX="467.0" layoutY="464.0" text="Set Temperature" />
-      <Label layoutX="479.0" layoutY="498.0" text="Power request" />
-      <Label layoutX="479.0" layoutY="534.0" text="Anouncement" />
-      <RadioButton layoutX="658.0" layoutY="392.0" mnemonicParsing="false" text="Lights" />
-      <RadioButton layoutX="658.0" layoutY="428.0" mnemonicParsing="false" text="Brake" />
-      <RadioButton layoutX="658.0" layoutY="463.0" mnemonicParsing="false" text="Emergency Brake" />
-      <RadioButton layoutX="658.0" layoutY="498.0" mnemonicParsing="false" text="Left doors" />
-      <RadioButton layoutX="658.0" layoutY="534.0" mnemonicParsing="false" text="Right doors" />
-      <Button layoutX="178.0" layoutY="517.0" mnemonicParsing="false" text="Activate" />
-      <Button layoutX="178.0" layoutY="556.0" mnemonicParsing="false" text="Activate" />
-      <Button layoutX="178.0" layoutY="595.0" mnemonicParsing="false" text="Activate" />
+      <Label layoutX="482.0" layoutY="428.0" text="Authority" />
+      <Label layoutX="445.0" layoutY="464.0" text="Set Temperature" />
+      <Label layoutX="457.0" layoutY="498.0" text="Power request" />
+      <Label layoutX="457.0" layoutY="534.0" text="Anouncement" />
+      <RadioButton fx:id="lightsButton" layoutX="658.0" layoutY="392.0" mnemonicParsing="false" onAction="#onLightsClick" text="Lights" />
+      <RadioButton fx:id="brakeButton" layoutX="658.0" layoutY="428.0" mnemonicParsing="false" onAction="#onBrakeClick" text="Brake" />
+      <RadioButton fx:id="emergencyBrakeButton" layoutX="658.0" layoutY="463.0" mnemonicParsing="false" onAction="#onEmergencyBrakeClick" text="Emergency Brake" />
+      <RadioButton fx:id="leftdoorsButton" layoutX="658.0" layoutY="498.0" mnemonicParsing="false" onAction="#leftdoorsClick" text="Left doors" />
+      <RadioButton fx:id="rightdoorsButton" layoutX="658.0" layoutY="534.0" mnemonicParsing="false" onAction="#rightdoorsClick" text="Right doors" />
+      <Button fx:id="activateBrakeFailure" layoutX="178.0" layoutY="517.0" mnemonicParsing="false" onAction="#onBrakeFailure" text="Activate" />
+      <Button fx:id="activateEngineFailure" layoutX="178.0" layoutY="556.0" mnemonicParsing="false" onAction="#onEngineFailure" text="Activate" />
+      <Button fx:id="activateSignalFailure" layoutX="178.0" layoutY="595.0" mnemonicParsing="false" onAction="#onSignalFailure" text="Activate" />
       <Label layoutX="77.0" layoutY="521.0" text="Brake failure" />
       <Label layoutX="70.0" layoutY="560.0" text="Engine failure" />
       <Label layoutX="72.0" layoutY="599.0" text="Signal failure" />
+      <Label fx:id="passengerNumber" layoutX="193.0" layoutY="292.0" text="153" textFill="RED">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="requestedPowerNumber" layoutX="596.0" layoutY="292.0" text="20" textFill="RED">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="currentSpeedNumber" layoutX="396.0" layoutY="335.0" text="10 MPH" textFill="RED">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

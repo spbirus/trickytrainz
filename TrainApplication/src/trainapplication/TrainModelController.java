@@ -5,24 +5,29 @@
  */
 package trainapplication;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
  *
  * @author burri
  */
-public class TrainModelController implements Initializable {
+public class TrainModelController extends MainFXMLController implements Initializable {
 
     /**
      * Initializes the controller class.
@@ -94,8 +99,20 @@ public class TrainModelController implements Initializable {
     }
 
     @FXML
-    void onSubmit(ActionEvent event) {
+    void onSubmit(ActionEvent event) throws IOException {
+        System.out.println("train control second " + trainControllerStage.toString());
 
+        //send data to the train controller
+        if(! MainFXMLController.trainControllerStage.isShowing()) 
+        {
+            AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("TrainController.fxml"));
+            Scene scene = new Scene(page);
+            MainFXMLController.trainControllerStage.setScene(scene);
+            MainFXMLController.trainControllerStage.setTitle("Train Controller");
+            MainFXMLController.trainControllerStage.setResizable(true);
+        
+            MainFXMLController.trainControllerStage.show();
+        }
     }
 
     @FXML

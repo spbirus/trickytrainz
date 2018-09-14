@@ -25,7 +25,8 @@ public class MainFXMLController implements Initializable {
     private Stage ctcStage = new Stage();
     private Stage trackControllerStage = new Stage();
     private Stage trackModelStage = new Stage();
-    private Stage trainControllerStage = new Stage();
+    static Stage trainControllerStage = new Stage();
+    
     private Stage trainModelStage = new Stage();
     
    @FXML
@@ -62,6 +63,7 @@ public class MainFXMLController implements Initializable {
     
     @FXML
     private void handleTrainControllerButton(ActionEvent event) throws IOException {
+        System.out.println("train control main " + trainControllerStage.toString());
         
         if(! trainControllerStage.isShowing()) 
         {

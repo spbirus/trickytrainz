@@ -1,11 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrainModelController">
-    
+
+<AnchorPane id="AnchorPane" prefHeight="661.0" prefWidth="792.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="trainapplication.TrainModelController">
+   <children>
+      <Button layoutX="718.0" layoutY="614.0" mnemonicParsing="false" text="Submit" />
+      <TextField layoutX="131.0" layoutY="388.0" prefHeight="26.0" prefWidth="62.0" />
+      <Label layoutX="57.0" layoutY="392.0" text="Speed Limit" />
+      <Label layoutX="14.0" layoutY="428.0" text="Passengers Entering" />
+      <Label layoutX="20.0" layoutY="464.0" text="Passengers leaving" />
+      <TextField layoutX="131.0" layoutY="424.0" prefHeight="26.0" prefWidth="62.0" />
+      <TextField layoutX="131.0" layoutY="460.0" prefHeight="26.0" prefWidth="62.0" />
+      <TextField layoutX="569.0" layoutY="424.0" prefHeight="26.0" prefWidth="62.0" />
+      <TextArea layoutX="67.0" layoutY="56.0" prefHeight="200.0" prefWidth="200.0" />
+      <TextArea layoutX="289.0" layoutY="56.0" prefHeight="200.0" prefWidth="200.0" />
+      <TextArea layoutX="511.0" layoutY="56.0" prefHeight="200.0" prefWidth="200.0" />
+      <Label layoutX="89.0" layoutY="292.0" text="Passengers:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="416.0" layoutY="292.0" text="Power Requestion:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Label layoutX="259.0" layoutY="335.0" text="Current Speed:">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <TextField layoutX="569.0" layoutY="459.0" prefHeight="26.0" prefWidth="62.0" />
+      <TextField layoutX="569.0" layoutY="494.0" prefHeight="26.0" prefWidth="62.0" />
+      <TextField layoutX="569.0" layoutY="530.0" prefHeight="26.0" prefWidth="62.0" />
+      <TextField layoutX="569.0" layoutY="387.0" prefHeight="26.0" prefWidth="62.0" />
+      <Label layoutX="474.0" layoutY="392.0" text="Track Elevation" />
+      <MenuButton layoutX="18.0" layoutY="14.0" mnemonicParsing="false" text="Train #">
+        <items>
+          <MenuItem mnemonicParsing="false" text="Action 1" />
+          <MenuItem mnemonicParsing="false" text="Action 2" />
+        </items>
+      </MenuButton>
+      <Label layoutX="504.0" layoutY="428.0" text="Authority" />
+      <Label layoutX="467.0" layoutY="464.0" text="Set Temperature" />
+      <Label layoutX="479.0" layoutY="498.0" text="Power request" />
+      <Label layoutX="479.0" layoutY="534.0" text="Anouncement" />
+      <RadioButton layoutX="658.0" layoutY="392.0" mnemonicParsing="false" text="Lights" />
+      <RadioButton layoutX="658.0" layoutY="428.0" mnemonicParsing="false" text="Brake" />
+      <RadioButton layoutX="658.0" layoutY="463.0" mnemonicParsing="false" text="Emergency Brake" />
+      <RadioButton layoutX="658.0" layoutY="498.0" mnemonicParsing="false" text="Left doors" />
+      <RadioButton layoutX="658.0" layoutY="534.0" mnemonicParsing="false" text="Right doors" />
+      <Button layoutX="178.0" layoutY="517.0" mnemonicParsing="false" text="Activate" />
+      <Button layoutX="178.0" layoutY="556.0" mnemonicParsing="false" text="Activate" />
+      <Button layoutX="178.0" layoutY="595.0" mnemonicParsing="false" text="Activate" />
+      <Label layoutX="77.0" layoutY="521.0" text="Brake failure" />
+      <Label layoutX="70.0" layoutY="560.0" text="Engine failure" />
+      <Label layoutX="72.0" layoutY="599.0" text="Signal failure" />
+   </children>
 </AnchorPane>

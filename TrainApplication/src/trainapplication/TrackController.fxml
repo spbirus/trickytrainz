@@ -1,11 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrackControllerController">
-    
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="trainapplication.TrackControllerController">
+   <children>
+      <AnchorPane id="AnchorPane" layoutX="12.0" layoutY="10.0" prefHeight="661.0" prefWidth="792.0">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="163.0" layoutX="554.0" layoutY="449.0" stroke="BLACK" strokeType="INSIDE" width="104.0" />
+            <Button layoutX="718.0" layoutY="614.0" mnemonicParsing="false" text="Submit" />
+            <MenuButton layoutX="18.0" layoutY="14.0" mnemonicParsing="false" text="Track #">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Action 1" />
+                  <MenuItem mnemonicParsing="false" text="Action 2" />
+               </items>
+            </MenuButton>
+            <Button layoutX="178.0" layoutY="517.0" mnemonicParsing="false" text="Open" />
+            <Button layoutX="178.0" layoutY="556.0" mnemonicParsing="false" text="Raise" />
+            <Button layoutX="165.0" layoutY="595.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="71.0" text="Functional" />
+            <Label layoutX="70.0" layoutY="521.0" prefHeight="18.0" prefWidth="71.0" text="Switch State" />
+            <Label layoutX="70.0" layoutY="560.0" text="Railway Crossing" />
+            <Label layoutX="72.0" layoutY="599.0" text="Rail Control" />
+            <MenuButton layoutX="107.0" layoutY="14.0" mnemonicParsing="false" text="Block #">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Action 1" />
+                  <MenuItem mnemonicParsing="false" text="Action 2" />
+               </items>
+            </MenuButton>
+            <Button layoutX="244.0" layoutY="517.0" mnemonicParsing="false" text="Close" />
+            <Button layoutX="245.0" layoutY="556.0" mnemonicParsing="false" text="Lower" />
+            <Button layoutX="241.0" layoutY="595.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="Broken" />
+            <Circle fill="#22ff00" layoutX="606.0" layoutY="489.0" radius="28.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#ff1f1f" layoutX="606.0" layoutY="569.0" radius="28.0" stroke="BLACK" strokeType="INSIDE" />
+         </children>
+      </AnchorPane>
+   </children>
 </AnchorPane>

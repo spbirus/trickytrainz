@@ -23,21 +23,21 @@
                   <MenuItem mnemonicParsing="false" text="Action 2" />
                </items>
             </MenuButton>
-            <Button layoutX="180.0" layoutY="464.0" mnemonicParsing="false" text="Open" />
-            <Button layoutX="180.0" layoutY="503.0" mnemonicParsing="false" text="Raise" />
-            <Button layoutX="179.0" layoutY="541.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="71.0" text="Functional" />
-            <Label layoutX="72.0" layoutY="468.0" prefHeight="18.0" prefWidth="71.0" text="Switch State" />
+            <Button layoutX="197.0" layoutY="457.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Open" textAlignment="CENTER" />
+            <Button layoutX="197.0" layoutY="497.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Raise" textAlignment="CENTER" />
+            <Button layoutX="196.0" layoutY="535.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="89.0" text="Functional" textAlignment="CENTER" />
+            <Label layoutX="72.0" layoutY="468.0" prefHeight="18.0" prefWidth="89.0" text="Switch State" />
             <Label layoutX="72.0" layoutY="507.0" text="Railway Crossing" />
-            <Label layoutX="74.0" layoutY="546.0" text="Rail Control" />
-            <MenuButton layoutX="107.0" layoutY="14.0" mnemonicParsing="false" text="Block #">
+            <Label layoutX="74.0" layoutY="546.0" prefHeight="18.0" prefWidth="89.0" text="Rail Control" />
+            <MenuButton layoutX="125.0" layoutY="14.0" mnemonicParsing="false" text="Block #">
                <items>
                   <MenuItem mnemonicParsing="false" text="Action 1" />
                   <MenuItem mnemonicParsing="false" text="Action 2" />
                </items>
             </MenuButton>
-            <Button layoutX="263.0" layoutY="464.0" mnemonicParsing="false" text="Close" />
-            <Button layoutX="263.0" layoutY="504.0" mnemonicParsing="false" text="Lower" />
-            <Button layoutX="263.0" layoutY="541.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="Broken" />
+            <Button layoutX="307.0" layoutY="457.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" text="Close" textAlignment="CENTER" />
+            <Button layoutX="308.0" layoutY="497.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" text="Lower" textAlignment="CENTER" />
+            <Button layoutX="307.0" layoutY="535.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="73.0" text="Broken" textAlignment="CENTER" />
             <Circle fill="#22ff00" layoutX="606.0" layoutY="489.0" radius="28.0" stroke="BLACK" strokeType="INSIDE" />
             <Circle fill="#ff1f1f" layoutX="606.0" layoutY="569.0" radius="28.0" stroke="BLACK" strokeType="INSIDE" />
             <Label layoutX="117.0" layoutY="299.0" text="Switch Position:">
@@ -60,9 +60,9 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button layoutX="179.0" layoutY="583.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="71.0" text="Functional" />
-            <Label layoutX="75.0" layoutY="586.0" text="Track Circuit" />
-            <Button layoutX="263.0" layoutY="582.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="55.0" text="Faulty" />
+            <Button layoutX="196.0" layoutY="577.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Functional" textAlignment="CENTER" />
+            <Label layoutX="75.0" layoutY="586.0" prefHeight="18.0" prefWidth="89.0" text="Track Circuit" />
+            <Button layoutX="307.0" layoutY="577.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" text="Faulty" textAlignment="CENTER" />
             <TextField layoutX="184.0" layoutY="165.0" prefHeight="26.0" prefWidth="62.0" />
             <Label layoutX="67.0" layoutY="169.0" text="Authority">
                <font>

@@ -1,11 +1,88 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrackModelController">
-    
+
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="trainapplication.TrackModelController">
+   <children>
+      <VBox prefHeight="400.0" prefWidth="640.0">
+        <children>
+          <MenuBar prefHeight="0.0" prefWidth="640.0" VBox.vgrow="NEVER">
+            <menus>
+              <Menu mnemonicParsing="false" text="File">
+                <items>
+                  <MenuItem mnemonicParsing="false" text="New" />
+                  <MenuItem mnemonicParsing="false" text="Open…" />
+                  <Menu mnemonicParsing="false" text="Open Recent" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Close" />
+                  <MenuItem mnemonicParsing="false" text="Save" />
+                  <MenuItem mnemonicParsing="false" text="Save As…" />
+                  <MenuItem mnemonicParsing="false" text="Revert" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Preferences…" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Quit" />
+                </items>
+              </Menu>
+              <Menu mnemonicParsing="false" text="Edit">
+                <items>
+                  <MenuItem mnemonicParsing="false" text="Undo" />
+                  <MenuItem mnemonicParsing="false" text="Redo" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Cut" />
+                  <MenuItem mnemonicParsing="false" text="Copy" />
+                  <MenuItem mnemonicParsing="false" text="Paste" />
+                  <MenuItem mnemonicParsing="false" text="Delete" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" text="Select All" />
+                  <MenuItem mnemonicParsing="false" text="Unselect All" />
+                </items>
+              </Menu>
+              <Menu mnemonicParsing="false" text="Help">
+                <items>
+                  <MenuItem mnemonicParsing="false" text="About MyHelloApp" />
+                </items>
+              </Menu>
+            </menus>
+          </MenuBar>
+          <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+            <children>
+                  <Button layoutX="159.0" layoutY="309.0" mnemonicParsing="false" text="Browse" />
+                  <Label layoutX="63.0" layoutY="316.0" text="Add Tracks" />
+                  <ListView id="TrackRed" accessibleRole="COMBO_BOX" accessibleText="Properties" blendMode="COLOR_DODGE" editable="true" layoutX="331.0" layoutY="78.0" prefHeight="262.0" prefWidth="267.0" />
+                  <ComboBox id="BlockSelect" accessibleText="Block" layoutX="63.0" layoutY="106.0" prefHeight="30.0" prefWidth="192.0" promptText="Block" />
+                  <RadioButton layoutX="167.0" layoutY="51.0" mnemonicParsing="false" text="Red" />
+                  <RadioButton layoutX="69.0" layoutY="49.0" mnemonicParsing="false" text="Green" />
+                  <Button layoutX="69.0" layoutY="182.0" mnemonicParsing="false" text="Break" />
+                  <Button layoutX="149.0" layoutY="183.0" mnemonicParsing="false" text="Fix" />
+                  <Button layoutX="235.0" layoutY="184.0" mnemonicParsing="false" text="Reset" />
+                  <Label layoutX="343.0" layoutY="40.0" text="Properties">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="282.0" fitWidth="169.0" layoutX="339.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Software%20Engineering/dummy_data.JPG" />
+                     </image>
+                  </ImageView>
+            </children>
+          </AnchorPane>
+        </children>
+      </VBox>
+   </children>
 </AnchorPane>

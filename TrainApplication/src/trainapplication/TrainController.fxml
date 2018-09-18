@@ -1,11 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrainControllerController">
-    
+<AnchorPane id="AnchorPane" prefHeight="590.0" prefWidth="775.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrainControllerController">
+   <children>
+      <SplitPane layoutX="359.0" layoutY="87.0" prefHeight="62.0" prefWidth="265.0" />
+      <MenuButton layoutX="28.0" layoutY="24.0" mnemonicParsing="false" text="Train #">
+         <items>
+            <MenuItem mnemonicParsing="false" text="Action 1" />
+            <MenuItem mnemonicParsing="false" text="Action 2" />
+            <Menu mnemonicParsing="false" text="Unspecified Menu">
+              <items>
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+              </items>
+            </Menu>
+         </items>
+      </MenuButton>
+      <Label layoutX="356.0" layoutY="205.0" text="Current Speed:" />
+      <Label layoutX="35.0" layoutY="110.0" text="Speed Limit:" />
+      <Label layoutX="359.0" layoutY="53.0" text="Announcements" />
+      <TextField layoutX="148.0" layoutY="105.0" prefHeight="27.0" prefWidth="103.0" />
+      <TextField layoutX="469.0" layoutY="200.0" prefHeight="27.0" prefWidth="103.0" />
+      <Button layoutX="148.0" layoutY="368.0" mnemonicParsing="false" text="Activate" />
+      <Button layoutX="148.0" layoutY="407.0" mnemonicParsing="false" text="Activate" />
+      <Button layoutX="148.0" layoutY="446.0" mnemonicParsing="false" text="Activate" />
+      <Label layoutX="47.0" layoutY="372.0" text="Brake failure" />
+      <Label layoutX="40.0" layoutY="411.0" text="Engine failure" />
+      <Label layoutX="42.0" layoutY="450.0" text="Signal failure" />
+      <Label layoutX="35.0" layoutY="141.0" text="Suggested Speed:" />
+      <TextField layoutX="148.0" layoutY="136.0" prefHeight="27.0" prefWidth="103.0" />
+      <Label layoutX="35.0" layoutY="171.0" text="Power Command:" />
+      <Label layoutX="38.0" layoutY="205.0" text="Ki value:" />
+      <Label layoutX="36.0" layoutY="236.0" text="Kp value:" />
+      <TextField layoutX="148.0" layoutY="200.0" prefHeight="27.0" prefWidth="103.0" />
+      <TextField layoutX="148.0" layoutY="169.0" prefHeight="27.0" prefWidth="103.0" />
+      <TextField layoutX="148.0" layoutY="231.0" prefHeight="27.0" prefWidth="103.0" />
+      <Label layoutX="356.0" layoutY="171.0" prefHeight="17.0" prefWidth="84.0" text="STATUS" />
+      <Label layoutX="356.0" layoutY="241.0" text="Brake status:" />
+      <Label layoutX="356.0" layoutY="272.0" text="Door status:" />
+      <TextField layoutX="469.0" layoutY="267.0" prefHeight="27.0" prefWidth="103.0" />
+      <TextField layoutX="469.0" layoutY="236.0" prefHeight="27.0" prefWidth="103.0" />
+      <Label layoutX="356.0" layoutY="303.0" text="Light status" />
+      <TextField layoutX="469.0" layoutY="298.0" prefHeight="27.0" prefWidth="103.0" />
+      <Label layoutX="356.0" layoutY="333.0" text="Temperature:" />
+      <TextField layoutX="469.0" layoutY="331.0" prefHeight="27.0" prefWidth="103.0" />
+      <Button layoutX="348.0" layoutY="367.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="126.0" text="Service Break" />
+      <Button layoutX="348.0" layoutY="406.0" mnemonicParsing="false" text="Emergency Break" />
+      <Button layoutX="348.0" layoutY="445.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="126.0" text="Set Temp" />
+      <MenuButton layoutX="506.0" layoutY="367.0" mnemonicParsing="false" text="Manual/Automatic">
+         <items>
+            <MenuItem mnemonicParsing="false" text="Action 1" />
+            <MenuItem mnemonicParsing="false" text="Action 2" />
+            <Menu mnemonicParsing="false" text="Unspecified Menu">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Action 1" />
+               </items>
+            </Menu>
+         </items>
+      </MenuButton>
+      <Button layoutX="506.0" layoutY="405.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="147.0" text="Open/Close doors" />
+   </children>
 </AnchorPane>

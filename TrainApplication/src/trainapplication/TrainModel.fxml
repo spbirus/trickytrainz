@@ -10,19 +10,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="661.0" prefWidth="792.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrainModelController">
+<AnchorPane id="AnchorPane" prefHeight="653.0" prefWidth="905.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrainModelController">
    <children>
+      <RadioButton fx:id="emergencyBrakeButton" layoutX="659.0" layoutY="463.0" mnemonicParsing="false" onAction="#onEmergencyBrakeClick" prefHeight="18.0" prefWidth="200.0" text="Passenger Emergency Brake" wrapText="true" />
       <TextField fx:id="passengersLeavingBox" layoutX="147.0" layoutY="459.0" prefHeight="26.0" prefWidth="62.0" />
       <Button fx:id="submitButton" layoutX="718.0" layoutY="614.0" mnemonicParsing="false" onAction="#onSubmit" text="Submit" />
-      <TextField fx:id="speedLimitBox" layoutX="147.0" layoutY="387.0" prefHeight="26.0" prefWidth="62.0" />
+      <TextField id="speedLimit" fx:id="speedLimitBox" layoutX="147.0" layoutY="387.0" prefHeight="26.0" prefWidth="62.0" />
       <Label layoutX="57.0" layoutY="392.0" text="Speed Limit" />
       <Label layoutX="14.0" layoutY="428.0" text="Passengers Entering" />
       <Label layoutX="20.0" layoutY="464.0" text="Passengers leaving" />
       <TextField fx:id="passengersEnteringBox" layoutX="147.0" layoutY="423.0" prefHeight="26.0" prefWidth="62.0" />
       <TextField fx:id="authorityBox" layoutX="569.0" layoutY="424.0" prefHeight="26.0" prefWidth="62.0" />
-      <TextArea fx:id="trainInfoBox" layoutX="67.0" layoutY="56.0" prefHeight="213.0" prefWidth="200.0" text="Train info&#10;&#10;Length:&#10;Width:&#10;Height:&#10;Weight:&#10;Max Capacity:&#10;# Cars:&#10;# doors:&#10;Max Accel:&#10;Max Deccel:&#10;" />
-      <TextArea fx:id="trainControllerBox" layoutX="289.0" layoutY="56.0" prefHeight="214.0" prefWidth="200.0" text="Data from train controller&#10;&#10;Station announcement:&#10;Left doors:&#10;Right doors:&#10;Lights:&#10;Brake:&#10;Emergency brake:&#10;Inside temp:&#10;Current power:&#10;&#10;" />
-      <TextArea fx:id="trackModelBox" layoutX="511.0" layoutY="56.0" prefHeight="214.0" prefWidth="200.0" text="Data from track model&#10;&#10;Speed limit:&#10;Authority:&#10;Entering passengers:&#10;Leaving passengers:&#10;Track elevation:&#10;Track grade:" />
+      <TextArea fx:id="trainInfoBox" layoutX="67.0" layoutY="56.0" prefHeight="230.0" prefWidth="200.0" text="Train info&#10;&#10;Length:&#10;Width:&#10;Height:&#10;Mass:&#10;Crew #:&#10;Passenger #:&#10;Max Capacity:&#10;# Cars:&#10;# doors:&#10;Accel Limit:&#10;Deccel Limit:&#10;" />
+      <TextArea fx:id="trainControllerBox" layoutX="289.0" layoutY="56.0" prefHeight="230.0" prefWidth="200.0" text="Data from train controller&#10;&#10;Station announcement:&#10;Left doors:&#10;Right doors:&#10;Lights:&#10;Brake:&#10;Emergency brake:&#10;Inside temp:&#10;Current power:&#10;&#10;" />
+      <TextArea fx:id="trackModelBox" layoutX="511.0" layoutY="56.0" prefHeight="230.0" prefWidth="200.0" text="Data from track model&#10;&#10;Speed limit:&#10;Authority:&#10;Entering passengers:&#10;Leaving passengers:&#10;Track elevation:&#10;Track grade:" />
       <Label layoutX="89.0" layoutY="292.0" text="Passengers:">
          <font>
             <Font size="18.0" />
@@ -55,9 +56,8 @@
       <Label layoutX="457.0" layoutY="534.0" text="Anouncement" />
       <RadioButton fx:id="lightsButton" layoutX="658.0" layoutY="392.0" mnemonicParsing="false" onAction="#onLightsClick" text="Lights" />
       <RadioButton fx:id="brakeButton" layoutX="658.0" layoutY="428.0" mnemonicParsing="false" onAction="#onBrakeClick" text="Brake" />
-      <RadioButton fx:id="emergencyBrakeButton" layoutX="658.0" layoutY="463.0" mnemonicParsing="false" onAction="#onEmergencyBrakeClick" text="Emergency Brake" />
-      <RadioButton fx:id="leftdoorsButton" layoutX="658.0" layoutY="498.0" mnemonicParsing="false" onAction="#leftdoorsClick" text="Left doors" />
-      <RadioButton fx:id="rightdoorsButton" layoutX="658.0" layoutY="534.0" mnemonicParsing="false" onAction="#rightdoorsClick" text="Right doors" />
+      <RadioButton fx:id="leftdoorsButton" layoutX="658.0" layoutY="498.0" mnemonicParsing="false" onAction="#leftdoorsClick" text="Activate left doors" />
+      <RadioButton fx:id="rightdoorsButton" layoutX="658.0" layoutY="534.0" mnemonicParsing="false" onAction="#rightdoorsClick" text="Activate right doors" />
       <Button fx:id="activateBrakeFailure" layoutX="178.0" layoutY="517.0" mnemonicParsing="false" onAction="#onBrakeFailure" text="Activate" />
       <Button fx:id="activateEngineFailure" layoutX="178.0" layoutY="556.0" mnemonicParsing="false" onAction="#onEngineFailure" text="Activate" />
       <Button fx:id="activateSignalFailure" layoutX="178.0" layoutY="595.0" mnemonicParsing="false" onAction="#onSignalFailure" text="Activate" />

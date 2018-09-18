@@ -37,30 +37,76 @@ public class TrainModelController extends MainFXMLController implements Initiali
         // TODO
     }   
     
+     @FXML
+    private RadioButton emergencyBrakeButton;
+
     @FXML
     private TextField passengersLeavingBox;
+
+    @FXML
     private Button submitButton;
+
+    @FXML
     private TextField speedLimitBox;
+
+    @FXML
     private TextField passengersEnteringBox;
+
+    @FXML
     private TextField authorityBox;
+
+    @FXML
     private TextArea trainInfoBox;
+
+    @FXML
     private TextArea trainControllerBox;
+
+    @FXML
     private TextArea trackModelBox;
+
+    @FXML
     private TextField temperatureBox;
+
+    @FXML
     private TextField powerRequestBox;
+
+    @FXML
     private TextField announcementBox;
+
+    @FXML
     private TextField trackElevationBox;
+
+    @FXML
     private MenuButton trainNumDropdown;
+
+    @FXML
     private RadioButton lightsButton;
+
+    @FXML
     private RadioButton brakeButton;
-    private RadioButton emergencyBrakeButton;
+
+    @FXML
     private RadioButton leftdoorsButton;
+
+    @FXML
     private RadioButton rightdoorsButton;
+
+    @FXML
     private Button activateBrakeFailure;
+
+    @FXML
     private Button activateEngineFailure;
+
+    @FXML
     private Button activateSignalFailure;
+
+    @FXML
     private Label passengerNumber;
+
+    @FXML
     private Label requestedPowerNumber;
+
+    @FXML
     private Label currentSpeedNumber;
 
     @FXML

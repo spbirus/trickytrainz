@@ -13,10 +13,9 @@
 
 <AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrackControllerController">
    <children>
-      <AnchorPane id="AnchorPane" layoutX="-7.0" layoutY="2.0" prefHeight="661.0" prefWidth="792.0">
+      <AnchorPane id="AnchorPane" layoutX="1.0" layoutY="2.0" prefHeight="661.0" prefWidth="792.0">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" height="163.0" layoutX="554.0" layoutY="449.0" stroke="BLACK" strokeType="INSIDE" width="104.0" />
-            <Button layoutX="718.0" layoutY="614.0" mnemonicParsing="false" text="Submit" />
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="163.0" layoutX="502.0" layoutY="453.0" stroke="BLACK" strokeType="INSIDE" width="104.0" />
             <MenuButton layoutX="18.0" layoutY="14.0" mnemonicParsing="false" text="Track #">
                <items>
                   <MenuItem mnemonicParsing="false" text="Action 1" />
@@ -25,10 +24,10 @@
             </MenuButton>
             <Button layoutX="197.0" layoutY="457.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Open" textAlignment="CENTER" />
             <Button layoutX="197.0" layoutY="497.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Raise" textAlignment="CENTER" />
-            <Button layoutX="196.0" layoutY="535.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="89.0" text="Functional" textAlignment="CENTER" />
+            <Button layoutX="198.0" layoutY="535.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Functional" textAlignment="CENTER" />
             <Label layoutX="72.0" layoutY="468.0" prefHeight="18.0" prefWidth="89.0" text="Switch State" />
             <Label layoutX="72.0" layoutY="507.0" text="Railway Crossing" />
-            <Label layoutX="74.0" layoutY="546.0" prefHeight="18.0" prefWidth="89.0" text="Rail Control" />
+            <Label layoutX="72.0" layoutY="546.0" prefHeight="18.0" prefWidth="89.0" text="Rail Control" />
             <MenuButton layoutX="125.0" layoutY="14.0" mnemonicParsing="false" text="Block #">
                <items>
                   <MenuItem mnemonicParsing="false" text="Action 1" />
@@ -37,9 +36,9 @@
             </MenuButton>
             <Button layoutX="307.0" layoutY="457.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" text="Close" textAlignment="CENTER" />
             <Button layoutX="308.0" layoutY="497.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" text="Lower" textAlignment="CENTER" />
-            <Button layoutX="307.0" layoutY="535.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="73.0" text="Broken" textAlignment="CENTER" />
-            <Circle fill="#22ff00" layoutX="606.0" layoutY="489.0" radius="28.0" stroke="BLACK" strokeType="INSIDE" />
-            <Circle fill="#ff1f1f" layoutX="606.0" layoutY="569.0" radius="28.0" stroke="BLACK" strokeType="INSIDE" />
+            <Button layoutX="308.0" layoutY="535.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="73.0" text="Broken" textAlignment="CENTER" />
+            <Circle fill="#22ff00" layoutX="554.0" layoutY="493.0" radius="28.0" stroke="BLACK" strokeType="INSIDE" />
+            <Circle fill="#ff1f1f" layoutX="554.0" layoutY="573.0" radius="28.0" stroke="BLACK" strokeType="INSIDE" />
             <Label layoutX="117.0" layoutY="299.0" text="Switch Position:">
                <font>
                   <Font size="18.0" />
@@ -60,8 +59,8 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Button layoutX="196.0" layoutY="577.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Functional" textAlignment="CENTER" />
-            <Label layoutX="75.0" layoutY="586.0" prefHeight="18.0" prefWidth="89.0" text="Track Circuit" />
+            <Button layoutX="198.0" layoutY="577.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Functional" textAlignment="CENTER" />
+            <Label layoutX="72.0" layoutY="586.0" prefHeight="18.0" prefWidth="89.0" text="Track Circuit" />
             <Button layoutX="307.0" layoutY="577.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" text="Faulty" textAlignment="CENTER" />
             <TextField layoutX="184.0" layoutY="165.0" prefHeight="26.0" prefWidth="62.0" />
             <Label layoutX="67.0" layoutY="169.0" text="Authority">
@@ -80,7 +79,7 @@
                   <Font size="16.0" />
                </font>
             </Label>
-            <TextArea editable="false" layoutX="502.0" layoutY="69.0" prefHeight="178.0" prefWidth="207.0" text="Track #:&#10;Block#:&#10;Train Present (T/F):&#10;Station Present (T/F):&#10;Switch Present (T/F):&#10;Switch State:&#10;Crossing Present:&#10;Crossing State:&#10;Track Circuit State:&#10;Track Rail State:" />
+            <TextArea editable="false" layoutX="502.0" layoutY="69.0" prefHeight="178.0" prefWidth="207.0" text="Track #:&#10;Block#:&#10;Train Present (T/F):&#10;Station Present (T/F):&#10;Switch Present (T/F):&#10;Switch State:&#10;Crossing Present:&#10;Crossing State:&#10;Track Rail State:&#10;Track Circuit State:" />
             <TextArea editable="false" layoutX="502.0" layoutY="322.0" prefHeight="96.0" prefWidth="207.0" text="Commanded Speed:&#10;Authority:&#10;Switch Position:&#10;Light:" wrapText="true" />
             <Label layoutX="532.0" layoutY="27.0" text="Block Information">
                <font>
@@ -94,6 +93,13 @@
             </Label>
             <Button layoutX="295.0" layoutY="116.0" mnemonicParsing="false" text="Change" />
             <Button layoutX="295.0" layoutY="165.0" mnemonicParsing="false" text="Change" />
+            <Button alignment="CENTER" layoutX="666.0" layoutY="555.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="90.0" text="Import PLC" textAlignment="CENTER" />
+            <TextField layoutX="666.0" layoutY="512.0" prefHeight="26.0" prefWidth="90.0" />
+            <Label alignment="CENTER" layoutX="667.0" layoutY="482.0" prefHeight="20.0" prefWidth="90.0" text="PLC File">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

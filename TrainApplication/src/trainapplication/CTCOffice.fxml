@@ -1,11 +1,187 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.CTCOfficeController">
-    
+<AnchorPane id="AnchorPane" prefHeight="814.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.CTCOfficeController">
+   <children>
+      <Button fx:id="DispatchTrainButton" layoutX="276.0" layoutY="757.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="565.0" text="Dispatch Train">
+         <font>
+            <Font size="18.0" />
+         </font></Button>
+      <TabPane layoutX="25.0" layoutY="67.0" prefHeight="679.0" prefWidth="1067.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="All Lines">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="650.0" prefWidth="1053.0">
+                     <children>
+                        <SplitPane dividerPositions="0.5" layoutX="12.0" layoutY="13.0" prefHeight="632.0" prefWidth="1043.0">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="630.0" prefWidth="450.0">
+                                 <children>
+                                    <Text layoutX="35.0" layoutY="562.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Green Line Throughput: 1" wrappingWidth="145.13671875" />
+                                    <Text layoutX="248.0" layoutY="562.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Red Line Throughput: 1" wrappingWidth="135.13671875" />
+                                    <Text layoutX="167.0" layoutY="591.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Throughput: 2" wrappingWidth="105.13671875" />
+                                    <ImageView fitHeight="530.0" fitWidth="404.0" layoutX="55.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@trickytrainz/Default%20track%20layout%20red%20and%20green.png" />
+                                       </image>
+                                    </ImageView>
+                                 </children>
+                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="473.0" prefWidth="453.0">
+                                 <children>
+                                    <TableView fx:id="AllTrackTable" editable="true" layoutX="5.0" prefHeight="333.0" prefWidth="500.0">
+                                      <columns>
+                                        <TableColumn prefWidth="39.0" text="Line" />
+                                        <TableColumn prefWidth="62.0" text="Section" />
+                                          <TableColumn prefWidth="44.0" text="Block" />
+                                          <TableColumn prefWidth="84.0" text="Length (m)" />
+                                          <TableColumn prefWidth="70.0" text="Grade (%)" />
+                                          <TableColumn prefWidth="123.0" text="Speed Limit (km/h)" />
+                                          <TableColumn text="State" />
+                                      </columns>
+                                    </TableView>
+                                    <TableView editable="true" layoutX="5.0" layoutY="341.0" prefHeight="289.0" prefWidth="500.0">
+                                       <columns>
+                                          <TableColumn prefWidth="53.0" text="Line" />
+                                          <TableColumn prefWidth="59.0" text="Train ID" />
+                                          <TableColumn prefWidth="84.0" text="Speed (km/h)" />
+                                          <TableColumn prefWidth="66.0" text="Authority" />
+                                          <TableColumn prefWidth="100.0" text="Current Block" />
+                                          <TableColumn prefWidth="70.0" text="Target" />
+                                       </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Red Line">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane layoutX="12.0" layoutY="13.0" prefHeight="632.0" prefWidth="1043.0">
+                           <items>
+                              <SplitPane dividerPositions="0.5" prefHeight="632.0" prefWidth="885.0">
+                                 <items>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="530.0" prefWidth="342.0">
+                                       <children>
+                                          <Text layoutX="145.0" layoutY="575.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Red Line Throughput" wrappingWidth="149.13671875" />
+                                          <ImageView fitHeight="530.0" fitWidth="404.0" layoutX="57.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@trickytrainz/Default%20track%20layout%20red%20and%20green.png" />
+                                             </image>
+                                          </ImageView>
+                                       </children>
+                                    </AnchorPane>
+                                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="473.0" prefWidth="453.0">
+                                       <children>
+                                          <TableView editable="true" layoutX="5.0" prefHeight="333.0" prefWidth="500.0">
+                                             <columns>
+                                                <TableColumn prefWidth="62.0" text="Section" />
+                                                <TableColumn prefWidth="44.0" text="Block" />
+                                                <TableColumn prefWidth="84.0" text="Length (m)" />
+                                                <TableColumn prefWidth="70.0" text="Grade (%)" />
+                                                <TableColumn prefWidth="140.0" text="Speed Limit (km/h)" />
+                                                <TableColumn prefWidth="108.0" text="Occupied" />
+                                             </columns>
+                                          </TableView>
+                                          <TableView editable="true" layoutX="5.0" layoutY="341.0" prefHeight="289.0" prefWidth="500.0">
+                                             <columns>
+                                                <TableColumn prefWidth="78.0" text="Train ID" />
+                                                <TableColumn prefWidth="87.0" text="Speed (km/h)" />
+                                                <TableColumn prefWidth="79.0" text="Authority" />
+                                                <TableColumn prefWidth="99.0" text="Current Block" />
+                                                <TableColumn prefWidth="85.0" text="Target" />
+                                             </columns>
+                                          </TableView>
+                                       </children>
+                                    </AnchorPane>
+                                 </items>
+                              </SplitPane>
+                           </items>
+                        </SplitPane>
+                     </children></AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Green Line">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="473.0" prefWidth="664.0">
+                     <children>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <SplitPane layoutX="12.0" layoutY="13.0" prefHeight="633.0" prefWidth="1043.0">
+                                 <items>
+                                    <SplitPane dividerPositions="0.5" prefHeight="630.0" prefWidth="1000.0">
+                                       <items>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="530.0" prefWidth="342.0">
+                                             <children>
+                                                <Text layoutX="146.0" layoutY="575.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Green Line Throughput" wrappingWidth="148.13671875" />
+                                                <ImageView fitHeight="530.0" fitWidth="404.0" layoutX="57.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+                                                   <image>
+                                                      <Image url="@trickytrainz/Default%20track%20layout%20red%20and%20green.png" />
+                                                   </image>
+                                                </ImageView>
+                                             </children>
+                                          </AnchorPane>
+                                          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="473.0" prefWidth="453.0">
+                                             <children>
+                                                <TableView editable="true" layoutX="5.0" prefHeight="333.0" prefWidth="500.0">
+                                                   <columns>
+                                                      <TableColumn prefWidth="62.0" text="Section" />
+                                                      <TableColumn prefWidth="44.0" text="Block" />
+                                                      <TableColumn prefWidth="84.0" text="Length (m)" />
+                                                      <TableColumn prefWidth="70.0" text="Grade (%)" />
+                                                      <TableColumn prefWidth="140.0" text="Speed Limit (km/h)" />
+                                                      <TableColumn prefWidth="108.0" text="Occupied" />
+                                                   </columns>
+                                                </TableView>
+                                                <TableView layoutX="5.0" layoutY="341.0" prefHeight="289.0" prefWidth="500.0">
+                                                   <columns>
+                                                      <TableColumn prefWidth="78.0" text="Train ID" />
+                                                      <TableColumn prefWidth="87.0" text="Speed (km/h)" />
+                                                      <TableColumn prefWidth="79.0" text="Authority" />
+                                                      <TableColumn prefWidth="99.0" text="Current Block" />
+                                                      <TableColumn prefWidth="85.0" text="Target" />
+                                                   </columns>
+                                                </TableView>
+                                             </children>
+                                          </AnchorPane>
+                                       </items>
+                                    </SplitPane>
+                                 </items>
+                              </SplitPane>
+                           </children>
+                        </AnchorPane>
+                     </children></AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+      <Text layoutX="467.0" layoutY="49.0" strokeType="OUTSIDE" strokeWidth="0.0" text="CTC OFFICE">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Text>
+      <CheckBox layoutX="42.0" layoutY="770.0" mnemonicParsing="false" text="Automatic Mode" />
+      <Button layoutX="968.0" layoutY="742.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="99.0" text="New Train">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+   </children>
 </AnchorPane>

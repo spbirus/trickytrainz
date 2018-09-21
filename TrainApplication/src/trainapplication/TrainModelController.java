@@ -8,6 +8,8 @@ package trainapplication;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,8 +19,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -44,13 +49,7 @@ public class TrainModelController extends MainFXMLController implements Initiali
     private TextField passengersLeavingBox;
 
     @FXML
-    private Button submitButton;
-
-    @FXML
-    private TextField speedLimitBox;
-
-    @FXML
-    private TextField passengersEnteringBox;
+    private TextField setpointSpeedBox;
 
     @FXML
     private TextField authorityBox;
@@ -110,6 +109,72 @@ public class TrainModelController extends MainFXMLController implements Initiali
     private Label currentSpeedNumber;
 
     @FXML
+    private Button sendSpeed;
+
+    @FXML
+    private Button sendLeavingPass;
+
+    @FXML
+    private Button submitButton;
+
+    @FXML
+    private TextArea trackModelBox1;
+
+    @FXML
+    private TextField suggestSpeedBox;
+
+    @FXML
+    private Button dactivateBrakeFailure;
+
+    @FXML
+    private Button dectivateEngineFailure;
+
+    @FXML
+    private Button deactivateSignalFailure;
+
+    @FXML
+    private TableView<Train> trainTable;
+    
+    @FXML
+    private Button test;
+    
+    @FXML
+    private TableColumn<Train, Integer> number;
+
+    @FXML
+    private TableColumn<Train, Integer> length;
+
+    @FXML
+    private TableColumn<Train, Integer> width;
+
+    @FXML
+    private TableColumn<Train, Integer> height;
+
+    @FXML
+    private TableColumn<Train, Integer> mass;
+
+    @FXML
+    private TableColumn<Train, Integer> crewNum;
+
+    @FXML
+    private TableColumn<Train, Integer> passNum;
+
+    @FXML
+    private TableColumn<Train, Integer> maxCap;
+
+    @FXML
+    private TableColumn<Train, Integer> carNum;
+
+    @FXML
+    private TableColumn<Train, Integer> doorNum;
+
+    @FXML
+    private TableColumn<Train, Integer> accelLimit;
+
+    @FXML
+    private TableColumn<Train, Integer> deccelLimit;
+
+    @FXML
     void leftdoorsClick(ActionEvent event) {
 
     }
@@ -143,6 +208,17 @@ public class TrainModelController extends MainFXMLController implements Initiali
     void onSignalFailure(ActionEvent event) {
 
     }
+    
+    @FXML
+    void onSetpointSpeedSubmit(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void onPassengersLeavingSubmit(ActionEvent event) {
+
+    }
+    
 
     @FXML
     void onSubmit(ActionEvent event) throws IOException {
@@ -169,6 +245,24 @@ public class TrainModelController extends MainFXMLController implements Initiali
     @FXML
     void rightdoorsClick(ActionEvent event) {
 
+    }
+    
+    @FXML
+    void onTest(ActionEvent event) {
+        Train t = new Train(1,2,3,4,5,6,7,8,9,10,11,12);
+        number.setCellValueFactory(new PropertyValueFactory<>("number"));
+        length.setCellValueFactory(new PropertyValueFactory<>("length"));
+        width.setCellValueFactory(new PropertyValueFactory<>("width"));
+        height.setCellValueFactory(new PropertyValueFactory<>("height"));
+        mass.setCellValueFactory(new PropertyValueFactory<>("mass"));
+        crewNum.setCellValueFactory(new PropertyValueFactory<>("crewNum"));
+        passNum.setCellValueFactory(new PropertyValueFactory<>("passNum"));
+        maxCap.setCellValueFactory(new PropertyValueFactory<>("maxCap"));
+        carNum.setCellValueFactory(new PropertyValueFactory<>("carNum"));
+        doorNum.setCellValueFactory(new PropertyValueFactory<>("doorNum"));
+        accelLimit.setCellValueFactory(new PropertyValueFactory<>("accelLimit"));
+        deccelLimit.setCellValueFactory(new PropertyValueFactory<>("deccelLimit"));
+        trainTable.getItems().add(t);
     }
     
 }

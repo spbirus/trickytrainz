@@ -39,7 +39,21 @@ public class TrainModelController extends MainFXMLController implements Initiali
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        //TODO: need a for loop that will go through database and add all of the trains
+        Train t = new Train(1,2,3,4,5,6,7,8,9,10,11,12);
+        number.setCellValueFactory(new PropertyValueFactory<>("number"));
+        length.setCellValueFactory(new PropertyValueFactory<>("length"));
+        width.setCellValueFactory(new PropertyValueFactory<>("width"));
+        height.setCellValueFactory(new PropertyValueFactory<>("height"));
+        mass.setCellValueFactory(new PropertyValueFactory<>("mass"));
+        crewNum.setCellValueFactory(new PropertyValueFactory<>("crewNum"));
+        passNum.setCellValueFactory(new PropertyValueFactory<>("passNum"));
+        maxCap.setCellValueFactory(new PropertyValueFactory<>("maxCap"));
+        carNum.setCellValueFactory(new PropertyValueFactory<>("carNum"));
+        doorNum.setCellValueFactory(new PropertyValueFactory<>("doorNum"));
+        accelLimit.setCellValueFactory(new PropertyValueFactory<>("accelLimit"));
+        deccelLimit.setCellValueFactory(new PropertyValueFactory<>("deccelLimit"));
+        trainTable.getItems().add(t);
     }   
     
      @FXML
@@ -136,7 +150,7 @@ public class TrainModelController extends MainFXMLController implements Initiali
     private TableView<Train> trainTable;
     
     @FXML
-    private Button test;
+    private Button refresh;
     
     @FXML
     private TableColumn<Train, Integer> number;
@@ -248,7 +262,8 @@ public class TrainModelController extends MainFXMLController implements Initiali
     }
     
     @FXML
-    void onTest(ActionEvent event) {
+    void onRefresh(ActionEvent event) {
+        //TODO: need a for loop that will go through database and add all of the trains
         Train t = new Train(1,2,3,4,5,6,7,8,9,10,11,12);
         number.setCellValueFactory(new PropertyValueFactory<>("number"));
         length.setCellValueFactory(new PropertyValueFactory<>("length"));

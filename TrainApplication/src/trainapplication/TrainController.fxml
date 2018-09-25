@@ -9,63 +9,95 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="712.0" prefWidth="822.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrainControllerController">
+<AnchorPane id="AnchorPane" prefHeight="794.0" prefWidth="822.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrainControllerController">
    <children>
-      <AnchorPane layoutX="33.0" layoutY="14.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="33.0" layoutY="14.0" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
-            <Label layoutX="45.0" layoutY="75.0" text="Current Speed" />
-            <Label layoutX="63.0" layoutY="5.0" prefHeight="19.0" prefWidth="57.0" text="SPEED" underline="true">
+            <Label layoutX="29.0" layoutY="70.0" text="Current Speed" />
+            <Label layoutX="47.0" prefHeight="19.0" prefWidth="57.0" text="SPEED" underline="true">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="28.0" layoutY="34.0" text="45 ">
+            <Label layoutX="12.0" layoutY="29.0" text="45 ">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label layoutX="88.0" layoutY="34.0" text="MPH">
+            <Label layoutX="72.0" layoutY="29.0" text="MPH">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Separator layoutX="27.0" layoutY="69.0" prefHeight="5.0" prefWidth="126.0" />
-            <Label layoutX="41.0" layoutY="143.0" text="Setpoint Speed" />
-            <Label layoutX="45.0" layoutY="114.0" text="55">
+            <Separator layoutX="11.0" layoutY="64.0" prefHeight="5.0" prefWidth="126.0" />
+            <Label layoutX="25.0" layoutY="138.0" text="Setpoint Speed" />
+            <Label layoutX="29.0" layoutY="109.0" text="55">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="88.0" layoutY="114.0" text="MPH">
+            <Label layoutX="72.0" layoutY="109.0" text="MPH">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Separator layoutX="32.0" layoutY="138.0" prefHeight="5.0" prefWidth="113.0" />
+            <Separator layoutX="16.0" layoutY="133.0" prefHeight="5.0" prefWidth="113.0" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="419.0" layoutY="14.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="373.0" layoutY="14.0" prefHeight="200.0" prefWidth="259.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
-            <Label layoutX="51.0" layoutY="75.0" text="Brake status" />
-            <Label layoutX="57.0" layoutY="5.0" prefHeight="19.0" prefWidth="68.0" text="BRAKING" underline="true">
+            <Label layoutX="8.0" layoutY="73.0" text="Service Brake" />
+            <Label layoutX="90.0" layoutY="5.0" prefHeight="19.0" prefWidth="68.0" text="BRAKING" underline="true">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="28.0" layoutY="34.0" text="Engaged">
+            <Label layoutX="9.0" layoutY="43.0" text="Engaged">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Separator layoutX="1.0" layoutY="67.0" prefHeight="5.0" prefWidth="99.0" />
+            <Button layoutX="4.0" layoutY="100.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="126.0" text="Service Brake" />
+            <Button layoutX="130.0" layoutY="101.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="126.0" style="-fx-background-color: #e74c3c#e74c3c;" text="Emergency Brake" textFill="WHITE" />
+            <Label layoutX="159.0" layoutY="73.0" text="Service Brake" />
+            <Label layoutX="160.0" layoutY="43.0" text="Engaged">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Separator layoutX="152.0" layoutY="67.0" prefHeight="5.0" prefWidth="99.0" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="190.0" layoutY="14.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+         <children>
+            <Label layoutX="37.0" layoutY="78.0" text="Power Command" />
+            <Label layoutX="61.0" layoutY="5.0" prefHeight="19.0" prefWidth="57.0" text="POWER" underline="true">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="20.0" layoutY="36.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Separator layoutX="27.0" layoutY="69.0" prefHeight="5.0" prefWidth="126.0" />
-            <Button layoutX="26.0" layoutY="108.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="126.0" text="Service Break" />
-            <Button layoutX="26.0" layoutY="144.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="126.0" text="Emergency Break" />
+            <Separator layoutX="23.0" layoutY="73.0" prefHeight="5.0" prefWidth="126.0" />
+            <Label layoutX="18.0" layoutY="137.0" />
+            <Separator layoutX="4.0" layoutY="143.0" prefHeight="5.0" prefWidth="80.0" />
+            <Label layoutX="20.0" layoutY="146.0" text="Kp (kW)" />
+            <Label layoutX="105.0" layoutY="137.0" />
+            <Separator layoutX="91.0" layoutY="143.0" prefHeight="5.0" prefWidth="80.0" />
+            <TextField editable="false" layoutX="4.0" layoutY="110.0" prefHeight="27.0" prefWidth="80.0" />
+            <Button layoutX="24.0" layoutY="166.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="126.0" text="Set " />
+            <TextField editable="false" layoutX="91.0" layoutY="110.0" prefHeight="27.0" prefWidth="80.0" />
+            <Label layoutX="110.0" layoutY="146.0" text="Ki (kW)" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="226.0" layoutY="14.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="640.0" layoutY="14.0" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
-            <Label layoutX="40.0" layoutY="76.0" text="Power Command" />
-            <Label layoutX="64.0" layoutY="5.0" prefHeight="19.0" prefWidth="57.0" text="POWER" underline="true">
+            <Label layoutX="41.0" layoutY="85.0" text="Light status" />
+            <Label layoutX="48.0" layoutY="5.0" prefHeight="19.0" prefWidth="57.0" text="LIGHTS" underline="true">
                <font>
                   <Font size="15.0" />
                </font>
@@ -75,52 +107,10 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Separator layoutX="26.0" layoutY="71.0" prefHeight="5.0" prefWidth="126.0" />
-            <Label layoutX="21.0" layoutY="135.0" />
-            <Label layoutX="7.0" layoutY="119.0" text="35">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label layoutX="40.0" layoutY="119.0" text="units">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Separator layoutX="7.0" layoutY="141.0" prefHeight="5.0" prefWidth="80.0" />
-            <Label layoutX="41.0" layoutY="144.0" text="Ki" />
-            <Label layoutX="108.0" layoutY="135.0" />
-            <Label layoutX="94.0" layoutY="119.0" text="35">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Label layoutX="127.0" layoutY="119.0" text="units">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <Separator layoutX="94.0" layoutY="141.0" prefHeight="5.0" prefWidth="80.0" />
-            <Label layoutX="128.0" layoutY="144.0" text="Kp" />
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="613.0" layoutY="14.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
-         <children>
-            <Label layoutX="53.0" layoutY="74.0" text="Light status" />
-            <Label layoutX="60.0" layoutY="5.0" prefHeight="19.0" prefWidth="57.0" text="LIGHTS" underline="true">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
-            <Label layoutX="23.0" layoutY="34.0">
-               <font>
-                  <Font size="30.0" />
-               </font>
-            </Label>
-            <Circle fill="#2bff1f" layoutX="88.0" layoutY="48.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
-            <Separator layoutX="26.0" layoutY="69.0" prefHeight="5.0" prefWidth="126.0" />
-            <Button layoutX="26.0" layoutY="111.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="126.0" text="On" />
-            <Button layoutX="26.0" layoutY="147.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="126.0" text="Off" />
+            <Circle fill="#2bff1f" layoutX="76.0" layoutY="59.0" radius="14.0" stroke="BLACK" strokeType="INSIDE" />
+            <Separator layoutX="14.0" layoutY="80.0" prefHeight="5.0" prefWidth="126.0" />
+            <Button layoutX="14.0" layoutY="122.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="126.0" text="On" />
+            <Button layoutX="14.0" layoutY="158.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="126.0" text="Off" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="613.0" layoutY="226.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
@@ -232,7 +222,7 @@
       </AnchorPane>
       <AnchorPane layoutX="33.0" layoutY="440.0" prefHeight="200.0" prefWidth="370.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
-            <Label layoutX="157.0" layoutY="5.0" prefHeight="19.0" prefWidth="57.0" text="TRAINZ" underline="true">
+            <Label layoutX="103.0" layoutY="5.0" prefHeight="19.0" prefWidth="165.0" text="TRAIN INFORMATION" underline="true">
                <font>
                   <Font size="15.0" />
                </font>
@@ -242,7 +232,7 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <SplitPane layoutX="23.0" layoutY="40.0" prefHeight="144.0" prefWidth="325.0" />
+            <SplitPane layoutX="23.0" layoutY="40.0" prefHeight="118.0" prefWidth="325.0" />
          </children>
       </AnchorPane>
       <Label layoutX="79.0" layoutY="688.0" text="Mode" />

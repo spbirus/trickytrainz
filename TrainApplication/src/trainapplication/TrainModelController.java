@@ -40,7 +40,8 @@ public class TrainModelController extends MainFXMLController implements Initiali
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //TODO: need a for loop that will go through database and add all of the trains
-        Train t = new Train(1,2,3,4,5,6,7,8,9,10,11,12);
+        Train t = new Train("red",1,2,3,4,5,6,7,8,9,10,11,12);        
+        track.setCellValueFactory(new PropertyValueFactory<>("track"));
         number.setCellValueFactory(new PropertyValueFactory<>("number"));
         length.setCellValueFactory(new PropertyValueFactory<>("length"));
         width.setCellValueFactory(new PropertyValueFactory<>("width"));
@@ -151,6 +152,9 @@ public class TrainModelController extends MainFXMLController implements Initiali
     
     @FXML
     private Button refresh;
+    
+    @FXML
+    private TableColumn<Train, String> track;
     
     @FXML
     private TableColumn<Train, Integer> number;
@@ -264,7 +268,8 @@ public class TrainModelController extends MainFXMLController implements Initiali
     @FXML
     void onRefresh(ActionEvent event) {
         //TODO: need a for loop that will go through database and add all of the trains
-        Train t = new Train(1,2,3,4,5,6,7,8,9,10,11,12);
+        Train t = new Train("red",1,2,3,4,5,6,7,8,9,10,11,12);
+        track.setCellValueFactory(new PropertyValueFactory<>("track"));
         number.setCellValueFactory(new PropertyValueFactory<>("number"));
         length.setCellValueFactory(new PropertyValueFactory<>("length"));
         width.setCellValueFactory(new PropertyValueFactory<>("width"));

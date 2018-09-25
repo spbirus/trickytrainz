@@ -11,6 +11,7 @@ package trainapplication;
  */
 public class Train {
     
+    private String track;
     private int number;
     private int length;
     private int height;
@@ -24,7 +25,8 @@ public class Train {
     private int accelLimit;
     private int deccelLimit;
 
-    public Train(int number, int length, int height, int width, int mass, int crewNum, int passNum, int maxCap, int carNum, int doorNum, int accelLimit, int deccelLimit) {
+    public Train(String track, int number, int length, int height, int width, int mass, int crewNum, int passNum, int maxCap, int carNum, int doorNum, int accelLimit, int deccelLimit) {
+        this.track = track;
         this.number = number;
         this.length = length;
         this.height = height;
@@ -37,6 +39,14 @@ public class Train {
         this.doorNum = doorNum;
         this.accelLimit = accelLimit;
         this.deccelLimit = deccelLimit;
+    }
+
+    public String getTrack() {
+        return track;
+    }
+
+    public void setTrack(String track) {
+        this.track = track;
     }
 
     public int getNumber() {

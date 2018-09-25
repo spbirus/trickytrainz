@@ -4,14 +4,16 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="794.0" prefWidth="822.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrainControllerController">
+<AnchorPane id="AnchorPane" prefHeight="894.0" prefWidth="996.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrainControllerController">
    <children>
-      <AnchorPane layoutX="33.0" layoutY="14.0" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="10.0" layoutY="34.0" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
             <Label layoutX="29.0" layoutY="70.0" text="Current Speed" />
             <Label layoutX="47.0" prefHeight="19.0" prefWidth="57.0" text="SPEED" underline="true">
@@ -44,7 +46,7 @@
             <Separator layoutX="16.0" layoutY="133.0" prefHeight="5.0" prefWidth="113.0" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="373.0" layoutY="14.0" prefHeight="200.0" prefWidth="259.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="350.0" layoutY="34.0" prefHeight="200.0" prefWidth="259.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
             <Label layoutX="8.0" layoutY="73.0" text="Service Brake" />
             <Label layoutX="90.0" layoutY="5.0" prefHeight="19.0" prefWidth="68.0" text="BRAKING" underline="true">
@@ -69,7 +71,7 @@
             <Separator layoutX="152.0" layoutY="67.0" prefHeight="5.0" prefWidth="99.0" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="190.0" layoutY="14.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="167.0" layoutY="34.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
             <Label layoutX="37.0" layoutY="78.0" text="Power Command" />
             <Label layoutX="61.0" layoutY="5.0" prefHeight="19.0" prefWidth="57.0" text="POWER" underline="true">
@@ -94,7 +96,7 @@
             <Label layoutX="110.0" layoutY="146.0" text="Ki (kW)" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="640.0" layoutY="14.0" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="617.0" layoutY="34.0" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
             <Label layoutX="41.0" layoutY="85.0" text="Light status" />
             <Label layoutX="48.0" layoutY="5.0" prefHeight="19.0" prefWidth="57.0" text="LIGHTS" underline="true">
@@ -113,7 +115,7 @@
             <Button layoutX="14.0" layoutY="158.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="126.0" text="Off" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="613.0" layoutY="226.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="590.0" layoutY="246.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
             <Label layoutX="113.0" layoutY="36.0" text="F">
                <font>
@@ -142,7 +144,7 @@
             <Label layoutX="105.0" layoutY="32.0" text="o" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="226.0" layoutY="226.0" prefHeight="200.0" prefWidth="370.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="203.0" layoutY="246.0" prefHeight="200.0" prefWidth="370.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
             <Label layoutX="157.0" layoutY="5.0" prefHeight="19.0" prefWidth="57.0" text="DOORS" underline="true">
                <font>
@@ -184,7 +186,7 @@
             <Button layoutX="217.0" layoutY="107.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="126.0" text="Open " />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="33.0" layoutY="226.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="10.0" layoutY="246.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
             <Label layoutX="55.0" layoutY="5.0" prefHeight="19.0" prefWidth="68.0" text="MURPHY" underline="true">
                <font>
@@ -205,9 +207,9 @@
             <Button layoutX="6.0" layoutY="142.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="83.0" text="Activate" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="420.0" layoutY="440.0" prefHeight="200.0" prefWidth="370.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="11.0" layoutY="675.0" prefHeight="200.0" prefWidth="919.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
-            <Label layoutX="115.0" layoutY="5.0" prefHeight="19.0" prefWidth="141.0" text="ANNOUNCEMENTS" underline="true">
+            <Label layoutX="384.0" layoutY="9.0" prefHeight="19.0" prefWidth="141.0" text="ANNOUNCEMENTS" underline="true">
                <font>
                   <Font size="15.0" />
                </font>
@@ -217,29 +219,50 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <SplitPane layoutX="23.0" layoutY="40.0" prefHeight="144.0" prefWidth="325.0" />
+            <SplitPane layoutX="7.0" layoutY="40.0" prefHeight="144.0" prefWidth="900.0" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="33.0" layoutY="440.0" prefHeight="200.0" prefWidth="370.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="9.0" layoutY="460.0" prefHeight="209.0" prefWidth="921.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
-            <Label layoutX="103.0" layoutY="5.0" prefHeight="19.0" prefWidth="165.0" text="TRAIN INFORMATION" underline="true">
-               <font>
-                  <Font size="15.0" />
-               </font>
-            </Label>
             <Label layoutX="23.0" layoutY="34.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <SplitPane layoutX="23.0" layoutY="40.0" prefHeight="118.0" prefWidth="325.0" />
+            <TableView fx:id="trainTable" layoutX="7.0" layoutY="43.0" prefHeight="156.0" prefWidth="905.0">
+               <columns>
+                  <TableColumn fx:id="number" prefWidth="75.0" text="Train #" />
+                  <TableColumn fx:id="length" prefWidth="69.60002136230469" text="Length (ft)" />
+                  <TableColumn fx:id="width" prefWidth="63.99999237060547" text="Width (ft)" />
+                  <TableColumn fx:id="height" prefWidth="68.79998779296875" text="Height (ft)" />
+                  <TableColumn fx:id="mass" prefWidth="67.20001220703125" text="Mass (lbs)" />
+                  <TableColumn fx:id="crewNum" prefWidth="52.79998779296875" text="Crew #" />
+                  <TableColumn fx:id="passNum" prefWidth="84.7999267578125" text="Passenger #" />
+                  <TableColumn fx:id="maxCap" prefWidth="71.19998168945312" text="Max Cap." />
+                  <TableColumn fx:id="carNum" prefWidth="49.5999755859375" text="Car #" />
+                  <TableColumn fx:id="doorNum" prefWidth="70.4000244140625" text="Door #" />
+                  <TableColumn fx:id="accelLimit" prefWidth="83.20001220703125" text="Accel Limit" />
+                  <TableColumn fx:id="deccelLimit" prefWidth="85.60009765625" text="Deccel Limit" />
+                  <TableColumn fx:id="track" prefWidth="58.40004882812502" text="Track" />
+               </columns>
+            </TableView>
+            <Label layoutX="419.0" layoutY="13.0" prefHeight="19.0" prefWidth="89.0" text="ALL TRAINS" underline="true">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
-      <Label layoutX="79.0" layoutY="688.0" text="Mode" />
-      <Separator layoutX="33.0" layoutY="683.0" prefHeight="5.0" prefWidth="126.0" style="-fx-background-color: #bdc3c7#bdc3c7 #bdc3c7#bdc3c7;" />
-      <Label layoutX="45.0" layoutY="646.0" text="Manual">
+      <Label layoutX="848.0" layoutY="82.0" text="Mode" />
+      <Separator layoutX="802.0" layoutY="77.0" prefHeight="5.0" prefWidth="126.0" style="-fx-background-color: #bdc3c7#bdc3c7 #bdc3c7#bdc3c7;" />
+      <Label layoutX="814.0" layoutY="40.0" text="Manual">
          <font>
             <Font size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="803.0" layoutY="234.0" text="Your ad here">
+         <font>
+            <Font size="20.0" />
          </font>
       </Label>
    </children>

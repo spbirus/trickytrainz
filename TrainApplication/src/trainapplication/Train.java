@@ -11,7 +11,7 @@ package trainapplication;
  */
 public class Train {
     
-    private String track; //red or green line
+    private String line; //red or green line
     private int number; //train id number
     private int length;
     private int height;
@@ -30,8 +30,8 @@ public class Train {
     private int target; //destination
 
     //for CTC
-    public Train(String track, int number, int speed, int authority, int block, int target) {
-        this.track = track;
+    public Train(String line, int number, int speed, int authority, int block, int target) {
+        this.line = line;
         this.number = number;
         this.speed = speed;
         this.authority = authority;
@@ -40,8 +40,8 @@ public class Train {
     }
 
     //all of them
-    public Train(String track, int number, int length, int height, int width, int mass, int crewNum, int passNum, int maxCap, int carNum, int doorNum, int accelLimit, int deccelLimit, int speed, int authority, int block, int target) {
-        this.track = track;
+    public Train(String line, int number, int length, int height, int width, int mass, int crewNum, int passNum, int maxCap, int carNum, int doorNum, int accelLimit, int deccelLimit, int speed, int authority, int block, int target) {
+        this.line = line;
         this.number = number;
         this.length = length;
         this.height = height;
@@ -61,8 +61,8 @@ public class Train {
     }
 
     //for train model and train controller
-    public Train(String track, int number, int length, int height, int width, int mass, int crewNum, int passNum, int maxCap, int carNum, int doorNum, int accelLimit, int deccelLimit) {
-        this.track = track;
+    public Train(String line, int number, int length, int height, int width, int mass, int crewNum, int passNum, int maxCap, int carNum, int doorNum, int accelLimit, int deccelLimit) {
+        this.line = line;
         this.number = number;
         this.length = length;
         this.height = height;
@@ -77,12 +77,12 @@ public class Train {
         this.deccelLimit = deccelLimit;
     }
 
-    public String getTrack() {
-        return track;
+    public String getLine() {
+        return line;
     }
 
-    public void setTrack(String track) {
-        this.track = track;
+    public void setLine(String line) {
+        this.line = line;
     }
 
     public int getNumber() {
@@ -180,6 +180,40 @@ public class Train {
     public void setDeccelLimit(int deccelLimit) {
         this.deccelLimit = deccelLimit;
     }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
+    public int getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(int authority) {
+        this.authority = authority;
+    }
+
+    public int getBlock() {
+        return block;
+    }
+
+    public void setBlock(int block) {
+        this.block = block;
+    }
+
+    public int getTarget() {
+        return target;
+    }
+
+    public void setTarget(int target) {
+        this.target = target;
+    }
+    
+    
     
     
 }

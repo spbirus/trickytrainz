@@ -10,6 +10,17 @@ package trainapplication;
  * @author Michael
  */
 public class Track {
+    
+    private String line;
+    private String section;
+    private int blockNumber;
+    private int blockLength;
+    private Double blockGrade;
+    private int speedLimit;
+    private String infrastructure;
+    private double elevation;
+    private double cumElevation;
+    private String state;
 
     public Track(String line, String section, Integer blockNumber, Integer blockLength, Double blockGrade, Integer speedLimit, String infrastructure, Double elevation, Double cumElevation, String state) {
         this.line = line;
@@ -33,17 +44,6 @@ public class Track {
         this.state = state;
     }
    
-    
-    String line;
-    String section;
-    Integer blockNumber;
-    Integer blockLength;
-    Double blockGrade;
-    Integer speedLimit;
-    String infrastructure;
-    Double elevation;
-    Double cumElevation;
-    String state;
 
     public String getLine() {
         return line;
@@ -65,7 +65,7 @@ public class Track {
         return blockNumber;
     }
 
-    public void setBlockNumber(Integer blockNumber) {
+    public void setBlockNumber(int blockNumber) {
         this.blockNumber = blockNumber;
     }
 
@@ -73,7 +73,7 @@ public class Track {
         return blockLength;
     }
 
-    public void setBlockLength(Integer blockLength) {
+    public void setBlockLength(int blockLength) {
         this.blockLength = blockLength;
     }
 
@@ -81,7 +81,7 @@ public class Track {
         return blockGrade;
     }
 
-    public void setBlockGrade(Double blockGrade) {
+    public void setBlockGrade(double blockGrade) {
         this.blockGrade = blockGrade;
     }
 
@@ -89,7 +89,7 @@ public class Track {
         return speedLimit;
     }
 
-    public void setSpeedLimit(Integer speedLimit) {
+    public void setSpeedLimit(int speedLimit) {
         this.speedLimit = speedLimit;
     }
 
@@ -105,7 +105,7 @@ public class Track {
         return elevation;
     }
 
-    public void setElevation(Double elevation) {
+    public void setElevation(double elevation) {
         this.elevation = elevation;
     }
 
@@ -113,7 +113,7 @@ public class Track {
         return cumElevation;
     }
 
-    public void setCumElevation(Double cumElevation) {
+    public void setCumElevation(double cumElevation) {
         this.cumElevation = cumElevation;
     }
 

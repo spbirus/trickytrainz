@@ -58,8 +58,8 @@
             </AnchorPane>
             <AnchorPane layoutX="14.0" layoutY="7.0" prefHeight="270.0" prefWidth="766.0" style="-fx-background-color: #bdc3c7;">
                <children>
-                  <TextArea editable="false" layoutX="116.0" layoutY="83.0" prefHeight="178.0" prefWidth="207.0" text="Track #:&#10;Block#:&#10;Train Present (T/F):&#10;Station Present (T/F):&#10;Switch Present (T/F):&#10;Switch State:&#10;Crossing Present:&#10;Crossing State:&#10;Track Rail State:&#10;Track Circuit State:" />
-                  <TextArea editable="false" layoutX="456.0" layoutY="83.0" prefHeight="178.0" prefWidth="207.0" text="Commanded Speed:&#10;&#10;Authority:&#10;&#10;Switch Position:&#10;&#10;Light:" wrapText="true" />
+                  <TextArea editable="false" layoutX="91.0" layoutY="83.0" prefHeight="178.0" prefWidth="253.0" text="Track:&#10;Block#:&#10;Train Present:&#10;Station Present:&#10;Switch State:&#10;Crossing State:&#10;Track Rail State:&#10;Track Circuit State:" />
+                  <TextArea editable="false" layoutX="438.0" layoutY="83.0" prefHeight="178.0" prefWidth="254.0" text="Commanded Speed:&#10;&#10;Authority:&#10;&#10;Switch Position:&#10;&#10;Light:" wrapText="true" />
                   <Label layoutX="149.0" layoutY="45.0" text="Block Information">
                      <font>
                         <Font size="18.0" />
@@ -70,23 +70,22 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <AnchorPane layoutX="99.0" layoutY="59.0" prefHeight="200.0" prefWidth="200.0" />
+                  <MenuButton layoutX="195.0" layoutY="8.0" mnemonicParsing="false" text="Track ">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Action 1" />
+                        <MenuItem mnemonicParsing="false" text="Action 2" />
+                     </items>
+                  </MenuButton>
                </children>
             </AnchorPane>
             <Rectangle arcHeight="5.0" arcWidth="5.0" height="163.0" layoutX="494.0" layoutY="476.0" stroke="BLACK" strokeType="INSIDE" width="104.0" />
-            <MenuButton layoutX="182.0" layoutY="14.0" mnemonicParsing="false" text="Track #">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="Action 1" />
-                  <MenuItem mnemonicParsing="false" text="Action 2" />
-               </items>
-            </MenuButton>
             <Button layoutX="197.0" layoutY="480.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Open" textAlignment="CENTER" />
             <Button layoutX="197.0" layoutY="520.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Raise" textAlignment="CENTER" />
             <Button layoutX="198.0" layoutY="558.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Functional" textAlignment="CENTER" />
             <Label layoutX="72.0" layoutY="491.0" prefHeight="18.0" prefWidth="89.0" text="Switch State" />
             <Label layoutX="72.0" layoutY="530.0" text="Railway Crossing" />
             <Label layoutX="72.0" layoutY="569.0" prefHeight="18.0" prefWidth="89.0" text="Rail Control" />
-            <MenuButton layoutX="271.0" layoutY="14.0" mnemonicParsing="false" text="Block #">
+            <MenuButton layoutX="309.0" layoutY="14.0" mnemonicParsing="false" text="Block #">
                <items>
                   <MenuItem mnemonicParsing="false" text="Action 1" />
                   <MenuItem mnemonicParsing="false" text="Action 2" />
@@ -120,7 +119,7 @@
             <Button layoutX="198.0" layoutY="600.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="90.0" text="Functional" textAlignment="CENTER" />
             <Label layoutX="72.0" layoutY="609.0" prefHeight="18.0" prefWidth="89.0" text="Track Circuit" />
             <Button layoutX="307.0" layoutY="600.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="74.0" text="Faulty" textAlignment="CENTER" />
-            <Button alignment="CENTER" layoutX="666.0" layoutY="540.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="90.0" text="Import PLC" textAlignment="CENTER" />
+            <Button alignment="CENTER" layoutX="658.0" layoutY="540.0" mnemonicParsing="false" prefHeight="56.0" prefWidth="112.0" text="Import PLC" textAlignment="CENTER" />
             <Label alignment="CENTER" layoutX="666.0" layoutY="506.0" prefHeight="20.0" prefWidth="90.0" text="PLC File">
                <font>
                   <Font size="14.0" />
@@ -134,7 +133,7 @@
             </MenuButton>
          </children>
       </AnchorPane>
-      <MenuBar layoutX="14.0" layoutY="6.0" prefHeight="31.0" prefWidth="138.0">
+      <MenuBar layoutX="14.0" layoutY="6.0" prefHeight="31.0" prefWidth="192.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>

@@ -2,18 +2,23 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="894.0" prefWidth="996.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrainControllerController">
+<AnchorPane id="AnchorPane" prefHeight="979.0" prefWidth="940.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrainControllerController">
    <children>
-      <AnchorPane layoutX="10.0" layoutY="34.0" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="10.0" layoutY="73.0" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
             <Label layoutX="29.0" layoutY="70.0" text="Current Speed" />
             <Label layoutX="47.0" prefHeight="19.0" prefWidth="57.0" text="SPEED" underline="true">
@@ -46,7 +51,7 @@
             <Separator layoutX="16.0" layoutY="133.0" prefHeight="5.0" prefWidth="113.0" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="350.0" layoutY="34.0" prefHeight="200.0" prefWidth="259.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="350.0" layoutY="73.0" prefHeight="200.0" prefWidth="259.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
             <Label layoutX="8.0" layoutY="73.0" text="Service Brake" />
             <Label layoutX="90.0" layoutY="5.0" prefHeight="19.0" prefWidth="68.0" text="BRAKING" underline="true">
@@ -71,7 +76,7 @@
             <Separator layoutX="152.0" layoutY="67.0" prefHeight="5.0" prefWidth="99.0" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="167.0" layoutY="34.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="167.0" layoutY="73.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
             <Label layoutX="37.0" layoutY="78.0" text="Power Command" />
             <Label layoutX="61.0" layoutY="5.0" prefHeight="19.0" prefWidth="57.0" text="POWER" underline="true">
@@ -96,7 +101,7 @@
             <Label layoutX="110.0" layoutY="146.0" text="Ki (kW)" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="617.0" layoutY="34.0" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="617.0" layoutY="73.0" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
             <Label layoutX="41.0" layoutY="85.0" text="Light status" />
             <Label layoutX="48.0" layoutY="5.0" prefHeight="19.0" prefWidth="57.0" text="LIGHTS" underline="true">
@@ -115,7 +120,7 @@
             <Button layoutX="14.0" layoutY="158.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="126.0" text="Off" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="590.0" layoutY="246.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="590.0" layoutY="285.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
             <Label layoutX="113.0" layoutY="36.0" text="F">
                <font>
@@ -144,7 +149,7 @@
             <Label layoutX="105.0" layoutY="32.0" text="o" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="203.0" layoutY="246.0" prefHeight="200.0" prefWidth="370.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="203.0" layoutY="285.0" prefHeight="200.0" prefWidth="370.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
             <Label layoutX="157.0" layoutY="5.0" prefHeight="19.0" prefWidth="57.0" text="DOORS" underline="true">
                <font>
@@ -186,7 +191,7 @@
             <Button layoutX="217.0" layoutY="107.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="126.0" text="Open " />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="10.0" layoutY="246.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="10.0" layoutY="285.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
             <Label layoutX="55.0" layoutY="5.0" prefHeight="19.0" prefWidth="68.0" text="MURPHY" underline="true">
                <font>
@@ -207,7 +212,7 @@
             <Button layoutX="6.0" layoutY="142.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="83.0" text="Activate" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="11.0" layoutY="675.0" prefHeight="200.0" prefWidth="919.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="11.0" layoutY="714.0" prefHeight="200.0" prefWidth="919.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
             <Label layoutX="384.0" layoutY="9.0" prefHeight="19.0" prefWidth="141.0" text="ANNOUNCEMENTS" underline="true">
                <font>
@@ -222,7 +227,7 @@
             <SplitPane layoutX="7.0" layoutY="40.0" prefHeight="144.0" prefWidth="900.0" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="9.0" layoutY="460.0" prefHeight="209.0" prefWidth="921.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="9.0" layoutY="499.0" prefHeight="209.0" prefWidth="921.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
             <Label layoutX="23.0" layoutY="34.0">
                <font>
@@ -253,17 +258,53 @@
             </Label>
          </children>
       </AnchorPane>
-      <Label layoutX="848.0" layoutY="82.0" text="Mode" />
-      <Separator layoutX="802.0" layoutY="77.0" prefHeight="5.0" prefWidth="126.0" style="-fx-background-color: #bdc3c7#bdc3c7 #bdc3c7#bdc3c7;" />
-      <Label layoutX="814.0" layoutY="40.0" text="Manual">
+      <Label layoutX="841.0" layoutY="121.0" text="Mode" />
+      <Separator layoutX="795.0" layoutY="116.0" prefHeight="5.0" prefWidth="126.0" style="-fx-background-color: #bdc3c7#bdc3c7 #bdc3c7#bdc3c7;" />
+      <Label layoutX="807.0" layoutY="79.0" text="Manual">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <Label layoutX="803.0" layoutY="234.0" text="Your ad here">
+      <ImageView fitHeight="345.0" fitWidth="148.0" layoutX="780.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="826.0" layoutY="201.0" text="YOUR">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
+      <Label layoutX="839.0" layoutY="262.0" text="AD">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label layoutX="825.0" layoutY="319.0" text="HERE">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <MenuBar layoutX="11.0" layoutY="2.0">
+         <menus>
+            <Menu mnemonicParsing="false" text="File">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Close" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Edit">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="Delete" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Help">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="About" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+      <MenuButton fx:id="trainNumDropdown" layoutX="11.0" layoutY="44.0" mnemonicParsing="false" onAction="#onTrainSelectionClick" text="Train #">
+         <items>
+            <MenuItem mnemonicParsing="false" text="Action 1" />
+            <MenuItem mnemonicParsing="false" text="Action 2" />
+         </items>
+      </MenuButton>
    </children>
 </AnchorPane>

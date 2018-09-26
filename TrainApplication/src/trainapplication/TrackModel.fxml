@@ -3,20 +3,17 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
-<?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.SeparatorMenuItem?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/10.0.1" fx:controller="trainapplication.TrackModelController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrackModelController">
    <children>
       <VBox prefHeight="400.0" prefWidth="640.0">
         <children>
@@ -59,27 +56,62 @@
               </Menu>
             </menus>
           </MenuBar>
-          <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+          <AnchorPane maxHeight="-1.0" maxWidth="-1.0" prefHeight="374.0" prefWidth="677.0" VBox.vgrow="ALWAYS">
             <children>
-                  <Button layoutX="159.0" layoutY="309.0" mnemonicParsing="false" text="Browse" />
-                  <Label layoutX="63.0" layoutY="316.0" text="Add Tracks" />
-                  <ListView id="TrackRed" accessibleRole="COMBO_BOX" accessibleText="Properties" blendMode="COLOR_DODGE" editable="true" layoutX="331.0" layoutY="78.0" prefHeight="262.0" prefWidth="267.0" />
-                  <ComboBox id="BlockSelect" accessibleText="Block" layoutX="63.0" layoutY="106.0" prefHeight="30.0" prefWidth="192.0" promptText="Block" />
-                  <RadioButton layoutX="167.0" layoutY="51.0" mnemonicParsing="false" text="Red" />
-                  <RadioButton layoutX="69.0" layoutY="49.0" mnemonicParsing="false" text="Green" />
-                  <Button layoutX="69.0" layoutY="182.0" mnemonicParsing="false" text="Break" />
-                  <Button layoutX="149.0" layoutY="183.0" mnemonicParsing="false" text="Fix" />
-                  <Button layoutX="235.0" layoutY="184.0" mnemonicParsing="false" text="Reset" />
-                  <Label layoutX="343.0" layoutY="40.0" text="Properties">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <ImageView fitHeight="282.0" fitWidth="169.0" layoutX="339.0" layoutY="69.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@Software%20Engineering/dummy_data.JPG" />
-                     </image>
-                  </ImageView>
+                  <AnchorPane layoutX="14.0" layoutY="328.0" prefHeight="38.0" prefWidth="178.0" style="-fx-background-color: #bdc3c7;">
+                     <children>
+                        <Button layoutX="100.0" layoutY="8.0" mnemonicParsing="false" text="Browse" />
+                        <Label layoutX="21.0" layoutY="9.0" text="Add Tracks:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="14.0" layoutY="179.0" prefHeight="138.0" prefWidth="178.0" style="-fx-background-color: #bdc3c7;">
+                     <children>
+                        <Button layoutX="16.0" layoutY="96.0" mnemonicParsing="false" text="Power" />
+                        <Button layoutX="15.0" layoutY="62.0" mnemonicParsing="false" text="Track Circuit" />
+                        <Label layoutX="15.0" layoutY="4.0" text="Failure Testing">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Button layoutX="118.0" layoutY="62.0" mnemonicParsing="false" text="Fix" />
+                        <Button layoutX="15.0" layoutY="28.0" mnemonicParsing="false" text="Maintenece " />
+                        <Button layoutX="118.0" layoutY="28.0" mnemonicParsing="false" text="Reset" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="154.0" prefWidth="178.0" style="-fx-background-color: #bdc3c7;">
+                     <children>
+                        <ComboBox layoutX="14.0" layoutY="67.0" prefHeight="26.0" prefWidth="90.0" promptText="Section" />
+                        <ComboBox id="BlockSelect" accessibleText="Block" layoutX="14.0" layoutY="104.0" prefHeight="30.0" prefWidth="90.0" promptText="Block" />
+                        <ComboBox layoutX="13.0" layoutY="31.0" prefHeight="26.0" prefWidth="90.0" promptText="Track" />
+                        <Label layoutX="14.0" layoutY="5.0" text="Select Track">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="209.0" layoutY="12.0" prefHeight="350.0" prefWidth="386.0" style="-fx-background-color: #bdc3c7;">
+                     <children>
+                        <TableView layoutX="6.0" layoutY="3.0" prefHeight="341.0" prefWidth="774.0">
+                          <columns>
+                            <TableColumn id="line" fx:id="line" prefWidth="83.20008850097656" text="Line" />
+                            <TableColumn id="section" fx:id="section" prefWidth="49.5999755859375" text="Section" />
+                            <TableColumn id="block" fx:id="block" prefWidth="35.199951171875" text="Block" />
+                            <TableColumn id="blockLength" fx:id="blockLength" prefWidth="101.60003662109375" text="Block Length" />
+                            <TableColumn id="blockGrade" fx:id="blockGrade" prefWidth="72.79998779296875" text="Block Grade" />
+                            <TableColumn id="speedLimit" fx:id="speedLimit" prefWidth="79.20001220703125" text="Speed Limit" />
+                            <TableColumn id="infrastructure" fx:id="infrastructure" prefWidth="85.60003662109375" text="Infrastructure" />
+                            <TableColumn id="elevation" fx:id="elevation" prefWidth="68.0" text="Elevation" />
+                            <TableColumn id="cumElevation" fx:id="cumElevation" prefWidth="129.5999755859375" text="Cumulative Elevation" />
+                            <TableColumn id="state" fx:id="state" prefWidth="85.5999755859375" text="Signal" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
             </children>
           </AnchorPane>
         </children>

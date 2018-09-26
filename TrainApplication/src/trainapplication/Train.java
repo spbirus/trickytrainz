@@ -11,8 +11,8 @@ package trainapplication;
  */
 public class Train {
     
-    private String track;
-    private int number;
+    private String track; //red or green line
+    private int number; //train id number
     private int length;
     private int height;
     private int width;
@@ -24,7 +24,43 @@ public class Train {
     private int doorNum;
     private int accelLimit;
     private int deccelLimit;
+    private int speed;
+    private int authority;
+    private int block;
+    private int target; //destination
 
+    //for CTC
+    public Train(String track, int number, int speed, int authority, int block, int target) {
+        this.track = track;
+        this.number = number;
+        this.speed = speed;
+        this.authority = authority;
+        this.block = block;
+        this.target = target;
+    }
+
+    //all of them
+    public Train(String track, int number, int length, int height, int width, int mass, int crewNum, int passNum, int maxCap, int carNum, int doorNum, int accelLimit, int deccelLimit, int speed, int authority, int block, int target) {
+        this.track = track;
+        this.number = number;
+        this.length = length;
+        this.height = height;
+        this.width = width;
+        this.mass = mass;
+        this.crewNum = crewNum;
+        this.passNum = passNum;
+        this.maxCap = maxCap;
+        this.carNum = carNum;
+        this.doorNum = doorNum;
+        this.accelLimit = accelLimit;
+        this.deccelLimit = deccelLimit;
+        this.speed = speed;
+        this.authority = authority;
+        this.block = block;
+        this.target = target;
+    }
+
+    //for train model and train controller
     public Train(String track, int number, int length, int height, int width, int mass, int crewNum, int passNum, int maxCap, int carNum, int doorNum, int accelLimit, int deccelLimit) {
         this.track = track;
         this.number = number;

@@ -138,7 +138,7 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label fx:id="requestedPowerNumber" layoutX="577.0" layoutY="16.0" text="20 kW" textFill="RED">
+            <Label fx:id="requestedPowerNumber" layoutX="589.0" layoutY="16.0" text="20 kW" textFill="RED">
                <font>
                   <Font size="18.0" />
                </font>

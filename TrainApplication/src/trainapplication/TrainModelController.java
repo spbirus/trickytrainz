@@ -213,7 +213,17 @@ public class TrainModelController extends MainFXMLController implements Initiali
 
     @FXML
     void onBrakeClick(ActionEvent event) {
+        if(brakeButton.isSelected()){
+            double curSpeed = Double.parseDouble(currentSpeedNumber.getText());
+            double power = Double.parseDouble(requestedPowerNumber.getText());
+            int passengers = Integer.parseInt(passengerNumber.getText());
 
+            Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8); 
+            double newSpeed = t.calculateVelocity(power, curSpeed, 0, 1, 300, passengers); //1 is the normal brake
+
+
+            currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
+        }
     }
 
     @FXML
@@ -223,7 +233,17 @@ public class TrainModelController extends MainFXMLController implements Initiali
 
     @FXML
     void onEmergencyBrakeClick(ActionEvent event) {
+        if(emergencyBrakeButton.isSelected()){
+            double curSpeed = Double.parseDouble(currentSpeedNumber.getText());
+            double power = Double.parseDouble(requestedPowerNumber.getText());
+            int passengers = Integer.parseInt(passengerNumber.getText());
 
+            Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8); 
+            double newSpeed = t.calculateVelocity(power, curSpeed, 0, 3, 300, passengers); //3 is the emergency brake
+
+
+            currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
+        }
     }
 
     @FXML
@@ -260,9 +280,10 @@ public class TrainModelController extends MainFXMLController implements Initiali
         
         Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8); 
         double newSpeed = t.calculateVelocity(power, curSpeed, 0, 0, 300, passengers);
-        System.out.println("velocity: "+ t.calculateVelocity(power, curSpeed, 0, 0, 300, passengers) + "mph");
+//        System.out.println("velocity: "+ newSpeed + "mph");
 
-        currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0) + " MPH");
+        currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
+        requestedPowerNumber.setText(String.valueOf(Math.round(100*power)/100.0));
     }
 
     @FXML

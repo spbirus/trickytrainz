@@ -245,10 +245,10 @@ public class Train {
         //brakes = 3 emergency brake is pulled
         //brakes = 1 service brake is pulled
         if(brake == 3){
-            trainAccel += emergencyBrakeDecel;
+            trainAccel -= emergencyBrakeDecel;
         }
         if(brake == 1){
-            trainAccel += serviceBrakeDecel;
+            trainAccel -= serviceBrakeDecel;
         }
         
 //        System.out.println("accel: " + trainAccel +" ft/s^2");

@@ -16,7 +16,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
@@ -39,6 +41,9 @@ public class TrainModelController extends MainFXMLController implements Initiali
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //menubar stuff
+        
+        
         //TODO: need a for loop that will go through database and add all of the trains
         Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8);        
         track.setCellValueFactory(new PropertyValueFactory<>("line"));
@@ -154,6 +159,15 @@ public class TrainModelController extends MainFXMLController implements Initiali
     private Button refresh;
     
     @FXML
+    private CheckBox testPanelCheck;
+    
+    @FXML
+    private AnchorPane testPane;
+    
+    @FXML
+    private MenuBar menuBar;
+    
+    @FXML
     private TableColumn<Train, String> track;
     
     @FXML
@@ -234,7 +248,7 @@ public class TrainModelController extends MainFXMLController implements Initiali
     
     @FXML
     void onPassengersLeavingSubmit(ActionEvent event) {
-
+        passengerNumber.setText(String.valueOf(Integer.parseInt(passengerNumber.getText()) - Integer.parseInt(passengersLeavingBox.getText())));
     }
     
 
@@ -245,8 +259,10 @@ public class TrainModelController extends MainFXMLController implements Initiali
         int passengers = Integer.parseInt(passengerNumber.getText());
         
         Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8); 
-        System.out.println(t.calculateVelocity(power, curSpeed, 0, 0, 300, passengers) + "mph");
-        
+        double newSpeed = t.calculateVelocity(power, curSpeed, 0, 0, 300, passengers);
+        System.out.println("velocity: "+ t.calculateVelocity(power, curSpeed, 0, 0, 300, passengers) + "mph");
+
+        currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0) + " MPH");
     }
 
     @FXML
@@ -257,6 +273,16 @@ public class TrainModelController extends MainFXMLController implements Initiali
     @FXML
     void rightdoorsClick(ActionEvent event) {
 
+    }
+    
+    @FXML
+    void onTestClick(ActionEvent event) {
+        if(testPanelCheck.isSelected()){
+            testPane.setDisable(false);
+        }else if(!testPanelCheck.isSelected()){
+            testPane.setDisable(true);
+        }
+        
     }
     
     @FXML

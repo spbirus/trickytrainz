@@ -22,7 +22,7 @@ public class Train {
     private int maxCap;
     private int carNum;
     private int doorNum;
-    private double accelLimit;  //ft/s
+    private double accelLimit =  0.5 * 3.2808399;  //ft/s
     private double deccelLimit; //ft/s
     private double speed;       //
     private int authority;
@@ -35,10 +35,12 @@ public class Train {
     private double force;
     private final double M_TO_MI = 0.0006214;
     private final double N_TO_FTLBS = 0.22481;
-    private final double SEC_TO_HR = 3600;
+    //private final double SEC_TO_HR = 3600;
+    private final double FTPS_TO_MPH = 0.681818;
     private final double MPH_TO_MiPS = 0.000277778;
     private final double serviceBrakeDecel = 1.2 * 3.2808399; //ft/s^2
     private final double emergencyBrakeDecel = 2.73 * 3.2808399; //ft/s^2
+    private final double deltaT =1; 
 
     //for CTC
     public Train(String line, int number, double speed, int authority, int block, int target) {
@@ -217,7 +219,7 @@ public class Train {
         
         */
         
-        
+//        System.out.println("current speed: " + currentSpeed);
 
         //FORCE
         if(currentSpeed == 0){
@@ -227,7 +229,7 @@ public class Train {
             force = (power*1000*M_TO_MI)*(N_TO_FTLBS/(currentSpeed*MPH_TO_MiPS));
         }
         
-        
+//        System.out.println("force: " + force + " ftlbs");
         //to include friction, calculate frictional force and add it to force
         
         
@@ -249,19 +251,17 @@ public class Train {
             trainAccel += serviceBrakeDecel;
         }
         
-        
+//        System.out.println("accel: " + trainAccel +" ft/s^2");
         
         //VELOCITY
         //TODO: figure out what the seconds part is to get from accel to velocity
-        velActual = currentSpeed + (trainAccel * 0.01); //0.01 is a change in time
+        velActual = currentSpeed + (trainAccel * deltaT)*FTPS_TO_MPH; //0.01 is a change in time
         
         //prevent it from going backwards
         if(velActual < 0){
             velActual = 0;
         }
         
-        //convert back to mph
-        velActual = velActual*0.681818;
         
         
         return velActual;

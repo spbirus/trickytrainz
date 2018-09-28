@@ -87,8 +87,8 @@
             <RadioButton fx:id="leftdoorsButton" layoutX="271.0" layoutY="129.0" mnemonicParsing="false" onAction="#leftdoorsClick" text="Activate left doors" />
             <RadioButton fx:id="rightdoorsButton" layoutX="271.0" layoutY="165.0" mnemonicParsing="false" onAction="#rightdoorsClick" text="Activate right doors" />
             <Button fx:id="submitButton" layoutX="186.0" layoutY="224.0" mnemonicParsing="false" onAction="#onSubmit" text="Submit" />
-            <Label layoutX="2.0" layoutY="190.0" text="Suggested Speed (mph)" />
-            <TextField fx:id="suggestSpeedBox" layoutX="182.0" layoutY="184.0" prefHeight="26.0" prefWidth="62.0" />
+            <Label layoutX="2.0" layoutY="190.0" text="Current Speed (mph)" />
+            <TextField fx:id="currentSpeedBox" layoutX="182.0" layoutY="184.0" prefHeight="26.0" prefWidth="62.0" />
          </children>
       </AnchorPane>
       <Separator layoutX="9.0" layoutY="695.0" prefHeight="0.0" prefWidth="894.0" />

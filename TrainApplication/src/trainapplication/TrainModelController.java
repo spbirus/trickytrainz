@@ -40,8 +40,8 @@ public class TrainModelController extends MainFXMLController implements Initiali
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //TODO: need a for loop that will go through database and add all of the trains
-        Train t = new Train("red",1,2,3,4,5,6,7,8,9,10,11,12);        
-        track.setCellValueFactory(new PropertyValueFactory<>("track"));
+        Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8);        
+        track.setCellValueFactory(new PropertyValueFactory<>("line"));
         number.setCellValueFactory(new PropertyValueFactory<>("number"));
         length.setCellValueFactory(new PropertyValueFactory<>("length"));
         width.setCellValueFactory(new PropertyValueFactory<>("width"));
@@ -136,7 +136,7 @@ public class TrainModelController extends MainFXMLController implements Initiali
     private TextArea trackModelBox1;
 
     @FXML
-    private TextField suggestSpeedBox;
+    private TextField currentSpeedBox;
 
     @FXML
     private Button dactivateBrakeFailure;
@@ -240,19 +240,13 @@ public class TrainModelController extends MainFXMLController implements Initiali
 
     @FXML
     void onSubmit(ActionEvent event) throws IOException {
-        System.out.println("train control second " + trainControllerStage.toString());
-
-        //send data to the train controller
-        if(! MainFXMLController.trainControllerStage.isShowing()) 
-        {
-            AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("TrainController.fxml"));
-            Scene scene = new Scene(page);
-            MainFXMLController.trainControllerStage.setScene(scene);
-            MainFXMLController.trainControllerStage.setTitle("Train Controller");
-            MainFXMLController.trainControllerStage.setResizable(true);
+        double curSpeed = Double.parseDouble(currentSpeedBox.getText());
+        double power = Double.parseDouble(powerRequestBox.getText());
+        int passengers = Integer.parseInt(passengerNumber.getText());
         
-            MainFXMLController.trainControllerStage.show();
-        }
+        Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8); 
+        System.out.println(t.calculateVelocity(power, curSpeed, 0, 0, 300, passengers) + "mph");
+        
     }
 
     @FXML
@@ -268,8 +262,8 @@ public class TrainModelController extends MainFXMLController implements Initiali
     @FXML
     void onRefresh(ActionEvent event) {
         //TODO: need a for loop that will go through database and add all of the trains
-        Train t = new Train("red",1,2,3,4,5,6,7,8,9,10,11,12);
-        track.setCellValueFactory(new PropertyValueFactory<>("track"));
+        Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8);        
+        track.setCellValueFactory(new PropertyValueFactory<>("line"));
         number.setCellValueFactory(new PropertyValueFactory<>("number"));
         length.setCellValueFactory(new PropertyValueFactory<>("length"));
         width.setCellValueFactory(new PropertyValueFactory<>("width"));

@@ -13,47 +13,37 @@ public class Train {
     
     private String line; //red or green line
     private int number; //train id number
-    private int length;
-    private int height;
-    private int width;
-    private int mass;
+    private double length; //ft
+    private double height; //ft
+    private double width;  //ft
+    private double mass;   //lbs
     private int crewNum;
     private int passNum;
     private int maxCap;
     private int carNum;
     private int doorNum;
-    private int accelLimit;
-    private int deccelLimit;
-    private int speed;
+    private double accelLimit;  //ft/s
+    private double deccelLimit; //ft/s
+    private double speed;       //
     private int authority;
     private int block;
     private int target; //destination
+    
+    private double trainMass = 81800; //lbs
+    private double totalMass; //mass of car and people
+    private double velActual = 0; //thing to return to train controller
+    private double force;
+    private final double M_TO_MI = 0.0006214;
+    private final double N_TO_FTLBS = 0.22481;
+    private final double SEC_TO_HR = 3600;
+    private final double MPH_TO_MiPS = 0.000277778;
+    private final double serviceBrakeDecel = 1.2 * 3.2808399; //ft/s^2
+    private final double emergencyBrakeDecel = 2.73 * 3.2808399; //ft/s^2
 
     //for CTC
-    public Train(String line, int number, int speed, int authority, int block, int target) {
+    public Train(String line, int number, double speed, int authority, int block, int target) {
         this.line = line;
         this.number = number;
-        this.speed = speed;
-        this.authority = authority;
-        this.block = block;
-        this.target = target;
-    }
-
-    //all of them
-    public Train(String line, int number, int length, int height, int width, int mass, int crewNum, int passNum, int maxCap, int carNum, int doorNum, int accelLimit, int deccelLimit, int speed, int authority, int block, int target) {
-        this.line = line;
-        this.number = number;
-        this.length = length;
-        this.height = height;
-        this.width = width;
-        this.mass = mass;
-        this.crewNum = crewNum;
-        this.passNum = passNum;
-        this.maxCap = maxCap;
-        this.carNum = carNum;
-        this.doorNum = doorNum;
-        this.accelLimit = accelLimit;
-        this.deccelLimit = deccelLimit;
         this.speed = speed;
         this.authority = authority;
         this.block = block;
@@ -61,7 +51,7 @@ public class Train {
     }
 
     //for train model and train controller
-    public Train(String line, int number, int length, int height, int width, int mass, int crewNum, int passNum, int maxCap, int carNum, int doorNum, int accelLimit, int deccelLimit) {
+    public Train(String line, int number, double length, double height, double width, double mass, int crewNum, int passNum, int maxCap, int carNum, int doorNum, double accelLimit, double deccelLimit) {
         this.line = line;
         this.number = number;
         this.length = length;
@@ -93,7 +83,7 @@ public class Train {
         this.number = number;
     }
 
-    public int getLength() {
+    public double getLength() {
         return length;
     }
 
@@ -101,7 +91,7 @@ public class Train {
         this.length = length;
     }
 
-    public int getHeight() {
+    public double getHeight() {
         return height;
     }
 
@@ -109,7 +99,7 @@ public class Train {
         this.height = height;
     }
 
-    public int getWidth() {
+    public double getWidth() {
         return width;
     }
 
@@ -117,7 +107,7 @@ public class Train {
         this.width = width;
     }
 
-    public int getMass() {
+    public double getMass() {
         return mass;
     }
 
@@ -165,7 +155,7 @@ public class Train {
         this.doorNum = doorNum;
     }
 
-    public int getAccelLimit() {
+    public double getAccelLimit() {
         return accelLimit;
     }
 
@@ -173,7 +163,7 @@ public class Train {
         this.accelLimit = accelLimit;
     }
 
-    public int getDeccelLimit() {
+    public double getDeccelLimit() {
         return deccelLimit;
     }
 
@@ -181,7 +171,7 @@ public class Train {
         this.deccelLimit = deccelLimit;
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 
@@ -213,6 +203,69 @@ public class Train {
         this.target = target;
     }
     
+    
+    public double calculateVelocity(double power, double currentSpeed,double grade,int brake,double speedLimit,int passengers){
+        
+        
+        totalMass = trainMass + 150*passengers; //might need to add 1 for the operator
+        
+        /*
+                                                                                   F             a           vel
+        (1000)*power(.0006214)/(currentSpeed) X (.22481)/(currentSpeed*.000277778) X 1/totalMass X 1/seconds
+                      to mi                     to ft lbs      to mi per sec
+        
+        
+        */
+        
+        
+
+        //FORCE
+        if(currentSpeed == 0){
+            //train is stopped therefore can't divide by 0
+            force = (power*1000*M_TO_MI)/1; //convert from kW to Watts
+        }else{
+            force = (power*1000*M_TO_MI)*(N_TO_FTLBS/(currentSpeed*MPH_TO_MiPS));
+        }
+        
+        
+        //to include friction, calculate frictional force and add it to force
+        
+        
+        double trainAccel = force/totalMass;
+        
+        
+        //ACCEL
+        //check to make sure train does not exceed max
+        if(trainAccel >= accelLimit){
+            trainAccel = accelLimit;
+        }
+        
+        //brakes = 3 emergency brake is pulled
+        //brakes = 1 service brake is pulled
+        if(brake == 3){
+            trainAccel += emergencyBrakeDecel;
+        }
+        if(brake == 1){
+            trainAccel += serviceBrakeDecel;
+        }
+        
+        
+        
+        //VELOCITY
+        //TODO: figure out what the seconds part is to get from accel to velocity
+        velActual = currentSpeed + (trainAccel * 0.01); //0.01 is a change in time
+        
+        //prevent it from going backwards
+        if(velActual < 0){
+            velActual = 0;
+        }
+        
+        //convert back to mph
+        velActual = velActual*0.681818;
+        
+        
+        return velActual;
+    }
     
     
     

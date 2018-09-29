@@ -12,7 +12,6 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
@@ -72,33 +71,29 @@
       </AnchorPane>
       <AnchorPane fx:id="testPane" disable="true" layoutX="412.0" layoutY="425.0" prefHeight="257.0" prefWidth="478.0" style="-fx-background-color: #bdc3c7;">
          <children>
-            <RadioButton fx:id="emergencyBrakeButton" layoutX="271.0" layoutY="75.0" mnemonicParsing="false" onAction="#onEmergencyBrakeClick" prefHeight="47.0" prefWidth="200.0" text="Passenger Emergency Brake" wrapText="true" />
+            <TextField fx:id="trackElevationBox" layoutX="182.0" layoutY="7.0" prefHeight="26.0" prefWidth="62.0" />
             <TextField fx:id="authorityBox" layoutX="182.0" layoutY="44.0" prefHeight="26.0" prefWidth="62.0" />
             <TextField fx:id="temperatureBox" layoutX="182.0" layoutY="79.0" prefHeight="26.0" prefWidth="62.0" />
             <TextField fx:id="powerRequestBox" layoutX="182.0" layoutY="114.0" prefHeight="26.0" prefWidth="62.0" />
             <TextField fx:id="announcementBox" layoutX="182.0" layoutY="150.0" prefHeight="26.0" prefWidth="62.0" />
-            <TextField fx:id="trackElevationBox" layoutX="182.0" layoutY="7.0" prefHeight="26.0" prefWidth="62.0" />
+            <TextField fx:id="currentSpeedBox" layoutX="182.0" layoutY="184.0" prefHeight="26.0" prefWidth="62.0" />
             <Label layoutX="21.0" layoutY="14.0" text="Track Elevation (ft)" />
             <Label layoutX="33.0" layoutY="50.0" text="Authority (ft)" />
             <Label layoutX="14.0" layoutY="86.0" text="Set Temperature (F)" />
             <Label layoutX="14.0" layoutY="120.0" text="Power request (kW)" />
             <Label layoutX="26.0" layoutY="156.0" text="Anouncement" />
+            <Label layoutX="14.0" layoutY="188.0" text="Current Speed (mph)" />
             <RadioButton fx:id="lightsButton" layoutX="271.0" layoutY="12.0" mnemonicParsing="false" onAction="#onLightsClick" text="Lights" />
             <RadioButton fx:id="brakeButton" layoutX="271.0" layoutY="48.0" mnemonicParsing="false" onAction="#onBrakeClick" text="Brake" />
+            <RadioButton fx:id="emergencyBrakeButton" layoutX="271.0" layoutY="75.0" mnemonicParsing="false" onAction="#onEmergencyBrakeClick" prefHeight="47.0" prefWidth="200.0" text="Passenger Emergency Brake" wrapText="true" />
             <RadioButton fx:id="leftdoorsButton" layoutX="271.0" layoutY="129.0" mnemonicParsing="false" onAction="#leftdoorsClick" text="Activate left doors" />
             <RadioButton fx:id="rightdoorsButton" layoutX="271.0" layoutY="165.0" mnemonicParsing="false" onAction="#rightdoorsClick" text="Activate right doors" />
             <Button fx:id="submitButton" layoutX="186.0" layoutY="224.0" mnemonicParsing="false" onAction="#onSubmit" text="Submit" />
-            <Label layoutX="2.0" layoutY="190.0" text="Current Speed (mph)" />
-            <TextField fx:id="currentSpeedBox" layoutX="182.0" layoutY="184.0" prefHeight="26.0" prefWidth="62.0" />
          </children>
       </AnchorPane>
       <Separator layoutX="9.0" layoutY="695.0" prefHeight="0.0" prefWidth="894.0" />
       <AnchorPane layoutX="27.0" layoutY="55.0" prefHeight="288.0" prefWidth="862.0" style="-fx-background-color: #bdc3c7;">
          <children>
-            <TextArea fx:id="trainInfoBox" layoutX="11.0" layoutY="43.0" prefHeight="230.0" prefWidth="200.0" text="Train info&#10;&#10;Track:&#10;Length:&#10;Width:&#10;Height:&#10;Mass:&#10;Crew #:&#10;Passenger #:&#10;Max Capacity:&#10;# Cars:&#10;# doors:&#10;Accel Limit:&#10;Deccel Limit:&#10;" />
-            <TextArea fx:id="trainControllerBox" layoutX="235.0" layoutY="43.0" prefHeight="230.0" prefWidth="200.0" text="Data from train controller&#10;&#10;Station announcement:&#10;Left doors:&#10;Right doors:&#10;Lights:&#10;Brake:&#10;Emergency brake:&#10;Inside temp:&#10;Current power:&#10;&#10;" />
-            <TextArea fx:id="trackModelBox" layoutX="455.0" layoutY="43.0" prefHeight="230.0" prefWidth="200.0" text="Data from track model&#10;&#10;Speed limit:&#10;Authority:&#10;Entering passengers:&#10;Leaving passengers:&#10;Track elevation:&#10;Track grade:" />
-            <TextArea fx:id="trackModelBox1" layoutX="676.0" layoutY="43.0" prefHeight="230.0" prefWidth="174.0" text="Route Information&#10;&#10;" />
             <Label fx:id="advertisement" layoutX="401.0" layoutY="8.0" text="Your Ad Here">
                <font>
                   <Font size="18.0" />
@@ -106,10 +101,79 @@
             </Label>
             <MenuButton fx:id="trainNumDropdown" layoutX="11.0" layoutY="9.0" mnemonicParsing="false" onAction="#onTrainSelectionClick" text="Train #">
               <items>
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-                <MenuItem mnemonicParsing="false" text="Action 2" />
+                <MenuItem mnemonicParsing="false" text="1" />
+                <MenuItem mnemonicParsing="false" text="2" />
               </items>
             </MenuButton>
+            <AnchorPane layoutX="14.0" layoutY="43.0" prefHeight="234.0" prefWidth="185.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="-2.0" text="Train Info" />
+                  <Label layoutX="14.0" layoutY="34.0" text="Line:" />
+                  <Label layoutX="14.0" layoutY="52.0" text="Length (ft):" />
+                  <Label layoutX="14.0" layoutY="71.0" text="Width (ft):" />
+                  <Label layoutX="14.0" layoutY="89.0" text="Mass (lbs):" />
+                  <Label layoutX="14.0" layoutY="107.0" text="Crew #:" />
+                  <Label layoutX="14.0" layoutY="125.0" text="Passenger #:" />
+                  <Label layoutX="14.0" layoutY="143.0" text="Max Capacity:" />
+                  <Label layoutX="14.0" layoutY="161.0" text="Car #:" />
+                  <Label layoutX="14.0" layoutY="179.0" text="Door #:" />
+                  <Label layoutX="14.0" layoutY="197.0" text="Accel Limit (ft/s^2):" />
+                  <Label layoutX="14.0" layoutY="214.0" text="Decel Limit (ft/s^2):" />
+                  <Label fx:id="trackId" layoutX="153.0" layoutY="34.0" text="red" />
+                  <Label fx:id="lengthId" layoutX="152.0" layoutY="53.0" text="100" />
+                  <Label fx:id="widthId" layoutX="152.0" layoutY="72.0" text="100" />
+                  <Label fx:id="massId" layoutX="152.0" layoutY="90.0" text="100" />
+                  <Label fx:id="crewId" layoutX="152.0" layoutY="108.0" text="1" />
+                  <Label fx:id="passengerId" layoutX="152.0" layoutY="126.0" text="153" />
+                  <Label fx:id="maxCapId" layoutX="152.0" layoutY="144.0" text="300" />
+                  <Label fx:id="carId" layoutX="152.0" layoutY="162.0" text="5" />
+                  <Label fx:id="doorId" layoutX="152.0" layoutY="180.0" text="10" />
+                  <Label fx:id="accelId" layoutX="152.0" layoutY="198.0" text="10" />
+                  <Label fx:id="decelId" layoutX="152.0" layoutY="215.0" text="10" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="217.0" layoutY="43.0" prefHeight="233.0" prefWidth="174.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="-2.0" text="Data from train controller" />
+                  <Label layoutX="14.0" layoutY="34.0" text="Announcement:" />
+                  <Label layoutX="14.0" layoutY="52.0" text="Left doors:" />
+                  <Label layoutX="14.0" layoutY="71.0" text="Right doors:" />
+                  <Label layoutX="14.0" layoutY="89.0" text="Lights:" />
+                  <Label layoutX="14.0" layoutY="107.0" text="Brake:" />
+                  <Label layoutX="14.0" layoutY="125.0" text="Emergency brake:" />
+                  <Label layoutX="14.0" layoutY="143.0" text="Inside temp (F):" />
+                  <Label layoutX="14.0" layoutY="161.0" text="Current power (kW):" />
+                  <Label fx:id="announcementId" layoutX="160.0" layoutY="34.0" text="here" />
+                  <Label fx:id="leftdoorId" layoutX="159.0" layoutY="53.0" text="Closed" />
+                  <Label fx:id="rightdoorId" layoutX="159.0" layoutY="72.0" text="Closed" />
+                  <Label fx:id="lightId" layoutX="159.0" layoutY="90.0" text="Off" />
+                  <Label fx:id="brakeId" layoutX="159.0" layoutY="108.0" text="disengaged" />
+                  <Label fx:id="emergencyBrakeId" layoutX="159.0" layoutY="126.0" text="disengaged" />
+                  <Label fx:id="tempId" layoutX="159.0" layoutY="144.0" text="70" />
+                  <Label fx:id="currentpowerId" layoutX="159.0" layoutY="162.0" text="20" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="466.0" layoutY="43.0" prefHeight="233.0" prefWidth="174.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="-2.0" text="Data from track model" />
+                  <Label layoutX="14.0" layoutY="34.0" text="Speed limit (mph):" />
+                  <Label layoutX="14.0" layoutY="52.0" text="Authority:" />
+                  <Label layoutX="14.0" layoutY="71.0" text="Entering passengers:" />
+                  <Label layoutX="14.0" layoutY="90.0" text="Track elevation (ft):" />
+                  <Label layoutX="14.0" layoutY="108.0" text="Track grade (%):" />
+                  <Label fx:id="speedlimitId" layoutX="154.0" layoutY="33.0" text="40" />
+                  <Label fx:id="authorityId" layoutX="153.0" layoutY="52.0" text="10" />
+                  <Label fx:id="enteringpassengersId" layoutX="153.0" layoutY="71.0" text="10" />
+                  <Label fx:id="trackelevationId" layoutX="153.0" layoutY="90.0" text="10" />
+                  <Label fx:id="gradeId" layoutX="153.0" layoutY="108.0" text="1" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="673.0" layoutY="43.0" prefHeight="233.0" prefWidth="174.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="-2.0" text="Route info" />
+                  <Label layoutX="14.0" layoutY="34.0" text="Speed limit (mph):" />
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="27.0" layoutY="356.0" prefHeight="56.0" prefWidth="862.0" style="-fx-background-color: #bdc3c7;">

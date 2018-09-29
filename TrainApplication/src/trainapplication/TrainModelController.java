@@ -35,53 +35,95 @@ import javafx.stage.Stage;
  * @author burri
  */
 public class TrainModelController extends MainFXMLController implements Initializable {
+    //will need to get this data from somewhere
+    private Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8); 
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //menubar stuff
+        
+        //initialize the information in the main section 
+        trackId.setText(String.valueOf(t.getLine()));
+        lengthId.setText(String.valueOf(t.getLength()));
+        widthId.setText(String.valueOf(t.getWidth()));
+        massId.setText(String.valueOf(t.getMass()));
+        crewId.setText(String.valueOf(t.getCrewNum()));
+        passengerId.setText(String.valueOf(t.getPassNum()));
+        maxCapId.setText(String.valueOf(t.getMaxCap()));
+        carId.setText(String.valueOf(t.getCarNum()));
+        doorId.setText(String.valueOf(t.getDoorNum()));
+        accelId.setText(String.valueOf(t.getAccelLimit()));
+        decelId.setText(String.valueOf(t.getDeccelLimit()));
+        
+        tempId.setText(String.valueOf(t.getTemperature()));
+//        currentpowerId.setText(String.valueOf(t)); will come from train controller
+        
+        
+        //initialize some of the other data
+        passengerNumber.setText(String.valueOf(t.getPassNum()));
+        currentSpeedNumber.setText(String.valueOf(t.getSpeed()));
+        //power requested will come from train controller
+        
         
         
         //TODO: need a for loop that will go through database and add all of the trains
-        Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8);        
-        track.setCellValueFactory(new PropertyValueFactory<>("line"));
-        number.setCellValueFactory(new PropertyValueFactory<>("number"));
-        length.setCellValueFactory(new PropertyValueFactory<>("length"));
-        width.setCellValueFactory(new PropertyValueFactory<>("width"));
-        height.setCellValueFactory(new PropertyValueFactory<>("height"));
-        mass.setCellValueFactory(new PropertyValueFactory<>("mass"));
-        crewNum.setCellValueFactory(new PropertyValueFactory<>("crewNum"));
-        passNum.setCellValueFactory(new PropertyValueFactory<>("passNum"));
-        maxCap.setCellValueFactory(new PropertyValueFactory<>("maxCap"));
-        carNum.setCellValueFactory(new PropertyValueFactory<>("carNum"));
-        doorNum.setCellValueFactory(new PropertyValueFactory<>("doorNum"));
-        accelLimit.setCellValueFactory(new PropertyValueFactory<>("accelLimit"));
-        deccelLimit.setCellValueFactory(new PropertyValueFactory<>("deccelLimit"));
-        trainTable.getItems().add(t);
+//        Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8);        
+//        track.setCellValueFactory(new PropertyValueFactory<>("line"));
+//        number.setCellValueFactory(new PropertyValueFactory<>("number"));
+//        length.setCellValueFactory(new PropertyValueFactory<>("length"));
+//        width.setCellValueFactory(new PropertyValueFactory<>("width"));
+//        height.setCellValueFactory(new PropertyValueFactory<>("height"));
+//        mass.setCellValueFactory(new PropertyValueFactory<>("mass"));
+//        crewNum.setCellValueFactory(new PropertyValueFactory<>("crewNum"));
+//        passNum.setCellValueFactory(new PropertyValueFactory<>("passNum"));
+//        maxCap.setCellValueFactory(new PropertyValueFactory<>("maxCap"));
+//        carNum.setCellValueFactory(new PropertyValueFactory<>("carNum"));
+//        doorNum.setCellValueFactory(new PropertyValueFactory<>("doorNum"));
+//        accelLimit.setCellValueFactory(new PropertyValueFactory<>("accelLimit"));
+//        deccelLimit.setCellValueFactory(new PropertyValueFactory<>("deccelLimit"));
+//        trainTable.getItems().add(t);
     }   
     
-     @FXML
-    private RadioButton emergencyBrakeButton;
-
     @FXML
-    private TextField passengersLeavingBox;
+    private Button refresh;
 
     @FXML
     private TextField setpointSpeedBox;
 
     @FXML
+    private Button sendSpeed;
+
+    @FXML
+    private Button sendLeavingPass;
+
+    @FXML
+    private TextField passengersLeavingBox;
+
+    @FXML
+    private Button activateBrakeFailure;
+
+    @FXML
+    private Button dactivateBrakeFailure;
+
+    @FXML
+    private Button activateEngineFailure;
+
+    @FXML
+    private Button dectivateEngineFailure;
+
+    @FXML
+    private Button deactivateSignalFailure;
+
+    @FXML
+    private Button activateSignalFailure;
+
+    @FXML
+    private AnchorPane testPane;
+
+    @FXML
+    private TextField trackElevationBox;
+
+    @FXML
     private TextField authorityBox;
-
-    @FXML
-    private TextArea trainInfoBox;
-
-    @FXML
-    private TextArea trainControllerBox;
-
-    @FXML
-    private TextArea trackModelBox;
 
     @FXML
     private TextField temperatureBox;
@@ -93,10 +135,7 @@ public class TrainModelController extends MainFXMLController implements Initiali
     private TextField announcementBox;
 
     @FXML
-    private TextField trackElevationBox;
-
-    @FXML
-    private MenuButton trainNumDropdown;
+    private TextField currentSpeedBox;
 
     @FXML
     private RadioButton lightsButton;
@@ -105,67 +144,116 @@ public class TrainModelController extends MainFXMLController implements Initiali
     private RadioButton brakeButton;
 
     @FXML
+    private RadioButton emergencyBrakeButton;
+
+    @FXML
     private RadioButton leftdoorsButton;
 
     @FXML
     private RadioButton rightdoorsButton;
 
     @FXML
-    private Button activateBrakeFailure;
+    private Button submitButton;
 
     @FXML
-    private Button activateEngineFailure;
+    private Label advertisement;
 
     @FXML
-    private Button activateSignalFailure;
+    private MenuButton trainNumDropdown;
+
+    @FXML
+    private Label trackId;
+
+    @FXML
+    private Label lengthId;
+
+    @FXML
+    private Label widthId;
+
+    @FXML
+    private Label massId;
+
+    @FXML
+    private Label crewId;
+
+    @FXML
+    private Label passengerId;
+
+    @FXML
+    private Label maxCapId;
+
+    @FXML
+    private Label carId;
+
+    @FXML
+    private Label doorId;
+
+    @FXML
+    private Label accelId;
+
+    @FXML
+    private Label decelId;
+
+    @FXML
+    private Label announcementId;
+
+    @FXML
+    private Label leftdoorId;
+
+    @FXML
+    private Label rightdoorId;
+
+    @FXML
+    private Label lightId;
+
+    @FXML
+    private Label brakeId;
+
+    @FXML
+    private Label emergencyBrakeId;
+
+    @FXML
+    private Label tempId;
+
+    @FXML
+    private Label currentpowerId;
+
+    @FXML
+    private Label speedlimitId;
+
+    @FXML
+    private Label authorityId;
+
+    @FXML
+    private Label enteringpassengersId;
+
+    @FXML
+    private Label trackelevationId;
+
+    @FXML
+    private Label gradeId;
 
     @FXML
     private Label passengerNumber;
 
     @FXML
-    private Label requestedPowerNumber;
-
-    @FXML
     private Label currentSpeedNumber;
 
     @FXML
-    private Button sendSpeed;
+    private Label requestedPowerNumber;
 
     @FXML
-    private Button sendLeavingPass;
+    private Label mode;
 
     @FXML
-    private Button submitButton;
+    private MenuBar menuBar;
 
     @FXML
-    private TextArea trackModelBox1;
-
-    @FXML
-    private TextField currentSpeedBox;
-
-    @FXML
-    private Button dactivateBrakeFailure;
-
-    @FXML
-    private Button dectivateEngineFailure;
-
-    @FXML
-    private Button deactivateSignalFailure;
+    private CheckBox testPanelCheck;
 
     @FXML
     private TableView<Train> trainTable;
-    
-    @FXML
-    private Button refresh;
-    
-    @FXML
-    private CheckBox testPanelCheck;
-    
-    @FXML
-    private AnchorPane testPane;
-    
-    @FXML
-    private MenuBar menuBar;
+   
     
     @FXML
     private TableColumn<Train, String> track;
@@ -208,7 +296,20 @@ public class TrainModelController extends MainFXMLController implements Initiali
 
     @FXML
     void leftdoorsClick(ActionEvent event) {
-
+        if(leftdoorsButton.isSelected()){
+            leftdoorId.setText("Open");
+        }else{
+            leftdoorId.setText("Closed");
+        }
+    }
+    
+    @FXML
+    void rightdoorsClick(ActionEvent event) {
+        if(rightdoorsButton.isSelected()){
+            rightdoorId.setText("Open");
+        }else{
+            rightdoorId.setText("Closed");
+        }
     }
 
     @FXML
@@ -218,11 +319,14 @@ public class TrainModelController extends MainFXMLController implements Initiali
             double power = Double.parseDouble(requestedPowerNumber.getText());
             int passengers = Integer.parseInt(passengerNumber.getText());
 
-            Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8); 
+            
             double newSpeed = t.calculateVelocity(power, curSpeed, 0, 1, 300, passengers); //1 is the normal brake
 
 
             currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
+            brakeId.setText("engaged");
+        }else{
+            brakeId.setText("disengaged");
         }
     }
 
@@ -238,11 +342,13 @@ public class TrainModelController extends MainFXMLController implements Initiali
             double power = Double.parseDouble(requestedPowerNumber.getText());
             int passengers = Integer.parseInt(passengerNumber.getText());
 
-            Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8); 
             double newSpeed = t.calculateVelocity(power, curSpeed, 0, 3, 300, passengers); //3 is the emergency brake
 
 
             currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
+            emergencyBrakeId.setText("engaged");
+        }else{
+            emergencyBrakeId.setText("disengaged");
         }
     }
 
@@ -253,7 +359,11 @@ public class TrainModelController extends MainFXMLController implements Initiali
 
     @FXML
     void onLightsClick(ActionEvent event) {
-
+        if(lightsButton.isSelected()){
+            lightId.setText("On");
+        }else{
+            lightId.setText("Off");
+        }
     }
 
     @FXML
@@ -269,6 +379,7 @@ public class TrainModelController extends MainFXMLController implements Initiali
     @FXML
     void onPassengersLeavingSubmit(ActionEvent event) {
         passengerNumber.setText(String.valueOf(Integer.parseInt(passengerNumber.getText()) - Integer.parseInt(passengersLeavingBox.getText())));
+        passengerId.setText(String.valueOf(Integer.parseInt(passengerNumber.getText()) - Integer.parseInt(passengersLeavingBox.getText())));
     }
     
 
@@ -278,7 +389,6 @@ public class TrainModelController extends MainFXMLController implements Initiali
         double power = Double.parseDouble(powerRequestBox.getText());
         int passengers = Integer.parseInt(passengerNumber.getText());
         
-        Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8); 
         double newSpeed = t.calculateVelocity(power, curSpeed, 0, 0, 300, passengers);
 //        System.out.println("velocity: "+ newSpeed + "mph");
 
@@ -288,11 +398,6 @@ public class TrainModelController extends MainFXMLController implements Initiali
 
     @FXML
     void onTrainSelectionClick(ActionEvent event) {
-
-    }
-
-    @FXML
-    void rightdoorsClick(ActionEvent event) {
 
     }
     
@@ -308,8 +413,7 @@ public class TrainModelController extends MainFXMLController implements Initiali
     
     @FXML
     void onRefresh(ActionEvent event) {
-        //TODO: need a for loop that will go through database and add all of the trains
-        Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8);        
+        //TODO: need a for loop that will go through database and add all of the trains      
         track.setCellValueFactory(new PropertyValueFactory<>("line"));
         number.setCellValueFactory(new PropertyValueFactory<>("number"));
         length.setCellValueFactory(new PropertyValueFactory<>("length"));

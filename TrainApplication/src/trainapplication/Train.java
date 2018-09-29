@@ -23,11 +23,12 @@ public class Train {
     private int carNum;
     private int doorNum;
     private double accelLimit =  0.5 * 3.2808399;  //ft/s
-    private double deccelLimit; //ft/s
+    private double deccelLimit = 0; //ft/s
     private double speed;       //
     private int authority;
     private int block;
     private int target; //destination
+    private int temperature;
     
     private double trainMass = 81800; //lbs
     private double totalMass; //mass of car and people
@@ -35,12 +36,15 @@ public class Train {
     private double force;
     private final double M_TO_MI = 0.0006214;
     private final double N_TO_FTLBS = 0.22481;
+    private final double GRAVITY = 32.17405; //ft/s^2
     //private final double SEC_TO_HR = 3600;
     private final double FTPS_TO_MPH = 0.681818;
     private final double MPH_TO_MiPS = 0.000277778;
     private final double serviceBrakeDecel = 1.2 * 3.2808399; //ft/s^2
     private final double emergencyBrakeDecel = 2.73 * 3.2808399; //ft/s^2
     private final double deltaT =1; 
+    private int numberOfWheels = 12; //will probably need to change
+    private final double coefficientOfFriction = 0.16; //will probably need to change
 
     //for CTC
     public Train(String line, int number, double speed, int authority, int block, int target) {
@@ -69,6 +73,90 @@ public class Train {
         this.deccelLimit = deccelLimit;
     }
 
+    public double getM_TO_MI() {
+        return M_TO_MI;
+    }
+
+    public double getN_TO_FTLBS() {
+        return N_TO_FTLBS;
+    }
+
+    public double getGRAVITY() {
+        return GRAVITY;
+    }
+
+    public double getFTPS_TO_MPH() {
+        return FTPS_TO_MPH;
+    }
+
+    public double getMPH_TO_MiPS() {
+        return MPH_TO_MiPS;
+    }
+
+    public double getServiceBrakeDecel() {
+        return serviceBrakeDecel;
+    }
+
+    public double getEmergencyBrakeDecel() {
+        return emergencyBrakeDecel;
+    }
+
+    public double getDeltaT() {
+        return deltaT;
+    }
+
+    public double getCoefficientOfFriction() {
+        return coefficientOfFriction;
+    }
+
+    public double getTrainMass() {
+        return trainMass;
+    }
+
+    public void setTrainMass(double trainMass) {
+        this.trainMass = trainMass;
+    }
+
+    public double getTotalMass() {
+        return totalMass;
+    }
+
+    public void setTotalMass(double totalMass) {
+        this.totalMass = totalMass;
+    }
+
+    public double getVelActual() {
+        return velActual;
+    }
+
+    public void setVelActual(double velActual) {
+        this.velActual = velActual;
+    }
+
+    public double getForce() {
+        return force;
+    }
+
+    public void setForce(double force) {
+        this.force = force;
+    }
+
+    public int getNumberOfWheels() {
+        return numberOfWheels;
+    }
+
+    public void setNumberOfWheels(int numberOfWheels) {
+        this.numberOfWheels = numberOfWheels;
+    }
+
+    public int getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(int temperature) {
+        this.temperature = temperature;
+    }
+    
     public String getLine() {
         return line;
     }
@@ -229,9 +317,21 @@ public class Train {
             force = (power*1000*M_TO_MI)*(N_TO_FTLBS/(currentSpeed*MPH_TO_MiPS));
         }
         
-//        System.out.println("force: " + force + " ftlbs");
-        //to include friction, calculate frictional force and add it to force
+        //to downward force
+        double slope = Math.atan2(grade, 100); //given in radians
+        double angle = Math.toDegrees(slope);
         
+        //get all forces acting in the x plane that will counteract the force in the positive direction
+        double normalForce = (totalMass/numberOfWheels) * GRAVITY * Math.sin(angle*Math.PI/180);
+        double downwardForce = (totalMass/numberOfWheels) * GRAVITY * Math.cos(angle*Math.PI/180);
+        
+        //frictional force
+        double frictionalForce = (coefficientOfFriction*downwardForce) + normalForce;
+        System.out.println("Frictionalforce: " +frictionalForce + " ftlbs");
+        
+        force = force - frictionalForce;
+        
+        System.out.println("force: " + force + " ftlbs");
         
         double trainAccel = force/totalMass;
         
@@ -251,7 +351,7 @@ public class Train {
             trainAccel -= serviceBrakeDecel;
         }
         
-//        System.out.println("accel: " + trainAccel +" ft/s^2");
+        System.out.println("accel: " + trainAccel +" ft/s^2");
         
         //VELOCITY
         //TODO: figure out what the seconds part is to get from accel to velocity
@@ -262,7 +362,8 @@ public class Train {
             velActual = 0;
         }
         
-        
+        System.out.println("velocity: " + velActual +" ft/s");
+
         
         return velActual;
     }

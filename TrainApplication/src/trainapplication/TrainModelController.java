@@ -385,15 +385,23 @@ public class TrainModelController extends MainFXMLController implements Initiali
 
     @FXML
     void onSubmit(ActionEvent event) throws IOException {
-        double curSpeed = Double.parseDouble(currentSpeedBox.getText());
-        double power = Double.parseDouble(powerRequestBox.getText());
-        int passengers = Integer.parseInt(passengerNumber.getText());
-        
-        double newSpeed = t.calculateVelocity(power, curSpeed, 0, 0, 300, passengers);
-//        System.out.println("velocity: "+ newSpeed + "mph");
+        if(!"".equals(currentSpeedBox.getText()) && !"".equals(powerRequestBox.getText())){
+            double curSpeed = Double.parseDouble(currentSpeedBox.getText());
+            double power = Double.parseDouble(powerRequestBox.getText());
+            System.out.println(power);
+            int passengers = Integer.parseInt(passengerNumber.getText());
 
-        currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
-        requestedPowerNumber.setText(String.valueOf(Math.round(100*power)/100.0));
+            double newSpeed = t.calculateVelocity(power, curSpeed, 0, 0, 300, passengers);
+    //        System.out.println("velocity: "+ newSpeed + "mph");
+
+            currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
+            requestedPowerNumber.setText(String.valueOf(Math.round(100*power)/100.0));
+        }
+        
+        if(!"".equals(authorityBox.getText())){
+            authorityId.setText(String.valueOf(authorityBox.getText()));
+        }
+        
     }
 
     @FXML

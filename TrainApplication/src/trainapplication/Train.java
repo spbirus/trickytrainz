@@ -44,7 +44,7 @@ public class Train {
     private final double emergencyBrakeDecel = 2.73 * 3.2808399; //ft/s^2
     private final double deltaT =1; 
     private int numberOfWheels = 12; //will probably need to change
-    private final double coefficientOfFriction = 0.16; //will probably need to change
+    private final double coefficientOfFriction = 0.00035; //from  https://en.wikipedia.org/wiki/Rolling_resistance#Rolling_resistance_coefficient_examples
 
     //for CTC
     public Train(String line, int number, double speed, int authority, int block, int target) {

@@ -7,6 +7,7 @@ package trainapplication;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -28,7 +29,7 @@ public class TrainControllerController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         //TODO: need a for loop that will go through database and add all of the trains
         Train t = new Train("red",1,2,3,4,5,6,7,8,9,10,11,12);        
-        track.setCellValueFactory(new PropertyValueFactory<>("track"));
+        track.setCellValueFactory(new PropertyValueFactory<>("line"));
         number.setCellValueFactory(new PropertyValueFactory<>("number"));
         length.setCellValueFactory(new PropertyValueFactory<>("length"));
         width.setCellValueFactory(new PropertyValueFactory<>("width"));
@@ -86,6 +87,40 @@ public class TrainControllerController implements Initializable {
 
     @FXML
     private TableColumn<Train, String> track;
+    
+    @FXML
+    void onTrainSelectionClick(ActionEvent event) {
+
+    }
+    
+    @FXML
+    private MenuButton trainNumDropdown;
+
+
+    @FXML
+    void onTrainSelectionClick(ActionEvent event) {
+
+    }
+    
+     @FXML
+    void onRefresh(ActionEvent event) {
+        //TODO: need a for loop that will go through database and add all of the trains
+        Train t = new Train("red",1,2,3,4,5,6,7,8,9,10,11,12);
+        track.setCellValueFactory(new PropertyValueFactory<>("line"));
+        number.setCellValueFactory(new PropertyValueFactory<>("number"));
+        length.setCellValueFactory(new PropertyValueFactory<>("length"));
+        width.setCellValueFactory(new PropertyValueFactory<>("width"));
+        height.setCellValueFactory(new PropertyValueFactory<>("height"));
+        mass.setCellValueFactory(new PropertyValueFactory<>("mass"));
+        crewNum.setCellValueFactory(new PropertyValueFactory<>("crewNum"));
+        passNum.setCellValueFactory(new PropertyValueFactory<>("passNum"));
+        maxCap.setCellValueFactory(new PropertyValueFactory<>("maxCap"));
+        carNum.setCellValueFactory(new PropertyValueFactory<>("carNum"));
+        doorNum.setCellValueFactory(new PropertyValueFactory<>("doorNum"));
+        accelLimit.setCellValueFactory(new PropertyValueFactory<>("accelLimit"));
+        deccelLimit.setCellValueFactory(new PropertyValueFactory<>("deccelLimit"));
+        trainTable.getItems().add(t);
+    }
 
     
 }

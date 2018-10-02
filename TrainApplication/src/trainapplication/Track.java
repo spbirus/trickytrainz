@@ -11,18 +11,24 @@ package trainapplication;
  */
 public class Track {
     
+    //Physical Track Parameters Determined by the Excel or csv input
     private String line;
     private String section;
     private int blockNumber;
     private int blockLength;
-    private Double blockGrade;
+    private double blockGrade;
     private int speedLimit;
     private String infrastructure;
     private double elevation;
     private double cumElevation;
-    private String state;
+    
+    //Track State Parameters Determined by the state of the system
+    private String switchState;
+    private String blockState;
+    private String beacon;
+    
 
-    public Track(String line, String section, Integer blockNumber, Integer blockLength, Double blockGrade, Integer speedLimit, String infrastructure, Double elevation, Double cumElevation, String state) {
+    public Track(String line, String section, int blockNumber, int blockLength, double blockGrade, int speedLimit, String infrastructure, double elevation, double cumElevation, String blockState) {
         this.line = line;
         this.section = section;
         this.blockNumber = blockNumber;
@@ -32,16 +38,15 @@ public class Track {
         this.infrastructure = infrastructure;
         this.elevation = elevation;
         this.cumElevation = cumElevation;
-        this.state = state;
     }
 
-    public Track(String line, String section, Integer blockNumber, Integer blockLength, Integer speedLimit, String state) {
+    public Track(String line, String section, int blockNumber, int blockLength, int speedLimit, String blockState) {
         this.line = line;
         this.section = section;
         this.blockNumber = blockNumber;
         this.blockLength = blockLength;
         this.speedLimit = speedLimit;
-        this.state = state;
+        this.blockState = blockState;
     }
    
 
@@ -61,7 +66,7 @@ public class Track {
         this.section = section;
     }
 
-    public Integer getBlockNumber() {
+    public int getBlockNumber() {
         return blockNumber;
     }
 
@@ -69,7 +74,7 @@ public class Track {
         this.blockNumber = blockNumber;
     }
 
-    public Integer getBlockLength() {
+    public int getBlockLength() {
         return blockLength;
     }
 
@@ -77,7 +82,7 @@ public class Track {
         this.blockLength = blockLength;
     }
 
-    public Double getBlockGrade() {
+    public double getBlockGrade() {
         return blockGrade;
     }
 
@@ -85,7 +90,7 @@ public class Track {
         this.blockGrade = blockGrade;
     }
 
-    public Integer getSpeedLimit() {
+    public int getSpeedLimit() {
         return speedLimit;
     }
 
@@ -101,7 +106,7 @@ public class Track {
         this.infrastructure = infrastructure;
     }
 
-    public Double getElevation() {
+    public double getElevation() {
         return elevation;
     }
 
@@ -109,7 +114,7 @@ public class Track {
         this.elevation = elevation;
     }
 
-    public Double getCumElevation() {
+    public double getCumElevation() {
         return cumElevation;
     }
 
@@ -117,12 +122,28 @@ public class Track {
         this.cumElevation = cumElevation;
     }
 
-    public String getState() {
-        return state;
+    public String getBlockState() {
+        return blockState;
     }
 
-    public void setState(String state) {
-        this.state = state;
+    public void setBlockState(String blockState) {
+        this.blockState = blockState;
+    }
+
+    public String getSwitchState() {
+        return switchState;
+    }
+
+    public void setSwitchState(String switchState) {
+        this.switchState = switchState;
+    }
+
+    public String getBeacon() {
+        return beacon;
+    }
+
+    public void setBeacon(String beacon) {
+        this.beacon = beacon;
     }
    
 }

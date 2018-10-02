@@ -26,7 +26,7 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="12.0" layoutY="29.0" text="45 ">
+            <Label fx:id="currentSpeed" layoutX="12.0" layoutY="29.0" text="45 ">
                <font>
                   <Font size="30.0" />
                </font>
@@ -89,16 +89,26 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Separator layoutX="23.0" layoutY="73.0" prefHeight="5.0" prefWidth="126.0" />
+            <Separator layoutX="16.0" layoutY="71.0" prefHeight="5.0" prefWidth="148.0" />
             <Label layoutX="18.0" layoutY="137.0" />
             <Separator layoutX="4.0" layoutY="143.0" prefHeight="5.0" prefWidth="80.0" />
             <Label layoutX="20.0" layoutY="146.0" text="Kp (kW)" />
             <Label layoutX="105.0" layoutY="137.0" />
             <Separator layoutX="91.0" layoutY="143.0" prefHeight="5.0" prefWidth="80.0" />
-            <TextField id="kpVal" layoutX="4.0" layoutY="110.0" prefHeight="27.0" prefWidth="80.0" />
-            <Button id="setKiKpVals" layoutX="24.0" layoutY="166.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="126.0" text="Set " />
-            <TextField id="kiVal" layoutX="91.0" layoutY="110.0" prefHeight="27.0" prefWidth="80.0" />
+            <TextField fx:id="kpVal" layoutX="4.0" layoutY="110.0" prefHeight="27.0" prefWidth="80.0" />
+            <Button id="setKiKpVals" layoutX="24.0" layoutY="166.0" mnemonicParsing="false" onAction="#setKVals" prefHeight="27.0" prefWidth="126.0" text="Set " />
+            <TextField fx:id="kiVal" layoutX="91.0" layoutY="110.0" prefHeight="27.0" prefWidth="80.0" />
             <Label layoutX="110.0" layoutY="146.0" text="Ki (kW)" />
+            <Label layoutX="117.0" layoutY="36.0" text="kW">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Label fx:id="power" layoutX="32.0" layoutY="36.0" text="0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="617.0" layoutY="73.0" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #bdc3c7#bdc3c7;">

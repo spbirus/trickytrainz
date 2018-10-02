@@ -26,13 +26,13 @@ public class TrackModelController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        Track dummyTrack= new Track("Green", "A", 1, 100, 1.5, 55, "", 1.0, 1.0, "Open");
-//        Track dummyTrack2 = new Track("Green", "A", 2, 100, 0.5, 55, "", 1.0, 1.0, "Open");
-//        Track dummyTrack3 = new Track("Green", "A", 3, 100, 0.5, 55, "", 1.0, 1.0, "Open");
-//        Track dummyTrack4 = new Track("Green", "A", 4, 100, 1.0, 55, "", 1.0, 1.0, "Open");
-//        Track dummyTrack5 = new Track("Green", "A", 5, 100, 1.0, 55, "", 1.0, 1.0, "Closed");
-//        Track dummyTrack6 = new Track("Green", "A", 6, 100, 0.0, 55, "Switch", 1.0, 1.0, "Open");
-//        Track dummyTrack7 = new Track("Green", "A", 7, 100, 1.0, 55, "", 1.0, 1.0, "Open");
+        Track dummyTrack1= new Track("Green", "A", 1, 100, 1.5, 55, "", 1.0, 1.0, "Open");
+        Track dummyTrack2 = new Track("Green", "A", 2, 100, 0.5, 55, "", 1.0, 1.0, "Open");
+        Track dummyTrack3 = new Track("Green", "A", 3, 100, 0.5, 55, "", 1.0, 1.0, "Open");
+        Track dummyTrack4 = new Track("Green", "A", 4, 100, 1.0, 55, "", 1.0, 1.0, "Open");
+        Track dummyTrack5 = new Track("Green", "A", 5, 100, 1.0, 55, "", 1.0, 1.0, "Closed");
+        Track dummyTrack6 = new Track("Green", "A", 6, 100, 0.0, 55, "Switch", 1.0, 1.0, "Open");
+        Track dummyTrack7 = new Track("Green", "A", 7, 100, 1.0, 55, "", 1.0, 1.0, "Open");
         
         line.setCellValueFactory(new PropertyValueFactory<>("line"));
         section.setCellValueFactory(new PropertyValueFactory<>("section"));
@@ -45,15 +45,22 @@ public class TrackModelController implements Initializable {
         cumElevation.setCellValueFactory(new PropertyValueFactory<>("cumElevation"));
         state.setCellValueFactory(new PropertyValueFactory<>("state"));
  
-        trackTable.getItems().add(dummyTrack);
-//        trackTable.getItems().add(dummyTrack2);
-//        trackTable.getItems().add(dummyTrack3);
-//        trackTable.getItems().add(dummyTrack4);
-//        trackTable.getItems().add(dummyTrack5);
-//        trackTable.getItems().add(dummyTrack6);
-//        trackTable.getItems().add(dummyTrack7);
+        trackTable.getItems().add(dummyTrack1);
+        trackTable.getItems().add(dummyTrack2);
+        trackTable.getItems().add(dummyTrack3);
+        trackTable.getItems().add(dummyTrack4);
+        trackTable.getItems().add(dummyTrack5);
+        trackTable.getItems().add(dummyTrack6);
+        trackTable.getItems().add(dummyTrack7);
         
-    }  
+    } 
+    
+    public void readTrackFile(String filename){
+        
+        
+        
+    }
+    
     
     @FXML
     private TableView<Track> trackTable;

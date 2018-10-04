@@ -53,6 +53,7 @@ public class TrainModelController extends MainFXMLController implements Initiali
         doorId.setText(String.valueOf(t.getDoorNum()));
         accelId.setText(String.valueOf(t.getAccelLimit()));
         decelId.setText(String.valueOf(t.getDeccelLimit()));
+        trainId.setText(String.valueOf(t.getNumber()));
         
         tempId.setText(String.valueOf(t.getTemperature()));
 //        currentpowerId.setText(String.valueOf(t)); will come from train controller
@@ -244,6 +245,9 @@ public class TrainModelController extends MainFXMLController implements Initiali
 
     @FXML
     private Label mode;
+    
+    @FXML
+    private Label trainId;
 
     @FXML
     private MenuBar menuBar;
@@ -388,6 +392,9 @@ public class TrainModelController extends MainFXMLController implements Initiali
         if(!"".equals(currentSpeedBox.getText()) && !"".equals(powerRequestBox.getText())){
             double curSpeed = Double.parseDouble(currentSpeedBox.getText());
             double power = Double.parseDouble(powerRequestBox.getText());
+            if(power > 120){ //check for the max power
+                power = 120.00;
+            }
             System.out.println(power);
             int passengers = Integer.parseInt(passengerNumber.getText());
 

@@ -20,7 +20,7 @@ public class Train {
     private int crewNum;
     private int passNum;
     private int maxCap;
-    private int carNum;
+    private int carNum = 1;
     private int doorNum;
     private double accelLimit =  0.5 * 3.2808399;  //ft/s
     private double deccelLimit = 0; //ft/s
@@ -42,9 +42,10 @@ public class Train {
     private final double MPH_TO_MiPS = 0.000277778;
     private final double serviceBrakeDecel = 1.2 * 3.2808399; //ft/s^2
     private final double emergencyBrakeDecel = 2.73 * 3.2808399; //ft/s^2
-    private final double deltaT =1; 
+    private final double deltaT = 0.01; //used to say how everything is updating?????
     private int numberOfWheels = 12; //will probably need to change
     private final double coefficientOfFriction = 0.00035; //from  https://en.wikipedia.org/wiki/Rolling_resistance#Rolling_resistance_coefficient_examples
+    private int direction; // 0 and 1
 
     //for CTC
     public Train(String line, int number, double speed, int authority, int block, int target) {
@@ -355,7 +356,7 @@ public class Train {
         
         //VELOCITY
         //TODO: figure out what the seconds part is to get from accel to velocity
-        velActual = currentSpeed + (trainAccel * deltaT)*FTPS_TO_MPH; //0.01 is a change in time
+        velActual = currentSpeed + (trainAccel * deltaT)*FTPS_TO_MPH; //0.01 is a change in time that helps us not miss the beacon
         
         //prevent it from going backwards
         if(velActual < 0){

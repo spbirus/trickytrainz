@@ -5,46 +5,14 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="907.0" prefWidth="913.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrainModelController">
+<AnchorPane id="AnchorPane" prefHeight="698.0" prefWidth="915.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrainModelController">
    <children>
-      <ScrollPane layoutX="1.0" layoutY="748.0" prefHeight="158.0" prefWidth="910.0">
-         <content>
-            <TableView fx:id="trainTable" prefHeight="156.0" prefWidth="905.0">
-              <columns>
-                <TableColumn fx:id="number" prefWidth="75.0" text="Train #" />
-                <TableColumn fx:id="length" prefWidth="69.60002136230469" text="Length (ft)" />
-                  <TableColumn fx:id="width" prefWidth="63.99999237060547" text="Width (ft)" />
-                  <TableColumn fx:id="height" prefWidth="68.79998779296875" text="Height (ft)" />
-                  <TableColumn fx:id="mass" prefWidth="67.20001220703125" text="Mass (lbs)" />
-                  <TableColumn fx:id="crewNum" prefWidth="52.79998779296875" text="Crew #" />
-                  <TableColumn fx:id="passNum" prefWidth="84.7999267578125" text="Passenger #" />
-                  <TableColumn fx:id="maxCap" prefWidth="71.19998168945312" text="Max Cap." />
-                  <TableColumn fx:id="carNum" prefWidth="49.5999755859375" text="Car #" />
-                  <TableColumn fx:id="doorNum" prefWidth="70.4000244140625" text="Door #" />
-                  <TableColumn fx:id="accelLimit" prefWidth="83.20001220703125" text="Accel Limit" />
-                  <TableColumn fx:id="deccelLimit" prefWidth="85.60009765625" text="Deccel Limit" />
-                  <TableColumn fx:id="track" prefWidth="58.40004882812502" text="Track" />
-              </columns>
-            </TableView>
-         </content>
-      </ScrollPane>
-      <Label layoutX="403.0" layoutY="706.0" text="All Trains">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </Label>
-      <Button fx:id="refresh" layoutX="803.0" layoutY="707.0" mnemonicParsing="false" onAction="#onRefresh" text="Refresh Table" />
       <AnchorPane layoutX="26.0" layoutY="425.0" prefHeight="78.0" prefWidth="358.0" style="-fx-background-color: #bdc3c7;">
          <children>
             <Label layoutX="23.0" layoutY="13.0" text="Setpoint Speed (mph)" />
@@ -91,7 +59,6 @@
             <Button fx:id="submitButton" layoutX="186.0" layoutY="224.0" mnemonicParsing="false" onAction="#onSubmit" text="Submit" />
          </children>
       </AnchorPane>
-      <Separator layoutX="9.0" layoutY="695.0" prefHeight="0.0" prefWidth="894.0" />
       <AnchorPane layoutX="27.0" layoutY="55.0" prefHeight="288.0" prefWidth="862.0" style="-fx-background-color: #bdc3c7;">
          <children>
             <Label fx:id="advertisement" layoutX="401.0" layoutY="8.0" text="Your Ad Here">
@@ -99,12 +66,6 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <MenuButton fx:id="trainNumDropdown" layoutX="11.0" layoutY="9.0" mnemonicParsing="false" onAction="#onTrainSelectionClick" text="Train #">
-              <items>
-                <MenuItem mnemonicParsing="false" text="1" />
-                <MenuItem mnemonicParsing="false" text="2" />
-              </items>
-            </MenuButton>
             <AnchorPane layoutX="14.0" layoutY="43.0" prefHeight="234.0" prefWidth="185.0">
                <children>
                   <Label layoutX="14.0" layoutY="-2.0" text="Train Info" />
@@ -174,6 +135,16 @@
                   <Label layoutX="14.0" layoutY="34.0" text="Speed limit (mph):" />
                </children>
             </AnchorPane>
+            <Label layoutX="14.0" layoutY="8.0" text="Train id:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="trainId" layoutX="86.0" layoutY="8.0" text="1" textFill="RED">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
       <AnchorPane layoutX="27.0" layoutY="356.0" prefHeight="56.0" prefWidth="862.0" style="-fx-background-color: #bdc3c7;">

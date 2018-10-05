@@ -13,6 +13,11 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+
 /**
  * FXML Controller class
  *
@@ -53,10 +58,43 @@ public class TrackModelController implements Initializable {
         trackTable.getItems().add(dummyTrack6);
         trackTable.getItems().add(dummyTrack7);
         
+        readTrackFile("TestTrackData.csv");
     } 
     
     public void readTrackFile(String filename){
-        
+
+        String csvFile = filename;
+        BufferedReader br = null;
+        String line = "";
+        String cvsSplitBy = ",";
+
+        try {
+
+            br = new BufferedReader(new FileReader(csvFile));
+            while ((line = br.readLine()) != null) {
+
+                // use comma as separator
+                String[] trackBlock = line.split(cvsSplitBy);
+                
+                //trackBlock[0];
+
+                System.out.println("Country [code= " + trackBlock[4] + " , name=" + trackBlock[5] + "]");
+
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (br != null) {
+                try {
+                    br.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         
         
     }

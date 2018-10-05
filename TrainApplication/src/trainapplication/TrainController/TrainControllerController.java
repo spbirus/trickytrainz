@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trainapplication.TrainController;
+package trainapplication;
 
-import trainapplication.Train;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.TableColumn;
@@ -32,7 +32,7 @@ public class TrainControllerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //TODO: need a for loop that will go through database and add all of the trains
-        Train t = new Train("red",1,2,3,4,5,6,7,8,9,10,11,12);        
+        Train t = new Train("red",1,2,3,4,5,6,7,8,9,10,11,12);
         track.setCellValueFactory(new PropertyValueFactory<>("line"));
         number.setCellValueFactory(new PropertyValueFactory<>("number"));
         length.setCellValueFactory(new PropertyValueFactory<>("length"));
@@ -48,23 +48,28 @@ public class TrainControllerController implements Initializable {
         deccelLimit.setCellValueFactory(new PropertyValueFactory<>("deccelLimit"));
         //trainTable.getItems().add(t);
         trainTable.getItems().add(t);
-    }   
-    
-    @FXML
-    private Label currentSpeed;
+    }
 
     @FXML
-    private Label setpointSpeed;
+    private Label currentSpeedLabel;
+
+    @FXML
+    private Label setpointSpeedLabel;
 
     @FXML
     private TextField kpVal;
 
     @FXML
     private TextField kiVal;
-    
+
     @FXML
-    private Label power;
-    
+    private Label powerLabel;
+
+    @FXML
+    private Button emergBrakeButton;
+
+    @FXML
+    private Label emergBrakeLabel;
     @FXML
     private TableView<Train> trainTable;
 
@@ -106,16 +111,32 @@ public class TrainControllerController implements Initializable {
 
     @FXML
     private TableColumn<Train, String> track;
-    
+
     @FXML
     private MenuButton trainNumDropdown;
-    
-    
+
+
      @FXML
     void onTrainSelectionClick(ActionEvent event) {
 
     }
 
+     @FXML
+    void onEmergBrakeButtonClick(ActionEvent event) {
+        if(emergBrakeLabel.getText().equalsIgnoreCase("Engaged")){
+//                    double curSpeed = Double.parseDouble(currentSpeedLabel.getText());
+//                    double power = Double.parseDouble(requestedPowerNumber.getText());
+//                    int passengers = Integer.parseInt(passengerNumber.getText());
+//
+//                    double newSpeed = t.calculateVelocity(power, curSpeed, 0, 3, 300, passengers); //3 is the emergency brake
+//
+//
+//                    currentSpeedLabel.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
+                    emergBrakeLabel.setText("Disengaged");
+        }else if(emergBrakeLabel.getText().equalsIgnoreCase("Disengaged")){
+            emergBrakeLabel.setText("Engaged");
+        }
+    }
      @FXML
     void onRefresh(ActionEvent event) {
         //TODO: need a for loop that will go through database and add all of the trains
@@ -134,35 +155,52 @@ public class TrainControllerController implements Initializable {
         accelLimit.setCellValueFactory(new PropertyValueFactory<>("accelLimit"));
         deccelLimit.setCellValueFactory(new PropertyValueFactory<>("deccelLimit"));
         trainTable.getItems().add(t);
+
+
+        currSpeedVal = Double.parseDouble(currentSpeedLabel.getText());
+        setpointSpeedVal = Double.parseDouble(setpointSpeedLabel.getText());
+        uVal = 10;
+        speedErr = Math.abs(setpointSpeedVal - currSpeedVal);
+
+
     }
-    
+    //==========================Speed and Power Variables ======================
     private final double MAX_POWER = 120; //kW
-    
+    private double currSpeedVal;
+    double setpointSpeedVal;
+    double uVal;
+    double speedErr;
+
+    //==========================================================================
+
     @FXML
     void setKVals(ActionEvent event) {
-        double currSpeedVal = Double.parseDouble(currentSpeed.getText());
-        double setpointSpeedVal = Double.parseDouble(setpointSpeed.getText());
-        
+
+
         //double power = Double.parseDouble(p.getText());
         //int passengers = Integer.parseInt(passengerNumber.getText());
         double kp = Double.parseDouble(kpVal.getText());
         double ki = Double.parseDouble(kiVal.getText());
-        double oldPowerVal = Double.parseDouble(power.getText());
-        
-        double speedErr = setpointSpeedVal - currSpeedVal;
-        double uVal= 10; //will need to be calculated
-        
-        
-        
+        double oldSpeedErr = speedErr;
+        currSpeedVal = Double.parseDouble(currentSpeedLabel.getText());
+        setpointSpeedVal = Double.parseDouble(setpointSpeedLabel.getText());
+        speedErr = Math.abs(setpointSpeedVal - currSpeedVal);
+
+
+
+        uVal+= 50*(speedErr + oldSpeedErr); //will need to be calculated
+
+
+        double oldPowerVal = Double.parseDouble(powerLabel.getText());
         double powerVal = (kp*speedErr)+(ki*uVal);
-        
-        
-        if(powerVal > MAX_POWER){
-            powerVal = oldPowerVal;
-        }
-        power.setText(String.valueOf(powerVal));
-        
+
+
+//        if(powerVal > MAX_POWER){
+//            powerVal = oldPowerVal;
+//        }
+        powerLabel.setText(String.valueOf(powerVal));
+
 
     }
-    
+
 }

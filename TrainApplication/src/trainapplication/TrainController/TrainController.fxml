@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="979.0" prefWidth="940.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrainController.TrainControllerController">
+<AnchorPane id="AnchorPane" prefHeight="979.0" prefWidth="940.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrainControllerController">
    <children>
       <AnchorPane layoutX="10.0" layoutY="73.0" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
@@ -26,7 +26,7 @@
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="currentSpeed" layoutX="12.0" layoutY="29.0" text="45 ">
+            <Label fx:id="currentSpeedLabel" layoutX="12.0" layoutY="29.0" text="45 ">
                <font>
                   <Font size="30.0" />
                </font>
@@ -38,7 +38,7 @@
             </Label>
             <Separator layoutX="11.0" layoutY="64.0" prefHeight="5.0" prefWidth="126.0" />
             <Label layoutX="25.0" layoutY="138.0" text="Setpoint Speed" />
-            <Label layoutX="29.0" layoutY="109.0" text="55">
+            <Label fx:id="setpointSpeedLabel" layoutX="29.0" layoutY="109.0" text="55">
                <font>
                   <Font size="20.0" />
                </font>
@@ -66,14 +66,14 @@
             </Label>
             <Separator layoutX="1.0" layoutY="67.0" prefHeight="5.0" prefWidth="99.0" />
             <Button layoutX="4.0" layoutY="100.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="126.0" text="Service Brake" />
-            <Button layoutX="130.0" layoutY="101.0" mnemonicParsing="false" prefHeight="46.0" prefWidth="126.0" style="-fx-background-color: #e74c3c#e74c3c;" text="Emergency Brake" textFill="WHITE" />
-            <Label layoutX="159.0" layoutY="73.0" text="Service Brake" />
-            <Label layoutX="160.0" layoutY="43.0" text="Engaged">
+            <Button fx:id="emergBrakeButton" layoutX="130.0" layoutY="101.0" mnemonicParsing="false" onAction="#onEmergBrakeButtonClick" prefHeight="46.0" prefWidth="126.0" style="-fx-background-color: #e74c3c#e74c3c;" text="Emergency Brake" textFill="WHITE" />
+            <Label layoutX="132.0" layoutY="73.0" text="Service Brake" />
+            <Label fx:id="emergBrakeLabel" layoutX="133.0" layoutY="43.0" text="Engaged">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Separator layoutX="152.0" layoutY="67.0" prefHeight="5.0" prefWidth="99.0" />
+            <Separator layoutX="125.0" layoutY="67.0" prefHeight="5.0" prefWidth="99.0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="167.0" layoutY="73.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
@@ -104,7 +104,7 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label fx:id="power" layoutX="32.0" layoutY="36.0" text="0">
+            <Label fx:id="powerLabel" layoutX="32.0" layoutY="36.0" text="0">
                <font>
                   <Font size="30.0" />
                </font>

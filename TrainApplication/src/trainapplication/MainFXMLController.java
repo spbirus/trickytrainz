@@ -5,6 +5,7 @@
  */
 package trainapplication;
 
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -34,7 +35,7 @@ public class MainFXMLController implements Initializable {
         
         if(! ctcStage.isShowing()) 
         {
-            AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("CTCOffice.fxml"));
+            AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("CTCOffice/CTCOffice.fxml"));
             Scene scene = new Scene(page);
             ctcStage.setScene(scene);
             ctcStage.setTitle("CTC Office");
@@ -50,7 +51,7 @@ public class MainFXMLController implements Initializable {
         
         if(! trackControllerStage.isShowing()) 
         {
-            AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("TrackController.fxml"));
+            AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("TrackController/TrackController.fxml"));
             Scene scene = new Scene(page);
             trackControllerStage.setScene(scene);
             trackControllerStage.setTitle("Track Controller");
@@ -67,7 +68,7 @@ public class MainFXMLController implements Initializable {
         
         if(! trainControllerStage.isShowing()) 
         {
-            AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("TrainController.fxml"));
+            AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("TrainController/TrainController.fxml"));
             Scene scene = new Scene(page);
             trainControllerStage.setScene(scene);
             trainControllerStage.setTitle("Train Controller");
@@ -83,7 +84,7 @@ public class MainFXMLController implements Initializable {
 
         if(! trackModelStage.isShowing()) 
         {
-            AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("TrackModel.fxml"));
+            AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("TrackModel/TrackModel.fxml"));
             Scene scene = new Scene(page);
             trackModelStage.setScene(scene);
             trackModelStage.setTitle("Track Model");
@@ -99,7 +100,7 @@ public class MainFXMLController implements Initializable {
         
         if(! trainModelStage.isShowing()) 
         {
-            AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("TrainModel.fxml"));
+            AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("TrainModel/TrainModel.fxml"));
             Scene scene = new Scene(page);
             trainModelStage.setScene(scene);
             trainModelStage.setTitle("Train Model");

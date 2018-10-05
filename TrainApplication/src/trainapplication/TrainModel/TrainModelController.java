@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trainapplication;
+package trainapplication.TrainModel;
 
+import trainapplication.Train;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -34,7 +35,7 @@ import javafx.stage.Stage;
  *
  * @author burri
  */
-public class TrainModelController extends MainFXMLController implements Initializable {
+public class TrainModelController implements Initializable {
     //will need to get this data from somewhere
     private Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8); 
 
@@ -297,6 +298,34 @@ public class TrainModelController extends MainFXMLController implements Initiali
 
     @FXML
     private TableColumn<Train, Integer> deccelLimit;
+    
+    @FXML
+    private Button refreshSpeed;
+    
+    @FXML
+    private Button submitOther;
+    
+    private double storedVelocity = 0;
+    private double storedPower = 0;
+    
+    @FXML
+    void onRefreshSpeed(ActionEvent event) {
+        double curSpeed = storedVelocity; //Double.parseDouble(currentSpeedNumber.getText());
+        double power = storedPower; //Double.parseDouble(requestedPowerNumber.getText());
+        if(power > 120){ //check for the max power
+            power = 120.00;
+        }
+        System.out.println(power);
+        int passengers = Integer.parseInt(passengerNumber.getText());
+
+        double newSpeed = t.calculateVelocity(power, curSpeed, 0, 0, 300, passengers);
+        storedVelocity = newSpeed;
+        storedPower = power;
+//        System.out.println("velocity: "+ newSpeed + "mph");
+
+        currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
+        requestedPowerNumber.setText(String.valueOf(Math.round(100*power)/100.0));
+    }
 
     @FXML
     void leftdoorsClick(ActionEvent event) {
@@ -395,20 +424,39 @@ public class TrainModelController extends MainFXMLController implements Initiali
             if(power > 120){ //check for the max power
                 power = 120.00;
             }
-            System.out.println(power);
-            int passengers = Integer.parseInt(passengerNumber.getText());
+//            System.out.println(power);
+//            int passengers = Integer.parseInt(passengerNumber.getText());
+//
+//            double newSpeed = t.calculateVelocity(power, curSpeed, 0, 0, 300, passengers);
+//    //        System.out.println("velocity: "+ newSpeed + "mph");
+    
+            storedVelocity = curSpeed;
+            storedPower = power;
 
-            double newSpeed = t.calculateVelocity(power, curSpeed, 0, 0, 300, passengers);
-    //        System.out.println("velocity: "+ newSpeed + "mph");
-
-            currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
+            currentSpeedNumber.setText(String.valueOf(Math.round(100*curSpeed)/100.0));
             requestedPowerNumber.setText(String.valueOf(Math.round(100*power)/100.0));
         }
         
+               
+    }
+    
+    @FXML
+    void onSubmitOther(ActionEvent event) {
         if(!"".equals(authorityBox.getText())){
             authorityId.setText(String.valueOf(authorityBox.getText()));
+        } 
+        
+        if(!"".equals(trackElevationBox.getText())){
+            trackelevationId.setText(String.valueOf(trackElevationBox.getText()));
         }
         
+        if(!"".equals(temperatureBox.getText())){
+            tempId.setText(String.valueOf(temperatureBox.getText()));
+        }
+        
+        if(!"".equals(announcementBox.getText())){
+            announcementId.setText(String.valueOf(announcementBox.getText()));
+        }
     }
 
     @FXML

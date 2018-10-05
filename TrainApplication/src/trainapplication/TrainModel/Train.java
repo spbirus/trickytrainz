@@ -42,7 +42,7 @@ public class Train {
     private final double MPH_TO_MiPS = 0.000277778;
     private final double serviceBrakeDecel = 1.2 * 3.2808399; //ft/s^2
     private final double emergencyBrakeDecel = 2.73 * 3.2808399; //ft/s^2
-    private final double deltaT = 0.01; //used to say how everything is updating?????
+    private final double deltaT = 1; //deltaT is a change in time that helps us not miss the beacon
     private int numberOfWheels = 12; //will probably need to change
     private final double coefficientOfFriction = 0.00035; //from  https://en.wikipedia.org/wiki/Rolling_resistance#Rolling_resistance_coefficient_examples
     private int direction; // 0 and 1
@@ -301,8 +301,8 @@ public class Train {
         totalMass = trainMass + 150*passengers; //might need to add 1 for the operator
         
         /*
-                                                                                   F             a           vel
-        (1000)*power(.0006214)/(currentSpeed) X (.22481)/(currentSpeed*.000277778) X 1/totalMass X 1/seconds
+                                                                                   F             a         vel
+        (1000)*power(.0006214)/(currentSpeed) X (.22481)/(currentSpeed*.000277778) X 1/totalMass X 1*deltaT
                       to mi                     to ft lbs      to mi per sec
         
         
@@ -355,8 +355,7 @@ public class Train {
         System.out.println("accel: " + trainAccel +" ft/s^2");
         
         //VELOCITY
-        //TODO: figure out what the seconds part is to get from accel to velocity
-        velActual = currentSpeed + (trainAccel * deltaT)*FTPS_TO_MPH; //0.01 is a change in time that helps us not miss the beacon
+        velActual = currentSpeed + (trainAccel * deltaT)*FTPS_TO_MPH; //deltaT is a change in time that helps us not miss the beacon
         
         //prevent it from going backwards
         if(velActual < 0){

@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trainapplication;
+package trainapplication.TrackController;
 
+import trainapplication.Track;
+import trainapplication.Train;
 import java.util.*;
 import java.io.*;
 import java.net.URL;
@@ -178,7 +180,7 @@ public class TrackControllerController implements Initializable {
 
     @FXML
     void trackMenuControl() {
-        redLine.
+//        redLine.
     }
     
     void changeColor() {

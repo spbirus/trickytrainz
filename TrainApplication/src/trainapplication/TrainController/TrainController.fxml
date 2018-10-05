@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="979.0" prefWidth="940.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrainControllerController">
+<AnchorPane id="AnchorPane" prefHeight="979.0" prefWidth="940.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrainController.TrainControllerController">
    <children>
       <AnchorPane layoutX="10.0" layoutY="73.0" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>

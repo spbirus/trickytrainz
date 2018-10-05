@@ -25,7 +25,10 @@ public class Track {
     //Track State Parameters Determined by the state of the system
     private String switchState;
     private String blockState;
+    private String signal;
     private String beacon;
+    private int passengersStation;
+    private int passengersBoard;
     
 
     public Track(String line, String section, int blockNumber, int blockLength, double blockGrade, int speedLimit, String infrastructure, double elevation, double cumElevation, String blockState) {

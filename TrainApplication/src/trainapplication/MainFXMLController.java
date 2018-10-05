@@ -5,6 +5,8 @@
  */
 package trainapplication;
 
+import trainapplication.CTCOffice.*;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -34,7 +36,7 @@ public class MainFXMLController implements Initializable {
         
         if(! ctcStage.isShowing()) 
         {
-            AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("CTCOffice.fxml"));
+            AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getClassLoader().getResource("/CTCOffice/CTCOffice.fxml"));
             Scene scene = new Scene(page);
             ctcStage.setScene(scene);
             ctcStage.setTitle("CTC Office");
@@ -50,7 +52,7 @@ public class MainFXMLController implements Initializable {
         
         if(! trackControllerStage.isShowing()) 
         {
-            AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("TrackController.fxml"));
+            AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("/TrackController/TrackController.fxml"));
             Scene scene = new Scene(page);
             trackControllerStage.setScene(scene);
             trackControllerStage.setTitle("Track Controller");

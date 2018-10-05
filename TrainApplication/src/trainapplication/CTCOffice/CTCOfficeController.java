@@ -3,8 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trainapplication;
+package trainapplication.CTCOffice;
 
+import trainapplication.Track;
+import trainapplication.Train;
 import java.io.*;
 import java.net.URL;
 import java.text.DateFormat;

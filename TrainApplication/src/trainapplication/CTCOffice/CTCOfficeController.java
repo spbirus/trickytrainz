@@ -31,7 +31,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
@@ -43,12 +42,14 @@ import javafx.util.Duration;
 public class CTCOfficeController implements Initializable {
 
     
-    private int trainIDIterator = 1;
+    private int trainIDIterator = 0;
     private int redLineThroughput = 0;
     private int greenLineThroughput = 0;
     private int allLineThroughput = 0;
     private int hourlyPassengers = 0;
     private int hourlyTicketSales = 0;
+    private Schedule[] scheduleArray;
+    DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
     /**
      * Initializes the controller class.
      */
@@ -146,11 +147,10 @@ public class CTCOfficeController implements Initializable {
         trackTableGreenState.setStyle("-fx-alignment: CENTER;");
         
         //set system time to display
-        DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
         final Timeline timeline = new Timeline(
             new KeyFrame(
                 Duration.millis(500), event -> {
-                    systemTimeText.setText(timeFormat.format(System.currentTimeMillis()*4));
+                    systemTimeText.setText(timeFormat.format(System.currentTimeMillis()));
                     //can speedup time by multiplying speedup by System.currentTimeMillis()
                     //this however also changes the base system time, so not sure if that would work
                 }
@@ -158,6 +158,8 @@ public class CTCOfficeController implements Initializable {
         );
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+        
+        System.out.println((timeFormat.format(System.currentTimeMillis() + (long)15)));
         
     }
 
@@ -338,6 +340,8 @@ public class CTCOfficeController implements Initializable {
 
     @FXML
     void dispatchButtonClick(ActionEvent event) {
+        
+        //dummy info for just testing occupying the track table
         Train train1 = new Train("Red", 12, 33, 13, 1, 24);
         Train train2 = new Train("Green", 22, 26, 27, 34, 79);
         Track track1 = new Track("Red", "A", 1, 175, 35, "Occupied");
@@ -351,6 +355,7 @@ public class CTCOfficeController implements Initializable {
         trackTableGreen.getItems().add(track2);
     }
 
+    //schedule loaded in will be one train per file
     @FXML
     void loadScheduleButtonClick(ActionEvent event) {
         String csvFile;
@@ -367,15 +372,21 @@ public class CTCOfficeController implements Initializable {
         String cvsSplitBy = ",";
 
         try {
-
+            
+            Schedule schedule = new Schedule();
+            int index = 0; //index for elements of one schedule (multiple stops)
+            
             br = new BufferedReader(new FileReader(csvFile));
             while ((line = br.readLine()) != null) {
 
                 // use comma as separator
-                String[] trainInfo = line.split(cvsSplitBy);
-                createTrainFromSchedule(trainInfo);
-
+                String[] scheduleInfo = line.split(cvsSplitBy);
+                createTrainSchedule(schedule, scheduleInfo, index++);
             }
+            createTrainFromSchedule(schedule);
+            scheduleArray[trainIDIterator] = schedule;
+            trainIDIterator++;
+            
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -436,22 +447,24 @@ public class CTCOfficeController implements Initializable {
 
     }
 
-    //rest of methods
+    //rest of methods, non event-handlers
     
     /*
     create a train object based on the information
     train info passed in will be as follows:
     line, section(not used), current block, target block(=authority), time to target
     */
-    private void createTrainFromSchedule(String[] trainAttributes) {
-        String line = trainAttributes[0];
-        int number = trainIDIterator++;
-        int speed = 0;
-        int authority = Integer.parseInt(trainAttributes[2]);
-        int block = Integer.parseInt(trainAttributes[2]);
-        int target = Integer.parseInt(trainAttributes[3]);
-        double timeToNextBlock = Double.parseDouble(trainAttributes[4]);
-        Train train = new Train(line, number, speed, authority, block, target);
+    private void createTrainFromSchedule(Schedule schedule) {
+        
+        
+//        String line = trainAttributes[0];
+//        int number = trainIDIterator++;
+//        int speed = 0;
+//        int authority = Integer.parseInt(trainAttributes[2]);
+//        int block = Integer.parseInt(trainAttributes[2]);
+//        int target = Integer.parseInt(trainAttributes[3]);
+//        double timeToNextBlock = Double.parseDouble(trainAttributes[4]);
+//        Train train = new Train(line, number, speed, authority, block, target);
         
 //        temp sample items
 //        String line = "RED";
@@ -461,10 +474,21 @@ public class CTCOfficeController implements Initializable {
 //        int block = 1;
 //        int target = 5;
 //        Train train = new Train(line, number, speed, authority, block, target);
-        
-        addTrainToTable(train);
+//        
+//        addTrainToTable(train);
     }
     
+    private void createTrainSchedule(Schedule schedule, String[] trainAttributes, int index) {
+        schedule.trainID = trainIDIterator;
+        schedule.currentBlock[index] = Integer.parseInt(trainAttributes[2]);
+        schedule.targetBlock[index] = Integer.parseInt(trainAttributes[3]);
+        schedule.dispatchTime = System.currentTimeMillis();
+        schedule.timeToNextBlock[index] = Double.parseDouble(trainAttributes[4]);
+        
+        
+    }
+    
+    //takes train information as an input and adds a train to the appropriate table
     private void addTrainToTable(Train train) {
         if (train.getLine().equalsIgnoreCase("Red")){
             trainTableRed.getItems().add(train);
@@ -474,6 +498,12 @@ public class CTCOfficeController implements Initializable {
         trainTableAll.getItems().add(train);
         
         System.out.println(train);
+    }
+    
+    //updates table when a train reaches its target
+    //for demonstration purposes, will base it on a time factor in the schedule
+    private void updateTrainTable(){
+        
     }
 
 }

@@ -21,7 +21,7 @@ public class Train {
     private int passNum;
     private int maxCap;
     private int carNum = 1;
-    private int doorNum;
+    private int doorNum = 8;
     private double accelLimit =  0.5 * 3.2808399;  //ft/s
     private double deccelLimit = 0; //ft/s
     private double speed;       //
@@ -30,6 +30,7 @@ public class Train {
     private int target; //destination
     private int temperature;
     
+    private int maxCapacity = 148 + 74;
     private double trainMass = 81800; //lbs
     private double totalMass; //mass of car and people
     private double velActual = 0; //thing to return to train controller
@@ -39,10 +40,10 @@ public class Train {
     private final double GRAVITY = 32.17405; //ft/s^2
     //private final double SEC_TO_HR = 3600;
     private final double FTPS_TO_MPH = 0.681818;
-    private final double MPH_TO_MiPS = 0.000277778;
+    private final double MPH_TO_MiPS = 0.000277778; //miles per hr to miles to miles per second
     private final double serviceBrakeDecel = 1.2 * 3.2808399; //ft/s^2
     private final double emergencyBrakeDecel = 2.73 * 3.2808399; //ft/s^2
-    private final double deltaT = 1; //deltaT is a change in time that helps us not miss the beacon
+    private final double deltaT = 0.01; //deltaT is a change in time that helps us not miss the beacon
     private int numberOfWheels = 12; //will probably need to change
     private final double coefficientOfFriction = 0.00035; //from  https://en.wikipedia.org/wiki/Rolling_resistance#Rolling_resistance_coefficient_examples
     private int direction; // 0 and 1
@@ -303,7 +304,7 @@ public class Train {
         /*
                                                                                    F             a         vel
         (1000)*power(.0006214)/(currentSpeed) X (.22481)/(currentSpeed*.000277778) X 1/totalMass X 1*deltaT
-                      to mi                     to ft lbs      to mi per sec
+                      to mi                     to ft lbs            to mi per sec
         
         
         */
@@ -313,14 +314,16 @@ public class Train {
         //FORCE
         if(currentSpeed == 0){
             //train is stopped therefore can't divide by 0
-            force = (power*1000*M_TO_MI)/1; //convert from kW to Watts
+            System.out.println("speed is 0");
+            force = (power*1000)*(N_TO_FTLBS)/1; //convert from kW to Watts
         }else{
-            force = (power*1000*M_TO_MI)*(N_TO_FTLBS/(currentSpeed*MPH_TO_MiPS));
+            force = (power*1000)*(N_TO_FTLBS/currentSpeed);
         }
         
         //to downward force
         double slope = Math.atan2(grade, 100); //given in radians
         double angle = Math.toDegrees(slope);
+        System.out.println("Slope: " + slope + " Angle: " + angle);
         
         //get all forces acting in the x plane that will counteract the force in the positive direction
         double normalForce = (totalMass/numberOfWheels) * GRAVITY * Math.sin(angle*Math.PI/180);
@@ -329,6 +332,7 @@ public class Train {
         //frictional force
         double frictionalForce = (coefficientOfFriction*downwardForce) + normalForce;
         System.out.println("Frictionalforce: " +frictionalForce + " ftlbs");
+        System.out.println("Friction: " + force);
         
         force = force - frictionalForce;
         

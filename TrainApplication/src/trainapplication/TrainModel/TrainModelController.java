@@ -364,11 +364,6 @@ public class TrainModelController implements Initializable {
     }
 
     @FXML
-    void onBrakeFailure(ActionEvent event) {
-
-    }
-
-    @FXML
     void onEmergencyBrakeClick(ActionEvent event) {
         if(emergencyBrakeButton.isSelected()){
             double curSpeed = Double.parseDouble(currentSpeedNumber.getText());
@@ -384,9 +379,20 @@ public class TrainModelController implements Initializable {
             emergencyBrakeId.setText("disengaged");
         }
     }
+    
+    @FXML
+    void onBrakeFailure(ActionEvent event) {
+
+    }
+
 
     @FXML
     void onEngineFailure(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void onSignalFailure(ActionEvent event) {
 
     }
 
@@ -400,19 +406,19 @@ public class TrainModelController implements Initializable {
     }
 
     @FXML
-    void onSignalFailure(ActionEvent event) {
-
-    }
-    
-    @FXML
     void onSetpointSpeedSubmit(ActionEvent event) {
 
     }
     
     @FXML
     void onPassengersLeavingSubmit(ActionEvent event) {
-        passengerNumber.setText(String.valueOf(Integer.parseInt(passengerNumber.getText()) - Integer.parseInt(passengersLeavingBox.getText())));
-        passengerId.setText(String.valueOf(Integer.parseInt(passengerNumber.getText()) - Integer.parseInt(passengersLeavingBox.getText())));
+        if(Integer.parseInt(passengerNumber.getText()) - Integer.parseInt(passengersLeavingBox.getText()) < 0){
+            passengerNumber.setText(String.valueOf(0));
+            passengerId.setText(String.valueOf(0));
+        }else{
+            passengerNumber.setText(String.valueOf(Integer.parseInt(passengerNumber.getText()) - Integer.parseInt(passengersLeavingBox.getText())));
+            passengerId.setText(String.valueOf(Integer.parseInt(passengerNumber.getText()) - Integer.parseInt(passengersLeavingBox.getText())));
+        }
     }
     
 
@@ -474,23 +480,23 @@ public class TrainModelController implements Initializable {
         
     }
     
-    @FXML
-    void onRefresh(ActionEvent event) {
-        //TODO: need a for loop that will go through database and add all of the trains      
-        track.setCellValueFactory(new PropertyValueFactory<>("line"));
-        number.setCellValueFactory(new PropertyValueFactory<>("number"));
-        length.setCellValueFactory(new PropertyValueFactory<>("length"));
-        width.setCellValueFactory(new PropertyValueFactory<>("width"));
-        height.setCellValueFactory(new PropertyValueFactory<>("height"));
-        mass.setCellValueFactory(new PropertyValueFactory<>("mass"));
-        crewNum.setCellValueFactory(new PropertyValueFactory<>("crewNum"));
-        passNum.setCellValueFactory(new PropertyValueFactory<>("passNum"));
-        maxCap.setCellValueFactory(new PropertyValueFactory<>("maxCap"));
-        carNum.setCellValueFactory(new PropertyValueFactory<>("carNum"));
-        doorNum.setCellValueFactory(new PropertyValueFactory<>("doorNum"));
-        accelLimit.setCellValueFactory(new PropertyValueFactory<>("accelLimit"));
-        deccelLimit.setCellValueFactory(new PropertyValueFactory<>("deccelLimit"));
-        trainTable.getItems().add(t);
-    }
+//    @FXML
+//    void onRefresh(ActionEvent event) {
+//        //TODO: need a for loop that will go through database and add all of the trains      
+//        track.setCellValueFactory(new PropertyValueFactory<>("line"));
+//        number.setCellValueFactory(new PropertyValueFactory<>("number"));
+//        length.setCellValueFactory(new PropertyValueFactory<>("length"));
+//        width.setCellValueFactory(new PropertyValueFactory<>("width"));
+//        height.setCellValueFactory(new PropertyValueFactory<>("height"));
+//        mass.setCellValueFactory(new PropertyValueFactory<>("mass"));
+//        crewNum.setCellValueFactory(new PropertyValueFactory<>("crewNum"));
+//        passNum.setCellValueFactory(new PropertyValueFactory<>("passNum"));
+//        maxCap.setCellValueFactory(new PropertyValueFactory<>("maxCap"));
+//        carNum.setCellValueFactory(new PropertyValueFactory<>("carNum"));
+//        doorNum.setCellValueFactory(new PropertyValueFactory<>("doorNum"));
+//        accelLimit.setCellValueFactory(new PropertyValueFactory<>("accelLimit"));
+//        deccelLimit.setCellValueFactory(new PropertyValueFactory<>("deccelLimit"));
+//        trainTable.getItems().add(t);
+//    }
     
 }

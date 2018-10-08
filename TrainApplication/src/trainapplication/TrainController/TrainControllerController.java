@@ -53,7 +53,7 @@ public class TrainControllerController implements Initializable {
 //        deccelLimit.setCellValueFactory(new PropertyValueFactory<>("deccelLimit"));
 //        //trainTable.getItems().add(t);
 //        trainTable.getItems().add(t);
-        
+        train1 = new Train("red",1,0.0,1,1,1);
         
         currSpeedVal = Double.parseDouble(currentSpeedLabel.getText());
         setpointSpeedVal = Double.parseDouble(setpointSpeedLabel.getText());
@@ -171,6 +171,7 @@ public class TrainControllerController implements Initializable {
     double setpointSpeedVal;
     double uVal;
     double speedErr;
+    Train train1;
 
     //==========================================================================
 
@@ -217,9 +218,18 @@ public class TrainControllerController implements Initializable {
             powerVal = MAX_POWER;
         }
         powerLabel.setText(String.format("%.3f",powerVal));
+        
+        
+        //========FOR TESTING PURPOSES================
+        
+        double v = train1.calculateVelocity(powerVal, currSpeedVal, 0, 1, setpointSpeedVal, 50);
+                
+        //============================================
+                
+                
         //String.format("%.3f", value.doubleValue())
         if(currSpeedVal < setpointSpeedVal)
-            currentSpeedLabel.setText(String.valueOf(currSpeedVal+5));
+            currentSpeedLabel.setText(String.valueOf(v));
         System.out.println("=================================================");
 
     }

@@ -3,36 +3,28 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trainapplication;
+package trainapplication.TrainController;
 
-import java.io.IOException;
+import trainapplication.Train;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuButton;
-import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
+
 
 /**
  * FXML Controller class
  *
  * @author burri
  */
-public class TrainModelController extends MainFXMLController implements Initializable {
+public class TrainControllerController implements Initializable {
 
     /**
      * Initializes the controller class.
@@ -41,7 +33,7 @@ public class TrainModelController extends MainFXMLController implements Initiali
     public void initialize(URL url, ResourceBundle rb) {
         //TODO: need a for loop that will go through database and add all of the trains
         Train t = new Train("red",1,2,3,4,5,6,7,8,9,10,11,12);        
-        track.setCellValueFactory(new PropertyValueFactory<>("track"));
+        track.setCellValueFactory(new PropertyValueFactory<>("line"));
         number.setCellValueFactory(new PropertyValueFactory<>("number"));
         length.setCellValueFactory(new PropertyValueFactory<>("length"));
         width.setCellValueFactory(new PropertyValueFactory<>("width"));
@@ -54,108 +46,28 @@ public class TrainModelController extends MainFXMLController implements Initiali
         doorNum.setCellValueFactory(new PropertyValueFactory<>("doorNum"));
         accelLimit.setCellValueFactory(new PropertyValueFactory<>("accelLimit"));
         deccelLimit.setCellValueFactory(new PropertyValueFactory<>("deccelLimit"));
+        //trainTable.getItems().add(t);
         trainTable.getItems().add(t);
     }   
     
-     @FXML
-    private RadioButton emergencyBrakeButton;
+    @FXML
+    private Label currentSpeed;
 
     @FXML
-    private TextField passengersLeavingBox;
+    private Label setpointSpeed;
 
     @FXML
-    private TextField setpointSpeedBox;
+    private TextField kpVal;
 
     @FXML
-    private TextField authorityBox;
-
+    private TextField kiVal;
+    
     @FXML
-    private TextArea trainInfoBox;
-
-    @FXML
-    private TextArea trainControllerBox;
-
-    @FXML
-    private TextArea trackModelBox;
-
-    @FXML
-    private TextField temperatureBox;
-
-    @FXML
-    private TextField powerRequestBox;
-
-    @FXML
-    private TextField announcementBox;
-
-    @FXML
-    private TextField trackElevationBox;
-
-    @FXML
-    private MenuButton trainNumDropdown;
-
-    @FXML
-    private RadioButton lightsButton;
-
-    @FXML
-    private RadioButton brakeButton;
-
-    @FXML
-    private RadioButton leftdoorsButton;
-
-    @FXML
-    private RadioButton rightdoorsButton;
-
-    @FXML
-    private Button activateBrakeFailure;
-
-    @FXML
-    private Button activateEngineFailure;
-
-    @FXML
-    private Button activateSignalFailure;
-
-    @FXML
-    private Label passengerNumber;
-
-    @FXML
-    private Label requestedPowerNumber;
-
-    @FXML
-    private Label currentSpeedNumber;
-
-    @FXML
-    private Button sendSpeed;
-
-    @FXML
-    private Button sendLeavingPass;
-
-    @FXML
-    private Button submitButton;
-
-    @FXML
-    private TextArea trackModelBox1;
-
-    @FXML
-    private TextField suggestSpeedBox;
-
-    @FXML
-    private Button dactivateBrakeFailure;
-
-    @FXML
-    private Button dectivateEngineFailure;
-
-    @FXML
-    private Button deactivateSignalFailure;
-
+    private Label power;
+    
     @FXML
     private TableView<Train> trainTable;
-    
-    @FXML
-    private Button refresh;
-    
-    @FXML
-    private TableColumn<Train, String> track;
-    
+
     @FXML
     private TableColumn<Train, Integer> number;
 
@@ -193,83 +105,22 @@ public class TrainModelController extends MainFXMLController implements Initiali
     private TableColumn<Train, Integer> deccelLimit;
 
     @FXML
-    void leftdoorsClick(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onBrakeClick(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onBrakeFailure(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onEmergencyBrakeClick(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onEngineFailure(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onLightsClick(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onSignalFailure(ActionEvent event) {
-
-    }
+    private TableColumn<Train, String> track;
     
     @FXML
-    void onSetpointSpeedSubmit(ActionEvent event) {
-
-    }
+    private MenuButton trainNumDropdown;
     
-    @FXML
-    void onPassengersLeavingSubmit(ActionEvent event) {
-
-    }
     
-
-    @FXML
-    void onSubmit(ActionEvent event) throws IOException {
-        System.out.println("train control second " + trainControllerStage.toString());
-
-        //send data to the train controller
-        if(! MainFXMLController.trainControllerStage.isShowing()) 
-        {
-            AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("TrainController.fxml"));
-            Scene scene = new Scene(page);
-            MainFXMLController.trainControllerStage.setScene(scene);
-            MainFXMLController.trainControllerStage.setTitle("Train Controller");
-            MainFXMLController.trainControllerStage.setResizable(true);
-        
-            MainFXMLController.trainControllerStage.show();
-        }
-    }
-
-    @FXML
+     @FXML
     void onTrainSelectionClick(ActionEvent event) {
 
     }
 
-    @FXML
-    void rightdoorsClick(ActionEvent event) {
-
-    }
-    
-    @FXML
+     @FXML
     void onRefresh(ActionEvent event) {
         //TODO: need a for loop that will go through database and add all of the trains
         Train t = new Train("red",1,2,3,4,5,6,7,8,9,10,11,12);
-        track.setCellValueFactory(new PropertyValueFactory<>("track"));
+        track.setCellValueFactory(new PropertyValueFactory<>("line"));
         number.setCellValueFactory(new PropertyValueFactory<>("number"));
         length.setCellValueFactory(new PropertyValueFactory<>("length"));
         width.setCellValueFactory(new PropertyValueFactory<>("width"));
@@ -283,6 +134,35 @@ public class TrainModelController extends MainFXMLController implements Initiali
         accelLimit.setCellValueFactory(new PropertyValueFactory<>("accelLimit"));
         deccelLimit.setCellValueFactory(new PropertyValueFactory<>("deccelLimit"));
         trainTable.getItems().add(t);
+    }
+    
+    private final double MAX_POWER = 120; //kW
+    
+    @FXML
+    void setKVals(ActionEvent event) {
+        double currSpeedVal = Double.parseDouble(currentSpeed.getText());
+        double setpointSpeedVal = Double.parseDouble(setpointSpeed.getText());
+        
+        //double power = Double.parseDouble(p.getText());
+        //int passengers = Integer.parseInt(passengerNumber.getText());
+        double kp = Double.parseDouble(kpVal.getText());
+        double ki = Double.parseDouble(kiVal.getText());
+        double oldPowerVal = Double.parseDouble(power.getText());
+        
+        double speedErr = setpointSpeedVal - currSpeedVal;
+        double uVal= 10; //will need to be calculated
+        
+        
+        
+        double powerVal = (kp*speedErr)+(ki*uVal);
+        
+        
+        if(powerVal > MAX_POWER){
+            powerVal = oldPowerVal;
+        }
+        power.setText(String.valueOf(powerVal));
+        
+
     }
     
 }

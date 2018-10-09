@@ -354,7 +354,7 @@ public class CTCOfficeController implements Initializable {
 //        trackTableRed.getItems().add(track1);
 //        trackTableGreen.getItems().add(track2);
         
-        
+        System.out.println(trainIDIterator);
         Schedule schedule = scheduleArray[0];
         schedule.dispatchTime = System.currentTimeMillis();
         //conversion from timetoNext block is going to be sloppy... need to do it properly in the future

@@ -5,7 +5,7 @@
  */
 package trainapplication.TrackController;
 
-import trainapplication.Track;
+import trainapplication.TrackModel.Track;
 import trainapplication.Train;
 import java.util.*;
 import java.io.*;
@@ -16,12 +16,15 @@ import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.shape.Circle;
 
 
@@ -35,30 +38,43 @@ public class TrackControllerController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    Track block;
+    Track2 block;
     Train t;
+    int blockNum;
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //From other module
-        block= new Track("Green", "A", 1, 100, 1.5, 55, "", 1.0, 1.0, "Open");
+        //block=getTrack((int)blockNumSlider.getValue());
+        block= new Track2("Green", "A", 1, 100, 1.5, 55, "", 1.0, 1.0, "Open");
         trackName.setText(block.getLine());
         sectionName.setText(block.getSection());
         blockName.setText(Integer.toString(block.getBlockNumber()));
-        //stationBool.setText(block.getStationPresent());
-        //switchBool.setText(block.getSwitchPresent());
-        //crossingBool.setText(block.getCrossingPresent());
-        //crossingState.setText(block.getCrossing());
-        //railState.setText(block.getRailState());
-        //circuitState.setText(block.getCircuit());
-        //trackOccupancy.setText(block.getOccupancy());
+        stationBool.setText(Boolean.toString(block.getStationPresent()));
+        switchBool.setText(Boolean.toString(block.getSwitchPresent()));
+        crossingBool.setText(Boolean.toString(block.getCrossingPresent()));
+        if(block.getCrossingState()){
+            crossingState.setText("Lowered");
+        }else{
+            crossingState.setText("Raised");
+        }
+        if(block.getRailState()){
+            railState.setText("Functional");
+        }else{
+            railState.setText("Faulty");
+        }
+        if(block.getCircuitState()){
+            circuitState.setText("Functional");
+        }else{
+            circuitState.setText("Faulty");
+        }
         //From other module
         t = new Train("red", 20, 100, 1000, 1, 5);
         outputSpeed.setText(Double.toString(t.getSpeed())+" mph");
         outputAuthority.setText(Double.toString(t.getAuthority())+" ft");
         commandedSpeed.setText(Double.toString(t.getSpeed())+" mph");
         authority.setText(Double.toString(t.getAuthority())+" ft");
-        switchPosition.setText(block.getSwitchState());
-        outputSwitch.setText(block.getSwitchState());
+        switchPosition.setText(Boolean.toString(block.getSwitchState()));
+        outputSwitch.setText(Boolean.toString(block.getSwitchState()));
         outputLights.setText("Red");
         if(t.getBlock()==block.getBlockNumber()){
             trackOccupancy.setText("Occupied");
@@ -66,8 +82,20 @@ public class TrackControllerController implements Initializable {
             trackOccupancy.setText("Not Occupied");
         }
         changeColor();
-        
-    }     
+        blockNumSlider.setMin(0);
+        blockNumSlider.setMax(50);
+        blockValue.setText(Integer.toString((int)blockNumSlider.getValue()));
+
+    }  
+    @FXML
+    private Button sliderSubmit;
+    
+    @FXML
+    private Label blockValue;
+    
+    @FXML
+    private Slider blockNumSlider;
+    
     @FXML
     private MenuBar waysideMenuBar;
     
@@ -165,7 +193,7 @@ public class TrackControllerController implements Initializable {
     private Button importPLC;
     
     @FXML
-    private Menu redLine;
+    private MenuButton redLine;
     
     @FXML
     private MenuItem greenLine;
@@ -197,41 +225,101 @@ public class TrackControllerController implements Initializable {
     void murphyOpenSwitchClick(ActionEvent event) {
         switchPosition.setText("Open");
         outputSwitch.setText("Open");
+        //getBlock(blockNum).setSwitchState(true);
         changeColor();
     }
     @FXML
     void murphyCloseSwitchClick(ActionEvent event) {
         switchPosition.setText("Closed");
         outputSwitch.setText("Closed");
+        //getBlock(blockNum).setSwitchState(false);
         changeColor();
     }
     @FXML
     void murphyRaiseCrossingClick(ActionEvent event) {
         crossingState.setText("Raised");
+        //getBlock(blockNum).setCrossingState(false);
         changeColor();
     }
     @FXML
     void murphyLowerCrossingClick(ActionEvent event) {
         crossingState.setText("Lowered");
+        //getBlock(blockNum).setCrossingState(true);
         changeColor();
     }
     @FXML
     void murphyFixRailClick(ActionEvent event) {
         railState.setText("Functional");
+        //getBlock(blockNum).setRailState(true);
         changeColor();
     }
     @FXML
     void murphyBreakRailClick(ActionEvent event) {
         railState.setText("Faulty");
+        //getBlock(blockNum).setRailState(false);
         changeColor();
     }
     @FXML
     void murphyFixCircuitClick(ActionEvent event) {
         circuitState.setText("Functional");
+        //getBlock(blockNum).setCircuitState(true);
         changeColor();
     }
     @FXML
     void murphyBreakCircuitClick(ActionEvent event) {
         circuitState.setText("Faulty");
+        //getBlock(blockNum).setCircuitState(false);
+        changeColor();
+    }
+    @FXML
+    void sliderSubmit(ActionEvent event){
+        int sliderValue=(int)blockNumSlider.getValue();
+       
+        //initialize(getBlock(sliderValue));
+    }
+    @FXML
+    void sliderMoved(ActionEvent event){
+        //blockValue.setText(Long.toString(Math.round(blockNumSlider.getValue())));
+        
+    }
+    void run(Train t){
+        /*
+        boolean[] route = t.getRoute();
+        Track2 current = t.getStart();
+        Track2 end = t.getEnd();
+        int b;
+        while(!current.isEqual(end)){
+            b = current.getBlockNumber();
+            if(current.getSwitchPresent()){
+                if(current.getCrossingPresent()){
+                    if(current.getRailState()&&current.getCircuitState()){
+                        current.setCrossingState(true);
+                        current.setSwitchState(route[b]);
+                    }else{
+                        t.sendFailure();
+                    }
+                }else{
+                    if(current.getRailState()&&current.getCircuitState()){
+                        current.setSwitchState(route[b]);
+                    }else{
+                        t.sendFailure();
+                    }
+                }
+            }else{
+                if(current.getCrossingPresent()){
+                    if(current.getRailState()&&current.getCircuitState()){
+                        current.setCrossingState(true);
+                    }else{
+                        t.sendFailure();
+                    }
+                }else{
+                     if(!current.getRailState()||!current.getCircuitState()){
+                        t.sendFailure();
+                    }
+                }
+            }
+            current = current.getNextBlock();
+        }
+        */
     }
 }

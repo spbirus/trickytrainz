@@ -12,6 +12,7 @@ import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.animation.Animation;
@@ -41,30 +42,31 @@ import javafx.util.Duration;
  */
 public class CTCOfficeController implements Initializable {
 
-    
     private int trainIDIterator = 0;
     private int redLineThroughput = 0;
     private int greenLineThroughput = 0;
     private int allLineThroughput = 0;
     private int hourlyPassengers = 0;
     private int hourlyTicketSales = 0;
-    private Schedule[] scheduleArray;
-    DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+    private Schedule[] scheduleArray = new Schedule[1]; //array of schedules, will hold all schedules laoded in
+    private DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+    private long currentTime = System.currentTimeMillis();
+    private Timeline timeline = new Timeline();
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-        
+
         //set column to be a drop down to select red or green line (only in all table)
-        ObservableList<String> list = 
-        FXCollections.observableArrayList();
-            list.add("Red");
-            list.add("Green");
+        ObservableList<String> list
+                = FXCollections.observableArrayList();
+        list.add("Red");
+        list.add("Green");
         trainTableAllLine.setCellFactory(ComboBoxTableCell.forTableColumn(list));
-        
-        
+
         //init train tables for each line
         trainTableAllLine.setCellValueFactory(new PropertyValueFactory<>("line"));
         trainTableAllNumber.setCellValueFactory(new PropertyValueFactory<>("number"));
@@ -145,22 +147,18 @@ public class CTCOfficeController implements Initializable {
         trackTableGreenLength.setStyle("-fx-alignment: CENTER;");
         trackTableGreenLimit.setStyle("-fx-alignment: CENTER;");
         trackTableGreenState.setStyle("-fx-alignment: CENTER;");
-        
+
         //set system time to display
-        final Timeline timeline = new Timeline(
-            new KeyFrame(
-                Duration.millis(500), event -> {
-                    systemTimeText.setText(timeFormat.format(System.currentTimeMillis()));
-                    //can speedup time by multiplying speedup by System.currentTimeMillis()
-                    //this however also changes the base system time, so not sure if that would work
-                }
-            )
-        );
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
         
-        System.out.println((timeFormat.format(System.currentTimeMillis() + (long)15)));
         
+        multiplierTextField.setText("1");
+        
+        setTime(Integer.parseInt(multiplierTextField.getText()));
+
+        long offTime = (long) (System.currentTimeMillis() + 3.7*60*1000);
+        System.out.println(timeFormat.format(System.currentTimeMillis()));
+        System.out.println(timeFormat.format(offTime));
+
     }
 
     //track table information for all lines
@@ -319,10 +317,10 @@ public class CTCOfficeController implements Initializable {
 
     @FXML
     private MenuItem menuUserManual;
-    
+
     @FXML
     private Label systemTimeText;
-    
+
     @FXML
     private Label redThroughputLabel;
 
@@ -336,23 +334,35 @@ public class CTCOfficeController implements Initializable {
     @FXML
     void autoModeButtonClick(ActionEvent event) {
         //TODO later
+        timeline.stop();
+        setTime(Integer.parseInt(multiplierTextField.getText()));
     }
 
     @FXML
     void dispatchButtonClick(ActionEvent event) {
-        
-        //dummy info for just testing occupying the track table
-        Train train1 = new Train("Red", 12, 33, 13, 1, 24);
-        Train train2 = new Train("Green", 22, 26, 27, 34, 79);
-        Track track1 = new Track("Red", "A", 1, 175, 35, "Occupied");
-        Track track2 = new Track("Green", "I", 34, 175, 35, "Occupied");
 
-        addTrainToTable(train1);
-        addTrainToTable(train2);
-        trackTableAll.getItems().add(track1);
-        trackTableAll.getItems().add(track2);
-        trackTableRed.getItems().add(track1);
-        trackTableGreen.getItems().add(track2);
+        //dummy info for just testing occupying the track table
+//        //will delete this eventually...
+//        Train train1 = new Train("Red", 12, 33, 13, 1, 24);
+//        Train train2 = new Train("Green", 22, 26, 27, 34, 79);
+//        Track track1 = new Track("Red", "A", 1, 175, 35, "Occupied");
+//        Track track2 = new Track("Green", "I", 34, 175, 35, "Occupied");
+//        addTrainToTable(train1);
+//        addTrainToTable(train2);
+//        trackTableAll.getItems().add(track1);
+//        trackTableAll.getItems().add(track2);
+//        trackTableRed.getItems().add(track1);
+//        trackTableGreen.getItems().add(track2);
+        
+        
+        Schedule schedule = scheduleArray[0];
+        schedule.dispatchTime = System.currentTimeMillis();
+        //conversion from timetoNext block is going to be sloppy... need to do it properly in the future
+        long arrivalTime = (long) (schedule.dispatchTime + schedule.timeToNextBlock[schedule.scheduleIndex]*60*1000);
+        System.out.println("departure time: " + timeFormat.format(schedule.dispatchTime));
+        System.out.println("arrival time: " + timeFormat.format(arrivalTime));
+        
+        
     }
 
     //schedule loaded in will be one train per file
@@ -372,21 +382,23 @@ public class CTCOfficeController implements Initializable {
         String cvsSplitBy = ",";
 
         try {
-            
-            Schedule schedule = new Schedule();
+
+            Schedule schedule = new Schedule("", 0, new int[1], new int[1], 0, new double[1], 0);
             int index = 0; //index for elements of one schedule (multiple stops)
-            
+
             br = new BufferedReader(new FileReader(csvFile));
             while ((line = br.readLine()) != null) {
 
-                // use comma as separator
+                //use comma as separator
                 String[] scheduleInfo = line.split(cvsSplitBy);
-                createTrainSchedule(schedule, scheduleInfo, index++);
+                schedule = createTrainSchedule(schedule, scheduleInfo, index);
+                index++;
             }
             createTrainFromSchedule(schedule);
             scheduleArray[trainIDIterator] = schedule;
+            scheduleArray = Arrays.copyOf(scheduleArray, scheduleArray.length + 1); //increment array size to avoid null pointers when another schedule loaded in
             trainIDIterator++;
-            
+
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -400,20 +412,6 @@ public class CTCOfficeController implements Initializable {
                 }
             }
         }
-        
-        //temp dummy stuff to show what should happen I think?
-        //do I want this to only fill in certain info and the user determines speed/authority?
-            //that way the schedule only has to figure out current and target block
-            
-//        Train train1 = new Train("Red", 12, 33, 13, 1, 24);
-//        Train train2 = new Train("Green", 22, 26, 27, 34, 79);
-//        addTrainToTable(train1);
-//        addTrainToTable(train2);
-//        
-//        System.out.println("currently not actually reading in a file. just setting random things");
-//        
-//        createTrainFromSchedule(new String[2]);
-
     }
 
     @FXML
@@ -448,62 +446,96 @@ public class CTCOfficeController implements Initializable {
     }
 
     //rest of methods, non event-handlers
-    
+
     /*
     create a train object based on the information
     train info passed in will be as follows:
     line, section(not used), current block, target block(=authority), time to target
-    */
+     */
     private void createTrainFromSchedule(Schedule schedule) {
         
+        String line = schedule.line;
+        int number = schedule.trainID;
+        int speed = 25; //temp value, not sure how I'm setting this yet
+        int authority = schedule.targetBlock[schedule.scheduleIndex];
+        int block = schedule.currentBlock[schedule.scheduleIndex];
+        int target = schedule.targetBlock[schedule.scheduleIndex];
         
-//        String line = trainAttributes[0];
-//        int number = trainIDIterator++;
-//        int speed = 0;
-//        int authority = Integer.parseInt(trainAttributes[2]);
-//        int block = Integer.parseInt(trainAttributes[2]);
-//        int target = Integer.parseInt(trainAttributes[3]);
-//        double timeToNextBlock = Double.parseDouble(trainAttributes[4]);
-//        Train train = new Train(line, number, speed, authority, block, target);
-        
-//        temp sample items
-//        String line = "RED";
-//        int number = trainIDIterator++;
-//        int speed = 3;
-//        int authority = 0;
-//        int block = 1;
-//        int target = 5;
-//        Train train = new Train(line, number, speed, authority, block, target);
+        Train train = new Train(line, number, speed, authority, block, target);
 //        
-//        addTrainToTable(train);
+        addTrainToTable(train);
     }
-    
-    private void createTrainSchedule(Schedule schedule, String[] trainAttributes, int index) {
+
+    private Schedule createTrainSchedule(Schedule schedule, String[] trainAttributes, int index) {
+       
+        //need to put some sort of current_index variable into the schedule objects
+        //so I know what part of the schedule to load in once a train reaches its destination
+        schedule = resizeScheduleArray(schedule);
+        schedule.line = trainAttributes[0];
         schedule.trainID = trainIDIterator;
         schedule.currentBlock[index] = Integer.parseInt(trainAttributes[2]);
         schedule.targetBlock[index] = Integer.parseInt(trainAttributes[3]);
         schedule.dispatchTime = System.currentTimeMillis();
         schedule.timeToNextBlock[index] = Double.parseDouble(trainAttributes[4]);
-        
-        
+
+        return schedule;
+
     }
-    
+
+    //increase the index of the schedule component arrays to avoid null pointer exceptions while adding schedule elements
+    private Schedule resizeScheduleArray(Schedule schedule) {
+        schedule.currentBlock = Arrays.copyOf(schedule.currentBlock, schedule.currentBlock.length + 2);
+        schedule.targetBlock = Arrays.copyOf(schedule.targetBlock, schedule.targetBlock.length + 2);
+        schedule.timeToNextBlock = Arrays.copyOf(schedule.timeToNextBlock, schedule.timeToNextBlock.length + 2);
+        return schedule;
+    }
+
     //takes train information as an input and adds a train to the appropriate table
     private void addTrainToTable(Train train) {
-        if (train.getLine().equalsIgnoreCase("Red")){
+        if (train.getLine().equalsIgnoreCase("Red")) {
             trainTableRed.getItems().add(train);
         } else if (train.getLine().equalsIgnoreCase("Green")) {
             trainTableGreen.getItems().add(train);
         }
         trainTableAll.getItems().add(train);
-        
+
         System.out.println(train);
     }
-    
+
     //updates table when a train reaches its target
     //for demonstration purposes, will base it on a time factor in the schedule
-    private void updateTrainTable(){
+    private void updateTrainTable() {
+
+    }
+
+    private void setTime(int multiplier) {
         
+//        timeline = new Timeline(
+//                new KeyFrame(
+//                        Duration.millis(1000), event -> {
+//                    //systemTimeText.setText(timeFormat.format(System.currentTimeMillis()));
+//                    currentTime += multiplier*1000;
+//                    systemTimeText.setText(timeFormat.format(currentTime));
+//                    //can speedup time by multiplying speedup by System.currentTimeMillis()
+//                    //this however also changes the base system time, so not sure if that would work
+//                }
+//                )
+//        );
+        
+        timeline = new Timeline(
+                new KeyFrame(
+                        Duration.millis(1000), event -> {
+                    //systemTimeText.setText(timeFormat.format(System.currentTimeMillis()));
+                    currentTime += multiplier*1000;
+                    systemTimeText.setText(timeFormat.format(currentTime));
+                    //can speedup time by multiplying speedup by System.currentTimeMillis()
+                    //this however also changes the base system time, so not sure if that would work
+                }
+                )
+        );
+        
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
     }
 
 }

@@ -11,22 +11,26 @@ package trainapplication.CTCOffice;
  */
 public class Schedule {
     
+    String line;
     int trainID;
     int[] currentBlock;
     int[] targetBlock;
     long dispatchTime; //not sure what type of variable, but this will be used for knowing when a train is supposed to arrive at the next block
     double[] timeToNextBlock; //array to hold all of timing information for one train
+    int scheduleIndex;
 
     public Schedule() {
         
     }
 
-    public Schedule(int trainID, int[] currentBlock, int[] targetBlock, int dispatchTime, double[] timeToNextBlock) {
+    public Schedule(String line, int trainID, int[] currentBlock, int[] targetBlock, long dispatchTime, double[] timeToNextBlock, int scheduleIndex) {
+        this.line = line;
         this.trainID = trainID;
         this.currentBlock = currentBlock;
         this.targetBlock = targetBlock;
         this.dispatchTime = dispatchTime;
         this.timeToNextBlock = timeToNextBlock;
+        this.scheduleIndex = scheduleIndex;
     }
     
     
@@ -70,6 +74,23 @@ public class Schedule {
     public void setTimeToNextBlock(double[] timeToNextBlock) {
         this.timeToNextBlock = timeToNextBlock;
     }
+
+    public String getLine() {
+        return line;
+    }
+
+    public void setLine(String line) {
+        this.line = line;
+    }
+
+    public int getScheduleIndex() {
+        return scheduleIndex;
+    }
+
+    public void setScheduleIndex(int scheduleIndex) {
+        this.scheduleIndex = scheduleIndex;
+    }
+    
     
     
     

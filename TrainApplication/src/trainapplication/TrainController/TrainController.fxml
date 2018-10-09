@@ -32,7 +32,7 @@
             </Label>
             <Separator layoutX="11.0" layoutY="64.0" prefHeight="5.0" prefWidth="132.0" />
             <Label layoutX="10.0" layoutY="138.0" text="Setpoint Speed (MPH)" />
-            <Label fx:id="setpointSpeedLabel" layoutX="29.0" layoutY="109.0" text="55">
+            <Label fx:id="setpointSpeedLabel" layoutX="29.0" layoutY="109.0" text="10">
                <font>
                   <Font size="20.0" />
                </font>

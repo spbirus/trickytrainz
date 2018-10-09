@@ -147,7 +147,7 @@ public class TrainControllerController implements Initializable {
 //                    currentSpeedLabel.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
                     emergBrakeLabel.setText("Disengaging");
                     try{
-                        Thread.sleep(2000);
+                        Thread.sleep(1000);
                     }catch(InterruptedException e){
                         
                     }
@@ -156,7 +156,7 @@ public class TrainControllerController implements Initializable {
         }else if(emergBrakeLabel.getText().equalsIgnoreCase("Disengaged")){
             emergBrakeLabel.setText("Engaging");
             try{
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             }catch(InterruptedException e){
                         
             }
@@ -197,7 +197,7 @@ public class TrainControllerController implements Initializable {
         
 
 
-        uVal = oldUval + 0.01/2*(speedErr + oldSpeedErr); 
+        uVal = oldUval + train1.getDeltaT()/2*(speedErr + oldSpeedErr); 
         System.out.println("uVal: "+ uVal);
 
 
@@ -222,7 +222,7 @@ public class TrainControllerController implements Initializable {
         
         //========FOR TESTING PURPOSES================
         
-        double v = train1.calculateVelocity(powerVal, currSpeedVal, 0, 1, setpointSpeedVal, 50);
+        double v = train1.calculateVelocity(powerVal, currSpeedVal, 0, 0, setpointSpeedVal, 50);
                 
         //============================================
                 

@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="698.0" prefWidth="915.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrainModel.TrainModelController">
+   <children>
+      <AnchorPane layoutX="26.0" layoutY="425.0" prefHeight="78.0" prefWidth="358.0" style="-fx-background-color: #bdc3c7;">
+         <children>
+            <Label layoutX="23.0" layoutY="13.0" text="Setpoint Speed (mph)" />
+            <TextField id="speedLimit" fx:id="setpointSpeedBox" layoutX="192.0" layoutY="9.0" prefHeight="26.0" prefWidth="62.0" />
+            <Button fx:id="sendSpeed" layoutX="285.0" layoutY="9.0" mnemonicParsing="false" onAction="#onSetpointSpeedSubmit" text="Submit" />
+            <Button fx:id="sendLeavingPass" layoutX="285.0" layoutY="43.0" mnemonicParsing="false" onAction="#onPassengersLeavingSubmit" text="Submit" />
+            <TextField fx:id="passengersLeavingBox" layoutX="192.0" layoutY="43.0" prefHeight="26.0" prefWidth="62.0" />
+            <Label layoutX="14.0" layoutY="47.0" text="Passengers leaving (#)" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="27.0" layoutY="517.0" prefHeight="158.0" prefWidth="358.0" style="-fx-background-color: #bdc3c7;">
+         <children>
+            <Label layoutX="132.0" layoutY="14.0" text="Murphy" />
+            <Label layoutX="17.0" layoutY="45.0" text="Brake failure" />
+            <Button fx:id="activateBrakeFailure" layoutX="128.0" layoutY="41.0" mnemonicParsing="false" onAction="#onBrakeFailure" text="Activate" />
+            <Button fx:id="dactivateBrakeFailure" layoutX="216.0" layoutY="41.0" mnemonicParsing="false" onAction="#onBrakeFailure" text="Deactivate" />
+            <Button fx:id="activateEngineFailure" layoutX="128.0" layoutY="79.0" mnemonicParsing="false" onAction="#onEngineFailure" text="Activate" />
+            <Button fx:id="dectivateEngineFailure" layoutX="216.0" layoutY="79.0" mnemonicParsing="false" onAction="#onEngineFailure" text="Deactivate" />
+            <Label layoutX="14.0" layoutY="83.0" text="Engine failure" />
+            <Button fx:id="deactivateSignalFailure" layoutX="216.0" layoutY="120.0" mnemonicParsing="false" onAction="#onSignalFailure" text="Deactivate" />
+            <Button fx:id="activateSignalFailure" layoutX="128.0" layoutY="120.0" mnemonicParsing="false" onAction="#onSignalFailure" text="Activate" />
+            <Label layoutX="16.0" layoutY="124.0" text="Signal failure" />
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="testPane" disable="true" layoutX="412.0" layoutY="425.0" prefHeight="257.0" prefWidth="478.0" style="-fx-background-color: #bdc3c7;">
+         <children>
+            <TextField fx:id="trackElevationBox" layoutX="182.0" layoutY="7.0" prefHeight="26.0" prefWidth="62.0" />
+            <TextField fx:id="authorityBox" layoutX="182.0" layoutY="44.0" prefHeight="26.0" prefWidth="62.0" />
+            <TextField fx:id="temperatureBox" layoutX="182.0" layoutY="79.0" prefHeight="26.0" prefWidth="62.0" />
+            <TextField fx:id="powerRequestBox" layoutX="182.0" layoutY="152.0" prefHeight="26.0" prefWidth="62.0" />
+            <TextField fx:id="announcementBox" layoutX="182.0" layoutY="115.0" prefHeight="26.0" prefWidth="62.0" />
+            <TextField fx:id="currentSpeedBox" layoutX="182.0" layoutY="184.0" prefHeight="26.0" prefWidth="62.0" />
+            <Label layoutX="21.0" layoutY="14.0" text="Track Elevation (ft)" />
+            <Label layoutX="33.0" layoutY="50.0" text="Authority (ft)" />
+            <Label layoutX="14.0" layoutY="86.0" text="Set Temperature (F)" />
+            <Label layoutX="14.0" layoutY="156.0" text="Power request (kW)" />
+            <Label layoutX="28.0" layoutY="120.0" text="Anouncement" />
+            <Label layoutX="14.0" layoutY="188.0" text="Current Speed (mph)" />
+            <RadioButton fx:id="lightsButton" layoutX="266.0" layoutY="56.0" mnemonicParsing="false" onAction="#onLightsClick" text="Lights" />
+            <RadioButton fx:id="brakeButton" layoutX="266.0" layoutY="81.0" mnemonicParsing="false" onAction="#onBrakeClick" text="Brake" />
+            <RadioButton fx:id="emergencyBrakeButton" layoutX="265.0" layoutY="104.0" mnemonicParsing="false" onAction="#onEmergencyBrakeClick" prefHeight="47.0" prefWidth="200.0" text="Passenger Emergency Brake" wrapText="true" />
+            <RadioButton fx:id="leftdoorsButton" layoutX="266.0" layoutY="156.0" mnemonicParsing="false" onAction="#leftdoorsClick" text="Activate left doors" />
+            <RadioButton fx:id="rightdoorsButton" layoutX="266.0" layoutY="188.0" mnemonicParsing="false" onAction="#rightdoorsClick" text="Activate right doors" />
+            <Button fx:id="submitButton" layoutX="186.0" layoutY="224.0" mnemonicParsing="false" onAction="#onSubmit" text="Submit" />
+            <Button fx:id="refreshSpeed" layoutX="345.0" layoutY="224.0" mnemonicParsing="false" onAction="#onRefreshSpeed" text="Refresh Speed" />
+            <Separator layoutX="14.0" layoutY="145.0" prefHeight="3.0" prefWidth="222.0" />
+            <Button fx:id="submitOther" layoutX="291.0" layoutY="21.0" mnemonicParsing="false" onAction="#onSubmitOther" text="Submit other stuff" />
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="27.0" layoutY="55.0" prefHeight="288.0" prefWidth="862.0" style="-fx-background-color: #bdc3c7;">
+         <children>
+            <Label fx:id="advertisement" layoutX="401.0" layoutY="8.0" text="Your Ad Here">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <AnchorPane layoutX="14.0" layoutY="43.0" prefHeight="234.0" prefWidth="185.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="-2.0" text="Train Info" />
+                  <Label layoutX="14.0" layoutY="34.0" text="Line:" />
+                  <Label layoutX="14.0" layoutY="52.0" text="Length (ft):" />
+                  <Label layoutX="14.0" layoutY="71.0" text="Width (ft):" />
+                  <Label layoutX="14.0" layoutY="89.0" text="Mass (lbs):" />
+                  <Label layoutX="14.0" layoutY="107.0" text="Crew #:" />
+                  <Label layoutX="14.0" layoutY="125.0" text="Passenger #:" />
+                  <Label layoutX="14.0" layoutY="143.0" text="Max Capacity:" />
+                  <Label layoutX="14.0" layoutY="161.0" text="Car #:" />
+                  <Label layoutX="14.0" layoutY="179.0" text="Door #:" />
+                  <Label layoutX="14.0" layoutY="197.0" text="Accel Limit (ft/s^2):" />
+                  <Label layoutX="14.0" layoutY="214.0" text="Decel Limit (ft/s^2):" />
+                  <Label fx:id="trackId" layoutX="153.0" layoutY="34.0" text="red" />
+                  <Label fx:id="lengthId" layoutX="152.0" layoutY="53.0" text="100" />
+                  <Label fx:id="widthId" layoutX="152.0" layoutY="72.0" text="100" />
+                  <Label fx:id="massId" layoutX="152.0" layoutY="90.0" text="100" />
+                  <Label fx:id="crewId" layoutX="152.0" layoutY="108.0" text="1" />
+                  <Label fx:id="passengerId" layoutX="152.0" layoutY="126.0" text="153" />
+                  <Label fx:id="maxCapId" layoutX="152.0" layoutY="144.0" text="300" />
+                  <Label fx:id="carId" layoutX="152.0" layoutY="162.0" text="5" />
+                  <Label fx:id="doorId" layoutX="152.0" layoutY="180.0" text="10" />
+                  <Label fx:id="accelId" layoutX="152.0" layoutY="198.0" text="10" />
+                  <Label fx:id="decelId" layoutX="152.0" layoutY="215.0" text="10" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="217.0" layoutY="43.0" prefHeight="233.0" prefWidth="174.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="-2.0" text="Data from train controller" />
+                  <Label layoutX="14.0" layoutY="34.0" text="Announcement:" />
+                  <Label layoutX="14.0" layoutY="52.0" text="Left doors:" />
+                  <Label layoutX="14.0" layoutY="71.0" text="Right doors:" />
+                  <Label layoutX="14.0" layoutY="89.0" text="Lights:" />
+                  <Label layoutX="14.0" layoutY="107.0" text="Brake:" />
+                  <Label layoutX="14.0" layoutY="125.0" text="Emergency brake:" />
+                  <Label layoutX="14.0" layoutY="143.0" text="Inside temp (F):" />
+                  <Label layoutX="14.0" layoutY="161.0" text="Current power (kW):" />
+                  <Label fx:id="announcementId" layoutX="160.0" layoutY="34.0" text="here" />
+                  <Label fx:id="leftdoorId" layoutX="159.0" layoutY="53.0" text="Closed" />
+                  <Label fx:id="rightdoorId" layoutX="159.0" layoutY="72.0" text="Closed" />
+                  <Label fx:id="lightId" layoutX="159.0" layoutY="90.0" text="Off" />
+                  <Label fx:id="brakeId" layoutX="159.0" layoutY="108.0" text="disengaged" />
+                  <Label fx:id="emergencyBrakeId" layoutX="159.0" layoutY="126.0" text="disengaged" />
+                  <Label fx:id="tempId" layoutX="159.0" layoutY="144.0" text="70" />
+                  <Label fx:id="currentpowerId" layoutX="159.0" layoutY="162.0" text="20" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="466.0" layoutY="43.0" prefHeight="233.0" prefWidth="174.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="-2.0" text="Data from track model" />
+                  <Label layoutX="14.0" layoutY="34.0" text="Speed limit (mph):" />
+                  <Label layoutX="14.0" layoutY="52.0" text="Authority:" />
+                  <Label layoutX="14.0" layoutY="71.0" text="Entering passengers:" />
+                  <Label layoutX="14.0" layoutY="90.0" text="Track elevation (ft):" />
+                  <Label layoutX="14.0" layoutY="108.0" text="Track grade (%):" />
+                  <Label fx:id="speedlimitId" layoutX="154.0" layoutY="33.0" text="40" />
+                  <Label fx:id="authorityId" layoutX="153.0" layoutY="52.0" text="10" />
+                  <Label fx:id="enteringpassengersId" layoutX="153.0" layoutY="71.0" text="10" />
+                  <Label fx:id="trackelevationId" layoutX="153.0" layoutY="90.0" text="10" />
+                  <Label fx:id="gradeId" layoutX="153.0" layoutY="108.0" text="1" />
+               </children>
+            </AnchorPane>
+            <AnchorPane layoutX="673.0" layoutY="43.0" prefHeight="233.0" prefWidth="174.0">
+               <children>
+                  <Label layoutX="14.0" layoutY="-2.0" text="Route info" />
+                  <Label layoutX="14.0" layoutY="34.0" text="Speed limit (mph):" />
+               </children>
+            </AnchorPane>
+            <Label layoutX="14.0" layoutY="8.0" text="Train id:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="trainId" layoutX="86.0" layoutY="8.0" text="1" textFill="RED">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="27.0" layoutY="356.0" prefHeight="56.0" prefWidth="862.0" style="-fx-background-color: #bdc3c7;">
+         <children>
+            <Label layoutX="38.0" layoutY="16.0" text="Passengers:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="passengerNumber" layoutX="142.0" layoutY="16.0" text="153" textFill="RED">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="189.0" layoutY="16.0" text="Current Speed MPH:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="currentSpeedNumber" layoutX="371.0" layoutY="16.0" text="0" textFill="RED">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="425.0" layoutY="16.0" text="Power Requested kW:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="requestedPowerNumber" layoutX="615.0" layoutY="16.0" text="0" textFill="RED">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="675.0" layoutY="16.0" text="Mode:">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <Label fx:id="mode" layoutX="738.0" layoutY="16.0" text="Manual" textFill="RED">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <MenuBar fx:id="menuBar" layoutX="1.0" layoutY="1.0" prefHeight="26.0" prefWidth="913.0">
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Close" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <CheckBox fx:id="testPanelCheck" layoutX="760.0" layoutY="32.0" mnemonicParsing="false" onAction="#onTestClick" text="Enable Test Panel" />
+   </children>
+</AnchorPane>

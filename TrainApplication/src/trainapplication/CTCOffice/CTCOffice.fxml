@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -9,13 +10,11 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="814.0" prefWidth="1313.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.CTCOfficeController">
+<AnchorPane id="AnchorPane" prefHeight="814.0" prefWidth="1313.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.CTCOffice.CTCOfficeController">
    <children>
       <TabPane layoutX="11.0" layoutY="55.0" prefHeight="666.0" prefWidth="1287.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -25,31 +24,7 @@
                      <children>
                         <AnchorPane layoutX="14.0" layoutY="16.0" prefHeight="605.0" prefWidth="408.0" style="-fx-background-color: #bdc3c7;">
                            <children>
-                              <ImageView fitHeight="494.0" fitWidth="395.0" layoutX="13.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="file:/C:/Users/jtgal/OneDrive/Documents/Pitt%20Fall%202018/COE_1186%20Software%20Engineering/trickytrainz/TrainApplication/Documents/Track%20Image.png" />
-                                 </image>
-                              </ImageView>
-                              <Text layoutX="27.0" layoutY="536.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Red Line Throughput: 167">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="27.0" layoutY="560.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Green Line Throughput: 212">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Text>
-                              <Text layoutX="27.0" layoutY="587.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total Throughput: 379">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="440.0" layoutY="16.0" prefHeight="605.0" prefWidth="408.0" style="-fx-background-color: #bdc3c7;">
-                           <children>
-                              <TableView fx:id="trackTableAll" layoutX="13.0" layoutY="50.0" prefHeight="543.0" prefWidth="383.0">
+                              <TableView fx:id="trackTableAll" editable="true" layoutX="13.0" layoutY="50.0" prefHeight="543.0" prefWidth="383.0">
                                 <columns>
                                   <TableColumn fx:id="trackTableAllLine" prefWidth="38.0" text="Line" />
                                   <TableColumn fx:id="trackTableAllSection" prefWidth="47.0" text="Section" />
@@ -68,7 +43,7 @@
                         </AnchorPane>
                         <AnchorPane layoutX="865.0" layoutY="16.0" prefHeight="605.0" prefWidth="408.0" style="-fx-background-color: #bdc3c7;">
                            <children>
-                              <TableView fx:id="trainTableAll" layoutX="13.0" layoutY="50.0" prefHeight="469.0" prefWidth="383.0">
+                              <TableView fx:id="trainTableAll" editable="true" layoutX="13.0" layoutY="50.0" prefHeight="469.0" prefWidth="383.0">
                                  <columns>
                                     <TableColumn fx:id="trainTableAllLine" prefWidth="38.0" text="Line" />
                                     <TableColumn fx:id="trainTableAllNumber" prefWidth="58.0" text="Train ID" />
@@ -78,12 +53,12 @@
                                     <TableColumn fx:id="trainTableAllTarget" prefWidth="53.0" text="Target" />
                                  </columns>
                               </TableView>
-                              <Button layoutX="138.0" layoutY="564.0" mnemonicParsing="false" text="Load csv Schedule">
+                              <Button fx:id="loadScheduleButton" layoutX="138.0" layoutY="564.0" mnemonicParsing="false" onAction="#loadScheduleButtonClick" text="Load csv Schedule">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Button>
-                              <Button layoutX="114.0" layoutY="526.0" mnemonicParsing="false" text="Prepare Train for Dispatch">
+                              <Button fx:id="newTrainButton" layoutX="114.0" layoutY="526.0" mnemonicParsing="false" onAction="#newTrainButtonClick" text="Prepare Train for Dispatch">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -105,27 +80,15 @@
                      <children>
                         <AnchorPane layoutX="14.0" layoutY="16.0" prefHeight="605.0" prefWidth="408.0" style="-fx-background-color: #bdc3c7;">
                            <children>
-                              <ImageView fitHeight="494.0" fitWidth="395.0" layoutX="13.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="file:/C:/Users/jtgal/OneDrive/Documents/Pitt%20Fall%202018/COE_1186%20Software%20Engineering/trickytrainz/TrainApplication/Documents/Track%20Image.png" />
-                                 </image>
-                              </ImageView>
-                              <Text layoutX="26.0" layoutY="558.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Throughput: 167">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="440.0" layoutY="16.0" prefHeight="605.0" prefWidth="408.0" style="-fx-background-color: #bdc3c7;">
-                           <children>
                               <TableView fx:id="trackTableRed" layoutX="13.0" layoutY="50.0" prefHeight="543.0" prefWidth="383.0">
                                  <columns>
+                                    <TableColumn fx:id="trackTableRedLine" prefWidth="38.0" text="Line" />
                                     <TableColumn fx:id="trackTableRedSection" prefWidth="47.0" text="Section" />
                                     <TableColumn fx:id="trackTableRedBlock" prefWidth="38.0" text="Block" />
                                     <TableColumn fx:id="trackTableRedLength" prefWidth="67.0" text="Length (ft)" />
                                     <TableColumn fx:id="trackTableRedLimit" prefWidth="111.0" text="Speed Limit (mph)" />
-                                    <TableColumn fx:id="trackTableRedState" prefWidth="119.0" text="State" />
+                                    <TableColumn fx:id="trackTableRedState" prefWidth="82.0" text="State" />
+                                    <TableColumn fx:id="trackTableRedSection1" prefWidth="84.0" text="Section" />
                                  </columns>
                               </TableView>
                               <Text layoutX="119.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Track Information">
@@ -139,23 +102,14 @@
                            <children>
                               <TableView fx:id="trainTableRed" layoutX="13.0" layoutY="50.0" prefHeight="469.0" prefWidth="383.0">
                                  <columns>
+                                    <TableColumn fx:id="trainTableRedLine" prefWidth="38.0" text="Line" />
                                     <TableColumn fx:id="trainTableRedNumber" prefWidth="58.0" text="Train ID" />
                                     <TableColumn fx:id="trainTableRedSpeed" prefWidth="82.0" text="Speed (mph)" />
                                     <TableColumn fx:id="trainTableRedAuthority" prefWidth="68.0" text="Authority" />
                                     <TableColumn fx:id="trainTableRedCurrent" prefWidth="83.0" text="Current Block" />
-                                    <TableColumn fx:id="trainTableRedTarget" prefWidth="91.0" text="Target" />
+                                    <TableColumn fx:id="trainTableRedTarget" prefWidth="53.0" text="Target" />
                                  </columns>
                               </TableView>
-                              <Button layoutX="138.0" layoutY="564.0" mnemonicParsing="false" text="Load csv Schedule">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Button>
-                              <Button layoutX="114.0" layoutY="526.0" mnemonicParsing="false" text="Prepare Train for Dispatch">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Button>
                               <Text layoutX="120.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Train Information">
                                  <font>
                                     <Font size="22.0" />
@@ -172,27 +126,14 @@
                      <children>
                         <AnchorPane layoutX="14.0" layoutY="16.0" prefHeight="605.0" prefWidth="408.0" style="-fx-background-color: #bdc3c7;">
                            <children>
-                              <ImageView fitHeight="494.0" fitWidth="395.0" layoutX="13.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="file:/C:/Users/jtgal/OneDrive/Documents/Pitt%20Fall%202018/COE_1186%20Software%20Engineering/trickytrainz/TrainApplication/Documents/Track%20Image.png" />
-                                 </image>
-                              </ImageView>
-                              <Text layoutX="26.0" layoutY="558.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Throughput: 212">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="440.0" layoutY="16.0" prefHeight="605.0" prefWidth="408.0" style="-fx-background-color: #bdc3c7;">
-                           <children>
                               <TableView fx:id="trackTableGreen" layoutX="13.0" layoutY="50.0" prefHeight="543.0" prefWidth="383.0">
                                  <columns>
+                                    <TableColumn fx:id="trackTableGreenLine" prefWidth="38.0" text="Line" />
                                     <TableColumn fx:id="trackTableGreenSection" prefWidth="47.0" text="Section" />
                                     <TableColumn fx:id="trackTableGreenBlock" prefWidth="38.0" text="Block" />
                                     <TableColumn fx:id="trackTableGreenLength" prefWidth="67.0" text="Length (ft)" />
                                     <TableColumn fx:id="trackTableGreenLimit" prefWidth="111.0" text="Speed Limit (mph)" />
-                                    <TableColumn fx:id="trackTableGreenState" prefWidth="119.0" text="State" />
+                                    <TableColumn fx:id="trackTableGreenState" prefWidth="81.0" text="State" />
                                  </columns>
                               </TableView>
                               <Text layoutX="119.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Track Information">
@@ -206,23 +147,14 @@
                            <children>
                               <TableView fx:id="trainTableGreen" layoutX="13.0" layoutY="50.0" prefHeight="469.0" prefWidth="383.0">
                                  <columns>
+                                    <TableColumn fx:id="trainTableGreenLine" prefWidth="38.0" text="Line" />
                                     <TableColumn fx:id="trainTableGreenNumber" prefWidth="58.0" text="Train ID" />
                                     <TableColumn fx:id="trainTableGreenSpeed" prefWidth="82.0" text="Speed (mph)" />
                                     <TableColumn fx:id="trainTableGreenAuthority" prefWidth="68.0" text="Authority" />
                                     <TableColumn fx:id="trainTableGreenCurrent" prefWidth="83.0" text="Current Block" />
-                                    <TableColumn fx:id="trainTableGreenTarget" prefWidth="91.0" text="Target" />
+                                    <TableColumn fx:id="trainTableGreenTarget" prefWidth="53.0" text="Target" />
                                  </columns>
                               </TableView>
-                              <Button layoutX="138.0" layoutY="564.0" mnemonicParsing="false" text="Load csv Schedule">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Button>
-                              <Button layoutX="114.0" layoutY="526.0" mnemonicParsing="false" text="Prepare Train for Dispatch">
-                                 <font>
-                                    <Font size="14.0" />
-                                 </font>
-                              </Button>
                               <Text layoutX="120.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Train Information">
                                  <font>
                                     <Font size="22.0" />
@@ -235,7 +167,7 @@
             </Tab>
         </tabs>
       </TabPane>
-      <Button layoutX="405.0" layoutY="733.0" mnemonicParsing="false" prefHeight="67.0" prefWidth="503.0" text="Dispatch Train">
+      <Button fx:id="dispatchButton" layoutX="405.0" layoutY="733.0" mnemonicParsing="false" onAction="#dispatchButtonClick" prefHeight="67.0" prefWidth="503.0" text="Dispatch Train">
          <font>
             <Font size="24.0" />
          </font>
@@ -245,42 +177,57 @@
             <Font size="32.0" />
          </font>
       </Text>
-      <Button layoutX="1050.0" layoutY="721.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="204.0" text="Enter Automatic Mode">
+      <Button fx:id="autoModeButton" layoutX="1050.0" layoutY="721.0" mnemonicParsing="false" onAction="#autoModeButtonClick" prefHeight="43.0" prefWidth="204.0" text="Enter Automatic Mode">
          <font>
             <Font size="16.0" />
          </font>
       </Button>
-      <Text layoutX="1053.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Current Time: 18:53:24">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Text>
       <Text layoutX="964.0" layoutY="793.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Speedup Multiplier">
          <font>
             <Font size="14.0" />
          </font>
       </Text>
-      <TextField layoutX="1089.0" layoutY="775.0" prefHeight="25.0" prefWidth="165.0" promptText="Enter Miultiplier Value" />
-      <MenuBar layoutY="3.0" prefHeight="25.0" prefWidth="135.0">
+      <TextField fx:id="multiplierTextField" layoutX="1089.0" layoutY="775.0" prefHeight="25.0" prefWidth="165.0" promptText="Enter Miultiplier Value" />
+      <MenuBar layoutY="3.0" prefHeight="25.0" prefWidth="255.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" text="Load Schedule" />
-                  <MenuItem mnemonicParsing="false" text="Dispatch" />
-                  <MenuItem mnemonicParsing="false" text="Close" />
+              <MenuItem fx:id="menuLoadSchedule" mnemonicParsing="false" onAction="#menuLoadScheduleClick" text="Load Schedule" />
+                  <MenuItem fx:id="menuDispatch" mnemonicParsing="false" onAction="#menuDispatchClick" text="Dispatch" />
+                  <MenuItem fx:id="menuClose" mnemonicParsing="false" onAction="#menuCloseClick" text="Close" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem mnemonicParsing="false" text="New Train" />
+              <MenuItem fx:id="menuNewTrain" mnemonicParsing="false" onAction="#menuNewTrainClick" text="New Train" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <items>
-              <MenuItem mnemonicParsing="false" text="User's Maunal" />
+              <MenuItem fx:id="menuUserManual" mnemonicParsing="false" onAction="#menuUserManualClick" text="User's Maunal" />
             </items>
           </Menu>
         </menus>
       </MenuBar>
+      <Label fx:id="systemTimeText" layoutX="1082.0" layoutY="13.0" prefHeight="17.0" prefWidth="98.0" text="Label">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Label fx:id="redThroughputLabel" layoutX="45.0" layoutY="721.0" text="Red Line Throughput: 0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="greenThroughputLabel" layoutX="45.0" layoutY="743.0" text="Green Line Throughput: 0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label fx:id="allThroughputLabel" layoutX="45.0" layoutY="765.0" text="All Lines Throughput: 0">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

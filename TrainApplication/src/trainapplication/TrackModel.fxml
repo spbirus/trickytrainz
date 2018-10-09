@@ -96,7 +96,7 @@
                   </AnchorPane>
                   <AnchorPane layoutX="209.0" layoutY="12.0" prefHeight="350.0" prefWidth="386.0" style="-fx-background-color: #bdc3c7;">
                      <children>
-                        <TableView id="trackTable"fx:id="trackTable" layoutX="6.0" layoutY="3.0" prefHeight="341.0" prefWidth="774.0">
+                        <TableView fx:id="trackTable" layoutX="6.0" layoutY="3.0" prefHeight="341.0" prefWidth="774.0">
                           <columns>
                             <TableColumn id="line" fx:id="line" prefWidth="83.20008850097656" text="Line" />
                             <TableColumn id="section" fx:id="section" prefWidth="49.5999755859375" text="Section" />

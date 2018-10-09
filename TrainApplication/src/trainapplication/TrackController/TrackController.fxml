@@ -4,8 +4,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
@@ -67,12 +67,6 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <MenuButton fx:id="trackMenu" layoutX="8.0" layoutY="7.0" mnemonicParsing="false" text="Track ">
-                     <items>
-                        <MenuItem mnemonicParsing="false" text="Red Line" />
-                        <MenuItem mnemonicParsing="false" text="Green Line" />
-                     </items>
-                  </MenuButton>
                   <Label layoutX="197.0" layoutY="83.0" text="Track:" />
                   <Label layoutX="197.0" layoutY="114.0" text="Block:" />
                   <Label layoutX="146.0" layoutY="131.0" text="Station Present:" />
@@ -129,44 +123,20 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <MenuButton fx:id="blockMenu" layoutX="235.0" layoutY="7.0" mnemonicParsing="false" text="Block #">
-                     <items>
-                        <MenuItem fx:id="blockNum" mnemonicParsing="false" text="1" />
-                        <MenuItem mnemonicParsing="false" text="2" />
-                        <MenuItem mnemonicParsing="false" text="1" />
-                        <MenuItem mnemonicParsing="false" text="2" />
-                        <MenuItem mnemonicParsing="false" text="3" />
-                        <MenuItem mnemonicParsing="false" text="4" />
-                        <MenuItem mnemonicParsing="false" text="5" />
-                        <MenuItem mnemonicParsing="false" text="6" />
-                        <MenuItem mnemonicParsing="false" text="7" />
-                        <MenuItem mnemonicParsing="false" text="8" />
-                        <MenuItem mnemonicParsing="false" text="9" />
-                        <MenuItem mnemonicParsing="false" text="10" />
-                        <MenuItem mnemonicParsing="false" text="11" />
-                        <MenuItem mnemonicParsing="false" text="12" />
-                        <MenuItem mnemonicParsing="false" text="13" />
-                        <MenuItem mnemonicParsing="false" text="14" />
-                        <MenuItem mnemonicParsing="false" text="15" />
-                        <MenuItem mnemonicParsing="false" text="16" />
-                        <MenuItem mnemonicParsing="false" text="17" />
-                        <MenuItem mnemonicParsing="false" text="18" />
-                        <MenuItem mnemonicParsing="false" text="19" />
-                        <MenuItem mnemonicParsing="false" text="20" />
-                        <MenuItem mnemonicParsing="false" text="21" />
-                        <MenuItem mnemonicParsing="false" text="22" />
-                        <MenuItem mnemonicParsing="false" text="23" />
-                        <MenuItem mnemonicParsing="false" text="24" />
-                        <MenuItem mnemonicParsing="false" text="25" />
-                        <MenuItem mnemonicParsing="false" text="26" />
-                        <MenuItem mnemonicParsing="false" text="27" />
-                        <MenuItem mnemonicParsing="false" text="28" />
-                        <MenuItem mnemonicParsing="false" text="29" />
-                        <MenuItem mnemonicParsing="false" text="30" />
-                     </items>
-                  </MenuButton>
                   <Label layoutX="187.0" layoutY="98.0" text="Section:" />
                   <Label fx:id="sectionName" layoutX="250.0" layoutY="98.0" text="A" textFill="RED" />
+                  <Slider fx:id="blockNumSlider" blockIncrement="1.0" layoutX="93.0" layoutY="4.0" majorTickUnit="1.0" minorTickCount="1" onDragDetected="#sliderMoved" onDragDone="#sliderMoved" onMouseReleased="#sliderMoved" prefHeight="38.0" prefWidth="593.0" showTickLabels="true" showTickMarks="true" />
+                  <Label layoutX="21.0" layoutY="12.0" text="Block #">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="blockValue" layoutX="687.0" layoutY="16.0" text="10 mph" textFill="RED">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Button fx:id="sliderSubmit" layoutX="685.0" layoutY="45.0" mnemonicParsing="false" onAction="#sliderSubmit" prefHeight="26.0" prefWidth="58.0" text="Submit" textAlignment="CENTER" />
                </children>
             </AnchorPane>
             <Rectangle arcHeight="5.0" arcWidth="5.0" height="163.0" layoutX="494.0" layoutY="476.0" stroke="BLACK" strokeType="INSIDE" width="104.0" />
@@ -176,20 +146,6 @@
             <Label layoutX="72.0" layoutY="491.0" prefHeight="18.0" prefWidth="89.0" text="Switch State" />
             <Label layoutX="72.0" layoutY="530.0" text="Railway Crossing" />
             <Label layoutX="72.0" layoutY="569.0" prefHeight="18.0" prefWidth="89.0" text="Rail Control" />
-            <MenuButton fx:id="sectionMenu" layoutX="136.0" layoutY="14.0" mnemonicParsing="false" text="Section">
-               <items>
-                  <MenuItem mnemonicParsing="false" text="A" />
-                  <MenuItem mnemonicParsing="false" text="B" />
-                  <MenuItem mnemonicParsing="false" text="C" />
-                  <MenuItem mnemonicParsing="false" text="D" />
-                  <MenuItem mnemonicParsing="false" text="E" />
-                  <MenuItem mnemonicParsing="false" text="F" />
-                  <MenuItem mnemonicParsing="false" text="G" />
-                  <MenuItem mnemonicParsing="false" text="H" />
-                  <MenuItem mnemonicParsing="false" text="I" />
-                  <MenuItem mnemonicParsing="false" text="J" />
-               </items>
-            </MenuButton>
             <Button fx:id="closeSwitch" layoutX="307.0" layoutY="480.0" mnemonicParsing="false" onAction="#murphyCloseSwitchClick" prefHeight="26.0" prefWidth="74.0" text="Close" textAlignment="CENTER" />
             <Button fx:id="lowerCrossing" layoutX="308.0" layoutY="520.0" mnemonicParsing="false" onAction="#murphyLowerCrossingClick" prefHeight="26.0" prefWidth="74.0" text="Lower" textAlignment="CENTER" />
             <Button fx:id="breakRail" layoutX="308.0" layoutY="558.0" mnemonicParsing="false" onAction="#murphyBreakRailClick" prefHeight="26.0" prefWidth="73.0" text="Broken" textAlignment="CENTER" />

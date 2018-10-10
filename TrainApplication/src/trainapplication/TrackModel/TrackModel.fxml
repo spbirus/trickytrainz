@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrackModel.TrackModelController">
+<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.TrackModelController">
    <children>
       <VBox prefHeight="400.0" prefWidth="640.0">
         <children>
@@ -92,6 +92,24 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="209.0" layoutY="12.0" prefHeight="350.0" prefWidth="386.0" style="-fx-background-color: #bdc3c7;">
+                     <children>
+                        <TableView fx:id="trackTable" layoutX="6.0" layoutY="3.0" prefHeight="341.0" prefWidth="774.0">
+                          <columns>
+                            <TableColumn id="line" fx:id="line" prefWidth="83.20008850097656" text="Line" />
+                            <TableColumn id="section" fx:id="section" prefWidth="49.5999755859375" text="Section" />
+                            <TableColumn id="block" fx:id="block" prefWidth="35.199951171875" text="Block" />
+                            <TableColumn id="blockLength" fx:id="blockLength" prefWidth="101.60003662109375" text="Block Length" />
+                            <TableColumn id="blockGrade" fx:id="blockGrade" prefWidth="72.79998779296875" text="Block Grade" />
+                            <TableColumn id="speedLimit" fx:id="speedLimit" prefWidth="79.20001220703125" text="Speed Limit" />
+                            <TableColumn id="infrastructure" fx:id="infrastructure" prefWidth="85.60003662109375" text="Infrastructure" />
+                            <TableColumn id="elevation" fx:id="elevation" prefWidth="68.0" text="Elevation" />
+                            <TableColumn id="cumElevation" fx:id="cumElevation" prefWidth="129.5999755859375" text="Cumulative Elevation" />
+                            <TableColumn id="state" fx:id="state" prefWidth="85.5999755859375" text="Signal" />
+                          </columns>
+                        </TableView>
                      </children>
                   </AnchorPane>
             </children>

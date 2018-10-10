@@ -166,9 +166,9 @@ public class CTCOfficeController implements Initializable {
         newTrainPane.setVisible(false);
         
 
-        long offTime = (long) (System.currentTimeMillis() + 3.7*60*1000);
-        System.out.println(timeFormat.format(System.currentTimeMillis()));
-        System.out.println(timeFormat.format(offTime));
+//        long offsetTime = (long) (System.currentTimeMillis() + 3.7*60*1000);
+//        System.out.println(timeFormat.format(System.currentTimeMillis()));
+//        System.out.println(timeFormat.format(offsetTime));
 
     }
 
@@ -356,8 +356,8 @@ public class CTCOfficeController implements Initializable {
     @FXML
     private AnchorPane newTrainPane;
 
-    
-    
+    @FXML
+    private Button testShowSchedulesButton;
     
     
     
@@ -393,7 +393,6 @@ public class CTCOfficeController implements Initializable {
         int dispatchTargetBlock = dispatchTrain.getTarget();
         
         //
-        System.out.println(trainIDIterator);
         Schedule schedule = getScheduleInfoFromTrainTableSelected(dispatchTrain);
         schedule.dispatchTime = System.currentTimeMillis();
         //conversion from timetoNext block is going to be sloppy... need to do it properly in the future
@@ -406,7 +405,7 @@ public class CTCOfficeController implements Initializable {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("CTC Outputs");
         alert.setHeaderText("Train " + dispatchNumber + " is being dispatched from block " + dispatchCurrentBlock);
-        alert.setContentText("Suggested speed: " + dispatchSpeed + "      Target Block: " + dispatchTargetBlock);
+        alert.setContentText("Suggested speed: " + dispatchSpeed + "\nTarget Block: " + dispatchTargetBlock + "\nArrival Time: " + timeFormat.format(arrivalTime));
         alert.showAndWait();
         
         
@@ -424,7 +423,7 @@ public class CTCOfficeController implements Initializable {
         File file = fileChooser.showOpenDialog(null);
 
         csvFile = file.getPath();
-        System.out.println(csvFile);
+        //System.out.println(csvFile);
 
         BufferedReader br = null;
         String line = "";
@@ -447,6 +446,8 @@ public class CTCOfficeController implements Initializable {
             scheduleArray[trainIDIterator] = schedule;
             scheduleArray = Arrays.copyOf(scheduleArray, scheduleArray.length + 1); //increment array size to avoid null pointers when another schedule loaded in
             trainIDIterator++;
+            
+
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -525,7 +526,33 @@ public class CTCOfficeController implements Initializable {
 
     }
 
-    
+    @FXML
+    void testShowSchedulesClick(ActionEvent event) {
+        for (Schedule schedule : scheduleArray) {
+            System.out.println("Line, ID, current block array, target block array, dispatch time, time to next block array, index for the arrays");
+            System.out.println ("Line " + schedule.line);
+            System.out.println ("Train Number " + schedule.trainID);
+            System.out.print("Current block array: ");
+            for (int block : schedule.currentBlock) {
+                System.out.print(block + ", ");
+            }
+            System.out.println("");
+            System.out.print("Target block array: ");
+            for (int tBlock : schedule.targetBlock) {
+                System.out.print(tBlock + ", ");
+            }
+            System.out.println("");
+            System.out.println ("Dispatch time: " + timeFormat.format(schedule.dispatchTime));
+            System.out.print("Time to next block array: ");
+            for (double timeBlock : schedule.timeToNextBlock) {
+                System.out.print(timeBlock + ", ");
+            }
+            System.out.println("");
+            System.out.println ("Schedule index " +schedule.scheduleIndex);
+            System.out.println("\n\n");
+            
+        }
+    }
     
     
     
@@ -588,9 +615,9 @@ public class CTCOfficeController implements Initializable {
 
     //increase the index of the schedule component arrays to avoid null pointer exceptions while adding schedule elements
     private Schedule resizeScheduleArray(Schedule schedule) {
-        schedule.currentBlock = Arrays.copyOf(schedule.currentBlock, schedule.currentBlock.length + 2);
-        schedule.targetBlock = Arrays.copyOf(schedule.targetBlock, schedule.targetBlock.length + 2);
-        schedule.timeToNextBlock = Arrays.copyOf(schedule.timeToNextBlock, schedule.timeToNextBlock.length + 2);
+        schedule.currentBlock = Arrays.copyOf(schedule.currentBlock, schedule.currentBlock.length + 1);
+        schedule.targetBlock = Arrays.copyOf(schedule.targetBlock, schedule.targetBlock.length + 1);
+        schedule.timeToNextBlock = Arrays.copyOf(schedule.timeToNextBlock, schedule.timeToNextBlock.length + 1);
         return schedule;
     }
 
@@ -618,12 +645,12 @@ public class CTCOfficeController implements Initializable {
     }
     
     private Schedule newTrainMakeSchedule(Train train) {
-        //String line, int trainID, int[] currentBlock, int[] targetBlock, long dispatchTime, double[] timeToNextBlock, int scheduleIndex
         Schedule schedule = new Schedule("", 0, new int[1], new int[1], 0, new double[1], 0);
         resizeScheduleArray(schedule); //need to add some size to the original arrays created
         schedule.line = train.getLine();
         schedule.trainID = train.getNumber();
         schedule.currentBlock[0] = train.getBlock();
+        schedule.targetBlock[0] = train.getTarget();
         schedule.dispatchTime = currentTime;
         schedule.timeToNextBlock[0] = 1.5; //dont really have a number for this yet...
         schedule.scheduleIndex = 0;

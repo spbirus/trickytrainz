@@ -43,12 +43,12 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="commandedSpeed" layoutX="577.0" layoutY="56.0" text="10 mph" textFill="RED">
+                  <Label fx:id="commandedSpeed" layoutX="642.0" layoutY="56.0" text="10 mph" textFill="RED">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="authority" layoutX="577.0" layoutY="113.0" text="1000 ft" textFill="RED">
+                  <Label fx:id="authority" layoutX="644.0" layoutY="113.0" text="1000 ft" textFill="RED">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -62,7 +62,7 @@
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label layoutX="527.0" layoutY="45.0" text="Outputs">
+                  <Label layoutX="475.0" layoutY="45.0" text="Outputs">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -83,68 +83,69 @@
                   <Label fx:id="crossingState" layoutX="250.0" layoutY="185.0" text="Raised" textFill="RED" />
                   <Label fx:id="railState" layoutX="250.0" layoutY="203.0" text="Functional" textFill="RED" />
                   <Label fx:id="circuitState" layoutX="250.0" layoutY="221.0" text="Faulty" textFill="RED" />
-                  <Label layoutX="463.0" layoutY="83.0" text="Suggested Speed:">
+                  <Label layoutX="411.0" layoutY="83.0" text="Suggested Speed:">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="513.0" layoutY="111.0" text="Authority:">
+                  <Label layoutX="461.0" layoutY="111.0" text="Authority:">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="478.0" layoutY="136.0" text="Switch Position:">
+                  <Label layoutX="426.0" layoutY="136.0" text="Switch Position:">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label layoutX="502.0" layoutY="165.0" text="Light Color:">
+                  <Label layoutX="450.0" layoutY="165.0" text="Light Color:">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="outputSpeed" layoutX="584.0" layoutY="83.0" text="10 mph" textFill="RED">
+                  <Label fx:id="outputSpeed" layoutX="532.0" layoutY="83.0" text="10 mph" textFill="RED">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="outputAuthority" layoutX="587.0" layoutY="111.0" text="1000 ft" textFill="RED">
+                  <Label fx:id="outputAuthority" layoutX="535.0" layoutY="111.0" text="1000 ft" textFill="RED">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="outputSwitch" layoutX="587.0" layoutY="136.0" text="Open" textFill="RED">
+                  <Label fx:id="outputSwitch" layoutX="535.0" layoutY="136.0" text="Open" textFill="RED">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="outputLights" layoutX="589.0" layoutY="165.0" text="Green" textFill="RED">
+                  <Label fx:id="outputLights" layoutX="537.0" layoutY="165.0" text="Green" textFill="RED">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
                   <Label layoutX="187.0" layoutY="98.0" text="Section:" />
                   <Label fx:id="sectionName" layoutX="250.0" layoutY="98.0" text="A" textFill="RED" />
-                  <Slider fx:id="blockNumSlider" blockIncrement="1.0" layoutX="93.0" layoutY="4.0" majorTickUnit="1.0" minorTickCount="1" onDragDetected="#sliderMoved" onDragDone="#sliderMoved" onMouseReleased="#sliderMoved" prefHeight="38.0" prefWidth="593.0" showTickLabels="true" showTickMarks="true" />
+                  <Slider fx:id="blockNumSlider" blockIncrement="1.0" layoutX="93.0" layoutY="4.0" majorTickUnit="1.0" minorTickCount="1" prefHeight="38.0" prefWidth="593.0" showTickLabels="true" showTickMarks="true" />
                   <Label layoutX="21.0" layoutY="12.0" text="Block #">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
-                  <Label fx:id="blockValue" layoutX="687.0" layoutY="16.0" text="10 mph" textFill="RED">
+                  <Label fx:id="blockValue" layoutX="687.0" layoutY="16.0" text="Block #0" textFill="RED">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Button fx:id="sliderSubmit" layoutX="685.0" layoutY="45.0" mnemonicParsing="false" onAction="#sliderSubmit" prefHeight="26.0" prefWidth="58.0" text="Submit" textAlignment="CENTER" />
+                  <Button fx:id="sliderSubmit" layoutX="664.0" layoutY="45.0" mnemonicParsing="false" onAction="#sliderSubmit" prefHeight="26.0" prefWidth="98.0" text="Submit" textAlignment="CENTER" />
+                  <Button fx:id="routeButton" layoutX="665.0" layoutY="170.0" mnemonicParsing="false" onAction="#run" prefHeight="96.0" prefWidth="97.0" text="ROUTE" textAlignment="CENTER" />
                </children>
             </AnchorPane>
             <Rectangle arcHeight="5.0" arcWidth="5.0" height="163.0" layoutX="494.0" layoutY="476.0" stroke="BLACK" strokeType="INSIDE" width="104.0" />
             <Button fx:id="openSwitch" layoutX="197.0" layoutY="480.0" mnemonicParsing="false" onAction="#murphyOpenSwitchClick" prefHeight="26.0" prefWidth="90.0" text="Open" textAlignment="CENTER" />
             <Button fx:id="raiseCrossing" layoutX="197.0" layoutY="520.0" mnemonicParsing="false" onAction="#murphyRaiseCrossingClick" prefHeight="26.0" prefWidth="90.0" text="Raise" textAlignment="CENTER" />
             <Button fx:id="fixRail" layoutX="198.0" layoutY="558.0" mnemonicParsing="false" onAction="#murphyFixRailClick" prefHeight="26.0" prefWidth="90.0" text="Functional" textAlignment="CENTER" />
-            <Label layoutX="72.0" layoutY="491.0" prefHeight="18.0" prefWidth="89.0" text="Switch State" />
-            <Label layoutX="72.0" layoutY="530.0" text="Railway Crossing" />
+            <Label fx:id="switchMurphyLabel" layoutX="72.0" layoutY="491.0" prefHeight="18.0" prefWidth="89.0" text="Switch State" />
+            <Label fx:id="crossingMurphyLabel" layoutX="72.0" layoutY="530.0" text="Railway Crossing" />
             <Label layoutX="72.0" layoutY="569.0" prefHeight="18.0" prefWidth="89.0" text="Rail Control" />
             <Button fx:id="closeSwitch" layoutX="307.0" layoutY="480.0" mnemonicParsing="false" onAction="#murphyCloseSwitchClick" prefHeight="26.0" prefWidth="74.0" text="Close" textAlignment="CENTER" />
             <Button fx:id="lowerCrossing" layoutX="308.0" layoutY="520.0" mnemonicParsing="false" onAction="#murphyLowerCrossingClick" prefHeight="26.0" prefWidth="74.0" text="Lower" textAlignment="CENTER" />
@@ -161,12 +162,12 @@
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="408.0" layoutY="345.0" text="Commanded Speed:">
+            <Label layoutX="484.0" layoutY="345.0" text="Commanded Speed:">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="491.0" layoutY="404.0" text="Authority:">
+            <Label layoutX="567.0" layoutY="404.0" text="Authority:">
                <font>
                   <Font size="18.0" />
                </font>

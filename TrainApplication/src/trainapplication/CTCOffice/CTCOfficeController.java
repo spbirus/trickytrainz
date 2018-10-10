@@ -23,15 +23,21 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
@@ -149,11 +155,16 @@ public class CTCOfficeController implements Initializable {
         trackTableGreenState.setStyle("-fx-alignment: CENTER;");
 
         //set system time to display
-        
-        
         multiplierTextField.setText("1");
-        
         setTime(Integer.parseInt(multiplierTextField.getText()));
+        
+        //init choicebox in the new train popup screen
+        newTrainLineBox.getItems().addAll("Red", "Green");
+        newTrainLineBox.getSelectionModel().select("Red");
+        
+        //hide newTrainPane. will appear on add train button press
+        newTrainPane.setVisible(false);
+        
 
         long offTime = (long) (System.currentTimeMillis() + 3.7*60*1000);
         System.out.println(timeFormat.format(System.currentTimeMillis()));
@@ -329,7 +340,27 @@ public class CTCOfficeController implements Initializable {
 
     @FXML
     private Label allThroughputLabel;
+    
+    @FXML
+    private Slider suggestedSpeedSlider;
 
+    @FXML
+    private ChoiceBox<String> newTrainLineBox;
+
+    @FXML
+    private TextField newTrainTargetBlock;
+
+    @FXML
+    private Label suggestedSpeedLabel;
+    
+    @FXML
+    private AnchorPane newTrainPane;
+
+    
+    
+    
+    
+    
     //GUI ActionEvent Handlers
     @FXML
     void autoModeButtonClick(ActionEvent event) {
@@ -354,13 +385,31 @@ public class CTCOfficeController implements Initializable {
 //        trackTableRed.getItems().add(track1);
 //        trackTableGreen.getItems().add(track2);
         
+        //get selected train from the train table
+        Train dispatchTrain = trainTableAll.getSelectionModel().getSelectedItem();
+        int dispatchNumber = dispatchTrain.getNumber(); //train ID
+        double dispatchSpeed = dispatchTrain.getSpeed();
+        int dispatchCurrentBlock = dispatchTrain.getBlock();
+        int dispatchTargetBlock = dispatchTrain.getTarget();
+        
+        //
         System.out.println(trainIDIterator);
-        Schedule schedule = scheduleArray[0];
+        Schedule schedule = getScheduleInfoFromTrainTableSelected(dispatchTrain);
         schedule.dispatchTime = System.currentTimeMillis();
         //conversion from timetoNext block is going to be sloppy... need to do it properly in the future
+        //actually it might be okay... not sure
         long arrivalTime = (long) (schedule.dispatchTime + schedule.timeToNextBlock[schedule.scheduleIndex]*60*1000);
         System.out.println("departure time: " + timeFormat.format(schedule.dispatchTime));
         System.out.println("arrival time: " + timeFormat.format(arrivalTime));
+        
+        //popup box with CTC dispatch info
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("CTC Outputs");
+        alert.setHeaderText("Train " + dispatchNumber + " is being dispatched from block " + dispatchCurrentBlock);
+        alert.setContentText("Suggested speed: " + dispatchSpeed + "      Target Block: " + dispatchTargetBlock);
+        alert.showAndWait();
+        
+        
         
         
     }
@@ -416,8 +465,39 @@ public class CTCOfficeController implements Initializable {
 
     @FXML
     void newTrainButtonClick(ActionEvent event) {
-        //TODO create row in table
-        //or a popup gui where the user can select train info
+        newTrainPane.setVisible(true);
+        newTrainLineBox.getSelectionModel().select("Red");
+        suggestedSpeedSlider.setValue(0);
+        suggestedSpeedLabel.setText("0");
+        newTrainTargetBlock.setText("");
+    }
+    
+    @FXML
+    void newTrainSubmitClick(ActionEvent event) {
+        String newTrainLine = newTrainLineBox.getValue();
+        int newTrainNumber = trainIDIterator++;
+        double newTrainSpeed = (int) suggestedSpeedSlider.getValue();
+        int newTrainAuthority = Integer.parseInt(newTrainTargetBlock.getText());
+        int newTrainCurrentBlock = 0; //start in the yard
+        int newTrainTarget = newTrainAuthority;
+                //currently authority and target are the same, but this might change
+        Train newTrain = new Train(newTrainLine, newTrainNumber, newTrainSpeed, newTrainAuthority, newTrainCurrentBlock, newTrainTarget);
+        addTrainToTable(newTrain);
+        
+        //add new train info to schedule here
+        Schedule manualTrainAddSchedule = newTrainMakeSchedule(newTrain);
+        scheduleArray = Arrays.copyOf(scheduleArray, scheduleArray.length + 1);
+        scheduleArray[newTrainNumber] = manualTrainAddSchedule;
+        
+        
+        newTrainPane.setVisible(false);
+        
+    }
+    
+    @FXML
+    void suggestedSpeedSliderDrag(MouseEvent event) {
+        int suggestedSpeed = (int) suggestedSpeedSlider.getValue();
+        suggestedSpeedLabel.setText(Integer.toString(suggestedSpeed));
     }
 
     @FXML
@@ -445,8 +525,33 @@ public class CTCOfficeController implements Initializable {
 
     }
 
+    
+    
+    
+    
+    
+    
+    
     //rest of methods, non event-handlers
-
+    
+    private void setTime(int multiplier) {
+                
+        timeline = new Timeline(
+                new KeyFrame(
+                        Duration.millis(1000), event -> {
+                    //systemTimeText.setText(timeFormat.format(System.currentTimeMillis()));
+                    currentTime += multiplier*1000;
+                    systemTimeText.setText(timeFormat.format(currentTime));
+                    //can speedup time by multiplying speedup by System.currentTimeMillis()
+                    //this however also changes the base system time, so not sure if that would work
+                }
+                )
+        );
+        
+        timeline.setCycleCount(Animation.INDEFINITE);
+        timeline.play();
+    }
+     
     /*
     create a train object based on the information
     train info passed in will be as follows:
@@ -462,7 +567,6 @@ public class CTCOfficeController implements Initializable {
         int target = schedule.targetBlock[schedule.scheduleIndex];
         
         Train train = new Train(line, number, speed, authority, block, target);
-//        
         addTrainToTable(train);
     }
 
@@ -498,8 +602,6 @@ public class CTCOfficeController implements Initializable {
             trainTableGreen.getItems().add(train);
         }
         trainTableAll.getItems().add(train);
-
-        System.out.println(train);
     }
 
     //updates table when a train reaches its target
@@ -507,35 +609,24 @@ public class CTCOfficeController implements Initializable {
     private void updateTrainTable() {
 
     }
-
-    private void setTime(int multiplier) {
-        
-//        timeline = new Timeline(
-//                new KeyFrame(
-//                        Duration.millis(1000), event -> {
-//                    //systemTimeText.setText(timeFormat.format(System.currentTimeMillis()));
-//                    currentTime += multiplier*1000;
-//                    systemTimeText.setText(timeFormat.format(currentTime));
-//                    //can speedup time by multiplying speedup by System.currentTimeMillis()
-//                    //this however also changes the base system time, so not sure if that would work
-//                }
-//                )
-//        );
-        
-        timeline = new Timeline(
-                new KeyFrame(
-                        Duration.millis(1000), event -> {
-                    //systemTimeText.setText(timeFormat.format(System.currentTimeMillis()));
-                    currentTime += multiplier*1000;
-                    systemTimeText.setText(timeFormat.format(currentTime));
-                    //can speedup time by multiplying speedup by System.currentTimeMillis()
-                    //this however also changes the base system time, so not sure if that would work
-                }
-                )
-        );
-        
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
+    
+    private Schedule getScheduleInfoFromTrainTableSelected(Train train) {
+        //need to search schedule array and to find the scheudle with the same trainID as the train parameter
+        int trainID = train.getNumber();
+        Schedule schedule = scheduleArray[trainID];
+        return schedule;
     }
-
+    
+    private Schedule newTrainMakeSchedule(Train train) {
+        //String line, int trainID, int[] currentBlock, int[] targetBlock, long dispatchTime, double[] timeToNextBlock, int scheduleIndex
+        Schedule schedule = new Schedule("", 0, new int[1], new int[1], 0, new double[1], 0);
+        resizeScheduleArray(schedule); //need to add some size to the original arrays created
+        schedule.line = train.getLine();
+        schedule.trainID = train.getNumber();
+        schedule.currentBlock[0] = train.getBlock();
+        schedule.dispatchTime = currentTime;
+        schedule.timeToNextBlock[0] = 1.5; //dont really have a number for this yet...
+        schedule.scheduleIndex = 0;
+        return schedule;
+    }
 }

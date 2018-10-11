@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trainapplication;
+package trainapplication.TrackModel;
 
 import java.net.URL;
 import java.util.*;
@@ -17,6 +17,11 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -25,37 +30,50 @@ import java.io.IOException;
  */
 public class TrackModelController implements Initializable {
 
+    //
+    ArrayList<Track> trackList = new ArrayList<Track>();
+    ArrayList<Track> sortedTrackList = new ArrayList<Track>();
+    
+    //Gardcoded values for dropdown boxes 
+    //TODO: Fill in with real data values
+    ObservableList<String> trackLineList = FXCollections
+            .observableArrayList("Green", "Red");
+    ObservableList<String> trackSectionList = FXCollections
+            .observableArrayList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K");
+    ObservableList<Integer> trackBlockList = FXCollections
+            .observableArrayList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18);
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        ArrayList<Track> trackList = new ArrayList<Track>() ;
-        
-        
-        // TODO
-        /*
-        Track dummyTrack1= new Track("Green", "A", 1, 100, 1.5, 55, "", 1.0, 1.0, "Open");
-        Track dummyTrack2 = new Track("Green", "A", 2, 100, 0.5, 55, "", 1.0, 1.0, "Open");
-        Track dummyTrack3 = new Track("Green", "A", 3, 100, 0.5, 55, "", 1.0, 1.0, "Open");
-        Track dummyTrack4 = new Track("Green", "A", 4, 100, 1.0, 55, "", 1.0, 1.0, "Open");
-        Track dummyTrack5 = new Track("Green", "A", 5, 100, 1.0, 55, "", 1.0, 1.0, "Closed");
-        Track dummyTrack6 = new Track("Green", "A", 6, 100, 0.0, 55, "Switch", 1.0, 1.0, "Open");
-        Track dummyTrack7 = new Track("Green", "A", 7, 100, 1.0, 55, "", 1.0, 1.0, "Open");
-
+        trackLineComboBox.setItems(trackLineList);
+        trackSectionComboBox.setItems(trackSectionList);
+        trackBlockComboBox.setItems(trackBlockList);
         
         line.setCellValueFactory(new PropertyValueFactory<>("line"));
-        section.setCellValueFactory(new PropertyValueFactory<>("section"));
-        block.setCellValueFactory(new PropertyValueFactory<>("block"));
+        blockNumber.setCellValueFactory(new PropertyValueFactory<>("blockNumber"));
         blockLength.setCellValueFactory(new PropertyValueFactory<>("blockLength"));
         blockGrade.setCellValueFactory(new PropertyValueFactory<>("blockGrade"));
         speedLimit.setCellValueFactory(new PropertyValueFactory<>("speedLimit"));
         infrastructure.setCellValueFactory(new PropertyValueFactory<>("infrastructure"));
         elevation.setCellValueFactory(new PropertyValueFactory<>("elevation"));
-        cumElevation.setCellValueFactory(new PropertyValueFactory<>("cumElevation"));
-        state.setCellValueFactory(new PropertyValueFactory<>("state"));
+        blockDirection.setCellValueFactory(new PropertyValueFactory<>("blockDirection"));
+        blockState.setCellValueFactory(new PropertyValueFactory<>("blockState"));
+        occupancy.setCellValueFactory(new PropertyValueFactory<>("occupancy"));
+        blockHeat.setCellValueFactory(new PropertyValueFactory<>("blockHeat"));
         
+        // TODO
+        /*
+        Track dummyTrack1= new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+        Track dummyTrack2 = new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+        Track dummyTrack3 = new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+        Track dummyTrack4 = new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+        Track dummyTrack5 = new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+        Track dummyTrack6 = new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+        Track dummyTrack7 = new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+
         trackTable.getItems().add(dummyTrack1);
         trackTable.getItems().add(dummyTrack2);
         trackTable.getItems().add(dummyTrack3);
@@ -63,16 +81,16 @@ public class TrackModelController implements Initializable {
         trackTable.getItems().add(dummyTrack5);
         trackTable.getItems().add(dummyTrack6);
         trackTable.getItems().add(dummyTrack7);
+        
         */
-        readTrackFile("Documents/TestTrackData.csv", trackList);
     } 
     
-    public void readTrackFile(String filename, ArrayList<Track> trackList){
+    public void readTrackFile(String filename){
 
         String csvFile = filename;
         BufferedReader br = null;
         String line = "";
-        String cvsSplitBy = ",";
+        String csvSplitBy = ",";
 
         try {
 
@@ -80,7 +98,7 @@ public class TrackModelController implements Initializable {
             while ((line = br.readLine()) != null) {
                 
                 
-                String[] trackDataString = line.split(cvsSplitBy);
+                String[] trackDataString = line.split(csvSplitBy);
                 
                 String trackLine = trackDataString[0];
                 String trackSection = trackDataString[1];
@@ -99,8 +117,15 @@ public class TrackModelController implements Initializable {
                         trackInfrastructure, trackNextInbound, trackNextOutbound, 
                         trackElevation, trackCumElevation);
                 
-                trackList.add(newTrack);
+                newTrack.setBlockState("Green");
+                if(trackBlock == 13) newTrack.setOccupancy("Train");
+                else newTrack.setOccupancy("Open");
+                newTrack.setBlockHeat("ON");
+                if(trackInfrastructure.equals("SWITCH"))trackInfrastructure = "SWITCH-OPEN";
                 
+                trackList.add(newTrack);
+                //sortedTrackList.add(newTrack);
+                trackTable.getItems().add(newTrack);
 
             }
 
@@ -116,23 +141,166 @@ public class TrackModelController implements Initializable {
                     e.printStackTrace();
                 }
             }
+        }  
+        
+        //DEMO
+        trackLineComboBox.setValue("Green");
+    }
+    
+    public void FiltersButtonClicked(){
+        
+        ArrayList<Track> temp = trackList;
+        String selectedLine = (String)trackLineComboBox.getValue();
+        String selectedSection = (String)trackSectionComboBox.getValue();
+        //int selectedBlock = (int)trackBlockComboBox.getValue();
+        
+        for(Track track : trackList){
+            if(track.getSection().equals(selectedSection) == false){
+               trackTable.getItems().remove(track); 
+            } else {
+                sortedTrackList.add(track);
+            }     
         }
+        
+        trackList = temp;
+    }
+    
+    public void FilterResetButtonClicked(){
+        
+        for(Track track : sortedTrackList){
+            sortedTrackList.remove(track);
+            trackTable.getItems().remove(track);
+        }
+        
+        for(Track track : trackList) trackTable.getItems().add(track);
+    }
+    
+    public void LoadButtonClicked(){
+        
+        String filename = filenameTextField.getText();
+        readTrackFile(filename);
+        
+    }
+    
+    public void MainteneceButtonClicked(){
+        
+        int selectedBlock = (int)trackBlockComboBox.getValue();
+        
+        for(Track track : sortedTrackList){
+            System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
+            
+            if(selectedBlock == track.getBlockNumber()){
+                track.setBlockState("Red");
+                trackTable.refresh();
+            }
+        }
+    }
+    
+    public void TrackCircuitButtonClicked(){
+      
+        int selectedBlock = (int)trackBlockComboBox.getValue();
+         
+        for(Track track : sortedTrackList){
+            System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
+            
+            if(selectedBlock == track.getBlockNumber()){
+                track.setOccupancy("Unknown");
+                trackTable.refresh();
+            }
+        }  
+    }
+    
+    public void PowerButtonClicked(){
+        
+        int selectedBlock = (int)trackBlockComboBox.getValue();
+         
+        for(Track track : sortedTrackList){
+            System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
+            
+            if(selectedBlock == track.getBlockNumber()){
+                track.setBlockHeat("OFF");
+                trackTable.refresh();
+            }
+        }    
+    }
+    
+    public void FixButtonClicked(){
+       
+        int selectedBlock = (int)trackBlockComboBox.getValue();
+        
+        for(Track track : sortedTrackList){
+            System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
+            
+            if(selectedBlock == track.getBlockNumber()){
+                track.setBlockState("Green");
+                trackTable.refresh();
+            }
+        }
+            
+    }
+    
+    public void FixPowerButtonClicked(){
+        
+        int selectedBlock = (int)trackBlockComboBox.getValue();
+        
+        for(Track track : sortedTrackList){
+            System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
+            
+            if(selectedBlock == track.getBlockNumber()){
+                track.setBlockHeat("ON");
+                trackTable.refresh();
+            }
+        }
+        
+    }
+    
+    public void FixCircuitButtonClicked(){
+        
+        int selectedBlock = (int)trackBlockComboBox.getValue();
+        
+        for(Track track : sortedTrackList){
+            System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
+            
+            if(selectedBlock == track.getBlockNumber()){
+                track.setOccupancy("Train");
+                trackTable.refresh();
+            }
+        }
+        
+    }
+    
+    public void ResetButtonClicked(){
+        
+        for(Track track : sortedTrackList){
+            if(track.getBlockNumber() == 13)track.setOccupancy("Train");
+            else track.setOccupancy("Open");
+            track.setBlockHeat("ON");
+            track.setBlockState("Open");            
+        }
+        
+    }    
+    
+    public void LineSelected(){
         
         
     }
     
+    public void SectionSelected(){
+        
+    }
+    
+    public void BlockSelected(){
+            
+    }
     
     @FXML
     private TableView<Track> trackTable;
     
-    @FXML
+    @FXML 
     private TableColumn<Track, String> line;
 
     @FXML
-    private TableColumn<Track, String> section;
-
-    @FXML
-    private TableColumn<Track, Integer> block;
+    private TableColumn<Track, Integer> blockNumber;
 
     @FXML
     private TableColumn<Track, Double> blockLength;
@@ -150,11 +318,54 @@ public class TrackModelController implements Initializable {
     private TableColumn<Track, Double> elevation;
 
     @FXML
-    private TableColumn<Track, Double> cumElevation;
+    private TableColumn<Track, Double> blockDirection;
 
     @FXML
-    private TableColumn<Track, String> state;
+    private TableColumn<Track, String> blockState;
     
-      
+    @FXML
+    private TableColumn<Track, String> occupancy;
+
+    @FXML
+    private TableColumn<Track, String> blockHeat;
+    
+    @FXML 
+    private ComboBox trackLineComboBox;
+    
+    @FXML
+    private ComboBox trackSectionComboBox;
+    
+    @FXML
+    private ComboBox trackBlockComboBox;
+    
+    @FXML
+    private Button maintenenceButton;
+    
+    @FXML
+    private Button trackCircuitButton;
+    
+    @FXML
+    private Button powerButton;
+    
+    @FXML
+    private Button fixButton;
+    
+    @FXML
+    private Button resetButton;
+    
+    @FXML
+    private Button filterButton;
+    
+    @FXML
+    private TextField filenameTextField;
+    
+    @FXML
+    private Button loadButton;
+    
+    @FXML
+    private Button fixCircuitButton;
+    
+    @FXML
+    private Button fixPowerButton;
     
 }

@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trainapplication;
+package trainapplication.TrackModel;
 
 /**
  *
@@ -28,21 +28,34 @@ public class Track {
 
     
     //Track State Parameters Determined by the state of the system
-    private boolean switchState;
+    private boolean switchState= false;
     private boolean switchPresent;
     private int switchDefault;
     private String blockState;
     private boolean blockOccupancy;
     private boolean stationPresent;
     private boolean crossingPresent;
-    private boolean crossingState;
-    private boolean circuitState;
-    private String signal;
+    private boolean crossingState= true;
+    private boolean circuitState= true;
+    private boolean railState = true;
+
+    public boolean isRailState() {
+        return railState;
+    }
+
+    public void setRailState(boolean railState) {
+        this.railState = railState;
+    }
+    private String signal="Green";
     private String beacon;
     private int passengersStation;
     private int passengersBoard;
+    private String blockHeat;
+    private String occupancy;
+    private int blockDirection;
     
-
+    
+    //Data from csv file
     public Track(String line, String section, int blockNumber, double blockLength, double blockGrade, int speedLimit, String infrastructure, int nextInbound, int nextOutbound, double elevation, double cumElevation) {
         this.line = line;
         this.section = section;
@@ -53,6 +66,8 @@ public class Track {
         this.infrastructure = infrastructure;
         this.elevation = elevation;
         this.cumElevation = cumElevation;
+        if(this.nextInboundBlock == nextOutboundBlock) blockDirection = 1;
+        else blockDirection = 2;
     }
     //Jon Gramley - Track Controller
     public Track(String line, String section, int blockNumber, int nextInboundBlock, int nextOutboundBlock, boolean switchPresent, boolean stationPresent, boolean crossingPresent) {
@@ -64,6 +79,8 @@ public class Track {
         this.switchPresent = switchPresent;
         this.stationPresent = stationPresent;
         this.crossingPresent = crossingPresent;
+        if(this.nextInboundBlock == nextOutboundBlock) blockDirection = 1;
+        else blockDirection = 2;
     }
     
     //Jon Galaxy Dick  - CTC   
@@ -272,6 +289,30 @@ public class Track {
 
     public void setPassengersBoard(int passengersBoard) {
         this.passengersBoard = passengersBoard;
+    }
+
+    public String getBlockHeat() {
+        return blockHeat;
+    }
+
+    public void setBlockHeat(String blockHeat) {
+        this.blockHeat = blockHeat;
+    }
+
+    public String isOccupancy() {
+        return occupancy;
+    }
+
+    public void setOccupancy(String occupancy) {
+        this.occupancy = occupancy;
+    }
+
+    public int getBlockDirection() {
+        return blockDirection;
+    }
+
+    public void setBlockDirection(int blockDirection) {
+        this.blockDirection = blockDirection;
     }
    
     

@@ -41,6 +41,10 @@ public class Track {
     private String beacon;
     private int passengersStation;
     private int passengersBoard;
+    private String blockHeat;
+    private String occupancy;
+    private int blockDirection;
+    
     
     //Data from csv file
     public Track(String line, String section, int blockNumber, double blockLength, double blockGrade, int speedLimit, String infrastructure, int nextInbound, int nextOutbound, double elevation, double cumElevation) {
@@ -53,6 +57,8 @@ public class Track {
         this.infrastructure = infrastructure;
         this.elevation = elevation;
         this.cumElevation = cumElevation;
+        if(this.nextInboundBlock == nextOutboundBlock) blockDirection = 1;
+        else blockDirection = 2;
     }
     //Jon Gramley - Track Controller
     public Track(String line, String section, int blockNumber, int nextInboundBlock, int nextOutboundBlock, boolean switchPresent, boolean stationPresent, boolean crossingPresent) {
@@ -64,6 +70,8 @@ public class Track {
         this.switchPresent = switchPresent;
         this.stationPresent = stationPresent;
         this.crossingPresent = crossingPresent;
+        if(this.nextInboundBlock == nextOutboundBlock) blockDirection = 1;
+        else blockDirection = 2;
     }
     
     //Jon Galaxy Dick  - CTC   
@@ -272,6 +280,30 @@ public class Track {
 
     public void setPassengersBoard(int passengersBoard) {
         this.passengersBoard = passengersBoard;
+    }
+
+    public String getBlockHeat() {
+        return blockHeat;
+    }
+
+    public void setBlockHeat(String blockHeat) {
+        this.blockHeat = blockHeat;
+    }
+
+    public String isOccupancy() {
+        return occupancy;
+    }
+
+    public void setOccupancy(String occupancy) {
+        this.occupancy = occupancy;
+    }
+
+    public int getBlockDirection() {
+        return blockDirection;
+    }
+
+    public void setBlockDirection(int blockDirection) {
+        this.blockDirection = blockDirection;
     }
    
     

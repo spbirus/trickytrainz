@@ -53,15 +53,16 @@ public class TrackModelController implements Initializable {
         trackBlockComboBox.setItems(trackBlockList);
         
         line.setCellValueFactory(new PropertyValueFactory<>("line"));
-        section.setCellValueFactory(new PropertyValueFactory<>("section"));
-        block.setCellValueFactory(new PropertyValueFactory<>("block"));
+        blockNumber.setCellValueFactory(new PropertyValueFactory<>("blockNumber"));
         blockLength.setCellValueFactory(new PropertyValueFactory<>("blockLength"));
         blockGrade.setCellValueFactory(new PropertyValueFactory<>("blockGrade"));
         speedLimit.setCellValueFactory(new PropertyValueFactory<>("speedLimit"));
         infrastructure.setCellValueFactory(new PropertyValueFactory<>("infrastructure"));
         elevation.setCellValueFactory(new PropertyValueFactory<>("elevation"));
-        cumElevation.setCellValueFactory(new PropertyValueFactory<>("cumElevation"));
-        state.setCellValueFactory(new PropertyValueFactory<>("state"));
+        blockDirection.setCellValueFactory(new PropertyValueFactory<>("blockDirection"));
+        blockState.setCellValueFactory(new PropertyValueFactory<>("blockState"));
+        occupancy.setCellValueFactory(new PropertyValueFactory<>("occupancy"));
+        blockHeat.setCellValueFactory(new PropertyValueFactory<>("blockHeat"));
         
         // TODO
         /*
@@ -115,7 +116,11 @@ public class TrackModelController implements Initializable {
                         trackBlockLength, trackBlockGrade, trackSpeedLimit, 
                         trackInfrastructure, trackNextInbound, trackNextOutbound, 
                         trackElevation, trackCumElevation);
-
+                
+                newTrack.setBlockState("Open");
+                if(trackBlock == 13) newTrack.setOccupancy("Train");
+                else newTrack.setOccupancy("Open");
+                newTrack.setBlockHeat("ON");
                 
                 trackList.add(newTrack);
                 //sortedTrackList.add(newTrack);
@@ -135,56 +140,142 @@ public class TrackModelController implements Initializable {
                     e.printStackTrace();
                 }
             }
-        }
+        }  
         
-        
+        //DEMO
+        trackLineComboBox.setValue("Green");
     }
     
     public void FiltersButtonClicked(){
         
+        ArrayList<Track> temp = trackList;
         String selectedLine = (String)trackLineComboBox.getValue();
         String selectedSection = (String)trackSectionComboBox.getValue();
-        int selectedBlock = (int)trackBlockComboBox.getValue();
-        
-        String currSection = "";
-        
-        System.out.println("Block: " + selectedBlock + "\nSection: " + selectedSection
-                            + "\nLine:" + selectedLine);
+        //int selectedBlock = (int)trackBlockComboBox.getValue();
         
         for(Track track : trackList){
-            System.out.println("Current Section" + currSection);
             if(track.getSection().equals(selectedSection) == false){
-               trackTable.getItems().remove(track);
-               System.out.println("NOTSAME");
-            } 
-              
+               trackTable.getItems().remove(track); 
+            } else {
+                sortedTrackList.add(track);
+            }     
         }
+        
+        trackList = temp;
+    }
+    
+    public void FilterResetButtonClicked(){
+        
+        for(Track track : sortedTrackList){
+            sortedTrackList.remove(track);
+            trackTable.getItems().remove(track);
+        }
+        
+        for(Track track : trackList) trackTable.getItems().add(track);
     }
     
     public void LoadButtonClicked(){
         
         String filename = filenameTextField.getText();
         readTrackFile(filename);
-          
+        
     }
     
     public void MainteneceButtonClicked(){
         
+        int selectedBlock = (int)trackBlockComboBox.getValue();
+        
+        for(Track track : sortedTrackList){
+            System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
+            
+            if(selectedBlock == track.getBlockNumber()){
+                track.setBlockState("Closed");
+                trackTable.refresh();
+            }
+        }
     }
     
     public void TrackCircuitButtonClicked(){
-        
+      
+        int selectedBlock = (int)trackBlockComboBox.getValue();
+         
+        for(Track track : sortedTrackList){
+            System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
+            
+            if(selectedBlock == track.getBlockNumber()){
+                track.setOccupancy("Unknown");
+                trackTable.refresh();
+            }
+        }  
     }
     
     public void PowerButtonClicked(){
-           
+        
+        int selectedBlock = (int)trackBlockComboBox.getValue();
+         
+        for(Track track : sortedTrackList){
+            System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
+            
+            if(selectedBlock == track.getBlockNumber()){
+                track.setBlockHeat("OFF");
+                trackTable.refresh();
+            }
+        }    
     }
     
     public void FixButtonClicked(){
+       
+        int selectedBlock = (int)trackBlockComboBox.getValue();
+        
+        for(Track track : sortedTrackList){
+            System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
+            
+            if(selectedBlock == track.getBlockNumber()){
+                track.setBlockState("Open");
+                trackTable.refresh();
+            }
+        }
+            
+    }
+    
+    public void FixPowerButtonClicked(){
+        
+        int selectedBlock = (int)trackBlockComboBox.getValue();
+        
+        for(Track track : sortedTrackList){
+            System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
+            
+            if(selectedBlock == track.getBlockNumber()){
+                track.setBlockHeat("ON");
+                trackTable.refresh();
+            }
+        }
+        
+    }
+    
+    public void FixCircuitButtonClicked(){
+        
+        int selectedBlock = (int)trackBlockComboBox.getValue();
+        
+        for(Track track : sortedTrackList){
+            System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
+            
+            if(selectedBlock == track.getBlockNumber()){
+                track.setOccupancy("Train");
+                trackTable.refresh();
+            }
+        }
         
     }
     
     public void ResetButtonClicked(){
+        
+        for(Track track : sortedTrackList){
+            if(track.getBlockNumber() == 13)track.setOccupancy("Train");
+            else track.setOccupancy("Open");
+            track.setBlockHeat("ON");
+            track.setBlockState("Open");            
+        }
         
     }    
     
@@ -204,14 +295,11 @@ public class TrackModelController implements Initializable {
     @FXML
     private TableView<Track> trackTable;
     
-    @FXML
+    @FXML 
     private TableColumn<Track, String> line;
 
     @FXML
-    private TableColumn<Track, String> section;
-
-    @FXML
-    private TableColumn<Track, Integer> block;
+    private TableColumn<Track, Integer> blockNumber;
 
     @FXML
     private TableColumn<Track, Double> blockLength;
@@ -229,10 +317,16 @@ public class TrackModelController implements Initializable {
     private TableColumn<Track, Double> elevation;
 
     @FXML
-    private TableColumn<Track, Double> cumElevation;
+    private TableColumn<Track, Double> blockDirection;
 
     @FXML
-    private TableColumn<Track, String> state;
+    private TableColumn<Track, String> blockState;
+    
+    @FXML
+    private TableColumn<Track, String> occupancy;
+
+    @FXML
+    private TableColumn<Track, String> blockHeat;
     
     @FXML 
     private ComboBox trackLineComboBox;
@@ -266,5 +360,11 @@ public class TrackModelController implements Initializable {
     
     @FXML
     private Button loadButton;
+    
+    @FXML
+    private Button fixCircuitButton;
+    
+    @FXML
+    private Button fixPowerButton;
     
 }

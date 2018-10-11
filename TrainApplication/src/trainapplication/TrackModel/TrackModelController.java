@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package trainapplication;
+package trainapplication.TrackModel;
 
 import java.net.URL;
 import java.util.*;
@@ -117,10 +117,11 @@ public class TrackModelController implements Initializable {
                         trackInfrastructure, trackNextInbound, trackNextOutbound, 
                         trackElevation, trackCumElevation);
                 
-                newTrack.setBlockState("Open");
+                newTrack.setBlockState("Green");
                 if(trackBlock == 13) newTrack.setOccupancy("Train");
                 else newTrack.setOccupancy("Open");
                 newTrack.setBlockHeat("ON");
+                if(trackInfrastructure.equals("SWITCH"))trackInfrastructure = "SWITCH-OPEN";
                 
                 trackList.add(newTrack);
                 //sortedTrackList.add(newTrack);
@@ -189,7 +190,7 @@ public class TrackModelController implements Initializable {
             System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
             
             if(selectedBlock == track.getBlockNumber()){
-                track.setBlockState("Closed");
+                track.setBlockState("Red");
                 trackTable.refresh();
             }
         }
@@ -231,7 +232,7 @@ public class TrackModelController implements Initializable {
             System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
             
             if(selectedBlock == track.getBlockNumber()){
-                track.setBlockState("Open");
+                track.setBlockState("Green");
                 trackTable.refresh();
             }
         }

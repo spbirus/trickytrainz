@@ -42,7 +42,7 @@ public class Track {
     private int passengersStation;
     private int passengersBoard;
     
-
+    //Data from csv file
     public Track(String line, String section, int blockNumber, double blockLength, double blockGrade, int speedLimit, String infrastructure, int nextInbound, int nextOutbound, double elevation, double cumElevation) {
         this.line = line;
         this.section = section;

@@ -17,6 +17,11 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
 
 /**
  * FXML Controller class
@@ -25,25 +30,27 @@ import java.io.IOException;
  */
 public class TrackModelController implements Initializable {
 
+    //
+    ArrayList<Track> trackList = new ArrayList<Track>();
+    ArrayList<Track> sortedTrackList = new ArrayList<Track>();
+    
+    //Gardcoded values for dropdown boxes 
+    //TODO: Fill in with real data values
+    ObservableList<String> trackLineList = FXCollections
+            .observableArrayList("Green", "Red");
+    ObservableList<String> trackSectionList = FXCollections
+            .observableArrayList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K");
+    ObservableList<Integer> trackBlockList = FXCollections
+            .observableArrayList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18);
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-        ArrayList<Track> trackList = new ArrayList<Track>() ;
-        
-        
-        // TODO
-        /*
-        Track dummyTrack1= new Track("Green", "A", 1, 100, 1.5, 55, "", 1.0, 1.0, "Open");
-        Track dummyTrack2 = new Track("Green", "A", 2, 100, 0.5, 55, "", 1.0, 1.0, "Open");
-        Track dummyTrack3 = new Track("Green", "A", 3, 100, 0.5, 55, "", 1.0, 1.0, "Open");
-        Track dummyTrack4 = new Track("Green", "A", 4, 100, 1.0, 55, "", 1.0, 1.0, "Open");
-        Track dummyTrack5 = new Track("Green", "A", 5, 100, 1.0, 55, "", 1.0, 1.0, "Closed");
-        Track dummyTrack6 = new Track("Green", "A", 6, 100, 0.0, 55, "Switch", 1.0, 1.0, "Open");
-        Track dummyTrack7 = new Track("Green", "A", 7, 100, 1.0, 55, "", 1.0, 1.0, "Open");
-
+        trackLineComboBox.setItems(trackLineList);
+        trackSectionComboBox.setItems(trackSectionList);
+        trackBlockComboBox.setItems(trackBlockList);
         
         line.setCellValueFactory(new PropertyValueFactory<>("line"));
         section.setCellValueFactory(new PropertyValueFactory<>("section"));
@@ -56,6 +63,16 @@ public class TrackModelController implements Initializable {
         cumElevation.setCellValueFactory(new PropertyValueFactory<>("cumElevation"));
         state.setCellValueFactory(new PropertyValueFactory<>("state"));
         
+        // TODO
+        /*
+        Track dummyTrack1= new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+        Track dummyTrack2 = new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+        Track dummyTrack3 = new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+        Track dummyTrack4 = new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+        Track dummyTrack5 = new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+        Track dummyTrack6 = new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+        Track dummyTrack7 = new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+
         trackTable.getItems().add(dummyTrack1);
         trackTable.getItems().add(dummyTrack2);
         trackTable.getItems().add(dummyTrack3);
@@ -63,16 +80,16 @@ public class TrackModelController implements Initializable {
         trackTable.getItems().add(dummyTrack5);
         trackTable.getItems().add(dummyTrack6);
         trackTable.getItems().add(dummyTrack7);
+        
         */
-        readTrackFile("Documents/TestTrackData.csv", trackList);
     } 
     
-    public void readTrackFile(String filename, ArrayList<Track> trackList){
+    public void readTrackFile(String filename){
 
         String csvFile = filename;
         BufferedReader br = null;
         String line = "";
-        String cvsSplitBy = ",";
+        String csvSplitBy = ",";
 
         try {
 
@@ -80,7 +97,7 @@ public class TrackModelController implements Initializable {
             while ((line = br.readLine()) != null) {
                 
                 
-                String[] trackDataString = line.split(cvsSplitBy);
+                String[] trackDataString = line.split(csvSplitBy);
                 
                 String trackLine = trackDataString[0];
                 String trackSection = trackDataString[1];
@@ -98,9 +115,11 @@ public class TrackModelController implements Initializable {
                         trackBlockLength, trackBlockGrade, trackSpeedLimit, 
                         trackInfrastructure, trackNextInbound, trackNextOutbound, 
                         trackElevation, trackCumElevation);
+
                 
                 trackList.add(newTrack);
-                
+                //sortedTrackList.add(newTrack);
+                trackTable.getItems().add(newTrack);
 
             }
 
@@ -121,6 +140,66 @@ public class TrackModelController implements Initializable {
         
     }
     
+    public void FiltersButtonClicked(){
+        
+        String selectedLine = (String)trackLineComboBox.getValue();
+        String selectedSection = (String)trackSectionComboBox.getValue();
+        int selectedBlock = (int)trackBlockComboBox.getValue();
+        
+        String currSection = "";
+        
+        System.out.println("Block: " + selectedBlock + "\nSection: " + selectedSection
+                            + "\nLine:" + selectedLine);
+        
+        for(Track track : trackList){
+            System.out.println("Current Section" + currSection);
+            if(track.getSection().equals(selectedSection) == false){
+               trackTable.getItems().remove(track);
+               System.out.println("NOTSAME");
+            } 
+              
+        }
+    }
+    
+    public void LoadButtonClicked(){
+        
+        String filename = filenameTextField.getText();
+        readTrackFile(filename);
+          
+    }
+    
+    public void MainteneceButtonClicked(){
+        
+    }
+    
+    public void TrackCircuitButtonClicked(){
+        
+    }
+    
+    public void PowerButtonClicked(){
+           
+    }
+    
+    public void FixButtonClicked(){
+        
+    }
+    
+    public void ResetButtonClicked(){
+        
+    }    
+    
+    public void LineSelected(){
+        
+        
+    }
+    
+    public void SectionSelected(){
+        
+    }
+    
+    public void BlockSelected(){
+            
+    }
     
     @FXML
     private TableView<Track> trackTable;
@@ -155,6 +234,37 @@ public class TrackModelController implements Initializable {
     @FXML
     private TableColumn<Track, String> state;
     
-      
+    @FXML 
+    private ComboBox trackLineComboBox;
+    
+    @FXML
+    private ComboBox trackSectionComboBox;
+    
+    @FXML
+    private ComboBox trackBlockComboBox;
+    
+    @FXML
+    private Button maintenenceButton;
+    
+    @FXML
+    private Button trackCircuitButton;
+    
+    @FXML
+    private Button powerButton;
+    
+    @FXML
+    private Button fixButton;
+    
+    @FXML
+    private Button resetButton;
+    
+    @FXML
+    private Button filterButton;
+    
+    @FXML
+    private TextField filenameTextField;
+    
+    @FXML
+    private Button loadButton;
     
 }

@@ -47,6 +47,11 @@ public class Train {
     private int numberOfWheels = 12; //will probably need to change
     private final double coefficientOfFriction = 0.00035; //from  https://en.wikipedia.org/wiki/Rolling_resistance#Rolling_resistance_coefficient_examples
     private int direction; // 0 and 1
+    
+    //route variables for the train 
+    private boolean[] route;
+    private int routeStart;
+    private int routeEnd;
 
     //for CTC
     public Train(String line, int number, double speed, int authority, int block, int target) {
@@ -294,7 +299,7 @@ public class Train {
     public void setTarget(int target) {
         this.target = target;
     }
-    
+     
     
     public double calculateVelocity(double power, double currentSpeed,double grade,int brake,double speedLimit,int passengers){
         

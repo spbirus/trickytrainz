@@ -5,6 +5,7 @@
  */
 package trainapplication;
 
+import trainapplication.TrainModel.TrainModelController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -26,7 +27,7 @@ public class TrainApplication extends Application {
         stage.setScene(scene);
         stage.show();
     }
-
+    
     /**
      * @param args the command line arguments
      */

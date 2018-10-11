@@ -5,7 +5,9 @@
  */
 package trainapplication.TrainModel;
 
+import javafx.application.Application;
 import trainapplication.Train;
+import trainapplication.TrainControllerController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -35,9 +37,16 @@ import javafx.stage.Stage;
  *
  * @author burri
  */
-public class TrainModelController implements Initializable {
+public class TrainModelController extends Application implements Initializable {
     //will need to get this data from somewhere
     private Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8); 
+    private TrainControllerController trainCon;
+
+    public TrainModelController(TrainControllerController tr) {
+        trainCon = tr;
+    }
+    
+    
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -310,8 +319,9 @@ public class TrainModelController implements Initializable {
     
     @FXML
     void onRefreshSpeed(ActionEvent event) {
-        double curSpeed = storedVelocity; //Double.parseDouble(currentSpeedNumber.getText());
-        double power = storedPower; //Double.parseDouble(requestedPowerNumber.getText());
+        double curSpeed = storedVelocity; 
+//        double power = storedPower;  //used for hard coding the values
+        double power = trainCon.powerVal;
         if(power > 120){ //check for the max power
             power = 120.00;
         }
@@ -319,6 +329,7 @@ public class TrainModelController implements Initializable {
         int passengers = Integer.parseInt(passengerNumber.getText());
 
         double newSpeed = t.calculateVelocity(power, curSpeed, 0, 0, 300, passengers);
+        trainCon.currSpeedVal = newSpeed;
         storedVelocity = newSpeed;
         storedPower = power;
 //        System.out.println("velocity: "+ newSpeed + "mph");
@@ -498,5 +509,19 @@ public class TrainModelController implements Initializable {
 //        deccelLimit.setCellValueFactory(new PropertyValueFactory<>("deccelLimit"));
 //        trainTable.getItems().add(t);
 //    }
+
+    private Stage trainModelStage = new Stage();
+    
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        AnchorPane page = (AnchorPane) FXMLLoader.load(getClass().getResource("TrainModel.fxml"));
+        Scene scene = new Scene(page);
+        trainModelStage.setScene(scene);
+        trainModelStage.setTitle("Train Model");
+        trainModelStage.setResizable(true);
+        
+
+        trainModelStage.show();
+    }
     
 }

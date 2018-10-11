@@ -167,11 +167,12 @@ public class TrainControllerController implements Initializable {
      
     //==========================Speed and Power Variables ======================
     private final double MAX_POWER = 120; //kW
-    private double currSpeedVal;
+    public double currSpeedVal;
     double setpointSpeedVal;
     double uVal;
     double speedErr;
     Train train1;
+    public double powerVal;
 
     //==========================================================================
 
@@ -203,7 +204,7 @@ public class TrainControllerController implements Initializable {
 
         double oldPowerVal = Double.parseDouble(powerLabel.getText());
         System.out.println("Old Power Val: " + oldPowerVal);
-        double powerVal = (kp*speedErr)+(ki*uVal);
+        powerVal = (kp*speedErr)+(ki*uVal);
         System.out.println("Power Val: " + powerVal);
 
 

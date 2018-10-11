@@ -317,7 +317,7 @@ public class TrainModelController implements Initializable {
         Task <Void> task = new Task<Void>() {
             @Override public Void call() throws InterruptedException {
                 
-                for(int i = 0; i < 10000; i++){
+                for(int i = 0; i < 5000; i++){
                     Platform.runLater(new Runnable() {
                         @Override public void run() {
     //                           curSpeed = storedVelocity; //Double.parseDouble(currentSpeedNumber.getText());
@@ -338,7 +338,7 @@ public class TrainModelController implements Initializable {
                            }
 
                     });
-                    Thread.sleep(1);
+                    Thread.sleep(10);
                 }
                 
 

@@ -38,6 +38,7 @@
                </font>
             </Label>
             <Separator layoutX="10.0" layoutY="133.0" prefHeight="5.0" prefWidth="132.0" />
+            <Button id="setKiKpVals" fx:id="runSimulationButton" disable="true" layoutX="15.0" layoutY="162.0" mnemonicParsing="false" onAction="#runSim" prefHeight="27.0" prefWidth="120.0" text="Run" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="350.0" layoutY="73.0" prefHeight="200.0" prefWidth="259.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
@@ -67,28 +68,28 @@
       </AnchorPane>
       <AnchorPane layoutX="167.0" layoutY="73.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
-            <Label layoutX="24.0" layoutY="78.0" text="Power Command (kW)" />
+            <Label layoutX="24.0" layoutY="72.0" text="Power Command (kW)" />
             <Label layoutX="61.0" layoutY="5.0" prefHeight="19.0" prefWidth="57.0" text="POWER" underline="true">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="20.0" layoutY="36.0">
+            <Label layoutX="20.0" layoutY="30.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Separator layoutX="16.0" layoutY="71.0" prefHeight="5.0" prefWidth="148.0" />
-            <Label layoutX="18.0" layoutY="137.0" />
-            <Separator layoutX="4.0" layoutY="143.0" prefHeight="5.0" prefWidth="80.0" />
-            <Label layoutX="20.0" layoutY="146.0" text="Kp (kW)" />
-            <Label layoutX="105.0" layoutY="137.0" />
-            <Separator layoutX="91.0" layoutY="143.0" prefHeight="5.0" prefWidth="80.0" />
-            <TextField fx:id="kpVal" layoutX="4.0" layoutY="110.0" prefHeight="27.0" prefWidth="80.0" />
-            <Button id="setKiKpVals" layoutX="24.0" layoutY="166.0" mnemonicParsing="false" onAction="#setKVals" prefHeight="27.0" prefWidth="126.0" text="Set " />
-            <TextField fx:id="kiVal" layoutX="91.0" layoutY="110.0" prefHeight="27.0" prefWidth="80.0" />
-            <Label layoutX="110.0" layoutY="146.0" text="Ki (kW)" />
-            <Label fx:id="powerLabel" layoutX="32.0" layoutY="36.0" text="0">
+            <Separator layoutX="16.0" layoutY="65.0" prefHeight="5.0" prefWidth="148.0" />
+            <Label layoutX="18.0" layoutY="134.0" />
+            <Separator layoutX="4.0" layoutY="140.0" prefHeight="5.0" prefWidth="80.0" />
+            <Label layoutX="20.0" layoutY="143.0" text="Kp (kW)" />
+            <Label layoutX="105.0" layoutY="134.0" />
+            <Separator layoutX="91.0" layoutY="140.0" prefHeight="5.0" prefWidth="80.0" />
+            <TextField fx:id="kpVal" layoutX="4.0" layoutY="107.0" prefHeight="27.0" prefWidth="80.0" />
+            <Button id="setKiKpVals" fx:id="setKValsButton" layoutX="28.0" layoutY="162.0" mnemonicParsing="false" onAction="#setKVals" prefHeight="27.0" prefWidth="120.0" text="Set " />
+            <TextField fx:id="kiVal" layoutX="91.0" layoutY="107.0" prefHeight="27.0" prefWidth="80.0" />
+            <Label layoutX="110.0" layoutY="143.0" text="Ki (kW)" />
+            <Label fx:id="powerLabel" layoutX="32.0" layoutY="30.0" text="0">
                <font>
                   <Font size="30.0" />
                </font>

@@ -54,12 +54,8 @@ public class TrainControllerController implements Initializable {
 //        //trainTable.getItems().add(t);
 //        trainTable.getItems().add(t);
         train1 = new Train("red",1,0.0,1,1,1);
+        initPower();
         
-        currSpeedVal = Double.parseDouble(currentSpeedLabel.getText());
-        setpointSpeedVal = Double.parseDouble(setpointSpeedLabel.getText());
-        uVal = 0;
-        speedErr = Math.abs(setpointSpeedVal - currSpeedVal);
-         System.out.println("first Speed Error: "+speedErr);
 
     }
 
@@ -95,6 +91,12 @@ public class TrainControllerController implements Initializable {
     
     @FXML
     private CheckBox testPanelCheck;
+    
+    @FXML
+    private Button setKValsButton;
+    
+    @FXML
+    private Button runSimulationButton;
     
     @FXML
     private MenuButton trainNumDropdown;
@@ -167,71 +169,142 @@ public class TrainControllerController implements Initializable {
      
     //==========================Speed and Power Variables ======================
     private final double MAX_POWER = 120; //kW
-    private double currSpeedVal;
+    final double FPS_MS = 0.3048;
+    final double MPH_MS = 0.44704;
+    final double MPH_FPS = 1.46667;
+    double currSpeedVal;
     double setpointSpeedVal;
     double uVal;
+    double oldUval;
     double speedErr;
+    double oldSpeedErr;
     Train train1;
+    public double powerVal;
+    double oldPowerVal;
+    double TIME_MULTIPLIER = 200;
+    double ki;
+    double kp;
+    final double DEFAULT_KI = 20;
+    final double DEFAULT_KP = 5;
+    
 
     //==========================================================================
 
+    public void initPower(){
+        currSpeedVal = Double.parseDouble(currentSpeedLabel.getText());
+        setpointSpeedVal = Double.parseDouble(setpointSpeedLabel.getText());
+        uVal = 0;
+        oldUval = 0;
+        powerVal = 0;
+        oldPowerVal = 0;
+        speedErr = Math.abs(setpointSpeedVal - currSpeedVal);
+        oldSpeedErr = 0;
+        System.out.println("first Speed Error: "+speedErr);
+    }
     @FXML
     void setKVals(ActionEvent event) {
-
-
+//         set:
+//        SpeedErr - check
+//        Uval
+//        PowerVal 
         //double power = Double.parseDouble(p.getText());
         //int passengers = Integer.parseInt(passengerNumber.getText());
-        double kp = Double.parseDouble(kpVal.getText());
-        double ki = Double.parseDouble(kiVal.getText());
-        double oldSpeedErr = speedErr;
-        System.out.println("oldSpeedErr: "+oldSpeedErr);
-        double oldUval = uVal;
-        System.out.println("old uVal: " + oldUval);
         
-        currSpeedVal = Double.parseDouble(currentSpeedLabel.getText());
-        System.out.println("CurrentSpeed: "+currSpeedVal);
-        setpointSpeedVal = Double.parseDouble(setpointSpeedLabel.getText());
-        System.out.println("Setpoint Speed: "+setpointSpeedVal);
-        speedErr = Math.abs(setpointSpeedVal - currSpeedVal);
-        System.out.println("Speed Error: "+speedErr);
+        //===============grab values from UI======
         
-
-
-        uVal = oldUval + train1.getDeltaT()/2*(speedErr + oldSpeedErr); 
+        kp = Double.parseDouble(kpVal.getText());
+        ki = Double.parseDouble(kiVal.getText());
+        if(kp <= 0 || ki <= 0){
+            kp = DEFAULT_KP;
+            ki = DEFAULT_KI;
+            kpVal.setText(String.format("%.2f",kp));
+            kiVal.setText(String.format("%.2f",ki));
+        }
+        setKValsButton.setDisable(true);
+        kpVal.setEditable(false);
+        kiVal.setEditable(false);
+        runSimulationButton.setDisable(false);
+       
+            
+    }
+     @FXML
+    void runSim(ActionEvent event) {
+        System.out.println("Current Speed(mph): "+currSpeedVal);
+        System.out.println("Setpoint speed(mph): "+setpointSpeedVal);
+        //setKValsButton.setDisable(true);
+       //=================need to make a while loop using different thread in order to get live updates on GUI
+        for(int i = 0; i < TIME_MULTIPLIER; i++)   {
+            calculatePower();
+        }
+    }
+    void calculatePower(){
+        
+       
+        speedErr = setpointSpeedVal*MPH_MS - currSpeedVal*MPH_MS;
+        
+        
+        //========for testing purposes:======
+        System.out.println("CurrentSpeed(m/s): "+currSpeedVal*MPH_MS);
+        System.out.println("Setpoint Speed(m/s): "+setpointSpeedVal*MPH_MS);
+        
+        System.out.println("Speed Error(m/s): "+speedErr);
+        System.out.println("(Delta T)/2 Should be .005: " + train1.getDeltaT()/2.0);
+        //==============uVal calc===========
+          if(oldPowerVal < MAX_POWER){
+              System.out.println(String.format("uVal Calculation: %f = %f + (%f/(2.0))*(%f*%f + %f*%f)",uVal,oldUval,train1.getDeltaT(),speedErr,MPH_MS,oldSpeedErr,MPH_MS));
+              System.out.println(String.format("uVal Calculation: %f = %f + (%f)*(%f + %f)",uVal,oldUval,train1.getDeltaT()/2.0,speedErr*MPH_MS,oldSpeedErr*MPH_MS));
+              uVal = oldUval + (train1.getDeltaT()/(2.0))*(speedErr*MPH_MS + oldSpeedErr*MPH_MS);
+          }else{
+              uVal = oldUval;
+          }
+        
+        System.out.println("oldUval: "+oldUval);
         System.out.println("uVal: "+ uVal);
 
-
-        double oldPowerVal = Double.parseDouble(powerLabel.getText());
-        System.out.println("Old Power Val: " + oldPowerVal);
-        double powerVal = (kp*speedErr)+(ki*uVal);
-        System.out.println("Power Val: " + powerVal);
-
-
-        if(powerVal > MAX_POWER){
-            System.out.println("Power Val greater than max power! Uval is set to: "+oldUval);
-            uVal = oldUval;
-        }
-        powerVal = (kp*speedErr)+(ki*uVal);
-        System.out.println("powerVal = "+kp+"*"+speedErr+"+"+ki+"*"+uVal);
+       //================power calc===============
+       
         
-        if(powerVal > MAX_POWER){
+        double testPower = (kp*speedErr*MPH_MS)+(ki*uVal);
+        //powerVal = (kp*speedErr)+(ki*uVal);
+        if(testPower < MAX_POWER){
+            powerVal = testPower;
+            System.out.println(String.format("Test Power Calculation: %f = %f*%f*%f+%f*%f",testPower,kp,speedErr,MPH_MS,ki,uVal));
+            System.out.println(String.format("Test Power Calculation: %f = %f+%f",testPower,kp*speedErr*MPH_MS,ki*uVal));
+            
+        }else{
+            System.out.println(String.format("Test Power Calculation: %f = %f*%f*%f+%f*%f",testPower,kp,speedErr,MPH_MS,ki,uVal));
+            System.out.println(String.format("Test Power Calculation: %f = %f+%f",testPower,kp*speedErr*MPH_MS,ki*uVal));
+            System.out.println("Power larger than 120 kW.... reducing to 120 kw...");
             powerVal = MAX_POWER;
+            
         }
+        System.out.println("Old Power Val: " + oldPowerVal);
+        System.out.println("Power Val: " + powerVal);
+        
+        
         powerLabel.setText(String.format("%.3f",powerVal));
         
         
         //========FOR TESTING PURPOSES================
         
-        double v = train1.calculateVelocity(powerVal, currSpeedVal, 0, 0, setpointSpeedVal, 50);
-                
+        double currSpeedValNew = train1.calculateVelocity(powerVal, currSpeedVal, 0, 0, setpointSpeedVal, 50);
+        System.out.println("Current Speed according to Train Model: "+currSpeedValNew);
         //============================================
                 
-                
-        //String.format("%.3f", value.doubleValue())
-        if(currSpeedVal < setpointSpeedVal)
-            currentSpeedLabel.setText(String.valueOf(v));
+      
+        
+        currentSpeedLabel.setText(String.format("%.4f",currSpeedValNew));
+ 
         System.out.println("=================================================");
-
+        
+        oldSpeedErr = speedErr;
+        oldUval = uVal; 
+        oldPowerVal = powerVal;
+        currSpeedVal = currSpeedValNew;
+        
+        
+        
+        
     }
     @FXML
     void turnLightsOff(ActionEvent event) {

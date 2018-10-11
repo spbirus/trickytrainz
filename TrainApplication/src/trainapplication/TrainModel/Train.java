@@ -43,7 +43,7 @@ public class Train {
     private final double MPH_TO_MiPS = 0.000277778; //miles per hr to miles to miles per second
     private final double serviceBrakeDecel = 1.2 * 3.2808399; //ft/s^2
     private final double emergencyBrakeDecel = 2.73 * 3.2808399; //ft/s^2
-    private final double deltaT = 0.01; //deltaT is a change in time that helps us not miss the beacon
+    private final double deltaT = 1; //deltaT is a change in time that helps us not miss the beacon
     private int numberOfWheels = 12; //will probably need to change
     private final double coefficientOfFriction = 0.00035; //from  https://en.wikipedia.org/wiki/Rolling_resistance#Rolling_resistance_coefficient_examples
     private int direction; // 0 and 1
@@ -366,7 +366,7 @@ public class Train {
             velActual = 0;
         }
         
-        System.out.println("velocity: " + velActual +" ft/s");
+        System.out.println("velocity: " + velActual +" MPH");
 
         
         return velActual;

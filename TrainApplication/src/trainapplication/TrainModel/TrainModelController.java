@@ -9,8 +9,10 @@ import trainapplication.Train;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -310,21 +312,51 @@ public class TrainModelController implements Initializable {
     
     @FXML
     void onRefreshSpeed(ActionEvent event) {
-        double curSpeed = storedVelocity; //Double.parseDouble(currentSpeedNumber.getText());
-        double power = storedPower; //Double.parseDouble(requestedPowerNumber.getText());
-        if(power > 120){ //check for the max power
-            power = 120.00;
-        }
-        System.out.println(power);
-        int passengers = Integer.parseInt(passengerNumber.getText());
+//        double curSpeed = 0;
+//        double power = 0;
+        Task <Void> task = new Task<Void>() {
+            @Override public Void call() throws InterruptedException {
+                
+                for(int i = 0; i < 10000; i++){
+                    Platform.runLater(new Runnable() {
+                        @Override public void run() {
+    //                           curSpeed = storedVelocity; //Double.parseDouble(currentSpeedNumber.getText());
+    //                           power = storedPower; //Double.parseDouble(requestedPowerNumber.getText());
+                               if(storedPower > 120){ //check for the max power
+                                   storedPower = 120.00;
+                               }
+                               System.out.println(storedPower);
+                               int passengers = Integer.parseInt(passengerNumber.getText());
 
-        double newSpeed = t.calculateVelocity(power, curSpeed, 0, 0, 300, passengers);
-        storedVelocity = newSpeed;
-        storedPower = power;
-//        System.out.println("velocity: "+ newSpeed + "mph");
+                               double newSpeed = t.calculateVelocity(storedPower, storedVelocity, 0, 0, 300, passengers);
+                               storedVelocity = newSpeed;
+                               storedPower = storedPower; //will eventually need to be from steves module
+                       //        System.out.println("velocity: "+ newSpeed + "mph");
 
-        currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
-        requestedPowerNumber.setText(String.valueOf(Math.round(100*power)/100.0));
+                               currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
+                               requestedPowerNumber.setText(String.valueOf(Math.round(100*storedPower)/100.0));
+                           }
+
+                    });
+                    Thread.sleep(1);
+                }
+                
+
+              return null;
+            }
+         };
+        
+        task.setOnSucceeded(e -> {
+//            label.textProperty().unbind();
+            // this message will be seen.
+            currentSpeedNumber.setText(String.valueOf(Math.round(100*storedVelocity)/100.0));
+            requestedPowerNumber.setText(String.valueOf(Math.round(100*storedPower)/100.0));
+         });
+        
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
+        
     }
 
     @FXML

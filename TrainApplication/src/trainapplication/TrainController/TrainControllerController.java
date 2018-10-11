@@ -56,7 +56,7 @@ public class TrainControllerController implements Initializable {
 //        //trainTable.getItems().add(t);
 //        trainTable.getItems().add(t);
         train1 = new Train("red",1,0.0,1,1,1);
-        initPower();
+        
         
 
     }
@@ -100,6 +100,18 @@ public class TrainControllerController implements Initializable {
     @FXML
     private Button runSimulationButton;
     
+     @FXML
+    private TextField temperatureVal;
+
+    @FXML
+    private Label temperatureLabel;
+    
+    @FXML
+    private TextField test_setpointSpeedVal;
+    
+    @FXML
+    private Button setSetpointButton;
+    
     @FXML
     private MenuButton trainNumDropdown;
 
@@ -108,63 +120,19 @@ public class TrainControllerController implements Initializable {
     void onTrainSelectionClick(ActionEvent event) {
 
     }
-@FXML
+    @FXML
     void onServBrakeButtonClick(ActionEvent event) {
         if(servBrakeLabel.getText().equalsIgnoreCase("Engaged")){
-//                    double curSpeed = Double.parseDouble(currentSpeedLabel.getText());
-//                    double power = Double.parseDouble(requestedPowerNumber.getText());
-//                    int passengers = Integer.parseInt(passengerNumber.getText());
-//
-//                    double newSpeed = t.calculateVelocity(power, curSpeed, 0, 3, 300, passengers); //3 is the emergency brake
-//
-//
-//                    currentSpeedLabel.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
-                    servBrakeLabel.setText("Disengaging");
-                    try{
-                        Thread.sleep(1000);
-                    }catch(InterruptedException e){
-                        
-                    }
-                    
                     servBrakeLabel.setText("Disengaged");
         }else if(servBrakeLabel.getText().equalsIgnoreCase("Disengaged")){
-            servBrakeLabel.setText("Engaging");
-            try{
-                Thread.sleep(1000);
-            }catch(InterruptedException e){
-                        
-            }
-                    
             servBrakeLabel.setText("Engaged");
         }
     }
      @FXML
     void onEmergBrakeButtonClick(ActionEvent event) {
         if(emergBrakeLabel.getText().equalsIgnoreCase("Engaged")){
-//                    double curSpeed = Double.parseDouble(currentSpeedLabel.getText());
-//                    double power = Double.parseDouble(requestedPowerNumber.getText());
-//                    int passengers = Integer.parseInt(passengerNumber.getText());
-//
-//                    double newSpeed = t.calculateVelocity(power, curSpeed, 0, 3, 300, passengers); //3 is the emergency brake
-//
-//
-//                    currentSpeedLabel.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
-                    emergBrakeLabel.setText("Disengaging");
-                    try{
-                        Thread.sleep(1000);
-                    }catch(InterruptedException e){
-                        
-                    }
-                    
                     emergBrakeLabel.setText("Disengaged");
         }else if(emergBrakeLabel.getText().equalsIgnoreCase("Disengaged")){
-            emergBrakeLabel.setText("Engaging");
-            try{
-                Thread.sleep(1000);
-            }catch(InterruptedException e){
-                        
-            }
-                    
             emergBrakeLabel.setText("Engaged");
         }
     }
@@ -187,7 +155,7 @@ public class TrainControllerController implements Initializable {
     double ki;
     double kp;
     final double DEFAULT_KP = 50;
-    final double DEFAULT_KI = .0062;
+    final double DEFAULT_KI = .004; //.0052 for 10 mph 
     
     
 
@@ -210,7 +178,7 @@ public class TrainControllerController implements Initializable {
 //        SpeedErr - check
 //        Uval
 //        PowerVal 
-        //double power = Double.parseDouble(p.getText());
+        
         //int passengers = Integer.parseInt(passengerNumber.getText());
         
         //===============grab values from UI======
@@ -232,6 +200,10 @@ public class TrainControllerController implements Initializable {
     }
      @FXML
     void runSim(ActionEvent event) {
+        runSimulationButton.setDisable(true);
+        test_setpointSpeedVal.setDisable(true);
+        setSetpointButton.setDisable(true);
+        initPower();
         System.out.println("Current Speed(mph): "+currSpeedVal);
         System.out.println("Setpoint speed(mph): "+setpointSpeedVal);
         
@@ -261,7 +233,7 @@ public class TrainControllerController implements Initializable {
             // this message will be seen.
             powerLabel.setText(String.format("%.3f",powerVal));
         
-            currentSpeedLabel.setText(String.format("%.4f",currSpeedVal));
+            currentSpeedLabel.setText(String.format("%.2f",currSpeedVal));
             
          });
         
@@ -331,7 +303,7 @@ public class TrainControllerController implements Initializable {
         //=====================set my GUI values================================
         powerLabel.setText(String.format("%.3f",powerVal));
         
-        currentSpeedLabel.setText(String.format("%.4f",currSpeedValNew));
+        currentSpeedLabel.setText(String.format("%.2f",currSpeedValNew));
         //======================================================================
     
         System.out.println("=================================================");
@@ -365,4 +337,16 @@ public class TrainControllerController implements Initializable {
         }
         
     }
+    @FXML
+    void setTemperature(ActionEvent event) {
+        double temp = Double.parseDouble(temperatureVal.getText());
+        temperatureLabel.setText(String.format("%.0f",temp));
+    }
+    
+    @FXML
+    void setSetpointSpeed_Test(ActionEvent event) {
+        setpointSpeedLabel.setText(String.format("%.2f",Double.parseDouble(test_setpointSpeedVal.getText())));
+    }
+
+    
 }

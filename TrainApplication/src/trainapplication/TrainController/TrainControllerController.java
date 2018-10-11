@@ -9,6 +9,8 @@ import java.awt.Color;
 import java.awt.Paint;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -184,8 +186,9 @@ public class TrainControllerController implements Initializable {
     double TIME_MULTIPLIER = 200;
     double ki;
     double kp;
-    final double DEFAULT_KI = 20;
-    final double DEFAULT_KP = 5;
+    final double DEFAULT_KP = 50;
+    final double DEFAULT_KI = .0062;
+    
     
 
     //==========================================================================
@@ -217,8 +220,8 @@ public class TrainControllerController implements Initializable {
         if(kp <= 0 || ki <= 0){
             kp = DEFAULT_KP;
             ki = DEFAULT_KI;
-            kpVal.setText(String.format("%.2f",kp));
-            kiVal.setText(String.format("%.2f",ki));
+            kpVal.setText(String.format("%.4f",kp));
+            kiVal.setText(String.format("%.4f",ki));
         }
         setKValsButton.setDisable(true);
         kpVal.setEditable(false);
@@ -231,11 +234,45 @@ public class TrainControllerController implements Initializable {
     void runSim(ActionEvent event) {
         System.out.println("Current Speed(mph): "+currSpeedVal);
         System.out.println("Setpoint speed(mph): "+setpointSpeedVal);
-        //setKValsButton.setDisable(true);
-       //=================need to make a while loop using different thread in order to get live updates on GUI
-        for(int i = 0; i < TIME_MULTIPLIER; i++)   {
-            calculatePower();
-        }
+        
+        //======================MULTI THREAD CALL===============================
+        Task <Void> task = new Task<Void>() {
+            @Override public Void call() throws InterruptedException {
+                while(currSpeedVal < setpointSpeedVal){
+                    Platform.runLater(new Runnable() {
+                      @Override public void run() {
+                          //=================function call======================
+                           
+                          calculatePower();
+                          
+                          
+                          //====================================================
+                      }
+                        
+                    }); 
+                    Thread.sleep(10);
+                }
+                return null;
+            }
+        };
+        
+         task.setOnSucceeded(e -> {
+
+            // this message will be seen.
+            powerLabel.setText(String.format("%.3f",powerVal));
+        
+            currentSpeedLabel.setText(String.format("%.4f",currSpeedVal));
+            
+         });
+        
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
+        
+        //======================================================================
+//        for(int i = 0; i < TIME_MULTIPLIER; i++)   {
+//            calculatePower();
+//        }
     }
     void calculatePower(){
         
@@ -282,7 +319,7 @@ public class TrainControllerController implements Initializable {
         System.out.println("Power Val: " + powerVal);
         
         
-        powerLabel.setText(String.format("%.3f",powerVal));
+        
         
         
         //========FOR TESTING PURPOSES================
@@ -291,10 +328,12 @@ public class TrainControllerController implements Initializable {
         System.out.println("Current Speed according to Train Model: "+currSpeedValNew);
         //============================================
                 
-      
+        //=====================set my GUI values================================
+        powerLabel.setText(String.format("%.3f",powerVal));
         
         currentSpeedLabel.setText(String.format("%.4f",currSpeedValNew));
- 
+        //======================================================================
+    
         System.out.println("=================================================");
         
         oldSpeedErr = speedErr;

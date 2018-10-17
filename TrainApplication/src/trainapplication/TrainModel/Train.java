@@ -27,7 +27,7 @@ public class Train {
     private double speed;       //
     private int authority;
     private int block;
-    private int target; //destination
+    private int target; //destination block
     private int temperature;
     
     private int maxCapacity = 148 + 74;

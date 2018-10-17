@@ -5,7 +5,9 @@
  */
 package trainapplication.TrainModel;
 
+import javafx.application.Application;
 import trainapplication.Train;
+import trainapplication.TrainControllerController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -41,6 +43,12 @@ public class TrainModelController implements Initializable {
     //will need to get this data from somewhere
     private Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8); 
 
+    private TrainControllerController trainCon;
+
+    public TrainModelController(TrainControllerController tr) {
+        trainCon = tr;
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -330,7 +338,9 @@ public class TrainModelController implements Initializable {
 
                                double newSpeed = t.calculateVelocity(storedPower, storedVelocity, 0, 0, 300, passengers);
                                storedVelocity = newSpeed;
-                               storedPower = storedPower; //will eventually need to be from steves module
+                               trainCon.setCurrentSpeed(storedVelocity); //send stuff to steve
+    //                               storedPower = storedPower; //will eventually need to be from steves module
+                                storedPower = trainCon.powerVal; //send stuff to steve
                        //        System.out.println("velocity: "+ newSpeed + "mph");
 
                                currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
@@ -439,7 +449,9 @@ public class TrainModelController implements Initializable {
 
     @FXML
     void onSetpointSpeedSubmit(ActionEvent event) {
-
+        if(!"".equals(setpointSpeedBox.getText())){
+            trainCon.setSetPointSpeed(Double.parseDouble(setpointSpeedBox.getText()));
+        }
     }
     
     @FXML

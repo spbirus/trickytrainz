@@ -10,5 +10,6 @@
       <Button fx:id="button2" layoutX="38.0" layoutY="114.0" onAction="#handleTrainModelButton" text="Train Model" />
       <Button fx:id="button3" layoutX="110.0" layoutY="74.0" onAction="#handleTrainControllerButton" text="Train Controller" />
       <Button fx:id="button4" layoutX="200.0" layoutY="114.0" onAction="#handleTrackModelButton" text="Track Model" />
+      <Button fx:id="openAll" layoutX="134.0" layoutY="161.0" mnemonicParsing="false" onAction="#handleOpenAll" text="Open All" />
     </children>
 </AnchorPane>

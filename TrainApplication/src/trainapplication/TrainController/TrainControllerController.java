@@ -143,7 +143,7 @@ public class TrainControllerController implements Initializable {
     final double MPH_MS = 0.44704;
     final double MPH_FPS = 1.46667;
     double currSpeedVal;
-    double setpointSpeedVal;
+    public double setpointSpeedVal = 0;
     double uVal;
     double oldUval;
     double speedErr;
@@ -157,13 +157,21 @@ public class TrainControllerController implements Initializable {
     final double DEFAULT_KP = 50;
     final double DEFAULT_KI = .004; //.0052 for 10 mph 
     
+    public void setSetPointSpeed(double newSpeed){
+        setpointSpeedVal = newSpeed;
+        setpointSpeedLabel.setText(String.valueOf(newSpeed));
+    }
     
+    public void setCurrentSpeed(double currSpeed){
+        currSpeedVal = currSpeed;
+        currentSpeedLabel.setText(String.valueOf(currSpeed));
+    }
 
     //==========================================================================
 
     public void initPower(){
         currSpeedVal = Double.parseDouble(currentSpeedLabel.getText());
-        setpointSpeedVal = Double.parseDouble(setpointSpeedLabel.getText());
+//        setpointSpeedVal = Double.parseDouble(setpointSpeedLabel.getText());
         uVal = 0;
         oldUval = 0;
         powerVal = 0;

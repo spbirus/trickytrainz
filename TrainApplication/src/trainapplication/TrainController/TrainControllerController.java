@@ -144,21 +144,22 @@ public class TrainControllerController implements Initializable {
     private final double MAX_POWER = 120; //kW
     final double FPS_MS = 0.3048;
     final double MPH_MS = 0.44704;
-    final double MPH_FPS = 1.46667;
-    double currSpeedVal;
-    public double setpointSpeedVal = 0;
+    final double MPH_FPS = 1.46667;  
     double uVal;
     double oldUval;
     double speedErr;
     double oldSpeedErr;
     Train train1;
-    public double powerVal;
     double oldPowerVal;
     double TIME_MULTIPLIER = 200;
     double ki;
     double kp;
-    final double DEFAULT_KP = 50;
-    final double DEFAULT_KI = .0038; //.0052 for 10 mph .004 for 25 mph .0038 for 50 mph
+    double DEFAULT_KP = 50;
+    double DEFAULT_KI = .0038; //.0052 for 10 mph .004 for 25 mph .0038 for 50 mph
+    
+    double currSpeedVal;
+    public double setpointSpeedVal = 0;
+    public double powerVal;
     
     public void setSetPointSpeed(double newSpeed){
         setpointSpeedVal = newSpeed;

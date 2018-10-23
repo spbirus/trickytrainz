@@ -113,6 +113,9 @@ public class TrainControllerController implements Initializable {
     private Button setSetpointButton;
     
     @FXML
+    private Button setDefaultKValsButton;
+    
+    @FXML
     private MenuButton trainNumDropdown;
 
 
@@ -155,7 +158,7 @@ public class TrainControllerController implements Initializable {
     double ki;
     double kp;
     final double DEFAULT_KP = 50;
-    final double DEFAULT_KI = .004; //.0052 for 10 mph 
+    final double DEFAULT_KI = .0038; //.0052 for 10 mph .004 for 25 mph .0038 for 50 mph
     
     public void setSetPointSpeed(double newSpeed){
         setpointSpeedVal = newSpeed;
@@ -179,6 +182,18 @@ public class TrainControllerController implements Initializable {
         speedErr = Math.abs(setpointSpeedVal - currSpeedVal);
         oldSpeedErr = 0;
         System.out.println("first Speed Error: "+speedErr);
+    }
+    @FXML
+    void setDefaultKVals(ActionEvent event) {
+        kpVal.setText(String.format("%.4f",DEFAULT_KP));
+        kiVal.setText(String.format("%.4f",DEFAULT_KI));
+        kp = DEFAULT_KP;
+        ki = DEFAULT_KI;
+        setDefaultKValsButton.setDisable(true);
+        setKValsButton.setDisable(true);
+        kpVal.setEditable(false);
+        kiVal.setEditable(false);
+        runSimulationButton.setDisable(false);
     }
     @FXML
     void setKVals(ActionEvent event) {

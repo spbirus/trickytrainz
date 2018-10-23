@@ -86,7 +86,7 @@
             <Label layoutX="105.0" layoutY="134.0" />
             <Separator layoutX="91.0" layoutY="140.0" prefHeight="5.0" prefWidth="80.0" />
             <TextField fx:id="kpVal" layoutX="4.0" layoutY="107.0" prefHeight="27.0" prefWidth="80.0" />
-            <Button id="setKiKpVals" fx:id="setKValsButton" layoutX="28.0" layoutY="162.0" mnemonicParsing="false" onAction="#setKVals" prefHeight="27.0" prefWidth="120.0" text="Set " />
+            <Button id="setKiKpVals" fx:id="setKValsButton" layoutX="91.0" layoutY="162.0" mnemonicParsing="false" onAction="#setKVals" prefHeight="27.0" prefWidth="80.0" text="Set " />
             <TextField fx:id="kiVal" layoutX="91.0" layoutY="107.0" prefHeight="27.0" prefWidth="80.0" />
             <Label layoutX="110.0" layoutY="143.0" text="Ki (kW)" />
             <Label fx:id="powerLabel" layoutX="32.0" layoutY="30.0" text="0">
@@ -94,6 +94,7 @@
                   <Font size="30.0" />
                </font>
             </Label>
+            <Button id="setKiKpVals" fx:id="setDefaultKValsButton" layoutX="5.0" layoutY="162.0" mnemonicParsing="false" onAction="#setDefaultKVals" prefHeight="27.0" prefWidth="80.0" text="DEFAULT" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="617.0" layoutY="73.0" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
@@ -115,72 +116,161 @@
             <Button layoutX="14.0" layoutY="158.0" mnemonicParsing="false" onAction="#turnLightsOff" prefHeight="27.0" prefWidth="126.0" text="Off" />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="590.0" layoutY="285.0" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="617.0" layoutY="280.0" prefHeight="287.0" prefWidth="150.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
-            <Label layoutX="33.0" layoutY="5.0" prefHeight="19.0" prefWidth="113.0" text="TEMPERATURE" underline="true">
+            <Label layoutX="22.0" layoutY="6.0" prefHeight="19.0" prefWidth="113.0" text="TEMPERATURE" underline="true">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="23.0" layoutY="34.0">
+            <Label layoutX="12.0" layoutY="35.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Separator layoutX="26.0" layoutY="69.0" prefHeight="5.0" prefWidth="126.0" />
-            <Button layoutX="26.0" layoutY="147.0" mnemonicParsing="false" onAction="#setTemperature" prefHeight="27.0" prefWidth="126.0" text="Set " />
-            <Label layoutX="40.0" layoutY="74.0" text="Temperature (F)" />
-            <TextField fx:id="temperatureVal" layoutX="26.0" layoutY="109.0" prefHeight="27.0" prefWidth="125.0" />
-            <Label fx:id="temperatureLabel" layoutX="58.0" layoutY="34.0" text="45 ">
+            <Separator layoutX="15.0" layoutY="70.0" prefHeight="5.0" prefWidth="126.0" />
+            <Button layoutX="14.0" layoutY="148.0" mnemonicParsing="false" onAction="#setTemperature" prefHeight="27.0" prefWidth="125.0" text="Set " />
+            <Label layoutX="29.0" layoutY="75.0" text="Temperature (F)" />
+            <TextField fx:id="temperatureVal" layoutX="14.0" layoutY="110.0" prefHeight="27.0" prefWidth="125.0" />
+            <Label fx:id="temperatureLabel" layoutX="47.0" layoutY="35.0" text="45 ">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="203.0" layoutY="285.0" prefHeight="200.0" prefWidth="370.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="194.0" layoutY="280.0" prefHeight="287.0" prefWidth="415.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
-            <Label layoutX="157.0" layoutY="5.0" prefHeight="19.0" prefWidth="57.0" text="DOORS" underline="true">
+            <Label layoutX="59.0" layoutY="6.0" prefHeight="19.0" prefWidth="99.0" text="LEFT DOORS" underline="true">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="23.0" layoutY="34.0">
+            <Label layoutX="18.0" layoutY="75.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Separator layoutX="26.0" layoutY="69.0" prefHeight="5.0" prefWidth="126.0" />
-            <Label layoutX="42.0" layoutY="74.0" text="Left Door Status" />
-            <Label layoutX="32.0" layoutY="34.0" text="Opening">
+            <Separator layoutX="13.0" layoutY="83.0" prefHeight="5.0" prefWidth="72.0" />
+            <Label layoutX="30.0" layoutY="86.0" text="Front " />
+            <Label layoutX="24.0" layoutY="56.0" text="Open">
                <font>
-                  <Font size="30.0" />
+                  <Font size="20.0" />
                </font>
             </Label>
-            <Button layoutX="26.0" layoutY="144.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="126.0" text="Close" />
-            <Button layoutX="27.0" layoutY="107.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="126.0" text="Open " />
+            <Button layoutX="147.0" layoutY="72.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Close" />
+            <Button layoutX="90.0" layoutY="72.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Open " />
             <Label layoutX="185.0" layoutY="13.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Label layoutX="213.0" layoutY="34.0">
+            <Label layoutX="225.0" layoutY="76.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Separator layoutX="216.0" layoutY="69.0" prefHeight="5.0" prefWidth="126.0" />
-            <Label layoutX="226.0" layoutY="74.0" text="Right Door Status" />
-            <Label layoutX="231.0" layoutY="36.0" text="Closed">
+            <Separator layoutX="220.0" layoutY="84.0" prefHeight="5.0" prefWidth="72.0" />
+            <Label layoutX="239.0" layoutY="86.0" text="Front" />
+            <Label layoutX="231.0" layoutY="57.0" text="Open">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Button layoutX="351.0" layoutY="72.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Close" />
+            <Button layoutX="294.0" layoutY="72.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Open " />
+            <Label layoutX="17.0" layoutY="127.0">
                <font>
                   <Font size="30.0" />
                </font>
             </Label>
-            <Button layoutX="216.0" layoutY="144.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="126.0" text="Close" />
-            <Button layoutX="217.0" layoutY="107.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="126.0" text="Open " />
+            <Separator layoutX="12.0" layoutY="135.0" prefHeight="5.0" prefWidth="72.0" />
+            <Label layoutX="11.0" layoutY="137.0" text="Front Middle" />
+            <Label layoutX="23.0" layoutY="108.0" text="Open">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Button layoutX="146.0" layoutY="124.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Close" />
+            <Button layoutX="89.0" layoutY="124.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Open " />
+            <Label layoutX="224.0" layoutY="130.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Separator layoutX="219.0" layoutY="136.0" prefHeight="5.0" prefWidth="72.0" />
+            <Label layoutX="216.0" layoutY="138.0" text="Front Middle" />
+            <Label layoutX="230.0" layoutY="109.0" text="Open">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Button layoutX="350.0" layoutY="124.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Close" />
+            <Button layoutX="293.0" layoutY="124.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Open " />
+            <Label layoutX="17.0" layoutY="179.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Separator layoutX="12.0" layoutY="187.0" prefHeight="5.0" prefWidth="72.0" />
+            <Label layoutX="10.0" layoutY="189.0" text="Back Middle" />
+            <Label layoutX="23.0" layoutY="160.0" text="Open">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Button layoutX="146.0" layoutY="176.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Close" />
+            <Button layoutX="89.0" layoutY="176.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Open " />
+            <Label layoutX="224.0" layoutY="180.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Separator layoutX="219.0" layoutY="188.0" prefHeight="5.0" prefWidth="72.0" />
+            <Label layoutX="217.0" layoutY="190.0" text="Back Middle" />
+            <Label layoutX="230.0" layoutY="161.0" text="Open">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Button layoutX="350.0" layoutY="176.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Close" />
+            <Button layoutX="293.0" layoutY="176.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Open " />
+            <Label layoutX="16.0" layoutY="234.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Separator layoutX="11.0" layoutY="242.0" prefHeight="5.0" prefWidth="72.0" />
+            <Label layoutX="32.0" layoutY="245.0" text="Back" />
+            <Label layoutX="22.0" layoutY="215.0" text="Open">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Button layoutX="145.0" layoutY="231.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Close" />
+            <Button layoutX="88.0" layoutY="231.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Open " />
+            <Label layoutX="223.0" layoutY="235.0">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <Separator layoutX="218.0" layoutY="243.0" prefHeight="5.0" prefWidth="72.0" />
+            <Label layoutX="237.0" layoutY="245.0" text="Back" />
+            <Label layoutX="229.0" layoutY="216.0" text="Open">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Button layoutX="349.0" layoutY="231.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Close" />
+            <Button layoutX="292.0" layoutY="231.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Open " />
+            <Label layoutX="271.0" layoutY="7.0" prefHeight="19.0" prefWidth="108.0" text="RIGHT DOORS" underline="true">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="testPane" disable="true" layoutX="11.0" layoutY="285.0" prefHeight="407.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane fx:id="testPane" disable="true" layoutX="10.0" layoutY="279.0" prefHeight="407.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
             <Label layoutX="54.0" layoutY="214.0" prefHeight="19.0" prefWidth="68.0" text="MURPHY" underline="true">
                <font>
@@ -210,7 +300,7 @@
             <Button id="setKiKpVals" fx:id="setSetpointButton" layoutX="28.0" layoutY="105.0" mnemonicParsing="false" onAction="#setSetpointSpeed_Test" prefHeight="27.0" prefWidth="120.0" text="Set " />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="203.0" layoutY="501.0" prefHeight="191.0" prefWidth="564.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="194.0" layoutY="574.0" prefHeight="112.0" prefWidth="564.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
             <Label layoutX="212.0" layoutY="9.0" prefHeight="19.0" prefWidth="141.0" text="ANNOUNCEMENTS" underline="true">
                <font>
@@ -222,7 +312,7 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <SplitPane layoutX="8.0" layoutY="40.0" prefHeight="144.0" prefWidth="548.0" />
+            <SplitPane layoutX="8.0" layoutY="40.0" prefHeight="46.0" prefWidth="548.0" />
          </children>
       </AnchorPane>
       <Label layoutX="841.0" layoutY="121.0" text="Mode" />
@@ -232,7 +322,7 @@
             <Font size="30.0" />
          </font>
       </Label>
-      <ImageView fitHeight="345.0" fitWidth="148.0" layoutX="780.0" layoutY="141.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="345.0" fitWidth="148.0" layoutX="777.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true" />
       <Label layoutX="826.0" layoutY="201.0" text="YOUR">
          <font>
             <Font size="20.0" />

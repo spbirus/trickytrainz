@@ -31,8 +31,8 @@ import javafx.scene.control.TextField;
 public class TrackModelController implements Initializable {
 
     //
-    ArrayList<Track> trackList = new ArrayList<Track>();
-    ArrayList<Track> sortedTrackList = new ArrayList<Track>();
+    ArrayList<Block> trackList = new ArrayList<Block>();
+    ArrayList<Block> sortedTrackList = new ArrayList<Block>();
     
     //Gardcoded values for dropdown boxes 
     //TODO: Fill in with real data values
@@ -66,13 +66,13 @@ public class TrackModelController implements Initializable {
         
         // TODO
         /*
-        Track dummyTrack1= new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
-        Track dummyTrack2 = new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
-        Track dummyTrack3 = new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
-        Track dummyTrack4 = new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
-        Track dummyTrack5 = new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
-        Track dummyTrack6 = new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
-        Track dummyTrack7 = new Track("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+        Block dummyTrack1= new Block("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+        Block dummyTrack2 = new Block("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+        Block dummyTrack3 = new Block("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+        Block dummyTrack4 = new Block("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+        Block dummyTrack5 = new Block("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+        Block dummyTrack6 = new Block("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
+        Block dummyTrack7 = new Block("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
 
         trackTable.getItems().add(dummyTrack1);
         trackTable.getItems().add(dummyTrack2);
@@ -112,7 +112,7 @@ public class TrackModelController implements Initializable {
                 double trackElevation = Double.parseDouble(trackDataString[9]);
                 double trackCumElevation = Double.parseDouble(trackDataString[10]);
                 
-                Track newTrack = new Track(trackLine, trackSection, trackBlock, 
+                Block newTrack = new Block(trackLine, trackSection, trackBlock, 
                         trackBlockLength, trackBlockGrade, trackSpeedLimit, 
                         trackInfrastructure, trackNextInbound, trackNextOutbound, 
                         trackElevation, trackCumElevation);
@@ -149,12 +149,12 @@ public class TrackModelController implements Initializable {
     
     public void FiltersButtonClicked(){
         
-        ArrayList<Track> temp = trackList;
+        ArrayList<Block> temp = trackList;
         String selectedLine = (String)trackLineComboBox.getValue();
         String selectedSection = (String)trackSectionComboBox.getValue();
         //int selectedBlock = (int)trackBlockComboBox.getValue();
         
-        for(Track track : trackList){
+        for(Block track : trackList){
             if(track.getSection().equals(selectedSection) == false){
                trackTable.getItems().remove(track); 
             } else {
@@ -167,12 +167,12 @@ public class TrackModelController implements Initializable {
     
     public void FilterResetButtonClicked(){
         
-        for(Track track : sortedTrackList){
+        for(Block track : sortedTrackList){
             sortedTrackList.remove(track);
             trackTable.getItems().remove(track);
         }
         
-        for(Track track : trackList) trackTable.getItems().add(track);
+        for(Block track : trackList) trackTable.getItems().add(track);
     }
     
     public void LoadButtonClicked(){
@@ -186,7 +186,7 @@ public class TrackModelController implements Initializable {
         
         int selectedBlock = (int)trackBlockComboBox.getValue();
         
-        for(Track track : sortedTrackList){
+        for(Block track : sortedTrackList){
             System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
             
             if(selectedBlock == track.getBlockNumber()){
@@ -200,7 +200,7 @@ public class TrackModelController implements Initializable {
       
         int selectedBlock = (int)trackBlockComboBox.getValue();
          
-        for(Track track : sortedTrackList){
+        for(Block track : sortedTrackList){
             System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
             
             if(selectedBlock == track.getBlockNumber()){
@@ -214,7 +214,7 @@ public class TrackModelController implements Initializable {
         
         int selectedBlock = (int)trackBlockComboBox.getValue();
          
-        for(Track track : sortedTrackList){
+        for(Block track : sortedTrackList){
             System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
             
             if(selectedBlock == track.getBlockNumber()){
@@ -228,7 +228,7 @@ public class TrackModelController implements Initializable {
        
         int selectedBlock = (int)trackBlockComboBox.getValue();
         
-        for(Track track : sortedTrackList){
+        for(Block track : sortedTrackList){
             System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
             
             if(selectedBlock == track.getBlockNumber()){
@@ -243,7 +243,7 @@ public class TrackModelController implements Initializable {
         
         int selectedBlock = (int)trackBlockComboBox.getValue();
         
-        for(Track track : sortedTrackList){
+        for(Block track : sortedTrackList){
             System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
             
             if(selectedBlock == track.getBlockNumber()){
@@ -258,7 +258,7 @@ public class TrackModelController implements Initializable {
         
         int selectedBlock = (int)trackBlockComboBox.getValue();
         
-        for(Track track : sortedTrackList){
+        for(Block track : sortedTrackList){
             System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
             
             if(selectedBlock == track.getBlockNumber()){
@@ -271,7 +271,7 @@ public class TrackModelController implements Initializable {
     
     public void ResetButtonClicked(){
         
-        for(Track track : sortedTrackList){
+        for(Block track : sortedTrackList){
             if(track.getBlockNumber() == 13)track.setOccupancy("Train");
             else track.setOccupancy("Open");
             track.setBlockHeat("ON");
@@ -294,40 +294,40 @@ public class TrackModelController implements Initializable {
     }
     
     @FXML
-    private TableView<Track> trackTable;
+    private TableView<Block> trackTable;
     
     @FXML 
-    private TableColumn<Track, String> line;
+    private TableColumn<Block, String> line;
 
     @FXML
-    private TableColumn<Track, Integer> blockNumber;
+    private TableColumn<Block, Integer> blockNumber;
 
     @FXML
-    private TableColumn<Track, Double> blockLength;
+    private TableColumn<Block, Double> blockLength;
 
     @FXML
-    private TableColumn<Track, Double> blockGrade;
+    private TableColumn<Block, Double> blockGrade;
 
     @FXML
-    private TableColumn<Track, Integer> speedLimit;
+    private TableColumn<Block, Integer> speedLimit;
 
     @FXML
-    private TableColumn<Track, String> infrastructure;
+    private TableColumn<Block, String> infrastructure;
 
     @FXML
-    private TableColumn<Track, Double> elevation;
+    private TableColumn<Block, Double> elevation;
 
     @FXML
-    private TableColumn<Track, Double> blockDirection;
+    private TableColumn<Block, Double> blockDirection;
 
     @FXML
-    private TableColumn<Track, String> blockState;
+    private TableColumn<Block, String> blockState;
     
     @FXML
-    private TableColumn<Track, String> occupancy;
+    private TableColumn<Block, String> occupancy;
 
     @FXML
-    private TableColumn<Track, String> blockHeat;
+    private TableColumn<Block, String> blockHeat;
     
     @FXML 
     private ComboBox trackLineComboBox;

@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane id="AnchorPane" prefHeight="814.0" prefWidth="1313.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.CTCOffice.CTCOfficeController">
+<AnchorPane id="AnchorPane" prefHeight="814.0" prefWidth="1313.0" xmlns="http://javafx.com/javafx/8.0.60" xmlns:fx="http://javafx.com/fxml/1" fx:controller="trainapplication.CTCOffice.CTCOfficeController">
    <children>
       <TabPane layoutX="11.0" layoutY="55.0" prefHeight="666.0" prefWidth="1287.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
@@ -45,14 +45,30 @@
                         </AnchorPane>
                         <AnchorPane layoutX="865.0" layoutY="16.0" prefHeight="605.0" prefWidth="408.0" style="-fx-background-color: #bdc3c7;">
                            <children>
-                              <TableView fx:id="trainTableAll" editable="true" layoutX="13.0" layoutY="50.0" prefHeight="469.0" prefWidth="383.0">
+                              <TableView fx:id="trainTableAll" editable="true" layoutX="3.0" layoutY="50.0" prefHeight="544.0" prefWidth="403.0">
                                  <columns>
-                                    <TableColumn fx:id="trainTableAllLine" prefWidth="38.0" text="Line" />
-                                    <TableColumn fx:id="trainTableAllNumber" prefWidth="58.0" text="Train ID" />
-                                    <TableColumn fx:id="trainTableAllSpeed" prefWidth="82.0" text="Speed (mph)" />
-                                    <TableColumn fx:id="trainTableAllAuthority" prefWidth="68.0" text="Authority" />
-                                    <TableColumn fx:id="trainTableAllCurrent" prefWidth="83.0" text="Current Block" />
-                                    <TableColumn fx:id="trainTableAllTarget" prefWidth="53.0" text="Target" />
+                                    <TableColumn fx:id="trainTableAllLine" prefWidth="50.0" text="Line" />
+                                    <TableColumn fx:id="trainTableAllNumber" prefWidth="74.0" text="Train ID" />
+                                    <TableColumn fx:id="trainTableAllSpeed" prefWidth="107.0" text="Speed (mph)" />
+                                    <TableColumn fx:id="trainTableAllCurrent" prefWidth="95.0" text="Current Block" />
+                                    <TableColumn fx:id="trainTableAllTarget" prefWidth="76.0" text="Target" />
+                                 </columns>
+                              </TableView>
+                              <Text layoutX="123.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Outbound Trains">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="440.0" layoutY="16.0" prefHeight="605.0" prefWidth="408.0" style="-fx-background-color: #bdc3c7;">
+                           <children>
+                              <TableView fx:id="queueTrainTable" editable="true" layoutX="2.0" layoutY="50.0" prefHeight="469.0" prefWidth="404.0">
+                                 <columns>
+                                    <TableColumn fx:id="queueTableLine" prefWidth="57.0" text="Line" />
+                                    <TableColumn fx:id="queueTableNumber" prefWidth="78.0" text="Train ID" />
+                                    <TableColumn fx:id="queueTableSpeed" prefWidth="166.0" text="Suggested Speed (mph)" />
+                                    <TableColumn fx:id="queueTableTarget" prefWidth="102.0" text="Target" />
                                  </columns>
                               </TableView>
                               <Button fx:id="loadScheduleButton" layoutX="138.0" layoutY="564.0" mnemonicParsing="false" onAction="#loadScheduleButtonClick" text="Load csv Schedule">
@@ -60,12 +76,12 @@
                                     <Font size="14.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="newTrainButton" layoutX="114.0" layoutY="526.0" mnemonicParsing="false" onAction="#newTrainButtonClick" text="Prepare Train for Dispatch">
+                              <Button fx:id="newTrainButton" layoutX="124.0" layoutY="526.0" mnemonicParsing="false" onAction="#newTrainButtonClick" text="Create Train for Queue">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Button>
-                              <Text layoutX="120.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Train Information">
+                              <Text layoutX="145.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Train Queue">
                                  <font>
                                     <Font size="22.0" />
                                  </font>
@@ -76,97 +92,6 @@
                   </AnchorPane>
             </content>
           </Tab>
-          <Tab text="Red Line">
-            <content>
-              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <AnchorPane layoutX="14.0" layoutY="16.0" prefHeight="605.0" prefWidth="408.0" style="-fx-background-color: #bdc3c7;">
-                           <children>
-                              <TableView fx:id="trackTableRed" layoutX="13.0" layoutY="50.0" prefHeight="543.0" prefWidth="383.0">
-                                 <columns>
-                                    <TableColumn fx:id="trackTableRedLine" prefWidth="38.0" text="Line" />
-                                    <TableColumn fx:id="trackTableRedSection" prefWidth="47.0" text="Section" />
-                                    <TableColumn fx:id="trackTableRedBlock" prefWidth="38.0" text="Block" />
-                                    <TableColumn fx:id="trackTableRedLength" prefWidth="67.0" text="Length (ft)" />
-                                    <TableColumn fx:id="trackTableRedLimit" prefWidth="111.0" text="Speed Limit (mph)" />
-                                    <TableColumn fx:id="trackTableRedState" prefWidth="82.0" text="State" />
-                                    <TableColumn fx:id="trackTableRedSection1" prefWidth="84.0" text="Section" />
-                                 </columns>
-                              </TableView>
-                              <Text layoutX="119.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Track Information">
-                                 <font>
-                                    <Font size="22.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="865.0" layoutY="16.0" prefHeight="605.0" prefWidth="408.0" style="-fx-background-color: #bdc3c7;">
-                           <children>
-                              <TableView fx:id="trainTableRed" layoutX="13.0" layoutY="50.0" prefHeight="469.0" prefWidth="383.0">
-                                 <columns>
-                                    <TableColumn fx:id="trainTableRedLine" prefWidth="38.0" text="Line" />
-                                    <TableColumn fx:id="trainTableRedNumber" prefWidth="58.0" text="Train ID" />
-                                    <TableColumn fx:id="trainTableRedSpeed" prefWidth="82.0" text="Speed (mph)" />
-                                    <TableColumn fx:id="trainTableRedAuthority" prefWidth="68.0" text="Authority" />
-                                    <TableColumn fx:id="trainTableRedCurrent" prefWidth="83.0" text="Current Block" />
-                                    <TableColumn fx:id="trainTableRedTarget" prefWidth="53.0" text="Target" />
-                                 </columns>
-                              </TableView>
-                              <Text layoutX="120.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Train Information">
-                                 <font>
-                                    <Font size="22.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </AnchorPane>
-                     </children></AnchorPane>
-            </content>
-          </Tab>
-            <Tab text="Green Line">
-               <content>
-                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <AnchorPane layoutX="14.0" layoutY="16.0" prefHeight="605.0" prefWidth="408.0" style="-fx-background-color: #bdc3c7;">
-                           <children>
-                              <TableView fx:id="trackTableGreen" layoutX="13.0" layoutY="50.0" prefHeight="543.0" prefWidth="383.0">
-                                 <columns>
-                                    <TableColumn fx:id="trackTableGreenLine" prefWidth="38.0" text="Line" />
-                                    <TableColumn fx:id="trackTableGreenSection" prefWidth="47.0" text="Section" />
-                                    <TableColumn fx:id="trackTableGreenBlock" prefWidth="38.0" text="Block" />
-                                    <TableColumn fx:id="trackTableGreenLength" prefWidth="67.0" text="Length (ft)" />
-                                    <TableColumn fx:id="trackTableGreenLimit" prefWidth="111.0" text="Speed Limit (mph)" />
-                                    <TableColumn fx:id="trackTableGreenState" prefWidth="81.0" text="State" />
-                                 </columns>
-                              </TableView>
-                              <Text layoutX="119.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Track Information">
-                                 <font>
-                                    <Font size="22.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </AnchorPane>
-                        <AnchorPane layoutX="865.0" layoutY="16.0" prefHeight="605.0" prefWidth="408.0" style="-fx-background-color: #bdc3c7;">
-                           <children>
-                              <TableView fx:id="trainTableGreen" layoutX="13.0" layoutY="50.0" prefHeight="469.0" prefWidth="383.0">
-                                 <columns>
-                                    <TableColumn fx:id="trainTableGreenLine" prefWidth="38.0" text="Line" />
-                                    <TableColumn fx:id="trainTableGreenNumber" prefWidth="58.0" text="Train ID" />
-                                    <TableColumn fx:id="trainTableGreenSpeed" prefWidth="82.0" text="Speed (mph)" />
-                                    <TableColumn fx:id="trainTableGreenAuthority" prefWidth="68.0" text="Authority" />
-                                    <TableColumn fx:id="trainTableGreenCurrent" prefWidth="83.0" text="Current Block" />
-                                    <TableColumn fx:id="trainTableGreenTarget" prefWidth="53.0" text="Target" />
-                                 </columns>
-                              </TableView>
-                              <Text layoutX="120.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Train Information">
-                                 <font>
-                                    <Font size="22.0" />
-                                 </font>
-                              </Text>
-                           </children>
-                        </AnchorPane>
-                     </children></AnchorPane>
-               </content>
-            </Tab>
         </tabs>
       </TabPane>
       <Button fx:id="dispatchButton" layoutX="405.0" layoutY="733.0" mnemonicParsing="false" onAction="#dispatchButtonClick" prefHeight="67.0" prefWidth="503.0" text="Dispatch Train">
@@ -192,19 +117,15 @@
       <TextField fx:id="multiplierTextField" layoutX="1089.0" layoutY="775.0" prefHeight="25.0" prefWidth="165.0" promptText="Enter Miultiplier Value" />
       <MenuBar layoutY="3.0" prefHeight="25.0" prefWidth="255.0">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
+          <Menu mnemonicParsing="false" text="File         ">
             <items>
+              <MenuItem fx:id="menuNewTrain" mnemonicParsing="false" onAction="#menuNewTrainClick" text="New Train" />
               <MenuItem fx:id="menuLoadSchedule" mnemonicParsing="false" onAction="#menuLoadScheduleClick" text="Load Schedule" />
                   <MenuItem fx:id="menuDispatch" mnemonicParsing="false" onAction="#menuDispatchClick" text="Dispatch" />
                   <MenuItem fx:id="menuClose" mnemonicParsing="false" onAction="#menuCloseClick" text="Close" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem fx:id="menuNewTrain" mnemonicParsing="false" onAction="#menuNewTrainClick" text="New Train" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="Help             ">
             <items>
               <MenuItem fx:id="menuUserManual" mnemonicParsing="false" onAction="#menuUserManualClick" text="User's Maunal" />
             </items>
@@ -238,7 +159,7 @@
                   <Font size="16.0" />
                </font>
             </Button>
-            <Slider fx:id="suggestedSpeedSlider" blockIncrement="1.0" layoutX="188.0" layoutY="83.0" majorTickUnit="1.0" max="50.0" minorTickCount="1" onMouseDragged="#suggestedSpeedSliderDrag" showTickMarks="true" snapToTicks="true" value="1.0" />
+            <Slider fx:id="suggestedSpeedSlider" blockIncrement="1.0" layoutX="188.0" layoutY="83.0" majorTickUnit="1.0" max="50.0" minorTickCount="1" onMouseClicked="#suggestedSpeedSliderDrag" onMouseDragged="#suggestedSpeedSliderDrag" showTickMarks="true" snapToTicks="true" value="1.0" />
             <TextField fx:id="newTrainTargetBlock" layoutX="371.0" layoutY="78.0" prefHeight="25.0" prefWidth="64.0" />
             <Label layoutX="57.0" layoutY="43.0" text="Train Line">
                <font>
@@ -249,6 +170,7 @@
             <Label layoutX="370.0" layoutY="45.0" text="Target Block" />
             <Label fx:id="suggestedSpeedLabel" layoutX="254.0" layoutY="101.0" text="0" />
             <ChoiceBox fx:id="newTrainLineBox" layoutX="43.0" layoutY="83.0" prefHeight="25.0" prefWidth="93.0" />
+            <Button layoutX="384.0" layoutY="145.0" mnemonicParsing="false" onAction="#newTrainCloseClick" text="Close" />
          </children>
       </AnchorPane>
       <Button fx:id="testShowSchedulesButton" layoutX="269.0" layoutY="743.0" mnemonicParsing="false" onAction="#testShowSchedulesClick" prefHeight="50.0" prefWidth="98.0" text="System Show Schedules" textAlignment="CENTER" wrapText="true">

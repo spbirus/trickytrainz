@@ -54,7 +54,8 @@ public class CTCOfficeController implements Initializable {
     private int allLineThroughput = 0;
     private int hourlyPassengers = 0;
     private int hourlyTicketSales = 0;
-    private Schedule[] scheduleArray = new Schedule[1]; //array of schedules, will hold all schedules laoded in
+    private Schedule[] scheduleArray = new Schedule[1]; //array of schedules, will hold all schedules loaded in
+    private Train[] trainArray = new Train[1]; //array of trains, will hold all trains that were ever created
     private DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
     private long currentTime = System.currentTimeMillis();
     private Timeline timeline = new Timeline();
@@ -67,54 +68,34 @@ public class CTCOfficeController implements Initializable {
         // TODO
 
         //set column to be a drop down to select red or green line (only in all table)
-        ObservableList<String> list
-                = FXCollections.observableArrayList();
-        list.add("Red");
-        list.add("Green");
-        trainTableAllLine.setCellFactory(ComboBoxTableCell.forTableColumn(list));
-
-        //init train tables for each line
+//        ObservableList<String> list
+//                = FXCollections.observableArrayList();
+//        list.add("Red");
+//        list.add("Green");
+//        queueTableLine.setCellFactory(ComboBoxTableCell.forTableColumn(list));
+        //init train table
         trainTableAllLine.setCellValueFactory(new PropertyValueFactory<>("line"));
         trainTableAllNumber.setCellValueFactory(new PropertyValueFactory<>("number"));
         trainTableAllSpeed.setCellValueFactory(new PropertyValueFactory<>("speed"));
-        trainTableAllAuthority.setCellValueFactory(new PropertyValueFactory<>("authority"));
         trainTableAllCurrent.setCellValueFactory(new PropertyValueFactory<>("block"));
         trainTableAllTarget.setCellValueFactory(new PropertyValueFactory<>("target"));
         trainTableAllLine.setStyle("-fx-alignment: CENTER;");
         trainTableAllNumber.setStyle("-fx-alignment: CENTER;");
         trainTableAllSpeed.setStyle("-fx-alignment: CENTER;");
-        trainTableAllAuthority.setStyle("-fx-alignment: CENTER;");
         trainTableAllCurrent.setStyle("-fx-alignment: CENTER;");
         trainTableAllTarget.setStyle("-fx-alignment: CENTER;");
-        //trainTableAllLine.setCellFactory(TextFieldTableCell.forTableColumn()); //this sets things as editable, but it doesnt work for non-strings yet
 
-        trainTableRedLine.setCellValueFactory(new PropertyValueFactory<>("line"));
-        trainTableRedNumber.setCellValueFactory(new PropertyValueFactory<>("number"));
-        trainTableRedSpeed.setCellValueFactory(new PropertyValueFactory<>("speed"));
-        trainTableRedAuthority.setCellValueFactory(new PropertyValueFactory<>("authority"));
-        trainTableRedCurrent.setCellValueFactory(new PropertyValueFactory<>("block"));
-        trainTableRedTarget.setCellValueFactory(new PropertyValueFactory<>("target"));
-        trainTableRedLine.setStyle("-fx-alignment: CENTER;");
-        trainTableRedNumber.setStyle("-fx-alignment: CENTER;");
-        trainTableRedSpeed.setStyle("-fx-alignment: CENTER;");
-        trainTableRedAuthority.setStyle("-fx-alignment: CENTER;");
-        trainTableRedCurrent.setStyle("-fx-alignment: CENTER;");
-        trainTableRedTarget.setStyle("-fx-alignment: CENTER;");
+        //init queue table
+        queueTableLine.setCellValueFactory(new PropertyValueFactory<>("line"));
+        queueTableNumber.setCellValueFactory(new PropertyValueFactory<>("number"));
+        queueTableSpeed.setCellValueFactory(new PropertyValueFactory<>("speed"));
+        queueTableTarget.setCellValueFactory(new PropertyValueFactory<>("target"));
+        queueTableLine.setStyle("-fx-alignment: CENTER;");
+        queueTableNumber.setStyle("-fx-alignment: CENTER;");
+        queueTableSpeed.setStyle("-fx-alignment: CENTER;");
+        queueTableTarget.setStyle("-fx-alignment: CENTER;");
 
-        trainTableGreenLine.setCellValueFactory(new PropertyValueFactory<>("line"));
-        trainTableGreenNumber.setCellValueFactory(new PropertyValueFactory<>("number"));
-        trainTableGreenSpeed.setCellValueFactory(new PropertyValueFactory<>("speed"));
-        trainTableGreenAuthority.setCellValueFactory(new PropertyValueFactory<>("authority"));
-        trainTableGreenCurrent.setCellValueFactory(new PropertyValueFactory<>("block"));
-        trainTableGreenTarget.setCellValueFactory(new PropertyValueFactory<>("target"));
-        trainTableGreenLine.setStyle("-fx-alignment: CENTER;");
-        trainTableGreenNumber.setStyle("-fx-alignment: CENTER;");
-        trainTableGreenSpeed.setStyle("-fx-alignment: CENTER;");
-        trainTableGreenAuthority.setStyle("-fx-alignment: CENTER;");
-        trainTableGreenCurrent.setStyle("-fx-alignment: CENTER;");
-        trainTableGreenTarget.setStyle("-fx-alignment: CENTER;");
-
-        //init track tables for each line
+        //init track table
         trackTableAllLine.setCellValueFactory(new PropertyValueFactory<>("line"));
         trackTableAllSection.setCellValueFactory(new PropertyValueFactory<>("section"));
         trackTableAllBlock.setCellValueFactory(new PropertyValueFactory<>("blockNumber"));
@@ -128,48 +109,21 @@ public class CTCOfficeController implements Initializable {
         trackTableAllLimit.setStyle("-fx-alignment: CENTER;");
         trackTableAllState.setStyle("-fx-alignment: CENTER;");
 
-        trackTableRedLine.setCellValueFactory(new PropertyValueFactory<>("line"));
-        trackTableRedSection.setCellValueFactory(new PropertyValueFactory<>("section"));
-        trackTableRedBlock.setCellValueFactory(new PropertyValueFactory<>("blockNumber"));
-        trackTableRedLength.setCellValueFactory(new PropertyValueFactory<>("blockLength"));
-        trackTableRedLimit.setCellValueFactory(new PropertyValueFactory<>("speedLimit"));
-        trackTableRedState.setCellValueFactory(new PropertyValueFactory<>("state"));
-        trackTableRedLine.setStyle("-fx-alignment: CENTER;");
-        trackTableRedSection.setStyle("-fx-alignment: CENTER;");
-        trackTableRedBlock.setStyle("-fx-alignment: CENTER;");
-        trackTableRedLength.setStyle("-fx-alignment: CENTER;");
-        trackTableRedLimit.setStyle("-fx-alignment: CENTER;");
-        trackTableRedState.setStyle("-fx-alignment: CENTER;");
-
-        trackTableGreenLine.setCellValueFactory(new PropertyValueFactory<>("line"));
-        trackTableGreenSection.setCellValueFactory(new PropertyValueFactory<>("section"));
-        trackTableGreenBlock.setCellValueFactory(new PropertyValueFactory<>("blockNumber"));
-        trackTableGreenLength.setCellValueFactory(new PropertyValueFactory<>("blockLength"));
-        trackTableGreenLimit.setCellValueFactory(new PropertyValueFactory<>("speedLimit"));
-        trackTableGreenState.setCellValueFactory(new PropertyValueFactory<>("state"));
-        trackTableGreenLine.setStyle("-fx-alignment: CENTER;");
-        trackTableGreenSection.setStyle("-fx-alignment: CENTER;");
-        trackTableGreenBlock.setStyle("-fx-alignment: CENTER;");
-        trackTableGreenLength.setStyle("-fx-alignment: CENTER;");
-        trackTableGreenLimit.setStyle("-fx-alignment: CENTER;");
-        trackTableGreenState.setStyle("-fx-alignment: CENTER;");
-
         //set system time to display
         multiplierTextField.setText("1");
         setTime(Integer.parseInt(multiplierTextField.getText()));
-        
+
         //init choicebox in the new train popup screen
         newTrainLineBox.getItems().addAll("Red", "Green");
         newTrainLineBox.getSelectionModel().select("Red");
-        
+
         //hide newTrainPane. will appear on add train button press
         newTrainPane.setVisible(false);
-        
 
+//        **testing of clock feature
 //        long offsetTime = (long) (System.currentTimeMillis() + 3.7*60*1000);
 //        System.out.println(timeFormat.format(System.currentTimeMillis()));
 //        System.out.println(timeFormat.format(offsetTime));
-
     }
 
     //track table information for all lines
@@ -208,102 +162,25 @@ public class CTCOfficeController implements Initializable {
     private TableColumn<Train, Integer> trainTableAllSpeed;
 
     @FXML
-    private TableColumn<Train, Integer> trainTableAllAuthority;
-
-    @FXML
     private TableColumn<Train, Integer> trainTableAllCurrent;
 
     @FXML
     private TableColumn<Train, Integer> trainTableAllTarget;
 
-    //track table information for red line
     @FXML
-    private TableView<Track> trackTableRed;
+    private TableView<Train> queueTrainTable;
 
     @FXML
-    private TableColumn<Track, String> trackTableRedLine;
+    private TableColumn<Train, String> queueTableLine;
 
     @FXML
-    private TableColumn<Track, String> trackTableRedSection;
+    private TableColumn<Train, Integer> queueTableNumber;
 
     @FXML
-    private TableColumn<Track, Integer> trackTableRedBlock;
+    private TableColumn<Train, Integer> queueTableSpeed;
 
     @FXML
-    private TableColumn<Track, Integer> trackTableRedLength;
-
-    @FXML
-    private TableColumn<Track, Integer> trackTableRedLimit;
-
-    @FXML
-    private TableColumn<Track, String> trackTableRedState;
-
-    //train table information for red line
-    @FXML
-    private TableView<Train> trainTableRed;
-
-    @FXML
-    private TableColumn<Train, String> trainTableRedLine;
-
-    @FXML
-    private TableColumn<Train, Integer> trainTableRedNumber;
-
-    @FXML
-    private TableColumn<Train, Integer> trainTableRedSpeed;
-
-    @FXML
-    private TableColumn<Train, Integer> trainTableRedAuthority;
-
-    @FXML
-    private TableColumn<Train, Integer> trainTableRedCurrent;
-
-    @FXML
-    private TableColumn<Train, Integer> trainTableRedTarget;
-
-    //track table information for green line
-    @FXML
-    private TableView<Track> trackTableGreen;
-
-    @FXML
-    private TableColumn<Track, String> trackTableGreenLine;
-
-    @FXML
-    private TableColumn<Track, String> trackTableGreenSection;
-
-    @FXML
-    private TableColumn<Track, Integer> trackTableGreenBlock;
-
-    @FXML
-    private TableColumn<Track, Integer> trackTableGreenLength;
-
-    @FXML
-    private TableColumn<Track, Integer> trackTableGreenLimit;
-
-    @FXML
-    private TableColumn<Track, String> trackTableGreenState;
-
-    //train table information for green line
-    @FXML
-    private TableView<Train> trainTableGreen;
-
-    @FXML
-    private TableColumn<Train, String> trainTableGreenLine;
-
-    @FXML
-    private TableColumn<Train, Integer> trainTableGreenNumber;
-
-    @FXML
-    private TableColumn<Train, Integer> trainTableGreenSpeed;
-
-    @FXML
-    private TableColumn<Train, Integer> trainTableGreenAuthority;
-
-    @FXML
-    private TableColumn<Train, Integer> trainTableGreenCurrent;
-
-    @FXML
-    private TableColumn<Train, Integer> trainTableGreenTarget;
-
+    private TableColumn<Train, Integer> queueTableTarget;
     //GUI elements (non-table) for the rest of the CTC Office
     @FXML
     private Button dispatchButton;
@@ -340,7 +217,7 @@ public class CTCOfficeController implements Initializable {
 
     @FXML
     private Label allThroughputLabel;
-    
+
     @FXML
     private Slider suggestedSpeedSlider;
 
@@ -352,15 +229,13 @@ public class CTCOfficeController implements Initializable {
 
     @FXML
     private Label suggestedSpeedLabel;
-    
+
     @FXML
     private AnchorPane newTrainPane;
 
     @FXML
     private Button testShowSchedulesButton;
-    
-    
-    
+
     //GUI ActionEvent Handlers
     @FXML
     void autoModeButtonClick(ActionEvent event) {
@@ -384,33 +259,32 @@ public class CTCOfficeController implements Initializable {
 //        trackTableAll.getItems().add(track2);
 //        trackTableRed.getItems().add(track1);
 //        trackTableGreen.getItems().add(track2);
-        
         //get selected train from the train table
-        Train dispatchTrain = trainTableAll.getSelectionModel().getSelectedItem();
+        Train dispatchTrain = queueTrainTable.getSelectionModel().getSelectedItem();
         int dispatchNumber = dispatchTrain.getNumber(); //train ID
         double dispatchSpeed = dispatchTrain.getSpeed();
         int dispatchCurrentBlock = dispatchTrain.getBlock();
         int dispatchTargetBlock = dispatchTrain.getTarget();
-        
+
+        //move train to outbound table
+        dispatchTrainFromQueue(dispatchTrain);
+
         //
         Schedule schedule = getScheduleInfoFromTrainTableSelected(dispatchTrain);
         schedule.dispatchTime = System.currentTimeMillis();
         //conversion from timetoNext block is going to be sloppy... need to do it properly in the future
         //actually it might be okay... not sure
-        long arrivalTime = (long) (schedule.dispatchTime + schedule.timeToNextBlock[schedule.scheduleIndex]*60*1000);
+        long arrivalTime = (long) (schedule.dispatchTime + schedule.timeToNextBlock[schedule.scheduleIndex] * 60 * 1000);
         System.out.println("departure time: " + timeFormat.format(schedule.dispatchTime));
         System.out.println("arrival time: " + timeFormat.format(arrivalTime));
-        
+
         //popup box with CTC dispatch info
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("CTC Outputs");
         alert.setHeaderText("Train " + dispatchNumber + " is being dispatched from block " + dispatchCurrentBlock);
         alert.setContentText("Suggested speed: " + dispatchSpeed + "\nTarget Block: " + dispatchTargetBlock + "\nArrival Time: " + timeFormat.format(arrivalTime));
         alert.showAndWait();
-        
-        
-        
-        
+
     }
 
     //schedule loaded in will be one train per file
@@ -446,8 +320,6 @@ public class CTCOfficeController implements Initializable {
             scheduleArray[trainIDIterator] = schedule;
             scheduleArray = Arrays.copyOf(scheduleArray, scheduleArray.length + 1); //increment array size to avoid null pointers when another schedule loaded in
             trainIDIterator++;
-            
-
 
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -472,29 +344,42 @@ public class CTCOfficeController implements Initializable {
         suggestedSpeedLabel.setText("0");
         newTrainTargetBlock.setText("");
     }
-    
+
     @FXML
     void newTrainSubmitClick(ActionEvent event) {
-        String newTrainLine = newTrainLineBox.getValue();
-        int newTrainNumber = trainIDIterator++;
-        double newTrainSpeed = (int) suggestedSpeedSlider.getValue();
-        int newTrainAuthority = Integer.parseInt(newTrainTargetBlock.getText());
-        int newTrainCurrentBlock = 0; //start in the yard
-        int newTrainTarget = newTrainAuthority;
-                //currently authority and target are the same, but this might change
-        Train newTrain = new Train(newTrainLine, newTrainNumber, newTrainSpeed, newTrainAuthority, newTrainCurrentBlock, newTrainTarget);
-        addTrainToTable(newTrain);
-        
-        //add new train info to schedule here
-        Schedule manualTrainAddSchedule = newTrainMakeSchedule(newTrain);
-        scheduleArray = Arrays.copyOf(scheduleArray, scheduleArray.length + 1);
-        scheduleArray[newTrainNumber] = manualTrainAddSchedule;
-        
-        
-        newTrainPane.setVisible(false);
-        
+        try {
+            String newTrainLine = newTrainLineBox.getValue();
+            int newTrainNumber = trainIDIterator++;
+            double newTrainSpeed = (int) suggestedSpeedSlider.getValue();
+            int newTrainAuthority = Integer.parseInt(newTrainTargetBlock.getText());
+            int newTrainCurrentBlock = 0; //start in the yard
+            int newTrainTarget = newTrainAuthority;
+            //currently authority and target are the same, but this might change
+            Train newTrain = new Train(newTrainLine, newTrainNumber, newTrainSpeed, newTrainAuthority, newTrainCurrentBlock, newTrainTarget);
+            addTrainToQueue(newTrain);
+
+            //add new train info to schedule here
+            Schedule manualTrainAddSchedule = newTrainMakeSchedule(newTrain);
+            scheduleArray = Arrays.copyOf(scheduleArray, scheduleArray.length + 1);
+            scheduleArray[newTrainNumber] = manualTrainAddSchedule;
+
+            newTrainPane.setVisible(false);
+        } catch (Exception ex) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            alert.setTitle("Train Target Invalid!");
+            alert.setContentText(ex.getMessage());
+            alert.showAndWait();
+            trainIDIterator--; //have to reset the trainID value
+            //newTrainPane.setVisible(false);
+        }
+
     }
     
+    @FXML
+    void newTrainCloseClick(ActionEvent event) {
+        newTrainPane.setVisible(false);
+    }
+
     @FXML
     void suggestedSpeedSliderDrag(MouseEvent event) {
         int suggestedSpeed = (int) suggestedSpeedSlider.getValue();
@@ -530,8 +415,8 @@ public class CTCOfficeController implements Initializable {
     void testShowSchedulesClick(ActionEvent event) {
         for (Schedule schedule : scheduleArray) {
             System.out.println("Line, ID, current block array, target block array, dispatch time, time to next block array, index for the arrays");
-            System.out.println ("Line " + schedule.line);
-            System.out.println ("Train Number " + schedule.trainID);
+            System.out.println("Line " + schedule.line);
+            System.out.println("Train Number " + schedule.trainID);
             System.out.print("Current block array: ");
             for (int block : schedule.currentBlock) {
                 System.out.print(block + ", ");
@@ -542,65 +427,58 @@ public class CTCOfficeController implements Initializable {
                 System.out.print(tBlock + ", ");
             }
             System.out.println("");
-            System.out.println ("Dispatch time: " + timeFormat.format(schedule.dispatchTime));
+            System.out.println("Dispatch time: " + timeFormat.format(schedule.dispatchTime));
             System.out.print("Time to next block array: ");
             for (double timeBlock : schedule.timeToNextBlock) {
                 System.out.print(timeBlock + ", ");
             }
             System.out.println("");
-            System.out.println ("Schedule index " +schedule.scheduleIndex);
+            System.out.println("Schedule index " + schedule.scheduleIndex);
             System.out.println("\n\n");
-            
+
         }
     }
-    
-    
-    
-    
-    
-    
+
     //rest of methods, non event-handlers
-    
     private void setTime(int multiplier) {
-                
+
         timeline = new Timeline(
                 new KeyFrame(
                         Duration.millis(1000), event -> {
                     //systemTimeText.setText(timeFormat.format(System.currentTimeMillis()));
-                    currentTime += multiplier*1000;
+                    currentTime += multiplier * 1000;
                     systemTimeText.setText(timeFormat.format(currentTime));
                     //can speedup time by multiplying speedup by System.currentTimeMillis()
                     //this however also changes the base system time, so not sure if that would work
                 }
                 )
         );
-        
+
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
     }
-     
+
     /*
     create a train object based on the information
     train info passed in will be as follows:
     line, section(not used), current block, target block(=authority), time to target
+    sends train to be added to the queue
      */
     private void createTrainFromSchedule(Schedule schedule) {
-        
+
         String line = schedule.line;
         int number = schedule.trainID;
         int speed = 25; //temp value, not sure how I'm setting this yet
         int authority = schedule.targetBlock[schedule.scheduleIndex];
         int block = schedule.currentBlock[schedule.scheduleIndex];
         int target = schedule.targetBlock[schedule.scheduleIndex];
-        
+
         Train train = new Train(line, number, speed, authority, block, target);
-        addTrainToTable(train);
+        addTrainToQueue(train);
     }
 
+    //sets up a schedule object when a schedule file is loaded in for a train
     private Schedule createTrainSchedule(Schedule schedule, String[] trainAttributes, int index) {
-       
-        //need to put some sort of current_index variable into the schedule objects
-        //so I know what part of the schedule to load in once a train reaches its destination
         schedule = resizeScheduleArray(schedule);
         schedule.line = trainAttributes[0];
         schedule.trainID = trainIDIterator;
@@ -610,7 +488,6 @@ public class CTCOfficeController implements Initializable {
         schedule.timeToNextBlock[index] = Double.parseDouble(trainAttributes[4]);
 
         return schedule;
-
     }
 
     //increase the index of the schedule component arrays to avoid null pointer exceptions while adding schedule elements
@@ -622,28 +499,33 @@ public class CTCOfficeController implements Initializable {
     }
 
     //takes train information as an input and adds a train to the appropriate table
-    private void addTrainToTable(Train train) {
-        if (train.getLine().equalsIgnoreCase("Red")) {
-            trainTableRed.getItems().add(train);
-        } else if (train.getLine().equalsIgnoreCase("Green")) {
-            trainTableGreen.getItems().add(train);
-        }
+    private void addTrainToQueue(Train train) {
+        queueTrainTable.getItems().add(train);
+        int trainID = train.getNumber();
+        trainArray[trainID] = train;
+        trainArray = Arrays.copyOf(trainArray, trainArray.length + 1);
+
+    }
+
+    //removes the selected train from the queue and adds it to the outbound table
+    private void dispatchTrainFromQueue(Train train) {
+        queueTrainTable.getItems().remove(train);
+        train.setSpeed(0);
         trainTableAll.getItems().add(train);
     }
 
-    //updates table when a train reaches its target
-    //for demonstration purposes, will base it on a time factor in the schedule
+    //updates outbound table when a train reaches its target
     private void updateTrainTable() {
 
     }
-    
+
     private Schedule getScheduleInfoFromTrainTableSelected(Train train) {
         //need to search schedule array and to find the scheudle with the same trainID as the train parameter
         int trainID = train.getNumber();
         Schedule schedule = scheduleArray[trainID];
         return schedule;
     }
-    
+
     private Schedule newTrainMakeSchedule(Train train) {
         Schedule schedule = new Schedule("", 0, new int[1], new int[1], 0, new double[1], 0);
         resizeScheduleArray(schedule); //need to add some size to the original arrays created

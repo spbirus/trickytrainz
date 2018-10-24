@@ -341,6 +341,10 @@ public class TrainControllerController implements Initializable {
         
         
     }
+    double getNewVelocityFromPower(){
+        double newVelocity = train1.calculateVelocity(powerVal, currSpeedVal, 0, 0, setpointSpeedVal, 50);
+        return newVelocity;
+    }
     @FXML
     void turnLightsOff(ActionEvent event) {
 

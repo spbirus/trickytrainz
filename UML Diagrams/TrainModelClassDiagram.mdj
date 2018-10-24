@@ -2676,7 +2676,8 @@
 								"$ref": "AAAAAAFmg4N76xS8sss="
 							},
 							"name": "storedVelocity",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						},
 						{
 							"_type": "UMLAttribute",
@@ -2685,7 +2686,8 @@
 								"$ref": "AAAAAAFmg4N76xS8sss="
 							},
 							"name": "storedPower",
-							"visibility": "private"
+							"visibility": "private",
+							"type": ""
 						}
 					],
 					"operations": [

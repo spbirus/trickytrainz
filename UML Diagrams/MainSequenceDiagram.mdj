@@ -47,15 +47,6 @@
 							"name": "DispatchNewTrain",
 							"ownedViews": [
 								{
-									"_type": "UMLActivationView",
-									"_id": "AAAAAAFmpxR45AA52UU=",
-									"font": "Arial;13;0",
-									"left": 1061,
-									"top": 283,
-									"width": 14,
-									"height": 166
-								},
-								{
 									"_type": "UMLFrameView",
 									"_id": "AAAAAAFmaORmJotB1FA=",
 									"_parent": {
@@ -72,7 +63,7 @@
 												"$ref": "AAAAAAFmaORmJotB1FA="
 											},
 											"font": "Arial;13;0",
-											"left": 70.97900390625,
+											"left": 78.97900390625,
 											"top": 5,
 											"width": 106.72021484375,
 											"height": 13,
@@ -85,7 +76,7 @@
 												"$ref": "AAAAAAFmaORmJotB1FA="
 											},
 											"font": "Arial;13;1",
-											"left": 5,
+											"left": 13,
 											"top": 5,
 											"width": 60.97900390625,
 											"height": 13,
@@ -93,6 +84,7 @@
 										}
 									],
 									"font": "Arial;13;0",
+									"left": 8,
 									"width": 1892,
 									"height": 692,
 									"nameLabel": {
@@ -1457,15 +1449,6 @@
 									"activation": {
 										"$ref": "AAAAAAFmpxR45AA52UU="
 									}
-								},
-								{
-									"_type": "UMLActivationView",
-									"_id": "AAAAAAFmpxpgKgC/uiE=",
-									"font": "Arial;13;0",
-									"left": 1068,
-									"top": 312,
-									"width": 14,
-									"height": 64
 								},
 								{
 									"_type": "UMLSeqMessageView",

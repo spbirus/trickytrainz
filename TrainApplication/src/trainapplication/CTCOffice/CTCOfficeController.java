@@ -503,8 +503,7 @@ public class CTCOfficeController implements Initializable {
         queueTrainTable.getItems().add(train);
         int trainID = train.getNumber();
         trainArray[trainID] = train;
-        trainArray = Arrays.copyOf(trainArray, trainArray.length + 1);
-
+        trainArray = Arrays.copyOf(trainArray, trainArray.length + 1);    
     }
 
     //removes the selected train from the queue and adds it to the outbound table

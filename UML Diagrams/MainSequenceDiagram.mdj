@@ -49,26 +49,11 @@
 								{
 									"_type": "UMLActivationView",
 									"_id": "AAAAAAFmpxR45AA52UU=",
-									"_parent": {
-										"$ref": "AAAAAAFmpxR44wA1liU="
-									},
-									"model": {
-										"$ref": "AAAAAAFmpxR44gA0c2Y="
-									},
 									"font": "Arial;13;0",
 									"left": 1061,
 									"top": 283,
 									"width": 14,
 									"height": 166
-								},
-								{
-									"_type": "UMLActivationView",
-									"_id": "AAAAAAFmpxR45AA52UU=",
-									"font": "Arial;13;0",
-									"left": 1061,
-									"top": 283,
-									"width": 14,
-									"height": 61
 								},
 								{
 									"_type": "UMLFrameView",
@@ -679,14 +664,14 @@
 											"left": 1719,
 											"top": 80,
 											"width": 1,
-											"height": 641
+											"height": 577
 										}
 									],
 									"font": "Arial;13;0",
 									"left": 1624,
 									"top": 40,
 									"width": 189.787109375,
-									"height": 681,
+									"height": 617,
 									"nameCompartment": {
 										"$ref": "AAAAAAFmaOkd+YxkOZc="
 									},
@@ -1363,15 +1348,6 @@
 									}
 								},
 								{
-									"_type": "UMLActivationView",
-									"_id": "AAAAAAFmpxkUVQCWhkw=",
-									"font": "Arial;13;0",
-									"left": 1068,
-									"top": 303,
-									"width": 14,
-									"height": 41
-								},
-								{
 									"_type": "UMLSeqMessageView",
 									"_id": "AAAAAAFmpxR44wA1liU=",
 									"_parent": {
@@ -1485,12 +1461,6 @@
 								{
 									"_type": "UMLActivationView",
 									"_id": "AAAAAAFmpxpgKgC/uiE=",
-									"_parent": {
-										"$ref": "AAAAAAFmpxpgKgC7M2c="
-									},
-									"model": {
-										"$ref": "AAAAAAFmpxpgKgC6FZ4="
-									},
 									"font": "Arial;13;0",
 									"left": 1068,
 									"top": 312,
@@ -1574,12 +1544,6 @@
 										{
 											"_type": "UMLActivationView",
 											"_id": "AAAAAAFmpxvyPxMTDqg=",
-											"_parent": {
-												"$ref": "AAAAAAFmpxvyPxMP2H8="
-											},
-											"model": {
-												"$ref": "AAAAAAFmpxvyPxMOOkc="
-											},
 											"font": "Arial;13;0",
 											"left": 1075,
 											"top": 344,

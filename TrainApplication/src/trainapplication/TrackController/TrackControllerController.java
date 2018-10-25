@@ -5,7 +5,6 @@
  */
 package trainapplication.TrackController;
 
-import trainapplication.TrackModel.Track;
 import trainapplication.Train;
 import java.util.*;
 import java.io.*;
@@ -26,6 +25,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.shape.Circle;
+import trainapplication.TrackModel.Block;
 
 
 /**
@@ -38,28 +38,29 @@ public class TrackControllerController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    private Track block;
+    private Block block;
     private Train t;
     private int blockNum;
-    private Track[] blockArray = new Track[15];
+    private Block[] blockArray = new Block[15];
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //From other module
-        blockArray[0]=new Track("Green", "YARD", 0, 1, 1, true, false, false);
-        blockArray[1]=new Track("Green", "A", 1, 2, 2, false, false, false);
-        blockArray[2]=new Track("Green", "A", 2, 3, 3, false, true, false);
-        blockArray[3]=new Track("Green", "A", 3, 4, 4, false, false, false);
-        blockArray[4]=new Track("Green", "B", 4, 5, 5, false, false, false);
-        blockArray[5]=new Track("Green", "B", 5, 6, 6, false, false, true);
-        blockArray[6]=new Track("Green", "B", 6, 7, 7, false, false, false);
-        blockArray[7]=new Track("Green", "C", 7, 8, 8, false, false, true);
-        blockArray[8]=new Track("Green", "C", 8, 9, 9, false, false, false);
-        blockArray[9]=new Track("Green", "C", 9, 10, 10, false, false, false);
-        blockArray[10]=new Track("Green", "C", 10, 11, 11, false, true, false);
-        blockArray[11]=new Track("Green", "C", 11, 12, 12, false, false, false);
-        blockArray[12]=new Track("Green", "C", 12, 13, 13, true, false, false);
-        blockArray[13]=new Track("Green", "D", 13, 14, 14, false, false, false);
-        blockArray[14]=new Track("Green", "D", 14, 15, 15, false, false, false);
+        blockArray[0]=new Block("Green", "YARD", 0, 1, 1, true, false, false);
+        blockArray[1]=new Block("Green", "A", 1, 2, 2, false, false, false);
+        blockArray[2]=new Block("Green", "A", 2, 3, 3, false, true, false);
+        blockArray[3]=new Block("Green", "A", 3, 4, 4, false, false, false);
+        blockArray[4]=new Block("Green", "B", 4, 5, 5, false, false, false);
+        blockArray[5]=new Block("Green", "B", 5, 6, 6, false, false, true);
+        blockArray[6]=new Block("Green", "B", 6, 7, 7, false, false, false);
+        blockArray[7]=new Block("Green", "C", 7, 8, 8, false, false, true);
+        blockArray[8]=new Block("Green", "C", 8, 9, 9, false, false, false);
+        blockArray[9]=new Block("Green", "C", 9, 10, 10, false, false, false);
+        blockArray[10]=new Block("Green", "C", 10, 11, 11, false, true, false);
+        blockArray[11]=new Block("Green", "C", 11, 12, 12, false, false, false);
+        blockArray[12]=new Block("Green", "C", 12, 13, 13, true, false, false);
+        blockArray[13]=new Block("Green", "D", 13, 14, 14, false, false, false);
+        blockArray[14]=new Block("Green", "D", 14, 15, 15, false, false, false);
+        
         t = new Train("Green", 20, 55, 1500, 0, 5);
         reset(0);
         
@@ -323,8 +324,8 @@ public class TrackControllerController implements Initializable {
     void run(ActionEvent event){
         boolean[] route = {true,true,true,true,true,true,true,true,true,true,true,true,true,true,true};
         int b=-1;
-        Track current;
-        Track end = blockArray[14];
+        Block current;
+        Block end = blockArray[14];
         boolean brk = true;
         while(brk){
             b++;
@@ -370,8 +371,8 @@ public class TrackControllerController implements Initializable {
     }
     private boolean sendFailure(boolean[] route){
         int b = -1;
-        Track current;
-        Track end = blockArray[14];
+        Block current;
+        Block end = blockArray[14];
         while(true){
             b++;
             current=blockArray[b];

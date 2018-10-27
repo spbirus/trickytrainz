@@ -10193,6 +10193,60 @@
 									"$ref": "AAAAAAFmqEaSxE66oD8="
 								}
 							}
+						},
+						{
+							"_type": "UMLAssociation",
+							"_id": "AAAAAAFmsLs83OhZMVo=",
+							"_parent": {
+								"$ref": "AAAAAAFmg8bSUOLKut4="
+							},
+							"end1": {
+								"_type": "UMLAssociationEnd",
+								"_id": "AAAAAAFmsLs83OhaZNM=",
+								"_parent": {
+									"$ref": "AAAAAAFmsLs83OhZMVo="
+								},
+								"reference": {
+									"$ref": "AAAAAAFmg8bSUOLKut4="
+								}
+							},
+							"end2": {
+								"_type": "UMLAssociationEnd",
+								"_id": "AAAAAAFmsLs83OhbKdk=",
+								"_parent": {
+									"$ref": "AAAAAAFmsLs83OhZMVo="
+								},
+								"reference": {
+									"$ref": "AAAAAAFmsLsRt95q3pw="
+								}
+							}
+						},
+						{
+							"_type": "UMLAssociation",
+							"_id": "AAAAAAFmsLtJNOlfFdE=",
+							"_parent": {
+								"$ref": "AAAAAAFmg8bSUOLKut4="
+							},
+							"end1": {
+								"_type": "UMLAssociationEnd",
+								"_id": "AAAAAAFmsLtJNOlg/wI=",
+								"_parent": {
+									"$ref": "AAAAAAFmsLtJNOlfFdE="
+								},
+								"reference": {
+									"$ref": "AAAAAAFmg8bSUOLKut4="
+								}
+							},
+							"end2": {
+								"_type": "UMLAssociationEnd",
+								"_id": "AAAAAAFmsLtJNOlh/Fs=",
+								"_parent": {
+									"$ref": "AAAAAAFmsLtJNOlfFdE="
+								},
+								"reference": {
+									"$ref": "AAAAAAFmsLrvid0rqlE="
+								}
+							}
 						}
 					]
 				},
@@ -10366,6 +10420,22 @@
 						"$ref": "AAAAAAFmg7GBSdz8L74="
 					},
 					"name": "Toggle Lights"
+				},
+				{
+					"_type": "UMLUseCase",
+					"_id": "AAAAAAFmsLrvid0rqlE=",
+					"_parent": {
+						"$ref": "AAAAAAFmg7GBSdz8L74="
+					},
+					"name": "Read Beacon"
+				},
+				{
+					"_type": "UMLUseCase",
+					"_id": "AAAAAAFmsLsRt95q3pw=",
+					"_parent": {
+						"$ref": "AAAAAAFmg7GBSdz8L74="
+					},
+					"name": "Receive Block"
 				}
 			]
 		}

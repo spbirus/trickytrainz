@@ -3008,7 +3008,7 @@
 											"top": 539.5,
 											"width": 182,
 											"height": 13,
-											"text": "Toggle Track for Maintenance"
+											"text": "Change Track State"
 										},
 										{
 											"_type": "LabelView",
@@ -3041,7 +3041,7 @@
 									"font": "Arial;13;0",
 									"left": 416,
 									"top": 532.5,
-									"width": 192.5205078125,
+									"width": 192,
 									"height": 25,
 									"stereotypeLabel": {
 										"$ref": "AAAAAAFmqHe3GGGV5sE="
@@ -5212,7 +5212,7 @@
 					"_parent": {
 						"$ref": "AAAAAAFmhFPogCNkvhQ="
 					},
-					"name": "Toggle Track for Maintenance"
+					"name": "Change Track State"
 				},
 				{
 					"_type": "UMLUseCase",
@@ -8157,9 +8157,9 @@
 										"$ref": "AAAAAAFmtyoaGeUNQrs="
 									},
 									"font": "Arial;13;0",
-									"left": 749,
+									"left": 748,
 									"top": 682,
-									"width": 19.5126953125,
+									"width": 20,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 25,
@@ -8428,9 +8428,9 @@
 										"$ref": "AAAAAAFmtyw8efKnB8I="
 									},
 									"font": "Arial;13;0",
-									"left": 889,
+									"left": 888,
 									"top": 880,
-									"width": 19.5126953125,
+									"width": 20,
 									"height": 13,
 									"alpha": 0.5235987755982988,
 									"distance": 25,
@@ -16441,7 +16441,7 @@
 							"_parent": {
 								"$ref": "AAAAAAFmqJMTYOe2wHM="
 							},
-							"name": "TrackMaintenance",
+							"name": "ChangeTrackState",
 							"ownedViews": [
 								{
 									"_type": "UMLFrameView",
@@ -16462,9 +16462,9 @@
 											"font": "Arial;13;0",
 											"left": 70.97900390625,
 											"top": 5,
-											"width": 107.45654296875,
+											"width": 108.91015625,
 											"height": 13,
-											"text": "TrackMaintenance"
+											"text": "ChangeTrackState"
 										},
 										{
 											"_type": "LabelView",

@@ -5856,6 +5856,28 @@
 									"subViews": [
 										{
 											"_type": "EdgeLabelView",
+											"_id": "AAAAAAFmxu0XPLL0brQ=",
+											"_parent": {
+												"$ref": "AAAAAAFmpzOD2/D4H9U="
+											},
+											"model": {
+												"$ref": "AAAAAAFmpzOD2/D3kZA="
+											},
+											"font": "Arial;13;0",
+											"left": 444,
+											"top": 171,
+											"width": 69.3671875,
+											"height": 13,
+											"alpha": 1.5707963267948966,
+											"distance": 10,
+											"hostEdge": {
+												"$ref": "AAAAAAFmpzOD2/D4H9U="
+											},
+											"edgePosition": 1,
+											"text": "5 : setBrake"
+										},
+										{
+											"_type": "EdgeLabelView",
 											"_id": "AAAAAAFmpzOD2/D6HYA=",
 											"_parent": {
 												"$ref": "AAAAAAFmpzOD2/D4H9U="
@@ -5906,7 +5928,7 @@
 												"$ref": "AAAAAAFmpzOD2/D3kZA="
 											},
 											"font": "Arial;13;0",
-											"left": 433,
+											"left": 426,
 											"top": 188,
 											"width": 14,
 											"height": 29
@@ -5919,7 +5941,10 @@
 									"tail": {
 										"$ref": "AAAAAAFmpzGuVvDG7/0="
 									},
-									"points": "439:168;469:168;469:188;446:188",
+									"points": "439:168;469:168;469:188;439:188",
+									"nameLabel": {
+										"$ref": "AAAAAAFmxu0XPLL0brQ="
+									},
 									"stereotypeLabel": {
 										"$ref": "AAAAAAFmpzOD2/D6HYA="
 									},
@@ -8591,6 +8616,28 @@
 									"subViews": [
 										{
 											"_type": "EdgeLabelView",
+											"_id": "AAAAAAFmxu0XUrQeHCY=",
+											"_parent": {
+												"$ref": "AAAAAAFmpziOy/K+h08="
+											},
+											"model": {
+												"$ref": "AAAAAAFmpziOy/K9hPo="
+											},
+											"font": "Arial;13;0",
+											"left": 401,
+											"top": 155,
+											"width": 108.38623046875,
+											"height": 13,
+											"alpha": 1.5707963267948966,
+											"distance": 10,
+											"hostEdge": {
+												"$ref": "AAAAAAFmpziOy/K+h08="
+											},
+											"edgePosition": 1,
+											"text": "2 : setTemperature"
+										},
+										{
+											"_type": "EdgeLabelView",
 											"_id": "AAAAAAFmpziOy/LABy0=",
 											"_parent": {
 												"$ref": "AAAAAAFmpziOy/K+h08="
@@ -8600,7 +8647,7 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": 476,
+											"left": 470,
 											"top": 155,
 											"height": 13,
 											"alpha": 1.5707963267948966,
@@ -8621,7 +8668,7 @@
 											},
 											"visible": false,
 											"font": "Arial;13;0",
-											"left": 442,
+											"left": 436,
 											"top": 156,
 											"height": 13,
 											"alpha": -1.5707963267948966,
@@ -8641,7 +8688,7 @@
 												"$ref": "AAAAAAFmpziOy/K9hPo="
 											},
 											"font": "Arial;13;0",
-											"left": 416,
+											"left": 409,
 											"top": 172,
 											"width": 14,
 											"height": 29
@@ -8654,7 +8701,10 @@
 									"tail": {
 										"$ref": "AAAAAAFmpzch1/KOugs="
 									},
-									"points": "422:152;452:152;452:172;429:172",
+									"points": "416:152;446:152;446:172;422:172",
+									"nameLabel": {
+										"$ref": "AAAAAAFmxu0XUrQeHCY="
+									},
 									"stereotypeLabel": {
 										"$ref": "AAAAAAFmpziOy/LABy0="
 									},
@@ -9421,6 +9471,28 @@
 									"subViews": [
 										{
 											"_type": "EdgeLabelView",
+											"_id": "AAAAAAFmxu0XWLR7gZo=",
+											"_parent": {
+												"$ref": "AAAAAAFmsPL8keXBQWI="
+											},
+											"model": {
+												"$ref": "AAAAAAFmsPL8keXAYMk="
+											},
+											"font": "Arial;13;0",
+											"left": 200,
+											"top": 252,
+											"width": 161.13525390625,
+											"height": 13,
+											"alpha": 1.5707963267948966,
+											"distance": 10,
+											"hostEdge": {
+												"$ref": "AAAAAAFmsPL8keXBQWI="
+											},
+											"edgePosition": 1,
+											"text": "4 : return calculated velocity"
+										},
+										{
+											"_type": "EdgeLabelView",
 											"_id": "AAAAAAFmsPL8keXD2fg=",
 											"_parent": {
 												"$ref": "AAAAAAFmsPL8keXBQWI="
@@ -9486,6 +9558,9 @@
 										"$ref": "AAAAAAFmpzsZTvL+WS4="
 									},
 									"points": "401:248;162:248",
+									"nameLabel": {
+										"$ref": "AAAAAAFmxu0XWLR7gZo="
+									},
 									"stereotypeLabel": {
 										"$ref": "AAAAAAFmsPL8keXD2fg="
 									},

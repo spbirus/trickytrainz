@@ -16033,7 +16033,7 @@
 													"top": 47,
 													"width": 150.18798828125,
 													"height": 13,
-													"text": "Dispatcher: <<Class>>"
+													"text": "Dispatcher: <<Actor>>"
 												},
 												{
 													"_type": "LabelView",
@@ -18431,7 +18431,7 @@
 						"$ref": "AAAAAAFmh5HCxZHxu9s="
 					},
 					"name": "Role22",
-					"type": "<<Class>>"
+					"type": "<<Actor>>"
 				},
 				{
 					"_type": "UMLAttribute",

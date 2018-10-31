@@ -9493,118 +9493,6 @@
 								},
 								{
 									"_type": "UMLSeqMessageView",
-									"_id": "AAAAAAFmsPL8keXBQWI=",
-									"_parent": {
-										"$ref": "AAAAAAFmpy9UYPB6+WM="
-									},
-									"model": {
-										"$ref": "AAAAAAFmsPL8keXAYMk="
-									},
-									"subViews": [
-										{
-											"_type": "EdgeLabelView",
-											"_id": "AAAAAAFmx5ubIPBtehM=",
-											"_parent": {
-												"$ref": "AAAAAAFmsPL8keXBQWI="
-											},
-											"model": {
-												"$ref": "AAAAAAFmsPL8keXAYMk="
-											},
-											"font": "Arial;13;0",
-											"left": 200,
-											"top": 252,
-											"width": 161.13525390625,
-											"height": 13,
-											"alpha": 1.5707963267948966,
-											"distance": 10,
-											"hostEdge": {
-												"$ref": "AAAAAAFmsPL8keXBQWI="
-											},
-											"edgePosition": 1,
-											"text": "4 : return calculated velocity"
-										},
-										{
-											"_type": "EdgeLabelView",
-											"_id": "AAAAAAFmsPL8keXD2fg=",
-											"_parent": {
-												"$ref": "AAAAAAFmsPL8keXBQWI="
-											},
-											"model": {
-												"$ref": "AAAAAAFmsPL8keXAYMk="
-											},
-											"visible": false,
-											"font": "Arial;13;0",
-											"left": 280,
-											"top": 267,
-											"height": 13,
-											"alpha": 1.5707963267948966,
-											"distance": 25,
-											"hostEdge": {
-												"$ref": "AAAAAAFmsPL8keXBQWI="
-											},
-											"edgePosition": 1
-										},
-										{
-											"_type": "EdgeLabelView",
-											"_id": "AAAAAAFmsPL8keXEBLw=",
-											"_parent": {
-												"$ref": "AAAAAAFmsPL8keXBQWI="
-											},
-											"model": {
-												"$ref": "AAAAAAFmsPL8keXAYMk="
-											},
-											"visible": false,
-											"font": "Arial;13;0",
-											"left": 281,
-											"top": 232,
-											"height": 13,
-											"alpha": -1.5707963267948966,
-											"distance": 10,
-											"hostEdge": {
-												"$ref": "AAAAAAFmsPL8keXBQWI="
-											},
-											"edgePosition": 1
-										},
-										{
-											"_type": "UMLActivationView",
-											"_id": "AAAAAAFmsPL8keXFrpQ=",
-											"_parent": {
-												"$ref": "AAAAAAFmsPL8keXBQWI="
-											},
-											"model": {
-												"$ref": "AAAAAAFmsPL8keXAYMk="
-											},
-											"visible": false,
-											"font": "Arial;13;0",
-											"left": 149,
-											"top": 248,
-											"width": 14,
-											"height": 25
-										}
-									],
-									"font": "Arial;13;0",
-									"head": {
-										"$ref": "AAAAAAFmpzk6S/Ld5fo="
-									},
-									"tail": {
-										"$ref": "AAAAAAFmpzsZTvL+WS4="
-									},
-									"points": "401:248;162:248",
-									"nameLabel": {
-										"$ref": "AAAAAAFmx5ubIPBtehM="
-									},
-									"stereotypeLabel": {
-										"$ref": "AAAAAAFmsPL8keXD2fg="
-									},
-									"propertyLabel": {
-										"$ref": "AAAAAAFmsPL8keXEBLw="
-									},
-									"activation": {
-										"$ref": "AAAAAAFmsPL8keXFrpQ="
-									}
-								},
-								{
-									"_type": "UMLSeqMessageView",
 									"_id": "AAAAAAFmsPm8L+Xa2b0=",
 									"_parent": {
 										"$ref": "AAAAAAFmpy9UYPB6+WM="
@@ -9623,17 +9511,17 @@
 												"$ref": "AAAAAAFmsPm8L+XZ8bs="
 											},
 											"font": "Arial;13;0",
-											"left": 205,
-											"top": 256,
+											"left": 204,
+											"top": 248,
 											"width": 138.75341796875,
 											"height": 13,
-											"alpha": 1.2924973281672683,
-											"distance": 14.560219778561036,
+											"alpha": 0.8760590342055572,
+											"distance": 7.810249675906654,
 											"hostEdge": {
 												"$ref": "AAAAAAFmsPm8L+Xa2b0="
 											},
 											"edgePosition": 1,
-											"text": "5 : setVelocity(double)"
+											"text": "4 : setVelocity(double)"
 										},
 										{
 											"_type": "EdgeLabelView",
@@ -9891,21 +9779,6 @@
 							},
 							"target": {
 								"$ref": "AAAAAAFmpzsZTvL3gWY="
-							},
-							"messageSort": "reply"
-						},
-						{
-							"_type": "UMLMessage",
-							"_id": "AAAAAAFmsPL8keXAYMk=",
-							"_parent": {
-								"$ref": "AAAAAAFmpy9UYPB5dGM="
-							},
-							"name": "return calculated velocity",
-							"source": {
-								"$ref": "AAAAAAFmpzsZTvL3gWY="
-							},
-							"target": {
-								"$ref": "AAAAAAFmpzk6SvLW20A="
 							},
 							"messageSort": "reply"
 						},

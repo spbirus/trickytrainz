@@ -5,6 +5,8 @@
  */
 package trainapplication.TrackModel;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author Michael
@@ -14,6 +16,7 @@ public class Track {
     private String line;
     private int[] switches;
     private int[] stations;
+    public ArrayList<Block> blockList = new ArrayList<Block>();
     
     public Track(String line){
        this.line = line;

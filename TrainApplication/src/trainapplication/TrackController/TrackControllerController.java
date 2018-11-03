@@ -21,11 +21,13 @@ import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuButton;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.shape.Circle;
 import trainapplication.TrackModel.Block;
+import trainapplication.TrainApplication;
 
 
 /**
@@ -38,34 +40,34 @@ public class TrackControllerController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    private Block block;
-    private Train t;
-    private int blockNum;
-    private Block[] blockArray = new Block[15];
+    private int mergeNum=2;
+    private int splitNum=1;
+    private int defaultNum=3;
+    private boolean mergePresent=true;
+    private boolean splitPresent=true;
+    /*private TrainApplication ta;
+    private String plcFile;
+    private int authorityVar;
+    private double speed;
+    public TrackControllerController(TrainApplication ta,String plcFile){
+        this.ta = ta;
+        this.plcFile = plcFile;
+    }
+    */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //From other module
-        blockArray[0]=new Block("Green", "YARD", 0, 1, 1, true, false, false);
-        blockArray[1]=new Block("Green", "A", 1, 2, 2, false, false, false);
-        blockArray[2]=new Block("Green", "A", 2, 3, 3, false, true, false);
-        blockArray[3]=new Block("Green", "A", 3, 4, 4, false, false, false);
-        blockArray[4]=new Block("Green", "B", 4, 5, 5, false, false, false);
-        blockArray[5]=new Block("Green", "B", 5, 6, 6, false, false, true);
-        blockArray[6]=new Block("Green", "B", 6, 7, 7, false, false, false);
-        blockArray[7]=new Block("Green", "C", 7, 8, 8, false, false, true);
-        blockArray[8]=new Block("Green", "C", 8, 9, 9, false, false, false);
-        blockArray[9]=new Block("Green", "C", 9, 10, 10, false, false, false);
-        blockArray[10]=new Block("Green", "C", 10, 11, 11, false, true, false);
-        blockArray[11]=new Block("Green", "C", 11, 12, 12, false, false, false);
-        blockArray[12]=new Block("Green", "C", 12, 13, 13, true, false, false);
-        blockArray[13]=new Block("Green", "D", 13, 14, 14, false, false, false);
-        blockArray[14]=new Block("Green", "D", 14, 15, 15, false, false, false);
-        
-        t = new Train("Green", 20, 55, 1500, 0, 5);
-        reset(0);
+        mergeBlock.setText(Integer.toString(this.mergeNum));
+        splitBlock.setText(Integer.toString(this.splitNum));
+        defaultBlock.setText(Integer.toString(this.defaultNum));
+        mergeBool.setText(Boolean.toString(this.mergePresent));
+        splitBool.setText(Boolean.toString(this.splitPresent));
+        signalState.setText("Green");
+        outputSwitch.setText("Block #" +splitBlock.getText() + " is Connected to "+ defaultBlock.getText());
+        crossingState.setText("Raised");
         
     }  
     private void reset(int num){
+        /*
         blockNum=num;
         block=blockArray[blockNum];
         trackName.setText(block.getLine());
@@ -135,52 +137,82 @@ public class TrackControllerController implements Initializable {
         blockNumSlider.setMin(0);
         blockNumSlider.setMax(14);
         blockValue.setText("Block #"+Long.toString(Math.round(blockNumSlider.getValue())));
-        
+        */
     }
+    @FXML
+    private RadioButton manualMode;
     @FXML
     private Label switchMurphyLabel;
     
     @FXML
     private Label crossingMurphyLabel;
     @FXML
-    private Button sliderSubmit;
-    
-    @FXML
-    private Label blockValue;
-    
-    @FXML
-    private Slider blockNumSlider;
-    
+    private Label signalMurphyLabel;
     @FXML
     private MenuBar waysideMenuBar;
     
+    @FXML
+    private MenuItem green1;
+    
+    @FXML
+    private MenuItem green2;
+    
+    @FXML
+    private MenuItem green3;
+    
+    @FXML
+    private MenuItem green4;
+    
+    @FXML
+    private MenuItem green5;
+    
+    @FXML
+    private MenuItem green6;
+    
+    @FXML
+    private MenuItem red1;
+    
+    @FXML
+    private MenuItem red2;
+    
+    @FXML
+    private MenuItem red3;
+    
+    @FXML
+    private MenuItem red4;
+    
+    @FXML
+    private MenuItem red5;
+    
+    @FXML
+    private MenuItem red6;
+    
+    @FXML
+    private MenuItem red7;
     
     @FXML
     private Label trackName;
     
     @FXML
-    private Label sectionName;
+    private Label mergeBool;
     
     @FXML
-    private Label blockName;
+    private Label splitBool;
     
     @FXML
-    private Label stationBool;
+    private Label mergeBlock;
     
     @FXML
-    private Label switchBool;
+    private Label splitBlock;
     
     @FXML
-    private Label crossingBool;
+    private Label defaultBlock;
     
     @FXML
     private Label crossingState;
     
     @FXML
-    private Label railState;
-    
-    @FXML
-    private Label circuitState;
+    private Label signalState;
     
     @FXML
     private Label outputSpeed;
@@ -196,9 +228,6 @@ public class TrackControllerController implements Initializable {
     
     @FXML
     private Label trackOccupancy;
-
-    @FXML
-    private Label switchPosition;
     
     @FXML
     private Label commandedSpeed;
@@ -207,10 +236,10 @@ public class TrackControllerController implements Initializable {
     private Label authority;
     
     @FXML
-    private Button openSwitch;
+    private Button defaultSwitch;
     
     @FXML
-    private Button closeSwitch;
+    private Button notDefaultSwitch;
     
     @FXML
     private Button raiseCrossing;
@@ -219,16 +248,10 @@ public class TrackControllerController implements Initializable {
     private Button lowerCrossing;
     
     @FXML
-    private Button fixRail;
+    private Button greenLightSet;
     
     @FXML
-    private Button breakRail;
-    
-    @FXML
-    private Button fixCircuit;
-    
-    @FXML
-    private Button breakCircuit;
+    private Button redLightSet;
     
     @FXML
     private Circle greenLight;
@@ -245,8 +268,7 @@ public class TrackControllerController implements Initializable {
         
     }
     private void changeColor() {
-        outputLights.setText(block.getSignal());
-        if(block.getSignal().equals("Green")){
+        if(outputLights.getText().equals("Green")){
             redLight.setVisible(false);
             greenLight.setVisible(true);
         }else{
@@ -254,73 +276,64 @@ public class TrackControllerController implements Initializable {
             greenLight.setVisible(false);
         }
     }
-    
     @FXML
-    void murphyOpenSwitchClick(ActionEvent event) {
-        if(block.isSwitchPresent()){
-            switchPosition.setText("Not Connected to Current Block");
-            outputSwitch.setText("Not Connected to Current Block");
-            block.setSwitchState(false);
+    void setManualMode(ActionEvent event){
+        if(manualMode.isSelected()){
+            switchMurphyLabel.setVisible(true);
+            crossingMurphyLabel.setVisible(true);
+            signalMurphyLabel.setVisible(true);
+            defaultSwitch.setVisible(true);
+            notDefaultSwitch.setVisible(true);
+            raiseCrossing.setVisible(true);
+            lowerCrossing.setVisible(true);
+            greenLightSet.setVisible(true);
+            redLightSet.setVisible(true);
+        }else{
+            switchMurphyLabel.setVisible(false);
+            crossingMurphyLabel.setVisible(false);
+            signalMurphyLabel.setVisible(false);
+            defaultSwitch.setVisible(false);
+            notDefaultSwitch.setVisible(false);
+            raiseCrossing.setVisible(false);
+            lowerCrossing.setVisible(false);
+            greenLightSet.setVisible(false);
+            redLightSet.setVisible(false);
         }
-        changeColor();
     }
     @FXML
-    void murphyCloseSwitchClick(ActionEvent event) {
-        if(block.isSwitchPresent()){
-            switchPosition.setText("Connected to Block #"+block.getNextOutboundBlock());
-            outputSwitch.setText("Connected to Block #"+block.getNextOutboundBlock());
-            block.setSwitchState(true);
-        }
-        changeColor();
+    void manDefaultSwitchClick(ActionEvent event) {
+            outputSwitch.setText("Block #" +splitBlock.getText() + " is Connected to "+ defaultBlock.getText());
     }
     @FXML
-    void murphyRaiseCrossingClick(ActionEvent event) {
+    void manNotDefaultSwitchClick(ActionEvent event) {
+            outputSwitch.setText("Block #"+splitBlock.getText() +"is Connected to Block #"+mergeBlock.getText());
+
+    }
+    @FXML
+    void manRaiseCrossingClick(ActionEvent event) {
         crossingState.setText("Raised");
-        block.setCrossingState(false);
-        changeColor();
     }
     @FXML
-    void murphyLowerCrossingClick(ActionEvent event) {
+    void manLowerCrossingClick(ActionEvent event) {
         crossingState.setText("Lowered");
-        block.setCrossingState(true);
+    }
+    @FXML
+    void manGreenSignalClick(ActionEvent event) {
+        signalState.setText("Green");
+        outputLights.setText("Green");
         changeColor();
     }
     @FXML
-    void murphyFixRailClick(ActionEvent event) {
-        railState.setText("Functional");
-        block.setRailState(true);
-        block.setSignal("Green");
+    void manRedSignalClick(ActionEvent event) {
+        signalState.setText("Red");
+        outputLights.setText("Red");
         changeColor();
     }
-    @FXML
-    void murphyBreakRailClick(ActionEvent event) {
-        railState.setText("Faulty");
-        block.setRailState(false);
-        block.setSignal("Red");
-        changeColor();
-    }
-    @FXML
-    void murphyFixCircuitClick(ActionEvent event) {
-        circuitState.setText("Functional");
-        block.setCircuitState(true);
-        block.setSignal("Green");
-        changeColor();
-    }
-    @FXML
-    void murphyBreakCircuitClick(ActionEvent event) {
-        circuitState.setText("Faulty");
-        block.setCircuitState(false);
-        block.setSignal("Red");
-        changeColor();
-    }
-    @FXML
-    void sliderSubmit(ActionEvent event){
-        blockValue.setText("Block #" +Long.toString(Math.round(blockNumSlider.getValue())));
-        reset((int)Math.round(blockNumSlider.getValue()));
-    }
-    @FXML
-    private Button routeButton;
-    @FXML
+    /*public void setSpeedAuthority(double speed, int authority){
+        this.speed = speed;
+        this.authorityVar = authority;
+    }*/
+    /*@FXML
     void run(ActionEvent event){
         boolean[] route = {true,true,true,true,true,true,true,true,true,true,true,true,true,true,true};
         int b=-1;
@@ -368,8 +381,8 @@ public class TrackControllerController implements Initializable {
             }
         }
         reset(blockNum);
-    }
-    private boolean sendFailure(boolean[] route){
+    }*/
+    /*private boolean sendFailure(boolean[] route){
         int b = -1;
         Block current;
         Block end = blockArray[14];
@@ -384,5 +397,5 @@ public class TrackControllerController implements Initializable {
             }
         }
         return false;
-    }
+    }*/
 }

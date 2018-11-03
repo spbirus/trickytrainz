@@ -26,7 +26,7 @@
                      <children>
                         <AnchorPane layoutX="14.0" layoutY="16.0" prefHeight="605.0" prefWidth="408.0" style="-fx-background-color: #bdc3c7;">
                            <children>
-                              <TableView fx:id="trackTableAll" editable="true" layoutX="13.0" layoutY="50.0" prefHeight="543.0" prefWidth="383.0">
+                              <TableView fx:id="trackTableAll" editable="true" layoutX="13.0" layoutY="50.0" prefHeight="502.0" prefWidth="383.0">
                                 <columns>
                                   <TableColumn fx:id="trackTableAllLine" prefWidth="38.0" text="Line" />
                                   <TableColumn fx:id="trackTableAllSection" prefWidth="47.0" text="Section" />
@@ -41,6 +41,11 @@
                                     <Font size="22.0" />
                                  </font>
                               </Text>
+                              <Button fx:id="changeTrackStateButton" layoutX="239.0" layoutY="561.0" mnemonicParsing="false" onAction="#changeTrackStateButtonClick" text="Change Track State">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="865.0" layoutY="16.0" prefHeight="605.0" prefWidth="408.0" style="-fx-background-color: #bdc3c7;">
@@ -86,6 +91,11 @@
                                     <Font size="22.0" />
                                  </font>
                               </Text>
+                              <Button fx:id="deleteTrainButton" layoutX="299.0" layoutY="541.0" mnemonicParsing="false" onAction="#deleteTrainButtonClick" text="Delete Train">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </AnchorPane>
                      </children>
@@ -137,45 +147,49 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Label fx:id="redThroughputLabel" layoutX="45.0" layoutY="721.0" text="Red Line Throughput: 0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="greenThroughputLabel" layoutX="45.0" layoutY="743.0" text="Green Line Throughput: 0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <Label fx:id="allThroughputLabel" layoutX="45.0" layoutY="765.0" text="All Lines Throughput: 0">
-         <font>
-            <Font size="16.0" />
-         </font>
-      </Label>
-      <AnchorPane fx:id="newTrainPane" layoutX="409.0" layoutY="254.0" prefHeight="218.0" prefWidth="491.0" style="-fx-background-color: #bdc3c7;">
+      <AnchorPane fx:id="newTrainPane" layoutX="378.0" layoutY="346.0" prefHeight="219.0" prefWidth="553.0" style="-fx-background-color: #bdc3c7;">
          <children>
-            <Button layoutX="191.0" layoutY="139.0" mnemonicParsing="false" onAction="#newTrainSubmitClick" prefHeight="36.0" prefWidth="132.0" text="Submit">
+            <Button layoutX="219.0" layoutY="146.0" mnemonicParsing="false" onAction="#newTrainSubmitClick" prefHeight="36.0" prefWidth="132.0" text="Submit">
                <font>
                   <Font size="16.0" />
                </font>
             </Button>
-            <Slider fx:id="suggestedSpeedSlider" blockIncrement="1.0" layoutX="188.0" layoutY="83.0" majorTickUnit="1.0" max="50.0" minorTickCount="1" onMouseClicked="#suggestedSpeedSliderDrag" onMouseDragged="#suggestedSpeedSliderDrag" showTickMarks="true" snapToTicks="true" value="1.0" />
-            <TextField fx:id="newTrainTargetBlock" layoutX="371.0" layoutY="78.0" prefHeight="25.0" prefWidth="64.0" />
+            <Slider fx:id="suggestedSpeedSlider" blockIncrement="1.0" layoutX="153.0" layoutY="84.0" majorTickUnit="1.0" max="50.0" minorTickCount="1" onMouseClicked="#suggestedSpeedSliderDrag" onMouseDragged="#suggestedSpeedSliderDrag" showTickMarks="true" snapToTicks="true" value="1.0" />
+            <TextField fx:id="newTrainTargetBlock" editable="false" layoutX="466.0" layoutY="83.0" prefHeight="25.0" prefWidth="64.0" />
             <Label layoutX="57.0" layoutY="43.0" text="Train Line">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label layoutX="211.0" layoutY="45.0" text="Suggested Speed" />
-            <Label layoutX="370.0" layoutY="45.0" text="Target Block" />
-            <Label fx:id="suggestedSpeedLabel" layoutX="254.0" layoutY="101.0" text="0" />
+            <Label layoutX="169.0" layoutY="43.0" text="Suggested Speed">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label layoutX="457.0" layoutY="45.0" text="Target Block">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="suggestedSpeedLabel" layoutX="223.0" layoutY="101.0" text="0" />
             <ChoiceBox fx:id="newTrainLineBox" layoutX="43.0" layoutY="83.0" prefHeight="25.0" prefWidth="93.0" />
-            <Button layoutX="384.0" layoutY="145.0" mnemonicParsing="false" onAction="#newTrainCloseClick" text="Close" />
+            <Button layoutX="466.0" layoutY="164.0" mnemonicParsing="false" onAction="#newTrainCloseClick" text="Close" />
+            <ChoiceBox fx:id="stationChoiceBox" layoutX="309.0" layoutY="83.0" onInputMethodTextChanged="#stationChoiceBoxChange" prefWidth="150.0" />
+            <Text layoutX="361.0" layoutY="60.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Station">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Text>
          </children>
       </AnchorPane>
-      <Button fx:id="testShowSchedulesButton" layoutX="269.0" layoutY="743.0" mnemonicParsing="false" onAction="#testShowSchedulesClick" prefHeight="50.0" prefWidth="98.0" text="System Show Schedules" textAlignment="CENTER" wrapText="true">
+      <Button fx:id="testShowSchedulesButton" layoutX="848.0" layoutY="14.0" mnemonicParsing="false" onAction="#testShowSchedulesClick" prefHeight="37.0" prefWidth="166.0" text="System Show Schedules" textAlignment="CENTER" wrapText="true">
          <font>
             <Font size="13.0" />
+         </font>
+      </Button>
+      <Button fx:id="getThroughputButton" layoutX="68.0" layoutY="743.0" mnemonicParsing="false" onAction="#getThroughputButtonClick" text="Get Throughput">
+         <font>
+            <Font size="14.0" />
          </font>
       </Button>
    </children>

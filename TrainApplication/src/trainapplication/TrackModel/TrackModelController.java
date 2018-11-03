@@ -22,6 +22,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import trainapplication.TrainApplication;
 
 /**
  * FXML Controller class
@@ -29,6 +30,12 @@ import javafx.scene.control.TextField;
  * @author burri
  */
 public class TrackModelController implements Initializable {
+    
+    private TrainApplication ta;
+    
+    public TrackModelController(TrainApplication ta){
+        this.ta = ta;
+    }
 
     //
     ArrayList<Block> trackList = new ArrayList<Block>();

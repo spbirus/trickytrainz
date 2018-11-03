@@ -33,6 +33,13 @@ import javafx.scene.shape.Circle;
  */
 public class TrainControllerController implements Initializable {
 
+    
+    private TrainApplication ta;
+
+    public TrainControllerController(TrainApplication ta) {
+        this.ta = ta;
+    }
+    
     /**
      * Initializes the controller class.
      */

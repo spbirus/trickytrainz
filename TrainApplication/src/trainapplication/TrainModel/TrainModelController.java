@@ -318,6 +318,11 @@ public class TrainModelController implements Initializable {
     private double storedVelocity = 0;
     private double storedPower = 0;
     
+    
+    public void run(){
+        
+    }
+    
     @FXML
     void onRefreshSpeed(ActionEvent event) {
 //        double curSpeed = 0;

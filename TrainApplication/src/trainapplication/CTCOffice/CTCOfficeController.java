@@ -36,10 +36,12 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
+import trainapplication.TrainApplication;
 
 /**
  * FXML Controller class
@@ -59,6 +61,13 @@ public class CTCOfficeController implements Initializable {
     private DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
     private long currentTime = System.currentTimeMillis();
     private Timeline timeline = new Timeline();
+    
+    
+//    private TrainApplication ta;
+//    
+//    public CTCOfficeController(TrainApplication ta) {
+//        this.ta = ta;
+//    }
 
     /**
      * Initializes the controller class.
@@ -113,10 +122,15 @@ public class CTCOfficeController implements Initializable {
         multiplierTextField.setText("1");
         setTime(Integer.parseInt(multiplierTextField.getText()));
 
-        //init choicebox in the new train popup screen
+        //init line choicebox in the new train popup screen
         newTrainLineBox.getItems().addAll("Red", "Green");
         newTrainLineBox.getSelectionModel().select("Red");
-
+        
+        //init station choicebox in the new train popup screen
+        stationChoiceBox.getItems().addAll("Select...", "Shadyside:7", "Herron Ave:16", "Swissville:21", "(U)Penn Station:25", "(U)Steel Plaza:35",
+                    "(U)First Ave:45", "Station Square:48", "South Hills Jct:60");
+        stationChoiceBox.getSelectionModel().select("Select...");
+        
         //hide newTrainPane. will appear on add train button press
         newTrainPane.setVisible(false);
 
@@ -235,6 +249,18 @@ public class CTCOfficeController implements Initializable {
 
     @FXML
     private Button testShowSchedulesButton;
+    
+    @FXML
+    private Button getThroughputButton;
+
+    @FXML
+    private ChoiceBox<String> stationChoiceBox;
+
+    @FXML
+    private Button deleteTrainButton;
+
+    @FXML
+    private Button changeTrackStateButton;
 
     //GUI ActionEvent Handlers
     @FXML
@@ -344,6 +370,35 @@ public class CTCOfficeController implements Initializable {
         suggestedSpeedLabel.setText("0");
         newTrainTargetBlock.setText("");
     }
+    
+        
+    @FXML
+    void stationChoiceBoxChange(InputMethodEvent event) {
+
+    }
+    
+    @FXML
+    void newTrainLineBoxChange(InputMethodEvent event) {
+        newTrainLineBox.getItems().removeAll();
+        if (newTrainLineBox.getSelectionModel().getSelectedItem().equals("Red")) {
+            stationChoiceBox.getItems().addAll("Select...", "Shadyside:7", "Herron Ave:16", "Swissville:21", "(U)Penn Station:25", "(U)Steel Plaza:35",
+                    "(U)First Ave:45", "Station Square:48", "South Hills Jct:60");
+            stationChoiceBox.getSelectionModel().select("Select...");
+        }
+        if (newTrainLineBox.getSelectionModel().getSelectedItem().equals("Green")) {
+            stationChoiceBox.getItems().addAll("Select...", "Pioneer:2", "Edgebrook:9", "Sussex:16", "Whited:22", "South Bank:31",
+                    "(U)Central:39", "(U)Inglewood:48", "(U)Overbrook:57", "Glenbury:65", "Dormont:73", "Mt Lebanon:77", "Poplar:88", "Castle Shannon:96",
+                    "Dormont:105", "Glenbury:114", "(U)Overbrook:123", "(U)Inglewood:132", "(U)Central:141");
+            stationChoiceBox.getSelectionModel().select("Select...");
+        }
+    }
+    
+    @FXML
+    void deleteTrainButtonClick(ActionEvent event) {
+        Train train = queueTrainTable.getSelectionModel().getSelectedItem();
+        queueTrainTable.getItems().remove(train);
+        
+    }
 
     @FXML
     void newTrainSubmitClick(ActionEvent event) {
@@ -410,6 +465,17 @@ public class CTCOfficeController implements Initializable {
     void menuUserManualClick(ActionEvent event) {
 
     }
+    
+        @FXML
+    void changeTrackStateButtonClick(ActionEvent event) {
+
+    }
+    
+        @FXML
+    void getThroughputButtonClick(ActionEvent event) {
+
+    }
+
 
     @FXML
     void testShowSchedulesClick(ActionEvent event) {
@@ -518,6 +584,7 @@ public class CTCOfficeController implements Initializable {
 
     }
 
+    //get the schedule associated with the selected train
     private Schedule getScheduleInfoFromTrainTableSelected(Train train) {
         //need to search schedule array and to find the scheudle with the same trainID as the train parameter
         int trainID = train.getNumber();
@@ -536,5 +603,10 @@ public class CTCOfficeController implements Initializable {
         schedule.timeToNextBlock[0] = 1.5; //dont really have a number for this yet...
         schedule.scheduleIndex = 0;
         return schedule;
+    }
+    
+    //get the speed and authority of the train that is being dispatched
+    private void getSpeedAuthority() {
+        
     }
 }

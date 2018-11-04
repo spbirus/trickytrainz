@@ -29,15 +29,23 @@ import javafx.stage.Stage;
 public class TrainApplication <E> extends Application {
     
     private static TrainApplication ta;
-    public CTCOfficeController ctc = new CTCOfficeController(ta);
-    public TrackControllerController trkCtr = new TrackControllerController(ta, "plc1.txt");
-    public TrackModelController trkMdl = new TrackModelController(ta);
-    public ArrayList<TrainModelController> trainmodels;
-    public ArrayList<TrainControllerController> trainctls;
+    public static CTCOfficeController ctc = new CTCOfficeController();
+    public static TrackControllerController trkCtr = new TrackControllerController();
+    //public TrackControllerController trkCtr = new TrackControllerController(ta, "plc1.txt");
+    //public TrackModelController trkMdl = new TrackModelController(ta);
+    public static TrackModelController trkMdl = new TrackModelController();
+    public ArrayList<TrainModelController> trainmodels = new ArrayList<TrainModelController>();
+    public ArrayList<TrainControllerController> trainctls = new ArrayList<TrainControllerController>();
     
 
 //    private ArrayList<TrainModelMain> trainmodels;
 //    private ArrayList<TrainController> trainctls;
+
+    public TrainApplication() {
+        
+    }
+    
+    
     
     @Override
     public void start(Stage stage) throws Exception {
@@ -59,7 +67,10 @@ public class TrainApplication <E> extends Application {
             public void run() {
                 // Update UI here.
                 ta = new TrainApplication();
-        
+                ctc.setTrainApp(ta);
+                trkCtr.setTrainApp(ta, "plc1.txt");
+                trkMdl.setTrainApp(ta);
+                
                 try {
                     ta.runThis();
                 } catch (IOException ex) {
@@ -99,12 +110,25 @@ public class TrainApplication <E> extends Application {
     }
     
     public void addTrain(int id, String line, double suggestedSpeed, int targetBlock) {
-        TrainModelController tr = new TrainModelController(ta, id, line, suggestedSpeed, targetBlock);
-        trainmodels.add(id, tr);
+        TrainModelController tr = new TrainModelController();
+        tr.setTrainApp(ta, id, line, suggestedSpeed, targetBlock);
+        //TrainModelController tr = new TrainModelController(ta, id, line, suggestedSpeed, targetBlock);
+        //tr.setTrainApp(ta)
+        System.out.println(id);
+        System.out.println(tr.toString());
+        trainmodels.add(tr);
         trainctls.add(id, new TrainControllerController(ta, tr.getT()));
     }
     
     public Train getTrain(int id){
         return trainmodels.get(id).getT();
+    }
+    
+    public void stuff() {
+        System.out.println("HELLO FROM STUFF");
+    }
+    
+    public void potatoes() {
+        System.out.println("oahgoaishgoaishaosihgaosihgaoishoaivhviob");
     }
 }

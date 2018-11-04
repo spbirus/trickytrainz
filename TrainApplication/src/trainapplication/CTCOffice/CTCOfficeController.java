@@ -67,7 +67,11 @@ public class CTCOfficeController implements Initializable {
     
     private TrainApplication ta;
     
-    public CTCOfficeController(TrainApplication ta) {
+    public CTCOfficeController() {
+        //this.ta = ta;
+    }
+    
+    public void setTrainApp(TrainApplication ta) {
         this.ta = ta;
     }
 
@@ -415,13 +419,19 @@ public class CTCOfficeController implements Initializable {
 
     @FXML
     void newTrainSubmitClick(ActionEvent event) {
-        try {
+        //try {
             int newTrainNumber = trainIDIterator++;
             String newTrainLine = newTrainLineBox.getValue();
             double newTrainSpeed = (int) suggestedSpeedSlider.getValue();
             int newTrainAuthority = getTargetBlockFromStation();
             
             //System.out.println(newTrainNumber + "   " + newTrainLine + "   " + newTrainSpeed + "   " + newTrainAuthority);
+            
+            //TrainApplication ta1 = new TrainApplication();
+            //ta1.stuff();
+            
+            ta.stuff();
+            ta.potatoes();
             
             ta.addTrain(newTrainNumber, newTrainLine, newTrainSpeed, newTrainAuthority);
             Train newTrain = ta.getTrain(newTrainNumber);
@@ -433,15 +443,14 @@ public class CTCOfficeController implements Initializable {
             scheduleArray[newTrainNumber] = manualTrainAddSchedule;
 
             newTrainPane.setVisible(false);
-        } catch (Exception ex) {
-            Alert alert = new Alert(AlertType.INFORMATION);
-            alert.setTitle("Train Target Invalid!");
-            alert.setContentText(ex.getMessage());
-            alert.setContentText(ex.toString());
-            alert.showAndWait();
-            trainIDIterator--; //have to reset the trainID value
-            //newTrainPane.setVisible(false);
-        }
+//        } catch (Exception ex) {
+//            Alert alert = new Alert(AlertType.INFORMATION);
+//            alert.setTitle("Train Target Invalid!");
+//            alert.setContentText(ex.getMessage());
+//            alert.showAndWait();
+//            trainIDIterator--; //have to reset the trainID value
+//            //newTrainPane.setVisible(false);
+//        }
 
     }
     

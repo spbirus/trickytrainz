@@ -335,7 +335,7 @@ public class CTCOfficeController implements Initializable {
 
         try {
 
-            Schedule schedule = new Schedule("", 0, new int[1], new int[1], 0, new double[1], 0);
+            Schedule schedule = new Schedule("", 0, new int[1], 0, new double[1], 0);
             int index = 0; //index for elements of one schedule (multiple stops)
 
             br = new BufferedReader(new FileReader(csvFile));
@@ -416,14 +416,13 @@ public class CTCOfficeController implements Initializable {
     @FXML
     void newTrainSubmitClick(ActionEvent event) {
         try {
-            String newTrainLine = newTrainLineBox.getValue();
             int newTrainNumber = trainIDIterator++;
+            String newTrainLine = newTrainLineBox.getValue();
             double newTrainSpeed = (int) suggestedSpeedSlider.getValue();
             int newTrainAuthority = getTargetBlockFromStation();
-            int newTrainCurrentBlock = 0; //start in the yard
-            int newTrainTarget = newTrainAuthority;
-            //currently authority and target are the same, but this might change
-            //Train newTrain = new Train(newTrainLine, newTrainNumber, newTrainSpeed, newTrainAuthority, newTrainCurrentBlock, newTrainTarget);
+            
+            //System.out.println(newTrainNumber + "   " + newTrainLine + "   " + newTrainSpeed + "   " + newTrainAuthority);
+            
             ta.addTrain(newTrainNumber, newTrainLine, newTrainSpeed, newTrainAuthority);
             Train newTrain = ta.getTrain(newTrainNumber);
             addTrainToQueue(newTrain);
@@ -438,6 +437,7 @@ public class CTCOfficeController implements Initializable {
             Alert alert = new Alert(AlertType.INFORMATION);
             alert.setTitle("Train Target Invalid!");
             alert.setContentText(ex.getMessage());
+            alert.setContentText(ex.toString());
             alert.showAndWait();
             trainIDIterator--; //have to reset the trainID value
             //newTrainPane.setVisible(false);
@@ -498,10 +498,6 @@ public class CTCOfficeController implements Initializable {
             System.out.println("Line, ID, current block array, target block array, dispatch time, time to next block array, index for the arrays");
             System.out.println("Line " + schedule.line);
             System.out.println("Train Number " + schedule.trainID);
-            System.out.print("Current block array: ");
-            for (int block : schedule.currentBlock) {
-                System.out.print(block + ", ");
-            }
             System.out.println("");
             System.out.print("Target block array: ");
             for (int tBlock : schedule.targetBlock) {
@@ -561,8 +557,6 @@ public class CTCOfficeController implements Initializable {
         int number = schedule.trainID;
         int speed = 25; //temp value, not sure how I'm setting this yet
         int authority = schedule.targetBlock[schedule.scheduleIndex];
-        int block = schedule.currentBlock[schedule.scheduleIndex];
-        int target = schedule.targetBlock[schedule.scheduleIndex];
 
         //Train train = new Train(line, number, speed, authority, block, target);
         ta.addTrain(number, line, speed, authority);
@@ -576,7 +570,6 @@ public class CTCOfficeController implements Initializable {
         schedule = resizeScheduleArray(schedule);
         schedule.line = trainAttributes[0];
         schedule.trainID = trainIDIterator;
-        schedule.currentBlock[index] = Integer.parseInt(trainAttributes[2]);
         schedule.targetBlock[index] = Integer.parseInt(trainAttributes[3]);
         schedule.dispatchTime = System.currentTimeMillis();
         schedule.timeToNextBlock[index] = Double.parseDouble(trainAttributes[4]);
@@ -586,7 +579,6 @@ public class CTCOfficeController implements Initializable {
 
     //increase the index of the schedule component arrays to avoid null pointer exceptions while adding schedule elements
     private Schedule resizeScheduleArray(Schedule schedule) {
-        schedule.currentBlock = Arrays.copyOf(schedule.currentBlock, schedule.currentBlock.length + 1);
         schedule.targetBlock = Arrays.copyOf(schedule.targetBlock, schedule.targetBlock.length + 1);
         schedule.timeToNextBlock = Arrays.copyOf(schedule.timeToNextBlock, schedule.timeToNextBlock.length + 1);
         return schedule;
@@ -621,11 +613,10 @@ public class CTCOfficeController implements Initializable {
     }
 
     private Schedule newTrainMakeSchedule(Train train) {
-        Schedule schedule = new Schedule("", 0, new int[1], new int[1], 0, new double[1], 0);
+        Schedule schedule = new Schedule("", 0, new int[1], 0, new double[1], 0);
         resizeScheduleArray(schedule); //need to add some size to the original arrays created
         schedule.line = train.getLine();
         schedule.trainID = train.getNumber();
-        schedule.currentBlock[0] = train.getBlock();
         schedule.targetBlock[0] = train.getTarget();
         schedule.dispatchTime = currentTime;
         schedule.timeToNextBlock[0] = 1.5; //dont really have a number for this yet...

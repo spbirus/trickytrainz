@@ -45,15 +45,15 @@ public class TrackControllerController implements Initializable {
     private int defaultNum=3;
     private boolean mergePresent=true;
     private boolean splitPresent=true;
-    /*private TrainApplication ta;
+    private TrainApplication ta;
     private String plcFile;
-    private int authorityVar;
+    private int authority;
     private double speed;
     public TrackControllerController(TrainApplication ta,String plcFile){
         this.ta = ta;
         this.plcFile = plcFile;
     }
-    */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         mergeBlock.setText(Integer.toString(this.mergeNum));
@@ -233,7 +233,7 @@ public class TrackControllerController implements Initializable {
     private Label commandedSpeed;
     
     @FXML
-    private Label authority;
+    private Label commandedAuthority;
     
     @FXML
     private Button defaultSwitch;

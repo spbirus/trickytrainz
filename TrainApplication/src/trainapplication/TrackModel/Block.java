@@ -11,6 +11,11 @@ package trainapplication.TrackModel;
  */
 public class Block {
     
+    //For Get Next Block
+    public Block nextBlock;
+    public Block previousBlock; 
+    public Block switchBlock;
+    
     //Physical Block Parameters Determined by the Excel or csv input
     private String line;
     private String section;
@@ -316,7 +321,29 @@ public class Block {
     public void setBlockDirection(int blockDirection) {
         this.blockDirection = blockDirection;
     }
-   
-    
+
+    public Block getNextBlock() {
+        return nextBlock;
+    }
+
+    public void setNextBlock(Block nextBlock) {
+        this.nextBlock = nextBlock;
+    }
+
+    public Block getPreviousBlock() {
+        return previousBlock;
+    }
+
+    public void setPreviousBlock(Block previousBlock) {
+        this.previousBlock = previousBlock;
+    }
+
+    public Block getSwitchBlock() {
+        return switchBlock;
+    }
+
+    public void setSwitchBlock(Block switchBlock) {
+        this.switchBlock = switchBlock;
+    }
     
 }

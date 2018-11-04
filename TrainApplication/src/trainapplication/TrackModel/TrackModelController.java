@@ -14,6 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -22,6 +23,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import trainapplication.TrainApplication;
 
 /**
@@ -38,8 +40,14 @@ public class TrackModelController implements Initializable {
     }
 
     //
-    ArrayList<Block> trackList = new ArrayList<Block>();
+    ArrayList<Track> trackList = new ArrayList<Track>();
     ArrayList<Block> sortedTrackList = new ArrayList<Block>();
+    
+    //TODO
+    //Update to make new tracks "configurable"
+    Track greenTrack = new Track("green");
+    Track redTrack = new Track("red");
+    Track testTrack = new Track("test");
     
     //Gardcoded values for dropdown boxes 
     //TODO: Fill in with real data values
@@ -70,6 +78,8 @@ public class TrackModelController implements Initializable {
         blockState.setCellValueFactory(new PropertyValueFactory<>("blockState"));
         occupancy.setCellValueFactory(new PropertyValueFactory<>("occupancy"));
         blockHeat.setCellValueFactory(new PropertyValueFactory<>("blockHeat"));
+       
+        
         
         // TODO
         /*
@@ -92,9 +102,13 @@ public class TrackModelController implements Initializable {
         */
     } 
     
-    public void readTrackFile(String filename){
+    public void readTrackFile(){
 
-        String csvFile = filename;
+
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Browse for Train Schedule");
+        File file = fileChooser.showOpenDialog(null);
+        String csvFile = file.getPath();
         BufferedReader br = null;
         String line = "";
         String csvSplitBy = ",";
@@ -119,20 +133,20 @@ public class TrackModelController implements Initializable {
                 double trackElevation = Double.parseDouble(trackDataString[9]);
                 double trackCumElevation = Double.parseDouble(trackDataString[10]);
                 
-                Block newTrack = new Block(trackLine, trackSection, trackBlock, 
+                Block newBlock = new Block(trackLine, trackSection, trackBlock, 
                         trackBlockLength, trackBlockGrade, trackSpeedLimit, 
                         trackInfrastructure, trackNextInbound, trackNextOutbound, 
                         trackElevation, trackCumElevation);
+//DEMO
+//                newBlock.setBlockState("Green");
+//                if(trackBlock == 13) newBlock.setOccupancy("Train");
+//                else newBlock.setOccupancy("Open");
+//                newBlock.setBlockHeat("ON");
+//                if(trackInfrastructure.equals("SWITCH"))trackInfrastructure = "SWITCH-OPEN";
                 
-                newTrack.setBlockState("Green");
-                if(trackBlock == 13) newTrack.setOccupancy("Train");
-                else newTrack.setOccupancy("Open");
-                newTrack.setBlockHeat("ON");
-                if(trackInfrastructure.equals("SWITCH"))trackInfrastructure = "SWITCH-OPEN";
-                
-                trackList.add(newTrack);
+                greenTrack.blockList.add(newBlock);
                 //sortedTrackList.add(newTrack);
-                trackTable.getItems().add(newTrack);
+                //trackTable.getItems().add(newBlock);
 
             }
 
@@ -150,42 +164,57 @@ public class TrackModelController implements Initializable {
             }
         }  
         
+        setBlockNeighbors();
+        
         //DEMO
         trackLineComboBox.setValue("Green");
     }
     
-    public void FiltersButtonClicked(){
+    private void setBlockNeighbors(){
         
-        ArrayList<Block> temp = trackList;
-        String selectedLine = (String)trackLineComboBox.getValue();
-        String selectedSection = (String)trackSectionComboBox.getValue();
-        //int selectedBlock = (int)trackBlockComboBox.getValue();
-        
-        for(Block track : trackList){
-            if(track.getSection().equals(selectedSection) == false){
-               trackTable.getItems().remove(track); 
-            } else {
-                sortedTrackList.add(track);
-            }     
+        for(Block block : greenTrack.blockList){
+            block.setNextBlock(block);
+            block.setPreviousBlock(block);
+            if(block.getInfrastructure().equals("SWITCH")){
+                block.setSwitchBlock(block);
+            }
+            
         }
         
-        trackList = temp;
+        
+    }
+    
+    public void FiltersButtonClicked(){
+        
+//        ArrayList<Block> temp = trackList;
+//        String selectedLine = (String)trackLineComboBox.getValue();
+//        String selectedSection = (String)trackSectionComboBox.getValue();
+//        //int selectedBlock = (int)trackBlockComboBox.getValue();
+//        
+//        for(Block track : trackList){
+//            if(track.getSection().equals(selectedSection) == false){
+//               trackTable.getItems().remove(track); 
+//            } else {
+//                sortedTrackList.add(track);
+//            }     
+//        }
+//        
+//        trackList = temp;
     }
     
     public void FilterResetButtonClicked(){
         
-        for(Block track : sortedTrackList){
-            sortedTrackList.remove(track);
-            trackTable.getItems().remove(track);
-        }
-        
-        for(Block track : trackList) trackTable.getItems().add(track);
+//        for(Block track : sortedTrackList){
+//            sortedTrackList.remove(track);
+//            trackTable.getItems().remove(track);
+//        }
+//        
+//        for(Block track : trackList) trackTable.getItems().add(track);
     }
     
     public void LoadButtonClicked(){
         
-        String filename = filenameTextField.getText();
-        readTrackFile(filename);
+        readTrackFile();
         
     }
     

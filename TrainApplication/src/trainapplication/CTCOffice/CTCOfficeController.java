@@ -423,7 +423,9 @@ public class CTCOfficeController implements Initializable {
             int newTrainCurrentBlock = 0; //start in the yard
             int newTrainTarget = newTrainAuthority;
             //currently authority and target are the same, but this might change
-            Train newTrain = new Train(newTrainLine, newTrainNumber, newTrainSpeed, newTrainAuthority, newTrainCurrentBlock, newTrainTarget);
+            //Train newTrain = new Train(newTrainLine, newTrainNumber, newTrainSpeed, newTrainAuthority, newTrainCurrentBlock, newTrainTarget);
+            ta.addTrain(newTrainNumber, newTrainLine, newTrainSpeed, newTrainAuthority);
+            Train newTrain = ta.getTrain(newTrainNumber);
             addTrainToQueue(newTrain);
 
             //add new train info to schedule here
@@ -562,7 +564,10 @@ public class CTCOfficeController implements Initializable {
         int block = schedule.currentBlock[schedule.scheduleIndex];
         int target = schedule.targetBlock[schedule.scheduleIndex];
 
-        Train train = new Train(line, number, speed, authority, block, target);
+        //Train train = new Train(line, number, speed, authority, block, target);
+        ta.addTrain(number, line, speed, authority);
+        Train train = ta.getTrain(number);
+        
         addTrainToQueue(train);
     }
 

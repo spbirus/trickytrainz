@@ -36,7 +36,9 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -63,11 +65,11 @@ public class CTCOfficeController implements Initializable {
     private Timeline timeline = new Timeline();
     
     
-//    private TrainApplication ta;
-//    
-//    public CTCOfficeController(TrainApplication ta) {
-//        this.ta = ta;
-//    }
+    private TrainApplication ta;
+    
+    public CTCOfficeController(TrainApplication ta) {
+        this.ta = ta;
+    }
 
     /**
      * Initializes the controller class.
@@ -127,8 +129,9 @@ public class CTCOfficeController implements Initializable {
         newTrainLineBox.getSelectionModel().select("Red");
         
         //init station choicebox in the new train popup screen
-        stationChoiceBox.getItems().addAll("Select...", "Shadyside:7", "Herron Ave:16", "Swissville:21", "(U)Penn Station:25", "(U)Steel Plaza:35",
-                    "(U)First Ave:45", "Station Square:48", "South Hills Jct:60");
+        stationChoiceBox.getItems().addAll("Select...", "Shadyside:7", "Herron Ave:16", "Swissville:21",
+                "(U)Penn Station:25", "(U)Steel Plaza:35",
+                "(U)First Ave:45", "Station Square:48", "South Hills Jct:60");
         stationChoiceBox.getSelectionModel().select("Select...");
         
         //hide newTrainPane. will appear on add train button press
@@ -308,7 +311,8 @@ public class CTCOfficeController implements Initializable {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("CTC Outputs");
         alert.setHeaderText("Train " + dispatchNumber + " is being dispatched from block " + dispatchCurrentBlock);
-        alert.setContentText("Suggested speed: " + dispatchSpeed + "\nTarget Block: " + dispatchTargetBlock + "\nArrival Time: " + timeFormat.format(arrivalTime));
+        alert.setContentText("Suggested speed: " + dispatchSpeed + "\nTarget Block: "
+                + dispatchTargetBlock + "\nArrival Time: " + timeFormat.format(arrivalTime));
         alert.showAndWait();
 
     }
@@ -344,7 +348,8 @@ public class CTCOfficeController implements Initializable {
             }
             createTrainFromSchedule(schedule);
             scheduleArray[trainIDIterator] = schedule;
-            scheduleArray = Arrays.copyOf(scheduleArray, scheduleArray.length + 1); //increment array size to avoid null pointers when another schedule loaded in
+            //increment array size to avoid null pointers when another schedule loaded in
+            scheduleArray = Arrays.copyOf(scheduleArray, scheduleArray.length + 1);
             trainIDIterator++;
 
         } catch (FileNotFoundException e) {
@@ -366,6 +371,7 @@ public class CTCOfficeController implements Initializable {
     void newTrainButtonClick(ActionEvent event) {
         newTrainPane.setVisible(true);
         newTrainLineBox.getSelectionModel().select("Red");
+        stationChoiceBox.getSelectionModel().select("Select...");
         suggestedSpeedSlider.setValue(0);
         suggestedSpeedLabel.setText("0");
         newTrainTargetBlock.setText("");
@@ -373,31 +379,38 @@ public class CTCOfficeController implements Initializable {
     
         
     @FXML
-    void stationChoiceBoxChange(InputMethodEvent event) {
+    void stationChoiceBoxChange(MouseEvent event) {
 
-    }
-    
-    @FXML
-    void newTrainLineBoxChange(InputMethodEvent event) {
-        newTrainLineBox.getItems().removeAll();
+        newTrainTargetBlock.setText("");
+        stationChoiceBox.getItems().clear();
         if (newTrainLineBox.getSelectionModel().getSelectedItem().equals("Red")) {
-            stationChoiceBox.getItems().addAll("Select...", "Shadyside:7", "Herron Ave:16", "Swissville:21", "(U)Penn Station:25", "(U)Steel Plaza:35",
+            stationChoiceBox.getItems().addAll("Select...", "Shadyside:7", "Herron Ave:16", "Swissville:21",
+                    "(U)Penn Station:25", "(U)Steel Plaza:35",
                     "(U)First Ave:45", "Station Square:48", "South Hills Jct:60");
-            stationChoiceBox.getSelectionModel().select("Select...");
         }
         if (newTrainLineBox.getSelectionModel().getSelectedItem().equals("Green")) {
             stationChoiceBox.getItems().addAll("Select...", "Pioneer:2", "Edgebrook:9", "Sussex:16", "Whited:22", "South Bank:31",
-                    "(U)Central:39", "(U)Inglewood:48", "(U)Overbrook:57", "Glenbury:65", "Dormont:73", "Mt Lebanon:77", "Poplar:88", "Castle Shannon:96",
-                    "Dormont:105", "Glenbury:114", "(U)Overbrook:123", "(U)Inglewood:132", "(U)Central:141");
-            stationChoiceBox.getSelectionModel().select("Select...");
+                    "(U)Central:39", "(U)Inglewood:48", "(U)Overbrook:57", "Glenbury:65", "Dormont:73", "Mt Lebanon:77",
+                    "Poplar:88", "Castle Shannon:96", "Dormont:105", "Glenbury:114",
+                    "(U)Overbrook:123", "(U)Inglewood:132", "(U)Central:141");
         }
     }
+    
+    @FXML
+    void newTrainLineBoxChange(MouseEvent event) {
+        stationChoiceBox.getSelectionModel().select("Select...");
+    }
+    
+    @FXML
+    void newTrainTargetBlockType(KeyEvent event) {
+        stationChoiceBox.getSelectionModel().select("Select...");
+    }
+    
     
     @FXML
     void deleteTrainButtonClick(ActionEvent event) {
         Train train = queueTrainTable.getSelectionModel().getSelectedItem();
         queueTrainTable.getItems().remove(train);
-        
     }
 
     @FXML
@@ -406,7 +419,7 @@ public class CTCOfficeController implements Initializable {
             String newTrainLine = newTrainLineBox.getValue();
             int newTrainNumber = trainIDIterator++;
             double newTrainSpeed = (int) suggestedSpeedSlider.getValue();
-            int newTrainAuthority = Integer.parseInt(newTrainTargetBlock.getText());
+            int newTrainAuthority = getTargetBlockFromStation();
             int newTrainCurrentBlock = 0; //start in the yard
             int newTrainTarget = newTrainAuthority;
             //currently authority and target are the same, but this might change
@@ -466,14 +479,14 @@ public class CTCOfficeController implements Initializable {
 
     }
     
-        @FXML
+    @FXML
     void changeTrackStateButtonClick(ActionEvent event) {
-
+        //change state of selected track from open to maintenance or vice versa
     }
     
-        @FXML
+    @FXML
     void getThroughputButtonClick(ActionEvent event) {
-
+        //get throughput information from Track Controller
     }
 
 
@@ -505,6 +518,16 @@ public class CTCOfficeController implements Initializable {
         }
     }
 
+    //rest of methods, non event-handlers
+    //rest of methods, non event-handlers
+    //rest of methods, non event-handlers
+    //rest of methods, non event-handlers
+    //rest of methods, non event-handlers
+    //rest of methods, non event-handlers
+    //rest of methods, non event-handlers
+    //rest of methods, non event-handlers
+    //rest of methods, non event-handlers
+    //rest of methods, non event-handlers
     //rest of methods, non event-handlers
     private void setTime(int multiplier) {
 
@@ -606,7 +629,19 @@ public class CTCOfficeController implements Initializable {
     }
     
     //get the speed and authority of the train that is being dispatched
+    //part of dispatching train when sending that info to a track controller
     private void getSpeedAuthority() {
         
     }
+    
+    //get the target block value of the station of what is entered in the user field
+    private int getTargetBlockFromStation() {
+        String targetString = stationChoiceBox.getSelectionModel().getSelectedItem();
+        if (targetString.equals("Select...")) {
+            return Integer.parseInt(newTrainTargetBlock.getText());
+        } else {
+            String[] splitString = targetString.split(":");
+            return Integer.parseInt(splitString[1]);
+        }
+    } 
 }

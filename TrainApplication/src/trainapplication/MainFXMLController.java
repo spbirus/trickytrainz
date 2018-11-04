@@ -32,7 +32,6 @@ public class MainFXMLController implements Initializable {
     private Stage ctcStage = new Stage();
     private Stage trackModelStage = new Stage();
     private ArrayList<Stage> trainModelStages = new ArrayList<Stage>();
-    private ArrayList<TrainModelController> trainModelControllers = new ArrayList<TrainModelController>();
     private ArrayList<Stage> trainControllerStages = new ArrayList<Stage>();
     private ArrayList<Stage> trackControllerStages = new ArrayList<Stage>();
     
@@ -92,31 +91,31 @@ public class MainFXMLController implements Initializable {
     
     
     private void createNewTrain(int number) throws IOException{
-        //create the train controller
-        TrainControllerController tr = new TrainControllerController();
-        FXMLLoader loader1 = new FXMLLoader(getClass().getResource("TrainController/TrainController.fxml"));
-        loader1.setController(tr);
-        AnchorPane trainconpage = (AnchorPane) loader1.load();
-//        AnchorPane trainconpage = (AnchorPane) FXMLLoader.load(getClass().getResource("TrainController/TrainController.fxml"));
-        Scene trainconscene = new Scene(trainconpage);
-        Stage trc1 = new Stage();
-        trc1.setScene(trainconscene);
-        trc1.setTitle("Train Controller " + number);
-        trc1.setResizable(true);
-        trainControllerStages.add(trc1);
-        
-        
-        //create the train model
-        TrainModelController con = new TrainModelController(tr);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("TrainModel/TrainModel.fxml"));
-        loader.setController(con);
-        AnchorPane trainmodelpage1 = (AnchorPane) loader.load();
-        Scene trainmodelscene1 = new Scene(trainmodelpage1);
-        Stage trm1 = new Stage();
-        trm1.setScene(trainmodelscene1);
-        trm1.setTitle("Train Model "+ number);
-        trm1.setResizable(true);
-        trainModelStages.add(trm1);
+//        //create the train controller
+//        TrainControllerController tr = new TrainControllerController();
+//        FXMLLoader loader1 = new FXMLLoader(getClass().getResource("TrainController/TrainController.fxml"));
+//        loader1.setController(tr);
+//        AnchorPane trainconpage = (AnchorPane) loader1.load();
+////        AnchorPane trainconpage = (AnchorPane) FXMLLoader.load(getClass().getResource("TrainController/TrainController.fxml"));
+//        Scene trainconscene = new Scene(trainconpage);
+//        Stage trc1 = new Stage();
+//        trc1.setScene(trainconscene);
+//        trc1.setTitle("Train Controller " + number);
+//        trc1.setResizable(true);
+//        trainControllerStages.add(trc1);
+//        
+//        
+//        //create the train model
+//        TrainModelController con = new TrainModelController(tr);
+//        FXMLLoader loader = new FXMLLoader(getClass().getResource("TrainModel/TrainModel.fxml"));
+//        loader.setController(con);
+//        AnchorPane trainmodelpage1 = (AnchorPane) loader.load();
+//        Scene trainmodelscene1 = new Scene(trainmodelpage1);
+//        Stage trm1 = new Stage();
+//        trm1.setScene(trainmodelscene1);
+//        trm1.setTitle("Train Model "+ number);
+//        trm1.setResizable(true);
+//        trainModelStages.add(trm1);
     }
     
    @FXML

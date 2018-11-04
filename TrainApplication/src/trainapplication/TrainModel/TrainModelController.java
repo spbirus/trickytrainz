@@ -8,6 +8,7 @@ package trainapplication.TrainModel;
 import javafx.application.Application;
 import trainapplication.Train;
 import trainapplication.TrainControllerController;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -33,6 +34,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import trainapplication.TrainApplication;
 
 /**
  * FXML Controller class
@@ -43,10 +45,10 @@ public class TrainModelController implements Initializable {
     //will need to get this data from somewhere
     private Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8); 
 
-    private TrainControllerController trainCon;
+    private TrainApplication ta;
 
-    public TrainModelController(TrainControllerController tr) {
-        trainCon = tr;
+    public TrainModelController(TrainApplication ta) {
+        this.ta = ta;
     }
     
     @Override
@@ -343,9 +345,9 @@ public class TrainModelController implements Initializable {
 
                                double newSpeed = t.calculateVelocity(storedPower, storedVelocity, 0, 0, 300, passengers);
                                storedVelocity = newSpeed;
-                               trainCon.setCurrentSpeed(storedVelocity); //send stuff to steve
+//                               trainCon.setCurrentSpeed(storedVelocity); //send stuff to steve
     //                               storedPower = storedPower; //will eventually need to be from steves module
-                                storedPower = trainCon.powerVal; //send stuff to steve
+//                                storedPower = trainCon.powerVal; //send stuff to steve
                        //        System.out.println("velocity: "+ newSpeed + "mph");
 
                                currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
@@ -455,7 +457,7 @@ public class TrainModelController implements Initializable {
     @FXML
     void onSetpointSpeedSubmit(ActionEvent event) {
         if(!"".equals(setpointSpeedBox.getText())){
-            trainCon.setSetPointSpeed(Double.parseDouble(setpointSpeedBox.getText()));
+//            trainCon.setSetPointSpeed(Double.parseDouble(setpointSpeedBox.getText()));
         }
     }
     

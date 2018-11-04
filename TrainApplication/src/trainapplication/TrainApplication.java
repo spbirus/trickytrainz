@@ -31,6 +31,7 @@ public class TrainApplication <E> extends Application {
     private static TrainApplication ta;
     private CTCOfficeController ctc = new CTCOfficeController(ta);
     private TrackControllerController trkCtr = new TrackControllerController(ta, "plc1.txt");
+    private TrackModelController trkMdl = new TrackModelController(ta);
     
 
 //    private ArrayList<TrainModelMain> trainmodels;
@@ -70,12 +71,15 @@ public class TrainApplication <E> extends Application {
     
     private void runThis() throws IOException{
         Stage ctcStage = createStage("CTCOffice/CTCOffice.fxml", "CTC Office", (E) ctc);
-        Stage trkCtr1 = createStage("TrackController/TrackController.fxml", "Track Controller 1", (E) trkCtr);
+        Stage trkCtrStage1 = createStage("TrackController/TrackController.fxml", "Track Controller 1", (E) trkCtr);
+        //will need more track controllers
+        Stage trkMdlStage = createStage("TrackModel/TrackModel.fxml", "Track Model", (E) trkMdl);
         
         
         
         ctcStage.show();
-        trkCtr1.show();
+        trkCtrStage1.show();
+        trkMdlStage.show();
         
         
     }

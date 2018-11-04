@@ -60,6 +60,15 @@ public class TrainModelController implements Initializable {
         t = new Train(line, id, suggestedSpeed, targetBlock);
     }
     
+    public TrainModelController() {
+        
+    }
+    
+    public void setTrainApp(TrainApplication ta, int id, String line, double suggestedSpeed, int targetBlock) {
+        this.ta = ta;
+        t = new Train(line, id, suggestedSpeed, targetBlock);
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         

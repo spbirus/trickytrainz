@@ -35,7 +35,11 @@ public class TrackModelController implements Initializable {
     
     private TrainApplication ta;
     
-    public TrackModelController(TrainApplication ta){
+    public TrackModelController() {
+
+    }
+    
+    public void setTrainApp(TrainApplication ta) {
         this.ta = ta;
     }
 

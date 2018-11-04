@@ -49,7 +49,12 @@ public class TrackControllerController implements Initializable {
     private String plcFile;
     private int authority;
     private double speed;
-    public TrackControllerController(TrainApplication ta,String plcFile){
+    
+    public TrackControllerController(){
+
+    }
+    
+    public void setTrainApp(TrainApplication ta, String plcFile) {
         this.ta = ta;
         this.plcFile = plcFile;
     }

@@ -43,12 +43,21 @@ import trainapplication.TrainApplication;
  */
 public class TrainModelController implements Initializable {
     //will need to get this data from somewhere
-    private Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8); 
+    private Train t; 
+
+    public Train getT() {
+        return t;
+    }
+
+    public void setT(Train t) {
+        this.t = t;
+    }
 
     private TrainApplication ta;
 
-    public TrainModelController(TrainApplication ta) {
+    public TrainModelController(TrainApplication ta, int id, String line, double suggestedSpeed, int targetBlock) {
         this.ta = ta;
+        t = new Train(line, id, suggestedSpeed, targetBlock);
     }
     
     @Override
@@ -58,7 +67,7 @@ public class TrainModelController implements Initializable {
         trackId.setText(String.valueOf(t.getLine()));
         lengthId.setText(String.valueOf(t.getLength()));
         widthId.setText(String.valueOf(t.getWidth()));
-        massId.setText(String.valueOf(t.getMass()));
+        massId.setText(String.valueOf(t.getTotalMass()));
         crewId.setText(String.valueOf(t.getCrewNum()));
         passengerId.setText(String.valueOf(t.getPassNum()));
         maxCapId.setText(String.valueOf(t.getMaxCap()));

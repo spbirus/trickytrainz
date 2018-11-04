@@ -35,9 +35,11 @@ public class TrainControllerController implements Initializable {
 
     
     private TrainApplication ta;
+    public Train t;
 
-    public TrainControllerController(TrainApplication ta) {
+    public TrainControllerController(TrainApplication ta, Train t) {
         this.ta = ta;
+        this.t = t;
     }
     
     /**
@@ -62,7 +64,7 @@ public class TrainControllerController implements Initializable {
 //        deccelLimit.setCellValueFactory(new PropertyValueFactory<>("deccelLimit"));
 //        //trainTable.getItems().add(t);
 //        trainTable.getItems().add(t);
-        train1 = new Train("red",1,0.0,1,1,1);
+//        train1 = new Train("red",1,0.0,1,1,1);
         
         
 

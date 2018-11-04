@@ -29,9 +29,11 @@ import javafx.stage.Stage;
 public class TrainApplication <E> extends Application {
     
     private static TrainApplication ta;
-    private CTCOfficeController ctc = new CTCOfficeController(ta);
-    private TrackControllerController trkCtr = new TrackControllerController(ta, "plc1.txt");
-    private TrackModelController trkMdl = new TrackModelController(ta);
+    public CTCOfficeController ctc = new CTCOfficeController(ta);
+    public TrackControllerController trkCtr = new TrackControllerController(ta, "plc1.txt");
+    public TrackModelController trkMdl = new TrackModelController(ta);
+    public ArrayList<TrainModelController> trainmodels;
+    public ArrayList<TrainControllerController> trainctls;
     
 
 //    private ArrayList<TrainModelMain> trainmodels;
@@ -96,4 +98,13 @@ public class TrainApplication <E> extends Application {
         return stage;
     }
     
+    public void addTrain(int id, String line, double suggestedSpeed, int targetBlock) {
+        TrainModelController tr = new TrainModelController(ta, id, line, suggestedSpeed, targetBlock);
+        trainmodels.add(id, tr);
+        trainctls.add(id, new TrainControllerController(ta, tr.getT()));
+    }
+    
+    public Train getTrain(int id){
+        return trainmodels.get(id).getT();
+    }
 }

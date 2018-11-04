@@ -11,15 +11,26 @@ package trainapplication;
  */
 public class Train {
     
+    private final double M_TO_FT = 3.281; 
+    private final double M_TO_MI = 0.0006214;
+    private final double N_TO_FTLBS = 0.22481;
+    private final double GRAVITY = 32.17405; //ft/s^2
+    //private final double SEC_TO_HR = 3600;
+    private final double FTPS_TO_MPH = 0.681818;
+    private final double MPH_TO_MiPS = 0.000277778; //miles per hr to miles to miles per second
+    private final double serviceBrakeDecel = 1.2 * 3.2808399; //ft/s^2
+    private final double emergencyBrakeDecel = 2.73 * 3.2808399; //ft/s^2
+    private final double deltaT = 1; //deltaT is a change in time that helps us not miss the beacon   
+    private final int seatCap = 74;
+    private final int standCap = 148;
+    private final int maxCap = seatCap + standCap;
     private String line; //red or green line
     private int number; //train id number
-    private double length; //ft
-    private double height; //ft
-    private double width;  //ft
-    private double mass;   //lbs
-    private int crewNum;
-    private int passNum;
-    private int maxCap;
+    private double length = 32.2*M_TO_FT; //ft
+    private double height = 3.42*M_TO_FT; //ft
+    private double width = 2.65*M_TO_FT; //ft
+    private int crewNum = 1;
+    private int passNum = 0;
     private int carNum = 1;
     private int doorNum = 8;
     private double accelLimit =  0.5 * 3.2808399;  //ft/s
@@ -35,44 +46,17 @@ public class Train {
     private double totalMass; //mass of car and people
     private double velActual = 0; //thing to return to train controller
     private double force;
-    private final double M_TO_MI = 0.0006214;
-    private final double N_TO_FTLBS = 0.22481;
-    private final double GRAVITY = 32.17405; //ft/s^2
-    //private final double SEC_TO_HR = 3600;
-    private final double FTPS_TO_MPH = 0.681818;
-    private final double MPH_TO_MiPS = 0.000277778; //miles per hr to miles to miles per second
-    private final double serviceBrakeDecel = 1.2 * 3.2808399; //ft/s^2
-    private final double emergencyBrakeDecel = 2.73 * 3.2808399; //ft/s^2
-    private final double deltaT = 1; //deltaT is a change in time that helps us not miss the beacon
+    
     private int numberOfWheels = 12; //will probably need to change
     private final double coefficientOfFriction = 0.00035; //from  https://en.wikipedia.org/wiki/Rolling_resistance#Rolling_resistance_coefficient_examples
     private int direction; // 0 and 1
 
     //for CTC
-    public Train(String line, int number, double speed, int authority, int block, int target) {
+    public Train(String line, int number, double speed, int authority) {
         this.line = line;
         this.number = number;
         this.speed = speed;
         this.authority = authority;
-        this.block = block;
-        this.target = target;
-    }
-
-    //for train model and train controller
-    public Train(String line, int number, double length, double height, double width, double mass, int crewNum, int passNum, int maxCap, int carNum, int doorNum, double accelLimit, double deccelLimit) {
-        this.line = line;
-        this.number = number;
-        this.length = length;
-        this.height = height;
-        this.width = width;
-        this.mass = mass;
-        this.crewNum = crewNum;
-        this.passNum = passNum;
-        this.maxCap = maxCap;
-        this.carNum = carNum;
-        this.doorNum = doorNum;
-        this.accelLimit = accelLimit;
-        this.deccelLimit = deccelLimit;
     }
 
     public double getM_TO_MI() {
@@ -198,13 +182,13 @@ public class Train {
     public void setWidth(int width) {
         this.width = width;
     }
-
-    public double getMass() {
-        return mass;
+    
+    public double getDeccelLimit() {
+        return deccelLimit;
     }
 
-    public void setMass(int mass) {
-        this.mass = mass;
+    public void setDeccelLimit(double deccelLimit) {
+        this.deccelLimit = deccelLimit;
     }
 
     public int getCrewNum() {
@@ -225,10 +209,6 @@ public class Train {
 
     public int getMaxCap() {
         return maxCap;
-    }
-
-    public void setMaxCap(int maxCap) {
-        this.maxCap = maxCap;
     }
 
     public int getCarNum() {
@@ -253,14 +233,6 @@ public class Train {
 
     public void setAccelLimit(int accelLimit) {
         this.accelLimit = accelLimit;
-    }
-
-    public double getDeccelLimit() {
-        return deccelLimit;
-    }
-
-    public void setDeccelLimit(int deccelLimit) {
-        this.deccelLimit = deccelLimit;
     }
 
     public double getSpeed() {

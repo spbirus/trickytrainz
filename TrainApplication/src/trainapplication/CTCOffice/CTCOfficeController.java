@@ -278,7 +278,7 @@ public class CTCOfficeController implements Initializable {
     }
 
     @FXML
-    void dispatchButtonClick(ActionEvent event) {
+    void dispatchButtonClick(ActionEvent event) throws IOException {
 
         //dummy info for just testing occupying the track table
 //        //will delete this eventually...
@@ -318,7 +318,8 @@ public class CTCOfficeController implements Initializable {
         alert.setContentText("Suggested speed: " + dispatchSpeed + "\nTarget Block: "
                 + dispatchTargetBlock + "\nArrival Time: " + timeFormat.format(arrivalTime));
         alert.showAndWait();
-
+           
+        ta.createTrainGUI(dispatchNumber);
     }
 
     //schedule loaded in will be one train per file
@@ -471,7 +472,7 @@ public class CTCOfficeController implements Initializable {
     }
 
     @FXML
-    void menuDispatchClick(ActionEvent event) {
+    void menuDispatchClick(ActionEvent event) throws IOException {
         dispatchButtonClick(event);
     }
 

@@ -35,7 +35,7 @@ public class TrainApplication <E> extends Application {
     //public TrackModelController trkMdl = new TrackModelController(ta);
     public static TrackModelController trkMdl = new TrackModelController();
     public ArrayList<TrainModelController> trainmodels = new ArrayList<TrainModelController>();
-    public ArrayList<TrainControllerController> trainctls = new ArrayList<TrainControllerController>();
+    public ArrayList<TrainControllerController> trainctrs = new ArrayList<TrainControllerController>();
     
 
 //    private ArrayList<TrainModelMain> trainmodels;
@@ -97,7 +97,7 @@ public class TrainApplication <E> extends Application {
         
     }
 
-    private Stage createStage(String path, String title, E cont) throws IOException {
+    public Stage createStage(String path, String title, E cont) throws IOException {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(path));
         loader.setController(cont);
         AnchorPane page = (AnchorPane) loader.load();
@@ -112,16 +112,24 @@ public class TrainApplication <E> extends Application {
     public void addTrain(int id, String line, double suggestedSpeed, int targetBlock) {
         TrainModelController tr = new TrainModelController();
         tr.setTrainApp(ta, id, line, suggestedSpeed, targetBlock);
-        //TrainModelController tr = new TrainModelController(ta, id, line, suggestedSpeed, targetBlock);
-        //tr.setTrainApp(ta)
-        System.out.println(id);
-        System.out.println(tr.toString());
-        trainmodels.add(tr);
-        trainctls.add(id, new TrainControllerController(ta, tr.getT()));
+        trainmodels.add(id, tr);
+        
+        TrainControllerController trc = new TrainControllerController();
+        System.out.println("Train: " + tr.getT().getLine());
+        trc.setTrainApp(ta, tr.getT());
+        trainctrs.add(id, trc);
     }
     
     public Train getTrain(int id){
         return trainmodels.get(id).getT();
+    }
+    
+    public void createTrainGUI(int id) throws IOException{
+        Stage trainMdlStage = createStage("TrainModel/TrainModel.fxml", "Train Model " + id, (E) trainmodels.get(id));
+        trainMdlStage.show();
+        
+        Stage trainCtrStage = createStage("TrainController/TrainController.fxml", "Train Controller " + id, (E) trainctrs.get(id));
+        trainCtrStage.show();
     }
     
     public void stuff() {

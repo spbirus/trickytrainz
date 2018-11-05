@@ -44,6 +44,7 @@ import trainapplication.TrainApplication;
 public class TrainModelController implements Initializable {
     //will need to get this data from somewhere
     private Train t; 
+    private TrainControllerController tc;
 
     public Train getT() {
         return t;
@@ -55,10 +56,10 @@ public class TrainModelController implements Initializable {
 
     private TrainApplication ta;
 
-    public TrainModelController(TrainApplication ta, int id, String line, double suggestedSpeed, int targetBlock) {
-        this.ta = ta;
-        t = new Train(line, id, suggestedSpeed, targetBlock);
-    }
+//    public TrainModelController(TrainApplication ta, int id, String line, double suggestedSpeed, int targetBlock) {
+//        this.ta = ta;
+//        t = new Train(line, id, suggestedSpeed, targetBlock);
+//    }
     
     public TrainModelController() {
         
@@ -85,34 +86,13 @@ public class TrainModelController implements Initializable {
         accelId.setText(String.valueOf(t.getAccelLimit()));
         decelId.setText(String.valueOf(t.getDeccelLimit()));
         trainId.setText(String.valueOf(t.getNumber()));
-        
         tempId.setText(String.valueOf(t.getTemperature()));
-//        currentpowerId.setText(String.valueOf(t)); will come from train controller
-        
-        
+
         //initialize some of the other data
         passengerNumber.setText(String.valueOf(t.getPassNum()));
         currentSpeedNumber.setText(String.valueOf(t.getSpeed()));
         //power requested will come from train controller
-        
-        
-        
-        //TODO: need a for loop that will go through database and add all of the trains
-//        Train t = new Train("red",12, 200, 20, 15, 500, 1, 100, 200, 7, 28, 8, 8);        
-//        track.setCellValueFactory(new PropertyValueFactory<>("line"));
-//        number.setCellValueFactory(new PropertyValueFactory<>("number"));
-//        length.setCellValueFactory(new PropertyValueFactory<>("length"));
-//        width.setCellValueFactory(new PropertyValueFactory<>("width"));
-//        height.setCellValueFactory(new PropertyValueFactory<>("height"));
-//        mass.setCellValueFactory(new PropertyValueFactory<>("mass"));
-//        crewNum.setCellValueFactory(new PropertyValueFactory<>("crewNum"));
-//        passNum.setCellValueFactory(new PropertyValueFactory<>("passNum"));
-//        maxCap.setCellValueFactory(new PropertyValueFactory<>("maxCap"));
-//        carNum.setCellValueFactory(new PropertyValueFactory<>("carNum"));
-//        doorNum.setCellValueFactory(new PropertyValueFactory<>("doorNum"));
-//        accelLimit.setCellValueFactory(new PropertyValueFactory<>("accelLimit"));
-//        deccelLimit.setCellValueFactory(new PropertyValueFactory<>("deccelLimit"));
-//        trainTable.getItems().add(t);
+
     }   
     
     @FXML
@@ -340,11 +320,14 @@ public class TrainModelController implements Initializable {
     
     
     public void run(){
+        tc = (TrainControllerController) ta.trainctrs.get(t.getNumber());
+        
         
     }
     
     @FXML
     void onRefreshSpeed(ActionEvent event) {
+        tc = (TrainControllerController) ta.trainctrs.get(t.getNumber());
 //        double curSpeed = 0;
 //        double power = 0;
         Task <Void> task = new Task<Void>() {
@@ -363,9 +346,8 @@ public class TrainModelController implements Initializable {
 
                                double newSpeed = t.calculateVelocity(storedPower, storedVelocity, 0, 0, 300, passengers);
                                storedVelocity = newSpeed;
-//                               trainCon.setCurrentSpeed(storedVelocity); //send stuff to steve
-    //                               storedPower = storedPower; //will eventually need to be from steves module
-//                                storedPower = trainCon.powerVal; //send stuff to steve
+                               tc.setCurrentSpeed(storedVelocity); //send stuff to steve
+                                storedPower = tc.powerVal; //send stuff to steve
                        //        System.out.println("velocity: "+ newSpeed + "mph");
 
                                currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
@@ -474,8 +456,9 @@ public class TrainModelController implements Initializable {
 
     @FXML
     void onSetpointSpeedSubmit(ActionEvent event) {
+        tc = (TrainControllerController) ta.trainctrs.get(t.getNumber());
         if(!"".equals(setpointSpeedBox.getText())){
-//            trainCon.setSetPointSpeed(Double.parseDouble(setpointSpeedBox.getText()));
+            tc.setSetPointSpeed(Double.parseDouble(setpointSpeedBox.getText()));
         }
     }
     

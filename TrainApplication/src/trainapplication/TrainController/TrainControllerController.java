@@ -37,7 +37,15 @@ public class TrainControllerController implements Initializable {
     private TrainApplication ta;
     public Train t;
 
-    public TrainControllerController(TrainApplication ta, Train t) {
+    public TrainControllerController(){
+        
+    }
+//    public TrainControllerController(TrainApplication ta, Train t) {
+//        this.ta = ta;
+//        this.t = t;
+//    }
+    
+    public void setTrainApp(TrainApplication ta, Train t) {
         this.ta = ta;
         this.t = t;
     }
@@ -158,7 +166,7 @@ public class TrainControllerController implements Initializable {
     double oldUval;
     double speedErr;
     double oldSpeedErr;
-    Train train1;
+    Train train1 = t;
     double oldPowerVal;
     double TIME_MULTIPLIER = 200;
     double ki;
@@ -279,7 +287,7 @@ public class TrainControllerController implements Initializable {
 //            calculatePower();
 //        }
     }
-    void calculatePower(){
+    public void calculatePower(){
         
        
         speedErr = setpointSpeedVal*MPH_MS - currSpeedVal*MPH_MS;

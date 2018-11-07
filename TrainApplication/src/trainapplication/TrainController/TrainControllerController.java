@@ -166,7 +166,6 @@ public class TrainControllerController implements Initializable {
     double oldUval;
     double speedErr;
     double oldSpeedErr;
-    Train train1 = t;
     double oldPowerVal;
     double TIME_MULTIPLIER = 200;
     double ki;
@@ -298,12 +297,12 @@ public class TrainControllerController implements Initializable {
         System.out.println("Setpoint Speed(m/s): "+setpointSpeedVal*MPH_MS);
         
         System.out.println("Speed Error(m/s): "+speedErr);
-        System.out.println("(Delta T)/2 Should be .005: " + train1.getDeltaT()/2.0);
+        System.out.println("(Delta T)/2 Should be .005: " + t.getDeltaT()/2.0);
         //==============uVal calc===========
           if(oldPowerVal < MAX_POWER){
-              System.out.println(String.format("uVal Calculation: %f = %f + (%f/(2.0))*(%f*%f + %f*%f)",uVal,oldUval,train1.getDeltaT(),speedErr,MPH_MS,oldSpeedErr,MPH_MS));
-              System.out.println(String.format("uVal Calculation: %f = %f + (%f)*(%f + %f)",uVal,oldUval,train1.getDeltaT()/2.0,speedErr*MPH_MS,oldSpeedErr*MPH_MS));
-              uVal = oldUval + (train1.getDeltaT()/(2.0))*(speedErr*MPH_MS + oldSpeedErr*MPH_MS);
+              System.out.println(String.format("uVal Calculation: %f = %f + (%f/(2.0))*(%f*%f + %f*%f)",uVal,oldUval,t.getDeltaT(),speedErr,MPH_MS,oldSpeedErr,MPH_MS));
+              System.out.println(String.format("uVal Calculation: %f = %f + (%f)*(%f + %f)",uVal,oldUval,t.getDeltaT()/2.0,speedErr*MPH_MS,oldSpeedErr*MPH_MS));
+              uVal = oldUval + (t.getDeltaT()/(2.0))*(speedErr*MPH_MS + oldSpeedErr*MPH_MS);
           }else{
               uVal = oldUval;
           }
@@ -337,7 +336,7 @@ public class TrainControllerController implements Initializable {
         
         //========FOR TESTING PURPOSES================
         
-        double currSpeedValNew = train1.calculateVelocity(powerVal, currSpeedVal, 0, 0, setpointSpeedVal, 50);
+        double currSpeedValNew = t.calculateVelocity(powerVal, currSpeedVal, 0, 0, setpointSpeedVal, 50);
         System.out.println("Current Speed according to Train Model: "+currSpeedValNew);
         //============================================
                 

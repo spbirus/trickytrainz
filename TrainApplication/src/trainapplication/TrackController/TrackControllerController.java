@@ -26,6 +26,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import trainapplication.TrackModel.Block;
 import trainapplication.TrainApplication;
 
@@ -40,104 +41,85 @@ public class TrackControllerController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    private int mergeNum=2;
-    private int splitNum=1;
-    private int defaultNum=3;
-    private boolean mergePresent=true;
-    private boolean splitPresent=true;
+    private boolean switchState=true;
+    private int mergeNum=0;
+    private int splitNum=0;
+    private int defaultNum=0;
+    private boolean mergePresent=false;
+    private boolean splitPresent=false;
+    private boolean occupied=false;
+    private boolean signalBool=true;
+    private boolean crossingBool= true;
     private TrainApplication ta;
     private String plcFile;
-    private int authority;
-    private double speed;
-    public TrackControllerController(TrainApplication ta,String plcFile){
+    private int authority=0;
+    private double speed=0;
+    private PLC plc;
+    
+    public void setTrainApp(TrainApplication ta,String plcFile)throws IOException{
         this.ta = ta;
         this.plcFile = plcFile;
+        readPLC(plcFile);
     }
-    
+    void readPLC(String plcFile)throws IOException{
+        File plcF = new File(plcFile);
+        Scanner scan = new Scanner(plcF);
+        String test = scan.nextLine().trim().toLowerCase();
+        if(test.equals("merge")){
+            mergePresent=true;
+            mergeNum=scan.nextInt();
+            test=scan.nextLine().trim().toLowerCase();
+            if(test.equals("split")){
+                splitPresent=true;
+                splitNum=scan.nextInt();
+                scan.nextLine();
+                defaultNum=scan.nextInt();
+            }else{
+                splitPresent=false;
+                splitNum = scan.nextInt();
+                defaultNum = scan.nextInt();
+            }
+        }else if(test.equals("split")){
+            mergePresent=false;
+            splitPresent=true;
+            splitNum = scan.nextInt();
+            scan.nextLine();
+            mergeNum = scan.nextInt();
+            defaultNum = scan.nextInt();
+        }
+        plc = new PLC(mergePresent, splitPresent);
+    }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        reset();
+    }  
+    private void reset(){
         mergeBlock.setText(Integer.toString(this.mergeNum));
         splitBlock.setText(Integer.toString(this.splitNum));
         defaultBlock.setText(Integer.toString(this.defaultNum));
         mergeBool.setText(Boolean.toString(this.mergePresent));
         splitBool.setText(Boolean.toString(this.splitPresent));
-        signalState.setText("Green");
-        outputSwitch.setText("Block #" +splitBlock.getText() + " is Connected to "+ defaultBlock.getText());
-        crossingState.setText("Raised");
-        
-    }  
-    private void reset(int num){
-        /*
-        blockNum=num;
-        block=blockArray[blockNum];
-        trackName.setText(block.getLine());
-        sectionName.setText(block.getSection());
-        blockName.setText(Integer.toString(block.getBlockNumber()));
-        stationBool.setText(Boolean.toString(block.isStationPresent()));
-        switchBool.setText(Boolean.toString(block.isSwitchPresent()));
-        crossingBool.setText(Boolean.toString(block.isCrossingPresent()));
-        if(block.isCrossingPresent()){  
-            crossingMurphyLabel.setVisible(true);
-            raiseCrossing.setVisible(true);
-            lowerCrossing.setVisible(true);
-            if(block.isCrossingState()){
-                crossingState.setText("Lowered");
-            }else{
-                crossingState.setText("Raised");
-            }
-        }else{
-            crossingState.setText("No Crossing");
-            crossingMurphyLabel.setVisible(false);
-            raiseCrossing.setVisible(false);
-            lowerCrossing.setVisible(false);
-        }
-        if(block.isRailState()){
-            railState.setText("Functional");
-        }else{
-            railState.setText("Faulty");
-        }
-        if(block.isCircuitState()){
-            circuitState.setText("Functional");
-        }else{
-            circuitState.setText("Faulty");
-        }
-        
-        outputSpeed.setText(Double.toString(t.getSpeed())+" mph");
-        outputAuthority.setText(Double.toString(t.getAuthority())+" ft");
-        commandedSpeed.setText(Double.toString(t.getSpeed())+" mph");
-        authority.setText(Double.toString(t.getAuthority())+" ft");
-        if(block.isSwitchPresent()){
-            switchMurphyLabel.setVisible(true);
-            openSwitch.setVisible(true);
-            closeSwitch.setVisible(true);
-            if(block.getSwitchState()){
-                switchPosition.setText("Connected to Block #"+block.getNextOutboundBlock());
-                outputSwitch.setText("Connected to Block #"+block.getNextOutboundBlock());
-                
-            }else{
-                switchPosition.setText("Not Connected to Current Block");
-                outputSwitch.setText("Not Connected to Current Block");
-            }
-        }else{
-            switchPosition.setText("No Switch on Current Block");
-            outputSwitch.setText("No Switch on Current Block");
-            switchMurphyLabel.setVisible(false);
-            openSwitch.setVisible(false);
-            closeSwitch.setVisible(false);
-        }
-        
-        
-        outputLights.setText(block.getSignal());
-        if(t.getBlock()==block.getBlockNumber()){
+        if(signalBool)
+            signalState.setText("Green");
+        else
+            signalState.setText("Red");
+        if(switchState)
+            outputSwitch.setText("Block #" +splitBlock.getText() + " is Connected to "+ defaultBlock.getText());
+        else
+            outputSwitch.setText("Block #" +splitBlock.getText() + " is Connected to "+ mergeBlock.getText());
+        if(crossingBool)
+            crossingState.setText("Raised");
+        else
+            crossingState.setText("Lowered");
+        outputSpeed.setText(Double.toString(speed));
+        outputAuthority.setText(Integer.toString(authority));
+        commandedSpeed.setText(Double.toString(speed));
+        commandedAuthority.setText(Integer.toString(authority));
+        if(occupied)
             trackOccupancy.setText("Occupied");
-        }else{
+        else
             trackOccupancy.setText("Not Occupied");
-        }
         changeColor();
-        blockNumSlider.setMin(0);
-        blockNumSlider.setMax(14);
-        blockValue.setText("Block #"+Long.toString(Math.round(blockNumSlider.getValue())));
-        */
     }
     @FXML
     private RadioButton manualMode;
@@ -264,8 +246,13 @@ public class TrackControllerController implements Initializable {
     
       
     @FXML
-    void onPLCClick(ActionEvent event) {
-        
+    void onPLCClick(ActionEvent event)throws IOException {
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Browse for PLC file");
+        File file =fileChooser.showOpenDialog(null);
+        String plcFile = file.getPath();
+        readPLC(plcFile);
+        reset();
     }
     private void changeColor() {
         if(outputLights.getText().equals("Green")){
@@ -303,32 +290,56 @@ public class TrackControllerController implements Initializable {
     @FXML
     void manDefaultSwitchClick(ActionEvent event) {
             outputSwitch.setText("Block #" +splitBlock.getText() + " is Connected to "+ defaultBlock.getText());
+            switchState = true;
     }
     @FXML
     void manNotDefaultSwitchClick(ActionEvent event) {
             outputSwitch.setText("Block #"+splitBlock.getText() +"is Connected to Block #"+mergeBlock.getText());
-
+            switchState = false;
     }
     @FXML
     void manRaiseCrossingClick(ActionEvent event) {
         crossingState.setText("Raised");
+        crossingBool = true;
     }
     @FXML
     void manLowerCrossingClick(ActionEvent event) {
         crossingState.setText("Lowered");
+        crossingBool = false;
     }
     @FXML
     void manGreenSignalClick(ActionEvent event) {
         signalState.setText("Green");
         outputLights.setText("Green");
+        signalBool = true;
         changeColor();
     }
     @FXML
     void manRedSignalClick(ActionEvent event) {
         signalState.setText("Red");
         outputLights.setText("Red");
+        signalBool = false;
         changeColor();
     }
+    /*boolean calculateSwitch(){
+        String line = "Green";
+        if(mergePresent&&splitPresent){
+            line = "Red";
+        }
+        boolean test1= plc.calculateSwitch(TrackModel.getBlockAt(line, mergeNum).getTrackCircuit(), TrackModel.getBlockAt(line, splitNum).getTrackCircuit(), Train.getToYard());
+        boolean test2 = plc.calculateSwitch(TrackModel.getBlockAt(line, mergeNum).getTrackCircuit(), TrackModel.getBlockAt(line, splitNum).getTrackCircuit(), Train.getToYard());
+        boolean test3 = plc.calculateSwitch(TrackModel.getBlockAt(line, mergeNum).getTrackCircuit(), TrackModel.getBlockAt(line, splitNum).getTrackCircuit(), Train.getToYard());
+        if(test1==test2)
+            return test1;
+        else if(test1==test3)
+            return test3;
+        else if(test2==test3)
+            return test2;
+        return true;
+                
+        
+
+    }*/
     /*public void setSpeedAuthority(double speed, int authority){
         this.speed = speed;
         this.authorityVar = authority;

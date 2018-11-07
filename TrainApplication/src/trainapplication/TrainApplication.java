@@ -68,7 +68,11 @@ public class TrainApplication <E> extends Application {
                 // Update UI here.
                 ta = new TrainApplication();
                 ctc.setTrainApp(ta);
-                trkCtr.setTrainApp(ta, "plc1.txt");
+                try {
+                    trkCtr.setTrainApp(ta, "plc1.txt");
+                } catch (IOException ex) {
+                    Logger.getLogger(TrainApplication.class.getName()).log(Level.SEVERE, null, ex);
+                }
                 trkMdl.setTrainApp(ta);
                 
                 try {

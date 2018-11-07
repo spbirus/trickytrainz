@@ -25,5 +25,25 @@ public class Track {
     public void setSwitchState(int block){
         
     }
-            
+    
+    public Block getBlockAt(int blkNumber){
+        for(Block blk : blockList){
+         if(blk.getBlockNumber() == blkNumber) return blk;               
+        }
+        return null;
+    }
+    
+    public ArrayList<Block> getBlockNeighbors(Block blk){
+        
+        ArrayList<Block> blockNeighbors = new ArrayList<Block>();
+        try{
+            blockNeighbors.add(blk.getNextBlock());
+            blockNeighbors.add(blk.getPreviousBlock());
+            blockNeighbors.add(blk.getSwitchBlock());
+        } catch(NullPointerException e) {
+           System.out.println("Not all the blocks are there");
+        }
+        
+        return blockNeighbors;
+    }       
  }

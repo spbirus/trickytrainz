@@ -5,6 +5,7 @@
  */
 package trainapplication.TrackModel;
 
+import com.sun.deploy.util.StringUtils;
 import java.net.URL;
 import java.util.*;
 import javafx.fxml.FXML;
@@ -48,6 +49,10 @@ public class TrackModelController implements Initializable {
     Track greenTrack = new Track("green");
     Track redTrack = new Track("red");
     Track testTrack = new Track("test");
+    
+    
+    HashMap<Integer, Block> greenMap = new HashMap<Integer, Block>();    
+    
     
     //Gardcoded values for dropdown boxes 
     //TODO: Fill in with real data values
@@ -102,8 +107,19 @@ public class TrackModelController implements Initializable {
         */
     } 
     
+    //Used by the Track Controller returns a Block object based on a Line and block number
+    public Block getBlockAt(String line, int number){
+        
+        Block block = null;
+        
+        if(line.equals("Green")){
+            return greenMap.get(number);
+        }
+        
+        return block;
+    }
+    
     public void readTrackFile(){
-
 
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Browse for Train Schedule");
@@ -143,7 +159,7 @@ public class TrackModelController implements Initializable {
 //                else newBlock.setOccupancy("Open");
 //                newBlock.setBlockHeat("ON");
 //                if(trackInfrastructure.equals("SWITCH"))trackInfrastructure = "SWITCH-OPEN";
-                
+                greenMap.put(trackBlock, newBlock);
                 greenTrack.blockList.add(newBlock);
                 //sortedTrackList.add(newTrack);
                 //trackTable.getItems().add(newBlock);
@@ -172,11 +188,24 @@ public class TrackModelController implements Initializable {
     
     private void setBlockNeighbors(){
         
+        int blockNum = 0;
+        
         for(Block block : greenTrack.blockList){
-            block.setNextBlock(block);
-            block.setPreviousBlock(block);
-            if(block.getInfrastructure().equals("SWITCH")){
-                block.setSwitchBlock(block);
+            
+            //Sets next Block for every block on the track
+            block.setNextBlock(greenTrack.getBlockAt(block.getNextInboundBlock()));
+            
+            //For Bidirectional tracks, sets the previous block to the next Outbound block
+            //In other words, the next block for a train going away from the yard on a bidirectional track
+            if(block.getNextInboundBlock() != block.getNextOutboundBlock()){
+                block.setPreviousBlock(greenTrack.getBlockAt(block.getNextOutboundBlock()));
+            }
+            
+            //Sets the third block connected to a block in the case of a switch 
+            // 
+            if(block.getInfrastructure().substring(0,6).equals("SWITCH")){
+                blockNum = Integer.parseInt(block.getInfrastructure().substring(block.getInfrastructure().lastIndexOf(";") + 1, 1));
+                block.setSwitchBlock(greenTrack.getBlockAt(blockNum));
             }
             
         }

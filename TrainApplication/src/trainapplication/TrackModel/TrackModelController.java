@@ -249,22 +249,39 @@ public class TrackModelController implements Initializable {
     
     public void MainteneceButtonClicked(){
         
-        int selectedBlock = (int)trackBlockComboBox.getValue();
-        
-        for(Block track : sortedTrackList){
-            System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
-            
-            if(selectedBlock == track.getBlockNumber()){
-                track.setBlockState("Red");
-                trackTable.refresh();
-            }
+//        int selectedBlock = (int)trackBlockComboBox.getValue();
+//        
+//        for(Block track : sortedTrackList){
+//            System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
+//            
+//            if(selectedBlock == track.getBlockNumber()){
+//                track.setBlockState("Red");
+//                trackTable.refresh();
+//            }
+//        }
+
+
+    int selectedBlock = (int)trackBlockComboBox.getValue();
+    
+    for(Block blk : greenTrack.blockList){
+        trackTable.getItems().remove(blk);
+        if(blk.getBlockNumber() == selectedBlock){
+            sortedTrackList = greenTrack.getBlockNeighbors(blk);
+            for(Block neighbor : sortedTrackList) trackTable.getItems().add(neighbor);
         }
+    }
+
     }
     
     public void TrackCircuitButtonClicked(){
       
         int selectedBlock = (int)trackBlockComboBox.getValue();
          
+        
+        //        for(Block track : sortedTrackList){
+//            sortedTrackList.remove(track);
+//            trackTable.getItems().remove(track);
+//        }
         for(Block track : sortedTrackList){
             System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
             

@@ -44,6 +44,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import trainapplication.TrainApplication;
+import trainapplication.TrainModel.TrainModelController;
 
 /**
  * FXML Controller class
@@ -302,8 +303,9 @@ public class CTCOfficeController implements Initializable {
         //move train to outbound table
         dispatchTrainFromQueue(dispatchTrain);
         
-        ta.trainmodels.get(dispatchNumber).runTrain();
-
+        TrainModelController tModel = (TrainModelController) ta.trainmodels.get(dispatchNumber);
+        tModel.runTrain();
+        
         //
         Schedule schedule = getScheduleInfoFromTrainTableSelected(dispatchTrain);
         schedule.dispatchTime = System.currentTimeMillis();

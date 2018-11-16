@@ -319,9 +319,52 @@ public class TrainModelController implements Initializable {
     private double storedPower = 0;
     
     
-    public void run(){
+    public void runTrain(){
         tc = (TrainControllerController) ta.trainctrs.get(t.getNumber());
         
+        Task <Void> task = new Task<Void>() {
+            @Override public Void call() throws InterruptedException {
+                
+                for(int i = 0; i < 5000; i++){
+                    Platform.runLater(new Runnable() {
+                        @Override public void run() {
+    //                           curSpeed = storedVelocity; //Double.parseDouble(currentSpeedNumber.getText());
+    //                           power = storedPower; //Double.parseDouble(requestedPowerNumber.getText());
+                               if(storedPower > 120){ //check for the max power
+                                   storedPower = 120.00;
+                               }
+                               System.out.println(storedPower);
+                               int passengers = Integer.parseInt(passengerNumber.getText());
+
+                               double newSpeed = t.calculateVelocity(storedPower, storedVelocity, 0, 0, 300, passengers);
+                               storedVelocity = newSpeed;
+                               tc.setCurrentSpeed(storedVelocity); //send stuff to steve
+                               storedPower = tc.powerVal; //send stuff to steve
+                       //        System.out.println("velocity: "+ newSpeed + "mph");
+
+                               currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
+                               requestedPowerNumber.setText(String.valueOf(Math.round(100*storedPower)/100.0));
+                           }
+
+                    });
+                    Thread.sleep(10);
+                }
+                
+
+              return null;
+            }
+         };
+        
+        task.setOnSucceeded(e -> {
+//            label.textProperty().unbind();
+            // this message will be seen.
+            currentSpeedNumber.setText(String.valueOf(Math.round(100*storedVelocity)/100.0));
+            requestedPowerNumber.setText(String.valueOf(Math.round(100*storedPower)/100.0));
+         });
+        
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
         
     }
     
@@ -347,7 +390,7 @@ public class TrainModelController implements Initializable {
                                double newSpeed = t.calculateVelocity(storedPower, storedVelocity, 0, 0, 300, passengers);
                                storedVelocity = newSpeed;
                                tc.setCurrentSpeed(storedVelocity); //send stuff to steve
-                                storedPower = tc.powerVal; //send stuff to steve
+                               storedPower = tc.powerVal; //send stuff to steve
                        //        System.out.println("velocity: "+ newSpeed + "mph");
 
                                currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));

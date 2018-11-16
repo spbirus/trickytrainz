@@ -278,7 +278,7 @@ public class CTCOfficeController implements Initializable {
     }
 
     @FXML
-    void dispatchButtonClick(ActionEvent event) throws IOException {
+    void dispatchButtonClick(ActionEvent event) {
 
         //dummy info for just testing occupying the track table
 //        //will delete this eventually...
@@ -301,6 +301,8 @@ public class CTCOfficeController implements Initializable {
 
         //move train to outbound table
         dispatchTrainFromQueue(dispatchTrain);
+        
+        ta.trainmodels.get(dispatchNumber).runTrain();
 
         //
         Schedule schedule = getScheduleInfoFromTrainTableSelected(dispatchTrain);
@@ -319,7 +321,7 @@ public class CTCOfficeController implements Initializable {
                 + dispatchTargetBlock + "\nArrival Time: " + timeFormat.format(arrivalTime));
         alert.showAndWait();
            
-        ta.createTrainGUI(dispatchNumber);
+        
     }
 
     //schedule loaded in will be one train per file
@@ -419,7 +421,7 @@ public class CTCOfficeController implements Initializable {
     }
 
     @FXML
-    void newTrainSubmitClick(ActionEvent event) {
+    void newTrainSubmitClick(ActionEvent event) throws IOException {
         //try {
             int newTrainNumber = trainIDIterator++;
             String newTrainLine = newTrainLineBox.getValue();
@@ -428,8 +430,6 @@ public class CTCOfficeController implements Initializable {
             
             //System.out.println(newTrainNumber + "   " + newTrainLine + "   " + newTrainSpeed + "   " + newTrainAuthority);
             
-            //TrainApplication ta1 = new TrainApplication();
-            //ta1.stuff();
             
             ta.stuff();
             ta.potatoes();
@@ -561,7 +561,7 @@ public class CTCOfficeController implements Initializable {
     line, section(not used), current block, target block(=authority), time to target
     sends train to be added to the queue
      */
-    private void createTrainFromSchedule(Schedule schedule) {
+    private void createTrainFromSchedule(Schedule schedule) throws IOException {
 
         String line = schedule.line;
         int number = schedule.trainID;
@@ -595,11 +595,13 @@ public class CTCOfficeController implements Initializable {
     }
 
     //takes train information as an input and adds a train to the appropriate table
-    private void addTrainToQueue(Train train) {
+    private void addTrainToQueue(Train train) throws IOException {
         queueTrainTable.getItems().add(train);
         int trainID = train.getNumber();
         trainArray[trainID] = train;
-        trainArray = Arrays.copyOf(trainArray, trainArray.length + 1);    
+        trainArray = Arrays.copyOf(trainArray, trainArray.length + 1);
+        
+        ta.createTrainGUI(trainID);
     }
 
     //removes the selected train from the queue and adds it to the outbound table

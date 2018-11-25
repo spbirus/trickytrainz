@@ -45,6 +45,7 @@ import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import trainapplication.TrainApplication;
 import trainapplication.TrainModel.*;
+import trainapplication.TrackModel.*;
 
 /**
  * FXML Controller class
@@ -119,7 +120,7 @@ public class CTCOfficeController implements Initializable {
         trackTableAllBlock.setCellValueFactory(new PropertyValueFactory<>("blockNumber"));
         trackTableAllLength.setCellValueFactory(new PropertyValueFactory<>("blockLength"));
         trackTableAllLimit.setCellValueFactory(new PropertyValueFactory<>("speedLimit"));
-        trackTableAllState.setCellValueFactory(new PropertyValueFactory<>("state"));
+        trackTableAllState.setCellValueFactory(new PropertyValueFactory<>("blockState"));
         trackTableAllLine.setStyle("-fx-alignment: CENTER;");
         trackTableAllSection.setStyle("-fx-alignment: CENTER;");
         trackTableAllBlock.setStyle("-fx-alignment: CENTER;");
@@ -152,25 +153,25 @@ public class CTCOfficeController implements Initializable {
 
     //track table information for all lines
     @FXML
-    private TableView<Track> trackTableAll;
+    private TableView<Block> trackTableAll;
 
     @FXML
-    private TableColumn<Track, String> trackTableAllLine;
+    private TableColumn<Block, String> trackTableAllLine;
 
     @FXML
-    private TableColumn<Track, String> trackTableAllSection;
+    private TableColumn<Block, String> trackTableAllSection;
 
     @FXML
-    private TableColumn<Track, Integer> trackTableAllBlock;
+    private TableColumn<Block, Integer> trackTableAllBlock;
 
     @FXML
-    private TableColumn<Track, Integer> trackTableAllLength;
+    private TableColumn<Block, Integer> trackTableAllLength;
 
     @FXML
-    private TableColumn<Track, Integer> trackTableAllLimit;
+    private TableColumn<Block, Integer> trackTableAllLimit;
 
     @FXML
-    private TableColumn<Track, String> trackTableAllState;
+    private TableColumn<Block, String> trackTableAllState;
 
     //train table information for all lines
     @FXML
@@ -258,7 +259,7 @@ public class CTCOfficeController implements Initializable {
     private AnchorPane newTrainPane;
 
     @FXML
-    private Button testShowSchedulesButton;
+    private Button getTrackInfoButton;
     
     @FXML
     private Button getThroughputButton;
@@ -295,19 +296,7 @@ public class CTCOfficeController implements Initializable {
     @FXML
     void dispatchButtonClick(ActionEvent event) {
 
-        //dummy info for just testing occupying the track table
-//        //will delete this eventually...
-//        Train train1 = new Train("Red", 12, 33, 13, 1, 24);
-//        Train train2 = new Train("Green", 22, 26, 27, 34, 79);
-//        Track track1 = new Track("Red", "A", 1, 175, 35, "Occupied");
-//        Track track2 = new Track("Green", "I", 34, 175, 35, "Occupied");
-//        addTrainToTable(train1);
-//        addTrainToTable(train2);
-//        trackTableAll.getItems().add(track1);
-//        trackTableAll.getItems().add(track2);
-//        trackTableRed.getItems().add(track1);
-//        trackTableGreen.getItems().add(track2);
-        //get selected train from the train table
+        //get selected train from the train table and dispatch it
         Train train = queueTrainTable.getSelectionModel().getSelectedItem();
         
         dispatchTrain(train);
@@ -421,10 +410,9 @@ public class CTCOfficeController implements Initializable {
             int newTrainAuthority = getTargetBlockFromStation();
             
             //System.out.println(newTrainNumber + "   " + newTrainLine + "   " + newTrainSpeed + "   " + newTrainAuthority);
-            
-            
-            ta.stuff();
-            ta.potatoes();
+            //testing communication system with printouts
+//            ta.stuff();
+//            ta.potatoes();
             
             ta.addTrain(newTrainNumber, newTrainLine, newTrainSpeed, newTrainAuthority);
             Train newTrain = ta.getTrain(newTrainNumber);
@@ -497,27 +485,21 @@ public class CTCOfficeController implements Initializable {
 
 
     @FXML
-    void testShowSchedulesClick(ActionEvent event) {
-        for (Schedule schedule : scheduleArray) {
-            System.out.println("Line, ID, current block array, target block array, dispatch time, time to next block array, index for the arrays");
-            System.out.println("Line " + schedule.line);
-            System.out.println("Train Number " + schedule.trainID);
-            System.out.println("");
-            System.out.print("Target block array: ");
-            for (int tBlock : schedule.targetBlock) {
-                System.out.print(tBlock + ", ");
-            }
-            System.out.println("");
-            System.out.println("Dispatch time: " + timeFormat.format(schedule.dispatchTime));
-            System.out.print("Time to next block array: ");
-            for (double timeBlock : schedule.timeToNextBlock) {
-                System.out.print(timeBlock + ", ");
-            }
-            System.out.println("");
-            System.out.println("Schedule index " + schedule.scheduleIndex);
-            System.out.println("\n\n");
+    void getTrackInfoClick(ActionEvent event) {
+        //get the initial track information from the track model (if it is loaded in)
+        
+        try {
+            //dummy info for just testing occupying the track table
+            Block block1 = new Block("Red", "A", 1, 175, 35, "Open");
+            Block block2 = new Block("Green", "I", 34, 175, 35, "Open");
+            trackTableAll.getItems().add(block1);
+            trackTableAll.getItems().add(block2);
 
+            getTrackInfoButton.setVisible(false);
+        } catch (Exception ex) {
+            System.out.println("I believe we should have the track model load in tracks first");
         }
+
     }
 
     //rest of methods, non event-handlers
@@ -534,7 +516,7 @@ public class CTCOfficeController implements Initializable {
     
     /*
     sets the active system time based on the multipler (default 1)
-    also tries to dispatch a train every x seconds (x is TBD)
+    also tries to dispatch a train every 30 seconds (30 is subject to change)
      */
     private void setTime(int multiplier) {
 
@@ -604,7 +586,7 @@ public class CTCOfficeController implements Initializable {
         System.out.println("arrival time: " + timeFormat.format(arrivalTime));
 
         //***************************
-        //HERE I NEED TO SEND INFO TO THE TRACK CONTROLLER (SPEED AND AUTHORITY)
+        //HERE I NEED TO SEND SUGGESTED SPEED AND AUTHORITY
         
         //**************************
         
@@ -630,7 +612,6 @@ public class CTCOfficeController implements Initializable {
         int speed = 25; //temp value, not sure how I'm setting this yet
         int authority = schedule.targetBlock[schedule.scheduleIndex];
 
-        //Train train = new Train(line, number, speed, authority, block, target);
         ta.addTrain(number, line, speed, authority);
         Train train = ta.getTrain(number);
         

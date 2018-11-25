@@ -124,6 +124,7 @@ public class TrackModelController implements Initializable {
         
         //Update GUI and information perteining to track state based on what block
         //the train is on
+        setTrackOccupancy(number);
         
         return b;
     }
@@ -355,6 +356,12 @@ public class TrackModelController implements Initializable {
             }
         }
         
+    }
+     
+    public void setTrackOccupancy(int block){
+        Block current = getBlockAt("Green", block);
+        current.setOccupancy("Train");
+        trackTable.refresh();    
     }
     
     public void FixCircuitButtonClicked(){

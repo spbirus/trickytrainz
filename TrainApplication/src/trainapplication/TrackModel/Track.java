@@ -26,7 +26,7 @@ public class Track {
         
     }
     
-    public Block getBlockAt(int blkNumber){
+    public Block getTrackBlock(int blkNumber){
         for(Block blk : blockList){
          if(blk.getBlockNumber() == blkNumber) return blk;               
         }

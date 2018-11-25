@@ -71,6 +71,8 @@ public class Block {
         this.infrastructure = infrastructure;
         this.elevation = elevation;
         this.cumElevation = cumElevation;
+        this.nextInboundBlock = nextInbound;
+        this.nextOutboundBlock = nextOutbound;
         if(this.nextInboundBlock == nextOutboundBlock) blockDirection = 1;
         else blockDirection = 2;
     }

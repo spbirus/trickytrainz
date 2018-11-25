@@ -277,8 +277,17 @@ public class CTCOfficeController implements Initializable {
     void autoModeButtonClick(ActionEvent event) {
         //TODO later
         timeline.stop();
-        autoMode = true;
-        dispatchTimeCheck = currentTime + 30000;
+        
+        if (autoMode) { //turns off auto mode (multiplier back to 1)
+            autoModeButton.setText("Enter Automatic Mode");
+            multiplierTextField.setText("1");
+            autoMode = false;
+        } else { //turns on auto mode based on multiplier value
+            autoModeButton.setText("Enter Manual Mode");
+            autoMode = true;
+            dispatchTimeCheck = currentTime + 30000; //dispatch Trains every 30 seconds
+        }
+
         int multiplier = Integer.parseInt(multiplierTextField.getText());
         setTime(multiplier);
     }
@@ -405,7 +414,7 @@ public class CTCOfficeController implements Initializable {
 
     @FXML
     void newTrainSubmitClick(ActionEvent event) throws IOException {
-        //try {
+        try {
             int newTrainNumber = trainIDIterator++;
             String newTrainLine = newTrainLineBox.getValue();
             double newTrainSpeed = (int) suggestedSpeedSlider.getValue();
@@ -427,14 +436,16 @@ public class CTCOfficeController implements Initializable {
             scheduleArray[newTrainNumber] = manualTrainAddSchedule;
 
             newTrainPane.setVisible(false);
-//        } catch (Exception ex) {
-//            Alert alert = new Alert(AlertType.INFORMATION);
-//            alert.setTitle("Train Target Invalid!");
+        } catch (Exception ex) {
+            Alert alert = new Alert(AlertType.INFORMATION);
+            //alert.setTitle("Train Target Invalid!");
+            alert.setTitle("Something is wrong with the data entered!");
+            System.out.println("Something went wrong with the data entered!");
 //            alert.setContentText(ex.getMessage());
 //            alert.showAndWait();
-//            trainIDIterator--; //have to reset the trainID value
-//            //newTrainPane.setVisible(false);
-//        }
+            trainIDIterator--; //have to reset the trainID value so things don't screw up
+            //newTrainPane.setVisible(false);
+        }
 
     }
     
@@ -546,7 +557,10 @@ public class CTCOfficeController implements Initializable {
         timeline.play();
     }
     
-    //try to dispatch the 1st train in the queue (if there is one)
+    /*
+    try to dispatch the 1st train in the queue (if there is one)
+    this is done with automode enabled
+    */
     private void tryToDispatchTrain() {
         if (currentTime > dispatchTimeCheck) {
             dispatchTimeCheck += 30000; // increment 30 seconds
@@ -566,9 +580,7 @@ public class CTCOfficeController implements Initializable {
         }
     }
     
-    /*
-    dispatches the train from the queue
-    */
+    //dispatches train from the queue
     private void dispatchTrain(Train train) {
         
         int dispatchNumber = train.getNumber(); //train ID
@@ -585,12 +597,17 @@ public class CTCOfficeController implements Initializable {
         //
         Schedule schedule = getScheduleInfoFromTrainTableSelected(train);
         schedule.dispatchTime = System.currentTimeMillis();
-        //conversion from timetoNext block is going to be sloppy... need to do it properly in the future
-        //actually it might be okay... not sure
+        
+        //time to next block is actually dwell time. gotta do something about that eventually (make an enum of dictionary-like thing with block/dwell
         long arrivalTime = (long) (schedule.dispatchTime + schedule.timeToNextBlock[schedule.scheduleIndex] * 60 * 1000);
         System.out.println("departure time: " + timeFormat.format(schedule.dispatchTime));
         System.out.println("arrival time: " + timeFormat.format(arrivalTime));
 
+        //***************************
+        //HERE I NEED TO SEND INFO TO THE TRACK CONTROLLER (SPEED AND AUTHORITY)
+        
+        //**************************
+        
         //popup box with CTC dispatch info
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("CTC Outputs");
@@ -681,10 +698,12 @@ public class CTCOfficeController implements Initializable {
         return schedule;
     }
     
-    //get the speed and authority of the train that is being dispatched
-    //part of dispatching train when sending that info to a track controller
+    /*
+    get the speed and authority of the train that is being dispatched
+    part of dispatching train when sending that info to a track controller
+    */
     private void getSpeedAuthority() {
-        
+        //this might not be used - depends on if track controller needs to call this itself
     }
     
     //get the target block value of the station of what is entered in the user field

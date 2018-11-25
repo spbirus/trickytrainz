@@ -322,7 +322,6 @@ public class TrainModelController implements Initializable {
     
     public void runTrain(){
         tc = (TrainControllerController) ta.trainctrs.get(t.getNumber());
-        t.setBlock(10);
         Task <Void> task = new Task<Void>() {
             @Override public Void call() throws InterruptedException {
                 boolean atYard = false;
@@ -333,6 +332,7 @@ public class TrainModelController implements Initializable {
                     t.setBlock(curr.getBlockNumber());
                     
                     //run until there is no distance left
+                    // TODO: need to talk to steve about this
                     boolean distanceLeft = true;
 //                    while(distanceLeft){
                     for(int i = 0; i < 100; i++){

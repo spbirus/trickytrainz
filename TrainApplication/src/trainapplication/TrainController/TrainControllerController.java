@@ -293,22 +293,22 @@ public class TrainControllerController implements Initializable {
         
         
         //========for testing purposes:======
-        System.out.println("CurrentSpeed(m/s): "+currSpeedVal*MPH_MS);
-        System.out.println("Setpoint Speed(m/s): "+setpointSpeedVal*MPH_MS);
+//        System.out.println("CurrentSpeed(m/s): "+currSpeedVal*MPH_MS);
+//        System.out.println("Setpoint Speed(m/s): "+setpointSpeedVal*MPH_MS);
         
-        System.out.println("Speed Error(m/s): "+speedErr);
-        System.out.println("(Delta T)/2 Should be .005: " + t.getDeltaT()/2.0);
+//        System.out.println("Speed Error(m/s): "+speedErr);
+//        System.out.println("(Delta T)/2 Should be .005: " + t.getDeltaT()/2.0);
         //==============uVal calc===========
           if(oldPowerVal < MAX_POWER){
-              System.out.println(String.format("uVal Calculation: %f = %f + (%f/(2.0))*(%f*%f + %f*%f)",uVal,oldUval,t.getDeltaT(),speedErr,MPH_MS,oldSpeedErr,MPH_MS));
-              System.out.println(String.format("uVal Calculation: %f = %f + (%f)*(%f + %f)",uVal,oldUval,t.getDeltaT()/2.0,speedErr*MPH_MS,oldSpeedErr*MPH_MS));
+//              System.out.println(String.format("uVal Calculation: %f = %f + (%f/(2.0))*(%f*%f + %f*%f)",uVal,oldUval,t.getDeltaT(),speedErr,MPH_MS,oldSpeedErr,MPH_MS));
+//              System.out.println(String.format("uVal Calculation: %f = %f + (%f)*(%f + %f)",uVal,oldUval,t.getDeltaT()/2.0,speedErr*MPH_MS,oldSpeedErr*MPH_MS));
               uVal = oldUval + (t.getDeltaT()/(2.0))*(speedErr*MPH_MS + oldSpeedErr*MPH_MS);
           }else{
               uVal = oldUval;
           }
         
-        System.out.println("oldUval: "+oldUval);
-        System.out.println("uVal: "+ uVal);
+//        System.out.println("oldUval: "+oldUval);
+//        System.out.println("uVal: "+ uVal);
 
        //================power calc===============
        
@@ -317,18 +317,18 @@ public class TrainControllerController implements Initializable {
         //powerVal = (kp*speedErr)+(ki*uVal);
         if(testPower < MAX_POWER){
             powerVal = testPower;
-            System.out.println(String.format("Test Power Calculation: %f = %f*%f*%f+%f*%f",testPower,kp,speedErr,MPH_MS,ki,uVal));
-            System.out.println(String.format("Test Power Calculation: %f = %f+%f",testPower,kp*speedErr*MPH_MS,ki*uVal));
+//            System.out.println(String.format("Test Power Calculation: %f = %f*%f*%f+%f*%f",testPower,kp,speedErr,MPH_MS,ki,uVal));
+//            System.out.println(String.format("Test Power Calculation: %f = %f+%f",testPower,kp*speedErr*MPH_MS,ki*uVal));
             
         }else{
-            System.out.println(String.format("Test Power Calculation: %f = %f*%f*%f+%f*%f",testPower,kp,speedErr,MPH_MS,ki,uVal));
-            System.out.println(String.format("Test Power Calculation: %f = %f+%f",testPower,kp*speedErr*MPH_MS,ki*uVal));
-            System.out.println("Power larger than 120 kW.... reducing to 120 kw...");
+//            System.out.println(String.format("Test Power Calculation: %f = %f*%f*%f+%f*%f",testPower,kp,speedErr,MPH_MS,ki,uVal));
+//            System.out.println(String.format("Test Power Calculation: %f = %f+%f",testPower,kp*speedErr*MPH_MS,ki*uVal));
+//            System.out.println("Power larger than 120 kW.... reducing to 120 kw...");
             powerVal = MAX_POWER;
             
         }
-        System.out.println("Old Power Val: " + oldPowerVal);
-        System.out.println("Power Val: " + powerVal);
+//        System.out.println("Old Power Val: " + oldPowerVal);
+//        System.out.println("Power Val: " + powerVal);
         
         
         
@@ -337,7 +337,7 @@ public class TrainControllerController implements Initializable {
         //========FOR TESTING PURPOSES================
         
         double currSpeedValNew = t.calculateVelocity(powerVal, currSpeedVal, 0, 0, setpointSpeedVal, 50);
-        System.out.println("Current Speed according to Train Model: "+currSpeedValNew);
+//        System.out.println("Current Speed according to Train Model: "+currSpeedValNew);
         //============================================
                 
         //=====================set my GUI values================================
@@ -346,7 +346,7 @@ public class TrainControllerController implements Initializable {
         currentSpeedLabel.setText(String.format("%.2f",currSpeedValNew));
         //======================================================================
     
-        System.out.println("=================================================");
+//        System.out.println("=================================================");
         
         oldSpeedErr = speedErr;
         oldUval = uVal; 

@@ -183,7 +183,7 @@ public class TrackModelController implements Initializable {
                 greenMap.put(trackBlock, newBlock);
                 greenTrack.blockList.add(newBlock);
                 //sortedTrackList.add(newTrack);
-                //trackTable.getItems().add(newBlock);
+                trackTable.getItems().add(newBlock);
 
             }
 
@@ -224,10 +224,10 @@ public class TrackModelController implements Initializable {
             
             //Sets the third block connected to a block in the case of a switch 
             // 
-            if(block.getInfrastructure().substring(0,6).equals("SWITCH")){
-                blockNum = Integer.parseInt(block.getInfrastructure().substring(block.getInfrastructure().lastIndexOf(";") + 1, 1));
-                block.setSwitchBlock(greenTrack.getBlockAt(blockNum));
-            }
+//            if(block.getInfrastructure().substring(0,6).equals("SWITCH")){
+//                blockNum = Integer.parseInt(block.getInfrastructure().substring(block.getInfrastructure().lastIndexOf(";") + 1, 1));
+//                block.setSwitchBlock(greenTrack.getBlockAt(blockNum));
+//            }
             
         }
         

@@ -28,7 +28,11 @@ public class Track {
     
     public Block getTrackBlock(int blkNumber){
         for(Block blk : blockList){
-         if(blk.getBlockNumber() == blkNumber) return blk;               
+         if(blk.getBlockNumber() == blkNumber){
+             System.out.println("Returned Block " + blk.getBlockNumber());
+             System.out.println("Requested Block " + blkNumber);
+             return blk;
+         }               
         }
         return null;
     }

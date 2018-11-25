@@ -34,6 +34,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import trainapplication.TrackModel.Block;
 import trainapplication.TrainApplication;
 
 /**
@@ -321,39 +322,60 @@ public class TrainModelController implements Initializable {
     
     public void runTrain(){
         tc = (TrainControllerController) ta.trainctrs.get(t.getNumber());
-        
+        t.setBlock(10);
         Task <Void> task = new Task<Void>() {
             @Override public Void call() throws InterruptedException {
-                
-                for(int i = 0; i < 5000; i++){
-                    Platform.runLater(new Runnable() {
-                        @Override public void run() {
-    //                           curSpeed = storedVelocity; //Double.parseDouble(currentSpeedNumber.getText());
-    //                           power = storedPower; //Double.parseDouble(requestedPowerNumber.getText());
-                               if(storedPower > 120){ //check for the max power
-                                   storedPower = 120.00;
+                boolean atYard = false;
+                while(!atYard){
+                    //set the block of the train
+                    Block curr = ta.trkMdl.getCurrentBlock(t.getLine(), t.getBlock());
+                    System.out.println("Current block: " + curr.getBlockNumber());
+                    t.setBlock(curr.getBlockNumber());
+                    
+                    //run until there is no distance left
+                    boolean distanceLeft = true;
+//                    while(distanceLeft){
+                    for(int i = 0; i < 100; i++){
+                        Platform.runLater(new Runnable() {
+                            @Override public void run() {
+        //                           curSpeed = storedVelocity; //Double.parseDouble(currentSpeedNumber.getText());
+        //                           power = storedPower; //Double.parseDouble(requestedPowerNumber.getText());
+                                   if(storedPower > 120){ //check for the max power
+                                       storedPower = 120.00;
+                                   }
+                                   
+//                                   System.out.println(storedPower);
+                                   int passengers = Integer.parseInt(passengerNumber.getText());
+
+                                   double newSpeed = t.calculateVelocity(storedPower, storedVelocity, 0, 0, 300, passengers);
+                                   storedVelocity = newSpeed;
+                                   tc.setCurrentSpeed(storedVelocity); //send stuff to steve
+                                   tc.calculatePower();
+                                   storedPower = tc.powerVal; //send stuff to steve
+                           //        System.out.println("velocity: "+ newSpeed + "mph");
+                           
+//                                    distanceLeft = tc.distanceLeft();
+
+                                   currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
+                                   requestedPowerNumber.setText(String.valueOf(Math.round(100*storedPower)/100.0));
                                }
-                               System.out.println(storedPower);
-                               int passengers = Integer.parseInt(passengerNumber.getText());
 
-                               double newSpeed = t.calculateVelocity(storedPower, storedVelocity, 0, 0, 300, passengers);
-                               storedVelocity = newSpeed;
-                               tc.setCurrentSpeed(storedVelocity); //send stuff to steve
-                               tc.calculatePower();
-                               storedPower = tc.powerVal; //send stuff to steve
-                       //        System.out.println("velocity: "+ newSpeed + "mph");
-
-                               currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
-                               requestedPowerNumber.setText(String.valueOf(Math.round(100*storedPower)/100.0));
-                           }
-
-                    });
-                    Thread.sleep(10);
+                        });
+                        Thread.sleep(10);
+                    }
+                    //get the next block
+                    Block next = ta.trkMdl.getNextBlock(t.getLine(), t.getBlock());
+                    System.out.println("Next block: " + next.getBlockNumber());
+                    t.setBlock(next.getBlockNumber());
+                    //set at yard
+                    if(t.getBlock() == 0){
+                        atYard = true;
+                    }
                 }
-                
 
               return null;
             }
+                
          };
         
         task.setOnSucceeded(e -> {

@@ -46,6 +46,11 @@
                                     <Font size="14.0" />
                                  </font>
                               </Button>
+                              <Button fx:id="getTrackInfoButton" layoutX="36.0" layoutY="558.0" mnemonicParsing="false" onAction="#getTrackInfoClick" prefHeight="37.0" prefWidth="166.0" text="Get Tracks" textAlignment="CENTER" wrapText="true">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Button>
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="865.0" layoutY="16.0" prefHeight="605.0" prefWidth="408.0" style="-fx-background-color: #bdc3c7;">
@@ -182,11 +187,6 @@
             </Text>
          </children>
       </AnchorPane>
-      <Button fx:id="testShowSchedulesButton" layoutX="848.0" layoutY="14.0" mnemonicParsing="false" onAction="#testShowSchedulesClick" prefHeight="37.0" prefWidth="166.0" text="System Show Schedules" textAlignment="CENTER" wrapText="true">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </Button>
       <Button fx:id="getThroughputButton" layoutX="68.0" layoutY="743.0" mnemonicParsing="false" onAction="#getThroughputButtonClick" text="Get Throughput">
          <font>
             <Font size="14.0" />

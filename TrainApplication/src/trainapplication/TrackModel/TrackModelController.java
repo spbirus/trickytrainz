@@ -212,14 +212,14 @@ public class TrackModelController implements Initializable {
         int blockNum = 0;
         
         for(Block block : greenTrack.blockList){
-            
+            System.out.println("Block " + block.getNextInboundBlock());
             //Sets next Block for every block on the track
-            block.setNextBlock(greenTrack.getBlockAt(block.getNextInboundBlock()));
+            block.setNextBlock(greenTrack.getTrackBlock(block.getNextInboundBlock()));
             
             //For Bidirectional tracks, sets the previous block to the next Outbound block
             //In other words, the next block for a train going away from the yard on a bidirectional track
             if(block.getNextInboundBlock() != block.getNextOutboundBlock()){
-                block.setPreviousBlock(greenTrack.getBlockAt(block.getNextOutboundBlock()));
+                block.setPreviousBlock(greenTrack.getTrackBlock(block.getNextOutboundBlock()));
             }
             
             //Sets the third block connected to a block in the case of a switch 

@@ -71,6 +71,8 @@ public class Block {
         this.infrastructure = infrastructure;
         this.elevation = elevation;
         this.cumElevation = cumElevation;
+        this.nextInboundBlock = nextInbound;
+        this.nextOutboundBlock = nextOutbound;
         if(this.nextInboundBlock == nextOutboundBlock) blockDirection = 1;
         else blockDirection = 2;
     }
@@ -88,7 +90,7 @@ public class Block {
         else blockDirection = 2;
     }
     
-    //Jon Galaxy Dick  - CTC   
+    //Jon Galaxy  - CTC   
     public Block(String line, String section, int blockNumber, int blockLength, int speedLimit, String blockState) {
         this.line = line;
         this.section = section;

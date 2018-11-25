@@ -302,6 +302,7 @@ public class CTCOfficeController implements Initializable {
         Train train = queueTrainTable.getSelectionModel().getSelectedItem();
         
         dispatchTrain(train);
+
            
         
     }

@@ -184,7 +184,7 @@ public class TrainControllerController implements Initializable {
     
     public void setCurrentSpeed(double currSpeed){
         currSpeedVal = currSpeed;
-        currentSpeedLabel.setText(String.valueOf(currSpeed));
+        currentSpeedLabel.setText(String.format("%.2f",currSpeed));
     }
 
     //==========================================================================

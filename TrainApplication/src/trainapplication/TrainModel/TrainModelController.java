@@ -339,6 +339,7 @@ public class TrainModelController implements Initializable {
                                double newSpeed = t.calculateVelocity(storedPower, storedVelocity, 0, 0, 300, passengers);
                                storedVelocity = newSpeed;
                                tc.setCurrentSpeed(storedVelocity); //send stuff to steve
+                               tc.calculatePower();
                                storedPower = tc.powerVal; //send stuff to steve
                        //        System.out.println("velocity: "+ newSpeed + "mph");
 

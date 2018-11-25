@@ -111,6 +111,23 @@ public class TrackModelController implements Initializable {
         */
     } 
     
+    // Function that will return the next block to the Train Model 
+    public Block getNextBlock(String line, int number){
+        Block b = getBlockAt(line, number);
+        return b.nextBlock;
+    }
+    
+    
+    //Wrapper function for Train Model to receive information of block, and update GUI
+    public Block getCurrentBlock(String line, int number){
+        Block b = getBlockAt(line, number);
+        
+        //Update GUI and information perteining to track state based on what block
+        //the train is on
+        
+        return b;
+    }
+    
     //Used by the Track Controller returns a Block object based on a Line and block number
     public Block getBlockAt(String line, int number){
         

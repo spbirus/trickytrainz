@@ -44,7 +44,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 import trainapplication.TrainApplication;
-import trainapplication.TrainModel.TrainModelController;
+import trainapplication.TrainModel.*;
 
 /**
  * FXML Controller class
@@ -63,6 +63,8 @@ public class CTCOfficeController implements Initializable {
     private Train[] trainArray = new Train[1]; //array of trains, will hold all trains that were ever created
     private DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
     private long currentTime = System.currentTimeMillis();
+    private long dispatchTimeCheck = System.currentTimeMillis(); //used to try and auto dispatch a train every 30 seconds
+    private boolean autoMode = false; //if true, system is in auto mode
     private Timeline timeline = new Timeline();
     
     
@@ -275,7 +277,10 @@ public class CTCOfficeController implements Initializable {
     void autoModeButtonClick(ActionEvent event) {
         //TODO later
         timeline.stop();
-        setTime(Integer.parseInt(multiplierTextField.getText()));
+        autoMode = true;
+        dispatchTimeCheck = currentTime + 30000;
+        int multiplier = Integer.parseInt(multiplierTextField.getText());
+        setTime(multiplier);
     }
 
     @FXML
@@ -294,34 +299,10 @@ public class CTCOfficeController implements Initializable {
 //        trackTableRed.getItems().add(track1);
 //        trackTableGreen.getItems().add(track2);
         //get selected train from the train table
-        Train dispatchTrain = queueTrainTable.getSelectionModel().getSelectedItem();
-        int dispatchNumber = dispatchTrain.getNumber(); //train ID
-        double dispatchSpeed = dispatchTrain.getSpeed();
-        int dispatchCurrentBlock = dispatchTrain.getBlock();
-        int dispatchTargetBlock = dispatchTrain.getTarget();
-
-        //move train to outbound table
-        dispatchTrainFromQueue(dispatchTrain);
+        Train train = queueTrainTable.getSelectionModel().getSelectedItem();
         
-        TrainModelController tModel = (TrainModelController) ta.trainmodels.get(dispatchNumber);
-        tModel.runTrain();
-        
-        //
-        Schedule schedule = getScheduleInfoFromTrainTableSelected(dispatchTrain);
-        schedule.dispatchTime = System.currentTimeMillis();
-        //conversion from timetoNext block is going to be sloppy... need to do it properly in the future
-        //actually it might be okay... not sure
-        long arrivalTime = (long) (schedule.dispatchTime + schedule.timeToNextBlock[schedule.scheduleIndex] * 60 * 1000);
-        System.out.println("departure time: " + timeFormat.format(schedule.dispatchTime));
-        System.out.println("arrival time: " + timeFormat.format(arrivalTime));
+        dispatchTrain(train);
 
-        //popup box with CTC dispatch info
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("CTC Outputs");
-        alert.setHeaderText("Train " + dispatchNumber + " is being dispatched from block " + dispatchCurrentBlock);
-        alert.setContentText("Suggested speed: " + dispatchSpeed + "\nTarget Block: "
-                + dispatchTargetBlock + "\nArrival Time: " + timeFormat.format(arrivalTime));
-        alert.showAndWait();
            
         
     }
@@ -539,12 +520,20 @@ public class CTCOfficeController implements Initializable {
     //rest of methods, non event-handlers
     //rest of methods, non event-handlers
     //rest of methods, non event-handlers
+    
+    /*
+    sets the active system time based on the multipler (default 1)
+    also tries to dispatch a train every x seconds (x is TBD)
+     */
     private void setTime(int multiplier) {
 
         timeline = new Timeline(
                 new KeyFrame(
                         Duration.millis(1000), event -> {
                     //systemTimeText.setText(timeFormat.format(System.currentTimeMillis()));
+                    if (autoMode) {
+                        tryToDispatchTrain();
+                    }
                     currentTime += multiplier * 1000;
                     systemTimeText.setText(timeFormat.format(currentTime));
                     //can speedup time by multiplying speedup by System.currentTimeMillis()
@@ -555,6 +544,60 @@ public class CTCOfficeController implements Initializable {
 
         timeline.setCycleCount(Animation.INDEFINITE);
         timeline.play();
+    }
+    
+    //try to dispatch the 1st train in the queue (if there is one)
+    private void tryToDispatchTrain() {
+        if (currentTime > dispatchTimeCheck) {
+            dispatchTimeCheck += 30000; // increment 30 seconds
+            //its time to try and dispatch again
+            //check queue for train (dispatch if possible), and increment dispatchTimeCheck by x(TBD) sec
+            try{
+                queueTrainTable.getSelectionModel().selectFirst();
+                Train train = queueTrainTable.getSelectionModel().getSelectedItem();
+                System.out.println("TRAIN IS BEING DISPATCHED AUTOMATICALLY");
+                System.out.println("but we'll never see this line because too much train stuff is being printed in threads...");
+                dispatchTrain(train);
+            }
+            catch (Exception ex) {
+                System.out.println("No train was in the queue. Add a train to auto be auto dispatched");
+            }
+            
+        }
+    }
+    
+    /*
+    dispatches the train from the queue
+    */
+    private void dispatchTrain(Train train) {
+        
+        int dispatchNumber = train.getNumber(); //train ID
+        double dispatchSpeed = train.getSpeed();
+        int dispatchCurrentBlock = train.getBlock();
+        int dispatchTargetBlock = train.getTarget();
+
+        //move train to outbound table
+        dispatchTrainFromQueue(train);
+        
+        TrainModelController tModelCont = (TrainModelController) ta.trainmodels.get(dispatchNumber);
+        tModelCont.runTrain();
+        
+        //
+        Schedule schedule = getScheduleInfoFromTrainTableSelected(train);
+        schedule.dispatchTime = System.currentTimeMillis();
+        //conversion from timetoNext block is going to be sloppy... need to do it properly in the future
+        //actually it might be okay... not sure
+        long arrivalTime = (long) (schedule.dispatchTime + schedule.timeToNextBlock[schedule.scheduleIndex] * 60 * 1000);
+        System.out.println("departure time: " + timeFormat.format(schedule.dispatchTime));
+        System.out.println("arrival time: " + timeFormat.format(arrivalTime));
+
+        //popup box with CTC dispatch info
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("CTC Outputs");
+        alert.setHeaderText("Train " + dispatchNumber + " is being dispatched from block " + dispatchCurrentBlock);
+        alert.setContentText("Suggested speed: " + dispatchSpeed + "\nTarget Block: "
+                + dispatchTargetBlock + "\nArrival Time: " + timeFormat.format(arrivalTime));
+        alert.showAndWait();
     }
 
     /*

@@ -322,19 +322,20 @@ public class TrainModelController implements Initializable {
     
     public void runTrain(){
         tc = (TrainControllerController) ta.trainctrs.get(t.getNumber());
-        
+        t.setBlock(10);
         Task <Void> task = new Task<Void>() {
             @Override public Void call() throws InterruptedException {
                 boolean atYard = false;
                 while(!atYard){
                     //set the block of the train
                     Block curr = ta.trkMdl.getCurrentBlock(t.getLine(), t.getBlock());
+                    System.out.println("Current block: " + curr.getBlockNumber());
                     t.setBlock(curr.getBlockNumber());
                     
                     //run until there is no distance left
                     boolean distanceLeft = true;
 //                    while(distanceLeft){
-                    for(int i; i < 100; i++){
+                    for(int i = 0; i < 100; i++){
                         Platform.runLater(new Runnable() {
                             @Override public void run() {
         //                           curSpeed = storedVelocity; //Double.parseDouble(currentSpeedNumber.getText());
@@ -343,7 +344,7 @@ public class TrainModelController implements Initializable {
                                        storedPower = 120.00;
                                    }
                                    
-                                   System.out.println(storedPower);
+//                                   System.out.println(storedPower);
                                    int passengers = Integer.parseInt(passengerNumber.getText());
 
                                    double newSpeed = t.calculateVelocity(storedPower, storedVelocity, 0, 0, 300, passengers);
@@ -364,7 +365,12 @@ public class TrainModelController implements Initializable {
                     }
                     //get the next block
                     Block next = ta.trkMdl.getNextBlock(t.getLine(), t.getBlock());
+                    System.out.println("Next block: " + next.getBlockNumber());
                     t.setBlock(next.getBlockNumber());
+                    //set at yard
+                    if(t.getBlock() == 0){
+                        atYard = true;
+                    }
                 }
 
               return null;

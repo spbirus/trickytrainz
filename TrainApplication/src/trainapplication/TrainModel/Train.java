@@ -45,6 +45,7 @@ public class Train {
     private double trainMass = 81800; //lbs
     private double totalMass; //mass of car and people
     private double velActual = 0; //thing to return to train controller
+    private double trainAccel = 0; //accelteration to return to train controller in ft/s^2
     private double force;
     
     private int numberOfWheels = 12; //will probably need to change
@@ -286,7 +287,7 @@ public class Train {
         //FORCE
         if(currentSpeed == 0){
             //train is stopped therefore can't divide by 0
-            System.out.println("speed is 0");
+//            System.out.println("speed is 0");
             force = (power*1000)*(N_TO_FTLBS)/1; //convert from kW to Watts
         }else{
             force = (power*1000)*(N_TO_FTLBS/currentSpeed);
@@ -295,7 +296,7 @@ public class Train {
         //to downward force
         double slope = Math.atan2(grade, 100); //given in radians
         double angle = Math.toDegrees(slope);
-        System.out.println("Slope: " + slope + " Angle: " + angle);
+//        System.out.println("Slope: " + slope + " Angle: " + angle);
         
         //get all forces acting in the x plane that will counteract the force in the positive direction
         double normalForce = (totalMass/numberOfWheels) * GRAVITY * Math.sin(angle*Math.PI/180);
@@ -303,14 +304,14 @@ public class Train {
         
         //frictional force
         double frictionalForce = (coefficientOfFriction*downwardForce) + normalForce;
-        System.out.println("Frictionalforce: " +frictionalForce + " ftlbs");
-        System.out.println("Friction: " + force);
+//        System.out.println("Frictionalforce: " +frictionalForce + " ftlbs");
+//        System.out.println("Friction: " + force);
         
         force = force - frictionalForce;
         
-        System.out.println("force: " + force + " ftlbs");
+//        System.out.println("force: " + force + " ftlbs");
         
-        double trainAccel = force/totalMass;
+        trainAccel = force/totalMass;
         
         
         //ACCEL
@@ -328,7 +329,7 @@ public class Train {
             trainAccel -= serviceBrakeDecel;
         }
         
-        System.out.println("accel: " + trainAccel +" ft/s^2");
+//        System.out.println("accel: " + trainAccel +" ft/s^2");
         
         //VELOCITY
         velActual = currentSpeed + (trainAccel * deltaT)*FTPS_TO_MPH; //deltaT is a change in time that helps us not miss the beacon
@@ -338,7 +339,7 @@ public class Train {
             velActual = 0;
         }
         
-        System.out.println("velocity: " + velActual +" MPH");
+//        System.out.println("velocity: " + velActual +" MPH");
 
         
         return velActual;

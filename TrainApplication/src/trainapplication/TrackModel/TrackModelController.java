@@ -50,9 +50,9 @@ public class TrackModelController implements Initializable {
     
     //TODO
     //Update to make new tracks "configurable"
-    Track greenTrack = new Track("green");
-    Track redTrack = new Track("red");
-    Track testTrack = new Track("test");
+    public Track greenTrack = new Track("green");
+    public Track redTrack = new Track("red");
+    public Track testTrack = new Track("test");
     
     
     HashMap<Integer, Block> greenMap = new HashMap<Integer, Block>();    
@@ -88,44 +88,42 @@ public class TrackModelController implements Initializable {
         occupancy.setCellValueFactory(new PropertyValueFactory<>("occupancy"));
         blockHeat.setCellValueFactory(new PropertyValueFactory<>("blockHeat"));
        
-        
-        
-        // TODO
-        /*
-        Block dummyTrack1= new Block("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
-        Block dummyTrack2 = new Block("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
-        Block dummyTrack3 = new Block("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
-        Block dummyTrack4 = new Block("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
-        Block dummyTrack5 = new Block("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
-        Block dummyTrack6 = new Block("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
-        Block dummyTrack7 = new Block("Green", "A", 1, 100, 1.5, 55, "", 1, 1, 1.0, 1.0);
-
-        trackTable.getItems().add(dummyTrack1);
-        trackTable.getItems().add(dummyTrack2);
-        trackTable.getItems().add(dummyTrack3);
-        trackTable.getItems().add(dummyTrack4);
-        trackTable.getItems().add(dummyTrack5);
-        trackTable.getItems().add(dummyTrack6);
-        trackTable.getItems().add(dummyTrack7);
-        
-        */
     } 
     
+        // Function used by CTC to get te distance to the destination block 
+    public double getDistance(int start, int end){
+        Block b = getBlockAt("Green", start);
+        Block target = getBlockAt("Green", end);
+        double length = 0.0;
+        while(b.getBlockNumber() != target.getBlockNumber()){
+            length += b.getBlockLength();
+            b = getNextBlock("Green", b.getBlockNumber());
+        }
+        return length;
+    }
+    
+        public void setTrackOccupancy(Block currBlock, Block prevBlock){
+        currBlock.setOccupancy("Train");
+        prevBlock.setOccupancy("");
+        trackTable.refresh();    
+    }
+    
     // Function that will return the next block to the Train Model 
+    // Also called from getDistance 
     public Block getNextBlock(String line, int number){
         Block b = getBlockAt(line, number);
+        
+        //Update GUI and information perteining to track state based on what block
+        //the train is on
+        setTrackOccupancy(b.nextBlock, b);
+        
         return b.nextBlock;
     }
     
     
     //Wrapper function for Train Model to receive information of block, and update GUI
     public Block getCurrentBlock(String line, int number){
-        Block b = getBlockAt(line, number);
-        
-        //Update GUI and information perteining to track state based on what block
-        //the train is on
-        setTrackOccupancy(number);
-        
+        Block b = getBlockAt(line, number);       
         return b;
     }
     
@@ -358,11 +356,6 @@ public class TrackModelController implements Initializable {
         
     }
      
-    public void setTrackOccupancy(int block){
-        Block current = getBlockAt("Green", block);
-        current.setOccupancy("Train");
-        trackTable.refresh();    
-    }
     
     public void FixCircuitButtonClicked(){
         

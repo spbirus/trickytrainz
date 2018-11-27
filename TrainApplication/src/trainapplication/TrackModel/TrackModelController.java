@@ -114,18 +114,18 @@ public class TrackModelController implements Initializable {
     // Function that will return the next block to the Train Model 
     public Block getNextBlock(String line, int number){
         Block b = getBlockAt(line, number);
+        
+        //Update GUI and information perteining to track state based on what block
+        //the train is on
+        setTrackOccupancy(b.nextBlock, b);
+        
         return b.nextBlock;
     }
     
     
     //Wrapper function for Train Model to receive information of block, and update GUI
     public Block getCurrentBlock(String line, int number){
-        Block b = getBlockAt(line, number);
-        
-        //Update GUI and information perteining to track state based on what block
-        //the train is on
-        setTrackOccupancy(number);
-        
+        Block b = getBlockAt(line, number);       
         return b;
     }
     
@@ -358,9 +358,11 @@ public class TrackModelController implements Initializable {
         
     }
      
-    public void setTrackOccupancy(int block){
-        Block current = getBlockAt("Green", block);
-        current.setOccupancy("Train");
+    public void setTrackOccupancy(Block currBlock, Block prevBlock){
+        //Block current = getBlockAt("Green", block);
+        //Block prev = getBlockAt("Green", prevBlock);
+        currBlock.setOccupancy("Train");
+        prevBlock.setOccupancy("");
         trackTable.refresh();    
     }
     

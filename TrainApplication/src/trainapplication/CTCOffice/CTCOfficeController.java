@@ -120,7 +120,7 @@ public class CTCOfficeController implements Initializable {
         trackTableAllBlock.setCellValueFactory(new PropertyValueFactory<>("blockNumber"));
         trackTableAllLength.setCellValueFactory(new PropertyValueFactory<>("blockLength"));
         trackTableAllLimit.setCellValueFactory(new PropertyValueFactory<>("speedLimit"));
-        trackTableAllState.setCellValueFactory(new PropertyValueFactory<>("blockState"));
+        trackTableAllState.setCellValueFactory(new PropertyValueFactory<>("occupancy"));
         trackTableAllLine.setStyle("-fx-alignment: CENTER;");
         trackTableAllSection.setStyle("-fx-alignment: CENTER;");
         trackTableAllBlock.setStyle("-fx-alignment: CENTER;");
@@ -410,6 +410,9 @@ public class CTCOfficeController implements Initializable {
             int newTrainTarget = getTargetBlockFromStation();
             double newTrainAuthority = 100; //100 is a dummy variable for now. have to work with trkMdl get actual distance
             
+            TrackModelController trackModel = (TrackModelController) ta.trkMdl;
+            newTrainAuthority = trackModel.getDistance(0, newTrainTarget);
+            
             ta.addTrain(newTrainNumber, newTrainLine, newTrainSpeed, newTrainTarget, newTrainAuthority);
             Train newTrain = ta.getTrain(newTrainNumber);
             addTrainToQueue(newTrain);
@@ -485,13 +488,13 @@ public class CTCOfficeController implements Initializable {
         //get the initial track information from the track model (if it is loaded in)
         //track data will be returned as an arrayList
         TrackModelController trackModel = (TrackModelController) ta.trkMdl;
-//        
-//        for (Block block : trackModel.redTrack.blockList) {
-//            trackTableAll.getItems().add(block);
-//        }
-//        for (Block block : trackModel.greenTrack.blockList) {
-//            trackTableAll.getItems().add(block);
-//        }
+        
+        for (Block block : trackModel.redTrack.blockList) {
+            trackTableAll.getItems().add(block);
+        }
+        for (Block block : trackModel.greenTrack.blockList) {
+            trackTableAll.getItems().add(block);
+        }
         
         try {
             //dummy info for just testing occupying the track table
@@ -615,8 +618,11 @@ public class CTCOfficeController implements Initializable {
         int number = schedule.trainID;
         int speed = 25; //temp value, not sure how I'm setting this yet
         int targetBlock = schedule.targetBlock[schedule.scheduleIndex];
+        double authority = 100;
+        TrackModelController trackModel = (TrackModelController) ta.trkMdl;
+        authority = trackModel.getDistance(0, targetBlock);
 
-        ta.addTrain(number, line, speed, targetBlock, 100); //dummy 100 as authority for now
+        ta.addTrain(number, line, speed, targetBlock, authority); //dummy 100 as authority for now
         Train train = ta.getTrain(number);
         
         addTrainToQueue(train);

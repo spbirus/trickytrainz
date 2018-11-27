@@ -115,7 +115,7 @@ public class TrainApplication <E> extends Application {
     
     public void addTrain(int id, String line, double suggestedSpeed, int targetBlock, double authority) {
         TrainModelController tr = new TrainModelController();
-        //tr.setTrainApp(ta, id, line, suggestedSpeed, targetBlock, authority);
+        tr.setTrainApp(ta, id, line, suggestedSpeed, targetBlock, authority);
         trainmodels.add(id, tr);
         
         TrainControllerController trc = new TrainControllerController();

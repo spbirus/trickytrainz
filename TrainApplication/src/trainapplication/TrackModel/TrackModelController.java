@@ -50,8 +50,8 @@ public class TrackModelController implements Initializable {
     
     //TODO
     //Update to make new tracks "configurable"
-    public Track greenTrack = new Track("green");
-    public Track redTrack = new Track("red");
+    Track greenTrack = new Track("green");
+    Track redTrack = new Track("red");
     Track testTrack = new Track("test");
     
     

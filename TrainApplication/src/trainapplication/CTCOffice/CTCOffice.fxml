@@ -33,7 +33,7 @@
                                     <TableColumn fx:id="trackTableAllBlock" prefWidth="38.0" text="Block" />
                                     <TableColumn fx:id="trackTableAllLength" prefWidth="67.0" text="Length (ft)" />
                                     <TableColumn fx:id="trackTableAllLimit" prefWidth="111.0" text="Speed Limit (mph)" />
-                                    <TableColumn fx:id="trackTableAllState" prefWidth="81.0" text="State" />
+                                    <TableColumn fx:id="trackTableAllState" prefWidth="81.0" text="Occupancy" />
                                 </columns>
                               </TableView>
                               <Text layoutX="119.0" layoutY="38.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Track Information">

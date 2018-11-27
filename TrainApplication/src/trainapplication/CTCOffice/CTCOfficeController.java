@@ -120,7 +120,7 @@ public class CTCOfficeController implements Initializable {
         trackTableAllBlock.setCellValueFactory(new PropertyValueFactory<>("blockNumber"));
         trackTableAllLength.setCellValueFactory(new PropertyValueFactory<>("blockLength"));
         trackTableAllLimit.setCellValueFactory(new PropertyValueFactory<>("speedLimit"));
-        trackTableAllState.setCellValueFactory(new PropertyValueFactory<>("blockState"));
+        trackTableAllState.setCellValueFactory(new PropertyValueFactory<>("occupancy"));
         trackTableAllLine.setStyle("-fx-alignment: CENTER;");
         trackTableAllSection.setStyle("-fx-alignment: CENTER;");
         trackTableAllBlock.setStyle("-fx-alignment: CENTER;");
@@ -485,13 +485,13 @@ public class CTCOfficeController implements Initializable {
         //get the initial track information from the track model (if it is loaded in)
         //track data will be returned as an arrayList
         TrackModelController trackModel = (TrackModelController) ta.trkMdl;
-//        
-//        for (Block block : trackModel.redTrack.blockList) {
-//            trackTableAll.getItems().add(block);
-//        }
-//        for (Block block : trackModel.greenTrack.blockList) {
-//            trackTableAll.getItems().add(block);
-//        }
+        
+        for (Block block : trackModel.redTrack.blockList) {
+            trackTableAll.getItems().add(block);
+        }
+        for (Block block : trackModel.greenTrack.blockList) {
+            trackTableAll.getItems().add(block);
+        }
         
         try {
             //dummy info for just testing occupying the track table

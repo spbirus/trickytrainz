@@ -334,8 +334,8 @@ public class TrainModelController implements Initializable {
                     //run until there is no distance left
                     // TODO: need to talk to steve about this
                     boolean distanceLeft = true;
-                    while(distanceLeft){
-//                    for(int i = 0; i < 100; i++){
+//                    while(distanceLeft){
+                    for(int i = 0; i < 100; i++){
                         Platform.runLater(new Runnable() {
                             @Override public void run() {
         //                           curSpeed = storedVelocity; //Double.parseDouble(currentSpeedNumber.getText());
@@ -354,7 +354,7 @@ public class TrainModelController implements Initializable {
                                    storedPower = tc.powerVal; //send stuff to steve
                            //        System.out.println("velocity: "+ newSpeed + "mph");
                            
-                                    distanceLeft = tc.distanceLeft();
+//                                    distanceLeft = tc.distanceLeft();
 
                                    currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
                                    requestedPowerNumber.setText(String.valueOf(Math.round(100*storedPower)/100.0));

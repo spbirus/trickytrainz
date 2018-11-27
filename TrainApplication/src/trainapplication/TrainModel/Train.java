@@ -36,7 +36,8 @@ public class Train {
     private double accelLimit =  0.5 * 3.2808399;  //ft/s
     private double deccelLimit = 0; //ft/s
     private double speed;       //
-    private int authority;
+    private int authority; // target block
+    private double total_distance; // a total distance to the target block
     private int block;
     private int target; //destination block
     private int temperature;
@@ -70,6 +71,14 @@ public class Train {
 
     public double getGRAVITY() {
         return GRAVITY;
+    }
+
+    public double getTotal_distance() {
+        return total_distance;
+    }
+
+    public void setTotal_distance(double total_distance) {
+        this.total_distance = total_distance;
     }
 
     public double getFTPS_TO_MPH() {

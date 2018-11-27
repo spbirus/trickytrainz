@@ -110,7 +110,7 @@ public class TrackModelController implements Initializable {
     
     // Function that will return the next block to the Train Model 
     // Also called from getDistance 
-    public Block getNextBlock(String line, int number){
+    public Block getNextBlock(String line, int number, int prevBlock){
         Block b = getBlockAt(line, number);
         
         //Update GUI and information perteining to track state based on what block

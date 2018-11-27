@@ -410,6 +410,9 @@ public class CTCOfficeController implements Initializable {
             int newTrainTarget = getTargetBlockFromStation();
             double newTrainAuthority = 100; //100 is a dummy variable for now. have to work with trkMdl get actual distance
             
+            TrackModelController trackModel = (TrackModelController) ta.trkMdl;
+            newTrainAuthority = trackModel.getDistance(0, newTrainTarget);
+            
             ta.addTrain(newTrainNumber, newTrainLine, newTrainSpeed, newTrainTarget, newTrainAuthority);
             Train newTrain = ta.getTrain(newTrainNumber);
             addTrainToQueue(newTrain);
@@ -615,8 +618,11 @@ public class CTCOfficeController implements Initializable {
         int number = schedule.trainID;
         int speed = 25; //temp value, not sure how I'm setting this yet
         int targetBlock = schedule.targetBlock[schedule.scheduleIndex];
+        double authority = 100;
+        TrackModelController trackModel = (TrackModelController) ta.trkMdl;
+        authority = trackModel.getDistance(0, targetBlock);
 
-        ta.addTrain(number, line, speed, targetBlock, 100); //dummy 100 as authority for now
+        ta.addTrain(number, line, speed, targetBlock, authority); //dummy 100 as authority for now
         Train train = ta.getTrain(number);
         
         addTrainToQueue(train);

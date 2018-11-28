@@ -55,10 +55,14 @@ public class TrackControllerController implements Initializable {
     private int authority=0;
     private double speed=0;
     private PLC plc;
+    int titleNum;
+    @FXML
+    private Label title;
     
-    public void setTrainApp(TrainApplication ta,String plcFile)throws IOException{
+    public void setTrainApp(TrainApplication ta, String plcFile, int titleNum)throws IOException{
         this.ta = ta;
         this.plcFile = plcFile;
+        this.titleNum = titleNum;
         readPLC(plcFile);
     }
     void readPLC(String plcFile)throws IOException{
@@ -67,30 +71,35 @@ public class TrackControllerController implements Initializable {
         String test = scan.nextLine().trim().toLowerCase();
         if(test.equals("merge")){
             mergePresent=true;
-            mergeNum=scan.nextInt();
+            mergeNum=Integer.parseInt(scan.nextLine());
             test=scan.nextLine().trim().toLowerCase();
             if(test.equals("split")){
                 splitPresent=true;
-                splitNum=scan.nextInt();
+                splitNum=Integer.parseInt(scan.nextLine());
                 scan.nextLine();
-                defaultNum=scan.nextInt();
+                defaultNum=Integer.parseInt(scan.nextLine());
             }else{
                 splitPresent=false;
-                splitNum = scan.nextInt();
-                defaultNum = scan.nextInt();
+                splitNum = Integer.parseInt(scan.nextLine());
+                defaultNum = Integer.parseInt(scan.nextLine());
             }
         }else if(test.equals("split")){
             mergePresent=false;
             splitPresent=true;
-            splitNum = scan.nextInt();
+            splitNum = Integer.parseInt(scan.nextLine());
             scan.nextLine();
-            mergeNum = scan.nextInt();
-            defaultNum = scan.nextInt();
+            mergeNum = Integer.parseInt(scan.nextLine());
+            defaultNum = Integer.parseInt(scan.nextLine());
         }
         plc = new PLC(mergePresent, splitPresent);
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        String line = "Green";
+        if(mergePresent && splitPresent)
+            line = "Red";
+        trackName.setText(line);
+        title.setText("Wayside Controller: " + line + " " + titleNum);
         reset();
     }  
     private void reset(){
@@ -104,9 +113,9 @@ public class TrackControllerController implements Initializable {
         else
             signalState.setText("Red");
         if(switchState)
-            outputSwitch.setText("Block #" +splitBlock.getText() + " is Connected to "+ defaultBlock.getText());
+            outputSwitch.setText("Block #" +splitBlock.getText() + " is Connected to Block #"+ defaultBlock.getText());
         else
-            outputSwitch.setText("Block #" +splitBlock.getText() + " is Connected to "+ mergeBlock.getText());
+            outputSwitch.setText("Block #" +splitBlock.getText() + " is Connected to Block #"+ mergeBlock.getText());
         if(crossingBool)
             crossingState.setText("Raised");
         else
@@ -130,48 +139,49 @@ public class TrackControllerController implements Initializable {
     private Label crossingMurphyLabel;
     @FXML
     private Label signalMurphyLabel;
-    @FXML
-    private MenuBar waysideMenuBar;
     
-    @FXML
-    private MenuItem green1;
-    
-    @FXML
-    private MenuItem green2;
-    
-    @FXML
-    private MenuItem green3;
-    
-    @FXML
-    private MenuItem green4;
-    
-    @FXML
-    private MenuItem green5;
-    
-    @FXML
-    private MenuItem green6;
-    
-    @FXML
-    private MenuItem red1;
-    
-    @FXML
-    private MenuItem red2;
-    
-    @FXML
-    private MenuItem red3;
-    
-    @FXML
-    private MenuItem red4;
-    
-    @FXML
-    private MenuItem red5;
-    
-    @FXML
-    private MenuItem red6;
-    
-    @FXML
-    private MenuItem red7;
-    
+//    @FXML
+//    private MenuBar waysideMenuBar;
+//    
+//    @FXML
+//    private MenuItem green1;
+//    
+//    @FXML
+//    private MenuItem green2;
+//    
+//    @FXML
+//    private MenuItem green3;
+//    
+//    @FXML
+//    private MenuItem green4;
+//    
+//    @FXML
+//    private MenuItem green5;
+//    
+//    @FXML
+//    private MenuItem green6;
+//    
+//    @FXML
+//    private MenuItem red1;
+//    
+//    @FXML
+//    private MenuItem red2;
+//    
+//    @FXML
+//    private MenuItem red3;
+//    
+//    @FXML
+//    private MenuItem red4;
+//    
+//    @FXML
+//    private MenuItem red5;
+//    
+//    @FXML
+//    private MenuItem red6;
+//    
+//    @FXML
+//    private MenuItem red7;
+//    
     @FXML
     private Label trackName;
     
@@ -289,12 +299,12 @@ public class TrackControllerController implements Initializable {
     }
     @FXML
     void manDefaultSwitchClick(ActionEvent event) {
-            outputSwitch.setText("Block #" +splitBlock.getText() + " is Connected to "+ defaultBlock.getText());
+            outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #"+ defaultBlock.getText());
             switchState = true;
     }
     @FXML
     void manNotDefaultSwitchClick(ActionEvent event) {
-            outputSwitch.setText("Block #"+splitBlock.getText() +"is Connected to Block #"+mergeBlock.getText());
+            outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #"+mergeBlock.getText());
             switchState = false;
     }
     @FXML
@@ -339,74 +349,10 @@ public class TrackControllerController implements Initializable {
                 
         
 
-    }*/
-    /*public void setSpeedAuthority(double speed, int authority){
+    }
+    public void setSpeedAuthority(double speed, int authority){
         this.speed = speed;
         this.authorityVar = authority;
     }*/
-    /*@FXML
-    void run(ActionEvent event){
-        boolean[] route = {true,true,true,true,true,true,true,true,true,true,true,true,true,true,true};
-        int b=-1;
-        Block current;
-        Block end = blockArray[14];
-        boolean brk = true;
-        while(brk){
-            b++;
-            current= blockArray[b];  
-            if(current.isSwitchPresent()){
-                if(current.isCrossingPresent()){
-                    if(current.isRailState()&&current.isCircuitState()){
-                        current.setCrossingState(true);
-                        current.setSwitchState(route[b]);
-                        current.setSignal("Green");
-                    }else{
-                        brk=sendFailure(route);
-                    }
-                }else{
-                    if(current.isRailState()&&current.isCircuitState()){
-                        current.setSwitchState(route[b]);
-                        current.setSignal("Green");
-                    }else{
-                        brk=sendFailure(route);
-                    }
-                }
-            }else{
-                if(current.isCrossingPresent()){
-                    if(current.isRailState()&&current.isCircuitState()){
-                        current.setCrossingState(true);
-                        current.setSignal("Green");
-                    }else{
-                        brk=sendFailure(route);
-                    }
-                }else{
-                    if(!current.isRailState()||!current.isCircuitState()){
-                        brk=sendFailure(route);
-                    }else{
-                        current.setSignal("Green");
-                    }
-                }
-            }
-            if(current.isBlockEqual(end.getLine(),end.getBlockNumber())){
-                break;
-            }
-        }
-        reset(blockNum);
-    }*/
-    /*private boolean sendFailure(boolean[] route){
-        int b = -1;
-        Block current;
-        Block end = blockArray[14];
-        while(true){
-            b++;
-            current=blockArray[b];
-            current.setSignal("Red");
-            current.setSwitchState(true);
-            current.setCrossingState(true);
-            if(current.isBlockEqual(end.getLine(),end.getBlockNumber())){
-                break;
-            }
-        }
-        return false;
-    }*/
+   
 }

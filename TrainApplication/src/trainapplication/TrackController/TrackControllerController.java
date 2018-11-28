@@ -54,7 +54,7 @@ public class TrackControllerController implements Initializable {
     private String plcFile;
     private int authority=0;
     private double speed=0;
-    private PLC plc;
+    private WaysidePLC plc;
     int titleNum;
     @FXML
     private Label title;
@@ -91,7 +91,7 @@ public class TrackControllerController implements Initializable {
             mergeNum = Integer.parseInt(scan.nextLine());
             defaultNum = Integer.parseInt(scan.nextLine());
         }
-        plc = new PLC(mergePresent, splitPresent);
+        plc = new WaysidePLC(mergePresent, splitPresent);
     }
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -331,28 +331,27 @@ public class TrackControllerController implements Initializable {
         signalBool = false;
         changeColor();
     }
-    /*boolean calculateSwitch(){
+    boolean calculateSwitch(){
         String line = "Green";
         if(mergePresent&&splitPresent){
             line = "Red";
         }
-        boolean test1= plc.calculateSwitch(TrackModel.getBlockAt(line, mergeNum).getTrackCircuit(), TrackModel.getBlockAt(line, splitNum).getTrackCircuit(), Train.getToYard());
-        boolean test2 = plc.calculateSwitch(TrackModel.getBlockAt(line, mergeNum).getTrackCircuit(), TrackModel.getBlockAt(line, splitNum).getTrackCircuit(), Train.getToYard());
-        boolean test3 = plc.calculateSwitch(TrackModel.getBlockAt(line, mergeNum).getTrackCircuit(), TrackModel.getBlockAt(line, splitNum).getTrackCircuit(), Train.getToYard());
+        boolean test1= plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), true);
+        boolean test2 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), true);
+        boolean test3 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), true);
         if(test1==test2)
             return test1;
         else if(test1==test3)
             return test3;
-        else if(test2==test3)
+        else 
             return test2;
-        return true;
                 
         
 
     }
     public void setSpeedAuthority(double speed, int authority){
         this.speed = speed;
-        this.authorityVar = authority;
-    }*/
+        this.authority = authority;
+    }
    
 }

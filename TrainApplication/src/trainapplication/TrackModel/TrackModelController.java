@@ -97,7 +97,7 @@ public class TrackModelController implements Initializable {
         double length = 0.0;
         while(b.getBlockNumber() != target.getBlockNumber()){
             length += b.getBlockLength();
-            b = getNextBlock("Green", b.getBlockNumber());
+            b = getNextBlock("Green", b.getBlockNumber(), -1);
         }
         return length;
     }
@@ -112,6 +112,8 @@ public class TrackModelController implements Initializable {
     // Also called from getDistance 
     public Block getNextBlock(String line, int number, int prevBlock){
         Block b = getBlockAt(line, number);
+        //prevBlock is -1 is
+        
         
         //Update GUI and information perteining to track state based on what block
         //the train is on
@@ -162,7 +164,7 @@ public class TrackModelController implements Initializable {
                 int  trackBlock = Integer.parseInt(trackDataString[2]);
                 double trackBlockLength = Double.parseDouble(trackDataString[3]);
                 double trackBlockGrade = Double.parseDouble(trackDataString[4]);
-                int trackSpeedLimit = Integer.parseInt(trackDataString[5]);
+                double trackSpeedLimit = Double.parseDouble(trackDataString[5]);
                 String trackInfrastructure = trackDataString[6];
                 int trackNextInbound = Integer.parseInt(trackDataString[7]);
                 int trackNextOutbound = Integer.parseInt(trackDataString[8]);

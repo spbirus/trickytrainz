@@ -172,6 +172,12 @@ public class TrainControllerController implements Initializable {
     double kp;
     double DEFAULT_KP = 50;
     double DEFAULT_KI = .0038; //.0052 for 10 mph .004 for 25 mph .0038 for 50 mph
+    public boolean isDistanceLeft = true;
+    public double distanceLeft;
+    public double distanceTraveled = 0;
+    public double distanceTraveledInBlock = 0;
+    
+    
     
     double currSpeedVal;
     public double setpointSpeedVal = 0;
@@ -255,7 +261,7 @@ public class TrainControllerController implements Initializable {
                       @Override public void run() {
                           //=================function call======================
                            
-                          calculatePower();
+                          //calculatePower();
                           
                           
                           //====================================================
@@ -286,9 +292,9 @@ public class TrainControllerController implements Initializable {
 //            calculatePower();
 //        }
     }
-    public void calculatePower(){
+    public void calculatePower(double blockDistance){
         
-       
+        
         speedErr = setpointSpeedVal*MPH_MS - currSpeedVal*MPH_MS;
         
         
@@ -329,10 +335,18 @@ public class TrainControllerController implements Initializable {
         }
 //        System.out.println("Old Power Val: " + oldPowerVal);
 //        System.out.println("Power Val: " + powerVal);
-        
-        
-        
-        
+        distanceTraveledInBlock += currSpeedVal * MPH_FPS * t.getDeltaT();
+        distanceLeft = blockDistance - distanceTraveledInBlock;
+        if(distanceLeft <= 0){
+            isDistanceLeft = false;
+            distanceTraveled+=distanceTraveledInBlock;
+            distanceTraveledInBlock = 0;
+        }
+            
+//        double distanceNeededToStop_ft = calculateDistanceToStop(currSpeedVal);
+//        if(distanceNeededToStop_ft > distanceLeft){
+//            
+//        }
         
         //========FOR TESTING PURPOSES================
         
@@ -356,6 +370,12 @@ public class TrainControllerController implements Initializable {
         
         
         
+    }
+    double calculateDistanceToStop(double currentSpeed){
+        double s_mph = currentSpeed;
+        double s_fps = s_mph*MPH_FPS;
+        double d_ft = Math.pow(s_fps,2)/(2.0*(1.2 * 3.2808399));  
+        return d_ft;
     }
     @FXML
     void turnLightsOff(ActionEvent event) {

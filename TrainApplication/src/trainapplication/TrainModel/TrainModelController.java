@@ -329,6 +329,7 @@ public class TrainModelController implements Initializable {
                     //set the block of the train
                     Block curr = ta.trkMdl.getCurrentBlock(t.getLine(), t.getBlock());
                     System.out.println("Current block: " + curr.getBlockNumber());
+                    double bLength = curr.getBlockLength();
                     t.setBlock(curr.getBlockNumber());
                     
                     //run until there is no distance left
@@ -350,7 +351,7 @@ public class TrainModelController implements Initializable {
                                    double newSpeed = t.calculateVelocity(storedPower, storedVelocity, 0, 0, 300, passengers);
                                    storedVelocity = newSpeed;
                                    tc.setCurrentSpeed(storedVelocity); //send stuff to steve
-                                   tc.calculatePower(curr.getBlockLength());
+                                   tc.calculatePower(bLength);
                                    storedPower = tc.powerVal; //send stuff to steve
                            //        System.out.println("velocity: "+ newSpeed + "mph");
                                   

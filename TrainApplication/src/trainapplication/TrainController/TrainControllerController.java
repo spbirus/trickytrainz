@@ -337,6 +337,10 @@ public class TrainControllerController implements Initializable {
 //        System.out.println("Power Val: " + powerVal);
         distanceTraveledInBlock += currSpeedVal * MPH_FPS * t.getDeltaT();
         distanceLeft = blockDistance - distanceTraveledInBlock;
+        System.out.println("\tblockDistance: "+blockDistance);
+        System.out.println("\tdistanceTraveled: "+distanceTraveled);
+        System.out.println("\tdistanceTraveledInBlock: " + distanceTraveledInBlock);
+        System.out.println("\tdistanceLeft: " + distanceLeft);
         if(distanceLeft <= 0){
             isDistanceLeft = false;
             distanceTraveled+=distanceTraveledInBlock;

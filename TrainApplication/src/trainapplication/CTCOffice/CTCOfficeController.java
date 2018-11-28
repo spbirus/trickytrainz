@@ -408,10 +408,10 @@ public class CTCOfficeController implements Initializable {
             String newTrainLine = newTrainLineBox.getValue();
             double newTrainSpeed = (int) suggestedSpeedSlider.getValue();
             int newTrainTarget = getTargetBlockFromStation();
-            double newTrainAuthority = 100; //100 is a dummy variable for now. have to work with trkMdl get actual distance
+            double newTrainAuthority = 1000; //100 is a dummy variable for now. have to work with trkMdl get actual distance
             
             TrackModelController trackModel = (TrackModelController) ta.trkMdl;
-            newTrainAuthority = trackModel.getDistance(0, newTrainTarget);
+//            newTrainAuthority = trackModel.getDistance(0, newTrainTarget);
             
             ta.addTrain(newTrainNumber, newTrainLine, newTrainSpeed, newTrainTarget, newTrainAuthority);
             Train newTrain = ta.getTrain(newTrainNumber);

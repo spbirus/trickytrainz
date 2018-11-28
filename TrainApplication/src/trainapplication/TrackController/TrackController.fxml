@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -16,28 +15,11 @@
    <children>
       <AnchorPane layoutX="14.0" layoutY="6.0" prefHeight="26.0" prefWidth="766.0" style="-fx-background-color: #bdc3c7;">
          <children>
-            <Label layoutX="299.0" layoutY="-4.0" text="Track Controller">
+            <Label fx:id="title" layoutX="299.0" layoutY="-4.0" text="Track Controller">
                <font>
                   <Font size="24.0" />
                </font>
             </Label>
-            <MenuButton layoutX="611.0" layoutY="4.0" mnemonicParsing="false" text="Track Controller #">
-              <items>
-                <MenuItem fx:id="green1" mnemonicParsing="false" text="Green 1" />
-                <MenuItem fx:id="green2" mnemonicParsing="false" text="Green 2" />
-                  <MenuItem fx:id="green3" mnemonicParsing="false" text="Green 3" />
-                  <MenuItem fx:id="green4" mnemonicParsing="false" text="Green 4" />
-                  <MenuItem fx:id="green5" mnemonicParsing="false" text="Green 5" />
-                  <MenuItem fx:id="green6" mnemonicParsing="false" text="Green 6" />
-                  <MenuItem fx:id="red1" mnemonicParsing="false" text="Red 1" />
-                  <MenuItem fx:id="red2" mnemonicParsing="false" text="Red 2" />
-                  <MenuItem fx:id="red3" mnemonicParsing="false" text="Red 3" />
-                  <MenuItem fx:id="red4" mnemonicParsing="false" text="Red 4" />
-                  <MenuItem fx:id="red5" mnemonicParsing="false" text="Red 5" />
-                  <MenuItem fx:id="red6" mnemonicParsing="false" text="Red 6" />
-                  <MenuItem fx:id="red7" mnemonicParsing="false" text="Red 7" />
-              </items>
-            </MenuButton>
          </children>
       </AnchorPane>
       <AnchorPane id="AnchorPane" layoutY="37.0" prefHeight="612.0" prefWidth="782.0">

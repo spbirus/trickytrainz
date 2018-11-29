@@ -343,27 +343,31 @@ public class TrainControllerController implements Initializable {
         }
 //        System.out.println("Old Power Val: " + oldPowerVal);
 //        System.out.println("Power Val: " + powerVal);
+        
         distanceTraveledInBlock += currSpeedVal * MPH_FPS * t.getDeltaT();
         distanceLeft = blockDistance - distanceTraveledInBlock;
-        System.out.println("\tblockDistance: "+blockDistance);
-        System.out.println("\tdistanceTraveled: "+distanceTraveled);
-        System.out.println("\tdistanceTraveledInBlock: " + distanceTraveledInBlock);
-        System.out.println("\tdistanceLeft: " + distanceLeft);
+//        System.out.println("\tblockDistance: "+blockDistance);
+//        System.out.println("\tdistanceTraveled: "+distanceTraveled);
+//        System.out.println("\tdistanceTraveledInBlock: " + distanceTraveledInBlock);
+//        System.out.println("\tdistanceLeft: " + distanceLeft);
         if(distanceLeft <= 0){
             isDistanceLeft = false;
-            distanceTraveled+=distanceTraveledInBlock;
+            distanceTraveled+=blockDistance;
             distanceTraveledInBlock = 0;
         }
             
-//        double distanceNeededToStop_ft = calculateDistanceToStop(currSpeedVal);
-//        if(distanceNeededToStop_ft > distanceLeft){
-//            
-//        }
+        double distanceNeededToStop_ft = calculateDistanceToStop(currSpeedVal);
+        
+//        System.out.println("\tdistance stopping: " + distanceNeededToStop_ft + "    " + (t.getAuthority()-distanceTraveled-distanceTraveledInBlock));
+        if(distanceNeededToStop_ft > (t.getAuthority()-distanceTraveled-distanceTraveledInBlock)){
+            System.out.println("\t\tService brakes engaged");
+            t.setBrakes(1); //set the service brake
+        }
         
         //========FOR TESTING PURPOSES================
         
         double currSpeedValNew = t.calculateVelocity(powerVal, currSpeedVal, 0, 0, setpointSpeedVal, 50);
-//        System.out.println("Current Speed according to Train Model: "+currSpeedValNew);
+//        System.out.println("\t\tCurrent Speed according to Train Model: "+currSpeedValNew);
         //============================================
                 
         //=====================set my GUI values================================

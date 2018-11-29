@@ -292,7 +292,15 @@ public class TrainControllerController implements Initializable {
 //            calculatePower();
 //        }
     }
-    public void calculatePower(double blockDistance){
+    
+    public double blockDistance = 0;
+
+    public void setBlockDistance(double blockDistance) {
+        this.blockDistance = blockDistance;
+    }
+    
+    
+    public void calculatePower(){
         
         
         speedErr = setpointSpeedVal*MPH_MS - currSpeedVal*MPH_MS;

@@ -12,6 +12,8 @@ import trainapplication.TrainControllerController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -324,12 +326,15 @@ public class TrainModelController implements Initializable {
         tc = (TrainControllerController) ta.trainctrs.get(t.getNumber());
         Task <Void> task = new Task<Void>() {
             @Override public Void call() throws InterruptedException {
+                Thread.sleep(2000); // needed to load the first block
                 boolean atYard = false;
                 while(!atYard){
                     //set the block of the train
+                    
                     Block curr = ta.trkMdl.getCurrentBlock(t.getLine(), t.getBlock());
                     System.out.println("Current block: " + curr.getBlockNumber());
                     double bLength = curr.getBlockLength();
+                    tc.setBlockDistance(bLength);
                     t.setBlock(curr.getBlockNumber());
                     
                     //run until there is no distance left
@@ -344,14 +349,14 @@ public class TrainModelController implements Initializable {
                                    if(storedPower > 120){ //check for the max power
                                        storedPower = 120.00;
                                    }
-                                   
+                                
 //                                   System.out.println(storedPower);
                                    int passengers = Integer.parseInt(passengerNumber.getText());
 
                                    double newSpeed = t.calculateVelocity(storedPower, storedVelocity, 0, 0, 300, passengers);
                                    storedVelocity = newSpeed;
                                    tc.setCurrentSpeed(storedVelocity); //send stuff to steve
-                                   tc.calculatePower(bLength);
+                                   tc.calculatePower();
                                    storedPower = tc.powerVal; //send stuff to steve
                            //        System.out.println("velocity: "+ newSpeed + "mph");
                                   

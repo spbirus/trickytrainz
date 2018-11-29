@@ -22,7 +22,7 @@ public class Block {
     private int blockNumber;
     private double blockLength;
     private double blockGrade;
-    private int speedLimit;
+    private double speedLimit;
     private String infrastructure;
     private double elevation;
     private double cumElevation;
@@ -61,7 +61,7 @@ public class Block {
     
     
     //Data from csv file
-    public Block(String line, String section, int blockNumber, double blockLength, double blockGrade, int speedLimit, String infrastructure, int nextInbound, int nextOutbound, double elevation, double cumElevation) {
+    public Block(String line, String section, int blockNumber, double blockLength, double blockGrade, double speedLimit, String infrastructure, int nextInbound, int nextOutbound, double elevation, double cumElevation) {
         this.line = line;
         this.section = section;
         this.blockNumber = blockNumber;
@@ -146,7 +146,7 @@ public class Block {
         this.blockGrade = blockGrade;
     }
 
-    public int getSpeedLimit() {
+    public double getSpeedLimit() {
         return speedLimit;
     }
 

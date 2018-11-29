@@ -132,10 +132,6 @@ public class TrainControllerController implements Initializable {
     @FXML
     private Button setDefaultKValsButton;
     
-    @FXML
-    private MenuButton trainNumDropdown;
-
-
      @FXML
     void onTrainSelectionClick(ActionEvent event) {
 
@@ -159,6 +155,7 @@ public class TrainControllerController implements Initializable {
      
     //==========================Speed and Power Variables ======================
     private final double MAX_POWER = 120; //kW
+    private final double serviceBrakeDecel = 1.2 * 3.2808399; //ft/s^2
     final double FPS_MS = 0.3048;
     final double MPH_MS = 0.44704;
     final double MPH_FPS = 1.46667;  
@@ -389,8 +386,10 @@ public class TrainControllerController implements Initializable {
     }
     double calculateDistanceToStop(double currentSpeed){
         double s_mph = currentSpeed;
-        double s_fps = s_mph*MPH_FPS;
-        double d_ft = Math.pow(s_fps,2)/(2.0*(1.2 * 3.2808399));  
+        double s_ms = s_mph*MPH_MS;
+        double decel_ms = serviceBrakeDecel*0.3048;
+        double d_m = Math.pow(s_ms,2)/(2.0*decel_ms);  
+        double d_ft = d_m/.3048;
         return d_ft;
     }
     @FXML

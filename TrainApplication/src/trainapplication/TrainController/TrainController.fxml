@@ -5,7 +5,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
@@ -357,12 +356,6 @@
             </Menu>
          </menus>
       </MenuBar>
-      <MenuButton fx:id="trainNumDropdown" layoutX="11.0" layoutY="44.0" mnemonicParsing="false" onAction="#onTrainSelectionClick" text="Train #">
-         <items>
-            <MenuItem mnemonicParsing="false" text="Action 1" />
-            <MenuItem mnemonicParsing="false" text="Action 2" />
-         </items>
-      </MenuButton>
       <CheckBox fx:id="testPanelCheck" layoutX="634.0" layoutY="44.0" mnemonicParsing="false" onAction="#onTestClick" text="Enable Test Panel" />
    </children>
 </AnchorPane>

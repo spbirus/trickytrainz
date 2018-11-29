@@ -481,6 +481,17 @@ public class CTCOfficeController implements Initializable {
     @FXML
     void getThroughputButtonClick(ActionEvent event) {
         //get throughput information from Track Controller
+        /*
+        do stuff here
+        */
+        
+        //display throughput information
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Displaying Throughput");
+        alert.setHeaderText("Throughput across all lines: " + allLineThroughput);
+        alert.setContentText("Throughput across red line: " + redLineThroughput + 
+                "Throughput across green line: " + greenLineThroughput);
+        alert.show();
     }
 
 
@@ -585,7 +596,7 @@ public class CTCOfficeController implements Initializable {
         tModelCont.runTrain();
         
         TrackControllerController tContCont = (TrackControllerController) ta.trkCtr;
-        tContCont.setSpeedAuthority(dispatchSpeed, dispatchTargetBlock);
+        tContCont.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
         
         //
         Schedule schedule = getScheduleInfoFromTrainTableSelected(train);
@@ -596,10 +607,6 @@ public class CTCOfficeController implements Initializable {
         System.out.println("departure time: " + timeFormat.format(schedule.dispatchTime));
         System.out.println("arrival time: " + timeFormat.format(arrivalTime));
 
-        //***************************
-        //HERE I NEED TO SEND SUGGESTED SPEED AND AUTHORITY
-        
-        //**************************
         
         //popup box with CTC dispatch info
         Alert alert = new Alert(AlertType.INFORMATION);
@@ -669,8 +676,23 @@ public class CTCOfficeController implements Initializable {
     }
 
     //updates outbound table when a train reaches its target
-    private void updateTrainTable() {
+    public void updateTrainTable() {
 
+    }
+    
+    //updates tracks as trains move on it
+    public void updateTrackTable() {
+        
+    }
+    
+    //dispatch a train that is already outbound and not in the yard
+    public void dispatchTrainFromStation() {
+        
+    }
+    
+    //when a train returns to the yard after driving for long enough
+    public void removeTrainFromOutbound() {
+        
     }
 
     //get the schedule associated with the selected train
@@ -693,13 +715,6 @@ public class CTCOfficeController implements Initializable {
         return schedule;
     }
     
-    /*
-    get the speed and authority of the train that is being dispatched
-    part of dispatching train when sending that info to a track controller
-    */
-    private void getSpeedAuthority() {
-        //this might not be used - depends on if track controller needs to call this itself
-    }
     
     //get the target block value of the station of what is entered in the user field
     private int getTargetBlockFromStation() {

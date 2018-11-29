@@ -45,6 +45,7 @@ public class TrackControllerController implements Initializable {
     private int mergeNum=0;
     private int splitNum=0;
     private int defaultNum=0;
+    private int id=0;
     private boolean mergePresent=false;
     private boolean splitPresent=false;
     private boolean occupied=false;
@@ -336,20 +337,31 @@ public class TrackControllerController implements Initializable {
         if(mergePresent&&splitPresent){
             line = "Red";
         }
-        boolean test1= plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), true);
-        boolean test2 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), true);
-        boolean test3 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), true);
+        boolean toYard = true;
+        if(splitPresent){
+            double distToYard = ta.trkMdl.getDistance(57, 0);
+            double authority = ta.getTrain(id).getAuthority();
+            if(authority>distToYard){
+                toYard=false;
+            }
+        }
+        
+        boolean test1= plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
+        boolean test2 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
+        boolean test3 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
         if(test1==test2)
-            return test1;
+            switchState = test1;
         else if(test1==test3)
-            return test3;
-        else 
-            return test2;
+            switchState = test3;
+        else
+            switchState = test2;
+        return switchState;
                 
         
 
     }
-    public void setSpeedAuthority(double speed, int authority){
+    public void setSpeedAuthority(int id, double speed, int authority){
+        this.id = id;
         this.speed = speed;
         this.authority = authority;
     }

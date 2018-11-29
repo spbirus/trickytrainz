@@ -78,22 +78,23 @@ public class TrainModelController implements Initializable {
         
         //initialize the information in the main section 
         trackId.setText(String.valueOf(t.getLine()));
-        lengthId.setText(String.valueOf(t.getLength()));
-        widthId.setText(String.valueOf(t.getWidth()));
-        massId.setText(String.valueOf(t.getTotalMass()));
+        lengthId.setText(String.valueOf(Math.floor(t.getLength() * 100) / 100));
+        widthId.setText(String.valueOf(Math.floor(t.getWidth() * 100) / 100));
+        massId.setText(String.valueOf(Math.floor(t.getTotalMass() * 100) / 100));
         crewId.setText(String.valueOf(t.getCrewNum()));
         passengerId.setText(String.valueOf(t.getPassNum()));
         maxCapId.setText(String.valueOf(t.getMaxCap()));
         carId.setText(String.valueOf(t.getCarNum()));
         doorId.setText(String.valueOf(t.getDoorNum()));
-        accelId.setText(String.valueOf(t.getAccelLimit()));
-        decelId.setText(String.valueOf(t.getDeccelLimit()));
+        accelId.setText(String.valueOf(Math.floor(t.getAccelLimit() * 100) / 100));
+        decelId.setText(String.valueOf(Math.floor(t.getDeccelLimit() * 100) / 100));
         trainId.setText(String.valueOf(t.getNumber()));
         tempId.setText(String.valueOf(t.getTemperature()));
 
         //initialize some of the other data
         passengerNumber.setText(String.valueOf(t.getPassNum()));
         currentSpeedNumber.setText(String.valueOf(t.getSpeed()));
+        setpointSpeedBox.setText(String.valueOf(t.getSpeed()));
         //power requested will come from train controller
 
     }   
@@ -327,8 +328,8 @@ public class TrainModelController implements Initializable {
         Task <Void> task = new Task<Void>() {
             @Override public Void call() throws InterruptedException {
                 Thread.sleep(2000); // needed to load the first block
-                boolean atYard = false;
-                while(!atYard){
+                boolean atAuthority = false;
+                while(!atAuthority){
                     //set the block of the train
                     
                     Block curr = ta.trkMdl.getCurrentBlock(t.getLine(), t.getBlock());
@@ -373,8 +374,8 @@ public class TrainModelController implements Initializable {
                     System.out.println("Next block: " + next.getBlockNumber());
                     t.setBlock(next.getBlockNumber());
                     //set at yard
-                    if(t.getBlock() == 0){
-                        atYard = true;
+                    if(t.getBlock() == t.getTarget()){
+                        atAuthority = true;
                     }
                 }
 

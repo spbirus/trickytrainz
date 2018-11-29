@@ -412,7 +412,8 @@ public class CTCOfficeController implements Initializable {
             double newTrainAuthority = 1000; //100 is a dummy variable for now. have to work with trkMdl get actual distance
             
             TrackModelController trackModel = (TrackModelController) ta.trkMdl;
-//            newTrainAuthority = trackModel.getDistance(0, newTrainTarget);
+            newTrainAuthority = trackModel.getDistance(0, newTrainTarget);
+            System.out.println("Total Distance: " + newTrainAuthority);
             
             ta.addTrain(newTrainNumber, newTrainLine, newTrainSpeed, newTrainTarget, newTrainAuthority);
             Train newTrain = ta.getTrain(newTrainNumber);
@@ -595,7 +596,7 @@ public class CTCOfficeController implements Initializable {
         TrainModelController tModelCont = (TrainModelController) ta.trainmodels.get(dispatchNumber);
         tModelCont.runTrain();
         
-        TrackControllerController tContCont = (TrackControllerController) ta.trkCtr;
+        TrackControllerController tContCont = (TrackControllerController) ta.trkCtr6;
         tContCont.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
         
         //

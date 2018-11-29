@@ -16,10 +16,42 @@ public class Track {
     private String line;
     private int[] switches;
     private int[] stations;
+    private Block occupiedBlock;
+    private Block previousBlock;
+
+    public int[] getSwitches() {
+        return switches;
+    }
+
+    public void setSwitches(int[] switches) {
+        this.switches = switches;
+    }
+
+    public Block getOccupiedBlock() {
+        return occupiedBlock;
+    }
+
+    public void setOccupiedBlock(Block occupiedBlock) {
+        this.occupiedBlock = occupiedBlock;
+    }
+
+    public Block getPreviousBlock() {
+        return previousBlock;
+    }
+
+    public void setPreviousBlock(Block previousBlock) {
+        this.previousBlock = previousBlock;
+    }
     public ArrayList<Block> blockList = new ArrayList<Block>();
+    
     
     public Track(String line){
        this.line = line;
+       int[] greenSwitches = {62, 76, 100, 29, 1, 57};
+       if(line.equals("Green")){
+           setSwitches(greenSwitches);
+       }
+           
     }
     
     public void setSwitchState(int block){

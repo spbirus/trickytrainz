@@ -103,7 +103,7 @@ public class TrackControllerController implements Initializable {
         title.setText("Wayside Controller: " + line + " " + titleNum);
         reset();
     }  
-    private void reset(){
+    public void reset(){
         mergeBlock.setText(Integer.toString(this.mergeNum));
         splitBlock.setText(Integer.toString(this.splitNum));
         defaultBlock.setText(Integer.toString(this.defaultNum));
@@ -332,7 +332,7 @@ public class TrackControllerController implements Initializable {
         signalBool = false;
         changeColor();
     }
-    boolean calculateSwitch(){
+    public boolean calculateSwitch(){
         String line = "Green";
         if(mergePresent&&splitPresent){
             line = "Red";
@@ -347,14 +347,14 @@ public class TrackControllerController implements Initializable {
         }
         
         boolean test1= plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
-        boolean test2 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
-        boolean test3 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
-        if(test1==test2)
+        //boolean test2 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
+        //boolean test3 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
+        //if(test1==test2)
             switchState = test1;
-        else if(test1==test3)
-            switchState = test3;
-        else
-            switchState = test2;
+        //else if(test1==test3)
+          //  switchState = test3;
+        //else
+          //  switchState = test2;
         return switchState;
                 
         
@@ -364,6 +364,7 @@ public class TrackControllerController implements Initializable {
         this.id = id;
         this.speed = speed;
         this.authority = authority;
+        reset();
     }
    
 }

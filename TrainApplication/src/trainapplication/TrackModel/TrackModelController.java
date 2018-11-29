@@ -47,7 +47,7 @@ public class TrackModelController implements Initializable {
     //
     ArrayList<Track> trackList = new ArrayList<Track>();
     ArrayList<Block> sortedTrackList = new ArrayList<Block>();
-    
+    public int[] keyBlocks = {62, 76, 100, 29, 1, 57};
     //TODO
     //Update to make new tracks "configurable"
     public Track greenTrack = new Track("green");
@@ -108,7 +108,11 @@ public class TrackModelController implements Initializable {
     
     public void setTrackOccupancy(Block currBlock, Block prevBlock){
         currBlock.setOccupancy("Train");
+        greenTrack.setOccupiedBlock(currBlock);
+        currBlock.setBlockOccupancy(true);
         prevBlock.setOccupancy("");
+        greenTrack.setPreviousBlock(prevBlock);
+        prevBlock.setBlockOccupancy(false);
         trackTable.refresh();    
     }
     
@@ -144,17 +148,35 @@ public class TrackModelController implements Initializable {
         }
         //System.out.println("Current Block " + b.getBlockNumber());
         //System.out.println("Next Block " + next.getBlockNumber());
-        
+        boolean switchState = false;
+        boolean switchPresent = false;
         setTrackOccupancy(next, b);
         
+        
+        
+        for( int i = 0; i < keyBlocks.length; i++){
+            if(next.getBlockNumber() == keyBlocks[i] || b.getBlockNumber() == keyBlocks[i]){
+                switchState = ta.trkCtr[i].calculateSwitch();
+                System.out.print("\n\n\n\n" + switchState + "\n\n\n\n\n\n");
+                switchPresent = (i == 5);
+            }
+        }
+        
+        if(switchPresent){
+            if(switchState){
+                next = getBlockAt("Green", 58);
+                next.setOccupancy("Train");
+                next.setBlockOccupancy(true);
+                greenTrack.setOccupiedBlock(next);
+                getBlockAt("Green",0).setOccupancy("");
+                getBlockAt("Green",0).setBlockOccupancy(false);
+                return next;
+            }
+        }
         return b.nextBlock;
     }
     
-        public void setTrackOccupancy(Block currBlock, Block prevBlock){
-        currBlock.setOccupancy("Train");
-        prevBlock.setOccupancy("");
-        trackTable.refresh();    
-    }
+
     
     //Wrapper function for Train Model to receive information of block, and update GUI
     public Block getCurrentBlock(String line, int number){
@@ -284,6 +306,16 @@ public class TrackModelController implements Initializable {
 //        }
 //        
 //        trackList = temp;
+
+
+    Block b = greenTrack.getOccupiedBlock();
+    Block prev = greenTrack.getPreviousBlock();
+    while(!b.getInfrastructure().equals("SWITCH") || b.getBlockNumber() != 57){
+        b = getNextBlock("Green", b.getBlockNumber(), prev.getBlockNumber());
+        prev = b;
+    }
+    //Open switch on Block b
+    
     }
     
     public void FilterResetButtonClicked(){

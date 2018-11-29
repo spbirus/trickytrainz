@@ -64,9 +64,9 @@ public class WaysidePLC {
          }else if(split){
              if(splitTrackCircuit){
                  if(toYard){
-                     switchState=true;
-                 }else{
                      switchState=false;
+                 }else{
+                     switchState=true;
                  }
              }
          }

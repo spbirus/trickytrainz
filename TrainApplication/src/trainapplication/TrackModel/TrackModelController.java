@@ -94,15 +94,19 @@ public class TrackModelController implements Initializable {
     public double getDistance(int start, int end){
         Block b = getBlockAt("Green", start);
         Block target = getBlockAt("Green", end);
+        Block prev = getBlockAt("Green", 0);
         double length = 0.0;
+        System.out.println("Target; " + end);
         while(b.getBlockNumber() != target.getBlockNumber()){
             length += b.getBlockLength();
-            b = getNextBlock("Green", b.getBlockNumber(), -1);
+            b = getNextBlock("Green", b.getBlockNumber(), prev.getBlockNumber());
+            System.out.println("Distance Block: " + b.getBlockNumber());
+            prev = b;
         }
         return length;
     }
     
-        public void setTrackOccupancy(Block currBlock, Block prevBlock){
+    public void setTrackOccupancy(Block currBlock, Block prevBlock){
         currBlock.setOccupancy("Train");
         prevBlock.setOccupancy("");
         trackTable.refresh();    
@@ -112,16 +116,45 @@ public class TrackModelController implements Initializable {
     // Also called from getDistance 
     public Block getNextBlock(String line, int number, int prevBlock){
         Block b = getBlockAt(line, number);
-        //prevBlock is -1 is
-        
-        
+        Block prev = getBlockAt(line, prevBlock);
+        Block next = null;
         //Update GUI and information perteining to track state based on what block
         //the train is on
-        setTrackOccupancy(b.nextBlock, b);
+        if(line.equals("Green")){
+            if(b.getBlockDirection() == 2 && b.getSection().equals("N")){
+               if(prev.getBlockNumber() < b.getBlockNumber()){
+                   //outbound (towards O)
+                   next = b.previousBlock;
+               }else{
+                   //inbound (towards R)
+                   next = b.nextBlock;
+               }
+            }else if(b.getBlockDirection() == 2){
+                //Train is on section D, E, or F
+                if(prev.getBlockNumber() < b.getBlockNumber()){
+                    //inbound
+                    next = b.nextBlock;
+                }else{
+                    //outbound
+                    next = b.previousBlock;
+                }
+            }else{
+                next = b.nextBlock;
+            }
+        }
+        //System.out.println("Current Block " + b.getBlockNumber());
+        //System.out.println("Next Block " + next.getBlockNumber());
+        
+        setTrackOccupancy(next, b);
         
         return b.nextBlock;
     }
     
+        public void setTrackOccupancy(Block currBlock, Block prevBlock){
+        currBlock.setOccupancy("Train");
+        prevBlock.setOccupancy("");
+        trackTable.refresh();    
+    }
     
     //Wrapper function for Train Model to receive information of block, and update GUI
     public Block getCurrentBlock(String line, int number){

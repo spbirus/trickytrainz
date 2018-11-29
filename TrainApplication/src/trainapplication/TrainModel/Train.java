@@ -52,6 +52,7 @@ public class Train {
     private int numberOfWheels = 12; //will probably need to change
     private final double coefficientOfFriction = 0.00035; //from  https://en.wikipedia.org/wiki/Rolling_resistance#Rolling_resistance_coefficient_examples
     private int direction; // 0 and 1
+    private int brakes = 0;
 
     //for CTC
     public Train(String line, int number, double speed, int target, double authority) {
@@ -60,6 +61,14 @@ public class Train {
         this.speed = speed;
         this.target = target;
         this.authority = authority;
+    }
+
+    public int getBrakes() {
+        return brakes;
+    }
+
+    public void setBrakes(int brakes) {
+        this.brakes = brakes;
     }
 
     public int getPreviousBlock() {
@@ -333,10 +342,10 @@ public class Train {
         
         //brakes = 3 emergency brake is pulled
         //brakes = 1 service brake is pulled
-        if(brake == 3){
+        if(brakes == 3){
             trainAccel -= emergencyBrakeDecel;
         }
-        if(brake == 1){
+        if(brakes == 1){
             trainAccel -= serviceBrakeDecel;
         }
         

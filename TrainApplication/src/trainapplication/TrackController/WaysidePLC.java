@@ -9,13 +9,13 @@ package trainapplication.TrackController;
  *
  * @author jonat
  */
-public class PLC {
+public class WaysidePLC {
     private boolean merge;
     private boolean split;
     private boolean switchState=true;
     private boolean crossingState;
     private boolean signalState;
-    PLC(boolean merge,boolean split){
+    WaysidePLC(boolean merge,boolean split){
         this.merge=merge;
         this.split=split;
     }

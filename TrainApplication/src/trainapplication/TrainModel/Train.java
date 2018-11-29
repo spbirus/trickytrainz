@@ -36,8 +36,9 @@ public class Train {
     private double accelLimit =  0.5 * 3.2808399;  //ft/s
     private double deccelLimit = 0; //ft/s
     private double speed;       //
-    private int authority;
-    private int block;
+    private double authority; // total distance
+    private int block = 0;
+    private int previousBlock = 0;
     private int target; //destination block
     private int temperature;
     
@@ -53,11 +54,20 @@ public class Train {
     private int direction; // 0 and 1
 
     //for CTC
-    public Train(String line, int number, double speed, int authority) {
+    public Train(String line, int number, double speed, int target, double authority) {
         this.line = line;
         this.number = number;
         this.speed = speed;
+        this.target = target;
         this.authority = authority;
+    }
+
+    public int getPreviousBlock() {
+        return previousBlock;
+    }
+
+    public void setPreviousBlock(int previousBlock) {
+        this.previousBlock = previousBlock;
     }
 
     public double getM_TO_MI() {
@@ -244,7 +254,7 @@ public class Train {
         this.speed = speed;
     }
 
-    public int getAuthority() {
+    public double getAuthority() {
         return authority;
     }
 
@@ -257,6 +267,7 @@ public class Train {
     }
 
     public void setBlock(int block) {
+        this.previousBlock = this.block;
         this.block = block;
     }
 

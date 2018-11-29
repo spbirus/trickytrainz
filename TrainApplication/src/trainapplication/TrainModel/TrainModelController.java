@@ -66,9 +66,9 @@ public class TrainModelController implements Initializable {
         
     }
     
-    public void setTrainApp(TrainApplication ta, int id, String line, double suggestedSpeed, int targetBlock) {
+    public void setTrainApp(TrainApplication ta, int id, String line, double suggestedSpeed, int targetBlock, double authority) {
         this.ta = ta;
-        t = new Train(line, id, suggestedSpeed, targetBlock);
+        t = new Train(line, id, suggestedSpeed, targetBlock, authority);
     }
     
     @Override
@@ -329,12 +329,13 @@ public class TrainModelController implements Initializable {
                     //set the block of the train
                     Block curr = ta.trkMdl.getCurrentBlock(t.getLine(), t.getBlock());
                     System.out.println("Current block: " + curr.getBlockNumber());
+                    double bLength = curr.getBlockLength();
                     t.setBlock(curr.getBlockNumber());
                     
                     //run until there is no distance left
                     // TODO: need to talk to steve about this
-                    boolean distanceLeft = true;
-                    while(distanceLeft){
+                    tc.isDistanceLeft = true;
+                    while(tc.isDistanceLeft){
 //                    for(int i = 0; i < 100; i++){
                         Platform.runLater(new Runnable() {
                             @Override public void run() {
@@ -350,11 +351,10 @@ public class TrainModelController implements Initializable {
                                    double newSpeed = t.calculateVelocity(storedPower, storedVelocity, 0, 0, 300, passengers);
                                    storedVelocity = newSpeed;
                                    tc.setCurrentSpeed(storedVelocity); //send stuff to steve
-                                   tc.calculatePower();
+                                   tc.calculatePower(bLength);
                                    storedPower = tc.powerVal; //send stuff to steve
                            //        System.out.println("velocity: "+ newSpeed + "mph");
-                           
-                                    distanceLeft = tc.distanceLeft();
+                                  
 
                                    currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
                                    requestedPowerNumber.setText(String.valueOf(Math.round(100*storedPower)/100.0));
@@ -364,7 +364,7 @@ public class TrainModelController implements Initializable {
                         Thread.sleep(10);
                     }
                     //get the next block
-                    Block next = ta.trkMdl.getNextBlock(t.getLine(), t.getBlock());
+                    Block next = ta.trkMdl.getNextBlock(t.getLine(), t.getBlock(), t.getPreviousBlock());
                     System.out.println("Next block: " + next.getBlockNumber());
                     t.setBlock(next.getBlockNumber());
                     //set at yard

@@ -30,7 +30,13 @@ public class TrainApplication <E> extends Application {
     
     private static TrainApplication ta;
     public static CTCOfficeController ctc = new CTCOfficeController();
-    public static TrackControllerController trkCtr = new TrackControllerController();
+    public static TrackControllerController trkCtr1 = new TrackControllerController();
+    public static TrackControllerController trkCtr2 = new TrackControllerController();    
+    public static TrackControllerController trkCtr3 = new TrackControllerController();    
+    public static TrackControllerController trkCtr4 = new TrackControllerController();
+    public static TrackControllerController trkCtr5 = new TrackControllerController();
+    public static TrackControllerController trkCtr6 = new TrackControllerController();
+
     //public TrackControllerController trkCtr = new TrackControllerController(ta, "plc1.txt");
     //public TrackModelController trkMdl = new TrackModelController(ta);
     public static TrackModelController trkMdl = new TrackModelController();
@@ -69,7 +75,12 @@ public class TrainApplication <E> extends Application {
                 ta = new TrainApplication();
                 ctc.setTrainApp(ta);
                 try {
-                    trkCtr.setTrainApp(ta, "plc1.txt");
+                    trkCtr1.setTrainApp(ta, "plc1.txt",1);
+                    trkCtr2.setTrainApp(ta, "plc2.txt",2);
+                    trkCtr3.setTrainApp(ta, "plc3.txt",3);
+                    trkCtr4.setTrainApp(ta, "plc4.txt",4);
+                    trkCtr5.setTrainApp(ta, "plc5.txt",5);
+                    trkCtr6.setTrainApp(ta, "plc6.txt",6);
                 } catch (IOException ex) {
                     Logger.getLogger(TrainApplication.class.getName()).log(Level.SEVERE, null, ex);
                 }
@@ -88,14 +99,14 @@ public class TrainApplication <E> extends Application {
     
     private void runThis() throws IOException{
         Stage ctcStage = createStage("CTCOffice/CTCOffice.fxml", "CTC Office", (E) ctc);
-        Stage trkCtrStage1 = createStage("TrackController/TrackController.fxml", "Track Controller 1", (E) trkCtr);
+        //Stage trkCtrStage1 = createStage("TrackController/TrackController.fxml", "Track Controller 1", (E) trkCtr);
         //will need more track controllers
         Stage trkMdlStage = createStage("TrackModel/TrackModel.fxml", "Track Model", (E) trkMdl);
         
         
         
         ctcStage.show();
-        trkCtrStage1.show();
+        //trkCtrStage1.show();
         trkMdlStage.show();
         
         
@@ -113,9 +124,9 @@ public class TrainApplication <E> extends Application {
         return stage;
     }
     
-    public void addTrain(int id, String line, double suggestedSpeed, int targetBlock) {
+    public void addTrain(int id, String line, double suggestedSpeed, int targetBlock, double authority) {
         TrainModelController tr = new TrainModelController();
-        tr.setTrainApp(ta, id, line, suggestedSpeed, targetBlock);
+        tr.setTrainApp(ta, id, line, suggestedSpeed, targetBlock, authority);
         trainmodels.add(id, tr);
         
         TrainControllerController trc = new TrainControllerController();

@@ -120,7 +120,7 @@ public class CTCOfficeController implements Initializable {
         trackTableAllBlock.setCellValueFactory(new PropertyValueFactory<>("blockNumber"));
         trackTableAllLength.setCellValueFactory(new PropertyValueFactory<>("blockLength"));
         trackTableAllLimit.setCellValueFactory(new PropertyValueFactory<>("speedLimit"));
-        trackTableAllState.setCellValueFactory(new PropertyValueFactory<>("blockState"));
+        trackTableAllState.setCellValueFactory(new PropertyValueFactory<>("occupancy"));
         trackTableAllLine.setStyle("-fx-alignment: CENTER;");
         trackTableAllSection.setStyle("-fx-alignment: CENTER;");
         trackTableAllBlock.setStyle("-fx-alignment: CENTER;");
@@ -407,14 +407,13 @@ public class CTCOfficeController implements Initializable {
             int newTrainNumber = trainIDIterator++;
             String newTrainLine = newTrainLineBox.getValue();
             double newTrainSpeed = (int) suggestedSpeedSlider.getValue();
-            int newTrainAuthority = getTargetBlockFromStation();
+            int newTrainTarget = getTargetBlockFromStation();
+            double newTrainAuthority = 1000; //100 is a dummy variable for now. have to work with trkMdl get actual distance
             
-            //System.out.println(newTrainNumber + "   " + newTrainLine + "   " + newTrainSpeed + "   " + newTrainAuthority);
-            //testing communication system with printouts
-//            ta.stuff();
-//            ta.potatoes();
+            TrackModelController trackModel = (TrackModelController) ta.trkMdl;
+//            newTrainAuthority = trackModel.getDistance(0, newTrainTarget);
             
-            ta.addTrain(newTrainNumber, newTrainLine, newTrainSpeed, newTrainAuthority);
+            ta.addTrain(newTrainNumber, newTrainLine, newTrainSpeed, newTrainTarget, newTrainAuthority);
             Train newTrain = ta.getTrain(newTrainNumber);
             addTrainToQueue(newTrain);
 
@@ -487,13 +486,22 @@ public class CTCOfficeController implements Initializable {
     @FXML
     void getTrackInfoClick(ActionEvent event) {
         //get the initial track information from the track model (if it is loaded in)
+        //track data will be returned as an arrayList
+        TrackModelController trackModel = (TrackModelController) ta.trkMdl;
+        
+        for (Block block : trackModel.redTrack.blockList) {
+            trackTableAll.getItems().add(block);
+        }
+        for (Block block : trackModel.greenTrack.blockList) {
+            trackTableAll.getItems().add(block);
+        }
         
         try {
             //dummy info for just testing occupying the track table
-            Block block1 = new Block("Red", "A", 1, 175, 35, "Open");
-            Block block2 = new Block("Green", "I", 34, 175, 35, "Open");
-            trackTableAll.getItems().add(block1);
-            trackTableAll.getItems().add(block2);
+//            Block block1 = new Block("Red", "A", 1, 175, 35, "Open");
+//            Block block2 = new Block("Green", "I", 34, 175, 35, "Open");
+//            trackTableAll.getItems().add(block1);
+//            trackTableAll.getItems().add(block2);
 
             getTrackInfoButton.setVisible(false);
         } catch (Exception ex) {
@@ -552,11 +560,10 @@ public class CTCOfficeController implements Initializable {
                 queueTrainTable.getSelectionModel().selectFirst();
                 Train train = queueTrainTable.getSelectionModel().getSelectedItem();
                 System.out.println("TRAIN IS BEING DISPATCHED AUTOMATICALLY");
-                System.out.println("but we'll never see this line because too much train stuff is being printed in threads...");
                 dispatchTrain(train);
             }
             catch (Exception ex) {
-                System.out.println("No train was in the queue. Add a train to auto be auto dispatched");
+                System.out.println("No train was in the queue. Add a train to the queue be auto dispatched");
             }
             
         }
@@ -610,9 +617,12 @@ public class CTCOfficeController implements Initializable {
         String line = schedule.line;
         int number = schedule.trainID;
         int speed = 25; //temp value, not sure how I'm setting this yet
-        int authority = schedule.targetBlock[schedule.scheduleIndex];
+        int targetBlock = schedule.targetBlock[schedule.scheduleIndex];
+        double authority = 100;
+        TrackModelController trackModel = (TrackModelController) ta.trkMdl;
+        authority = trackModel.getDistance(0, targetBlock);
 
-        ta.addTrain(number, line, speed, authority);
+        ta.addTrain(number, line, speed, targetBlock, authority); //dummy 100 as authority for now
         Train train = ta.getTrain(number);
         
         addTrainToQueue(train);

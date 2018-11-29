@@ -150,6 +150,11 @@ public class TrackModelController implements Initializable {
         return b.nextBlock;
     }
     
+        public void setTrackOccupancy(Block currBlock, Block prevBlock){
+        currBlock.setOccupancy("Train");
+        prevBlock.setOccupancy("");
+        trackTable.refresh();    
+    }
     
     //Wrapper function for Train Model to receive information of block, and update GUI
     public Block getCurrentBlock(String line, int number){

@@ -43,6 +43,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
+import trainapplication.TrackController.*;
 import trainapplication.TrainApplication;
 import trainapplication.TrainModel.*;
 import trainapplication.TrackModel.*;
@@ -582,6 +583,9 @@ public class CTCOfficeController implements Initializable {
         
         TrainModelController tModelCont = (TrainModelController) ta.trainmodels.get(dispatchNumber);
         tModelCont.runTrain();
+        
+        TrackControllerController tContCont = (TrackControllerController) ta.trkCtr;
+        tContCont.setSpeedAuthority(dispatchSpeed, dispatchTargetBlock);
         
         //
         Schedule schedule = getScheduleInfoFromTrainTableSelected(train);

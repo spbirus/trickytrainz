@@ -6,9 +6,14 @@
 package trainapplication;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import trainapplication.CTCOffice.*;
 import trainapplication.TrackController.*;
 import trainapplication.TrackModel.*;
@@ -21,6 +26,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  *
@@ -44,6 +50,7 @@ public class TrainApplication <E> extends Application {
     public ArrayList<TrainModelController> trainmodels = new ArrayList<TrainModelController>();
     public ArrayList<TrainControllerController> trainctrs = new ArrayList<TrainControllerController>();
     
+    private DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
 
 //    private ArrayList<TrainModelMain> trainmodels;
 //    private ArrayList<TrainController> trainctls;
@@ -165,5 +172,28 @@ public class TrainApplication <E> extends Application {
     
     public void potatoes() {
         System.out.println("oahgoaishgoaishaosihgaosihgaoishoaivhviob");
+    }
+    
+        /*
+    sets the active system time based on the multipler (default 1)
+    also tries to dispatch a train every 30 seconds (30 is subject to change)
+     */
+    public void setTime(int multiplier) {
+
+        ctc.timeline = new Timeline(
+                new KeyFrame(
+                        Duration.millis(1000), event -> {
+                    //systemTimeText.setText(timeFormat.format(System.currentTimeMillis()));
+                    if (ctc.autoMode) {
+                        ctc.tryToDispatchTrain();
+                    }
+                    ctc.currentTime += multiplier * 1000;
+                    ctc.systemTimeText.setText(timeFormat.format(ctc.currentTime));
+                }
+                )
+        );
+
+        ctc.timeline.setCycleCount(Animation.INDEFINITE);
+        ctc.timeline.play();
     }
 }

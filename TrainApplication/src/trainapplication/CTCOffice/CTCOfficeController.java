@@ -64,10 +64,10 @@ public class CTCOfficeController implements Initializable {
     private Schedule[] scheduleArray = new Schedule[1]; //array of schedules, will hold all schedules loaded in
     private Train[] trainArray = new Train[1]; //array of trains, will hold all trains that were ever created
     private DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
-    private long currentTime = System.currentTimeMillis();
+    public long currentTime = System.currentTimeMillis();
     private long dispatchTimeCheck = System.currentTimeMillis(); //used to try and auto dispatch a train every 30 seconds
-    private boolean autoMode = false; //if true, system is in auto mode
-    private Timeline timeline = new Timeline();
+    public boolean autoMode = false; //if true, system is in auto mode
+    public Timeline timeline = new Timeline();
     
     
     private TrainApplication ta;
@@ -131,7 +131,7 @@ public class CTCOfficeController implements Initializable {
 
         //set system time to display
         multiplierTextField.setText("1");
-        setTime(Integer.parseInt(multiplierTextField.getText()));
+        ta.setTime(Integer.parseInt(multiplierTextField.getText()));
 
         //init line choicebox in the new train popup screen
         newTrainLineBox.getItems().addAll("Red", "Green");
@@ -233,7 +233,7 @@ public class CTCOfficeController implements Initializable {
     private MenuItem menuUserManual;
 
     @FXML
-    private Label systemTimeText;
+    public Label systemTimeText;
 
     @FXML
     private Label redThroughputLabel;
@@ -291,7 +291,7 @@ public class CTCOfficeController implements Initializable {
         }
 
         int multiplier = Integer.parseInt(multiplierTextField.getText());
-        setTime(multiplier);
+        ta.setTime(multiplier);
     }
 
     @FXML
@@ -536,35 +536,10 @@ public class CTCOfficeController implements Initializable {
     //rest of methods, non event-handlers
     
     /*
-    sets the active system time based on the multipler (default 1)
-    also tries to dispatch a train every 30 seconds (30 is subject to change)
-     */
-    private void setTime(int multiplier) {
-
-        timeline = new Timeline(
-                new KeyFrame(
-                        Duration.millis(1000), event -> {
-                    //systemTimeText.setText(timeFormat.format(System.currentTimeMillis()));
-                    if (autoMode) {
-                        tryToDispatchTrain();
-                    }
-                    currentTime += multiplier * 1000;
-                    systemTimeText.setText(timeFormat.format(currentTime));
-                    //can speedup time by multiplying speedup by System.currentTimeMillis()
-                    //this however also changes the base system time, so not sure if that would work
-                }
-                )
-        );
-
-        timeline.setCycleCount(Animation.INDEFINITE);
-        timeline.play();
-    }
-    
-    /*
     try to dispatch the 1st train in the queue (if there is one)
     this is done with automode enabled
     */
-    private void tryToDispatchTrain() {
+    public void tryToDispatchTrain() {
         if (currentTime > dispatchTimeCheck) {
             dispatchTimeCheck += 30000; // increment 30 seconds
             //its time to try and dispatch again

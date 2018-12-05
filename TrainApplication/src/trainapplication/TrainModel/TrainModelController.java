@@ -94,7 +94,7 @@ public class TrainModelController implements Initializable {
         //initialize some of the other data
         passengerNumber.setText(String.valueOf(t.getPassNum()));
         currentSpeedNumber.setText(String.valueOf(t.getSpeed()));
-        setpointSpeedBox.setText(String.valueOf(t.getSpeed()));
+//        setpointSpeedBox.setText(String.valueOf(t.getSpeed()));
         //power requested will come from train controller
 
     }   
@@ -134,6 +134,9 @@ public class TrainModelController implements Initializable {
 
     @FXML
     private AnchorPane testPane;
+    
+    @FXML
+    private AnchorPane testPane2;
 
     @FXML
     private TextField trackElevationBox;
@@ -609,8 +612,10 @@ public class TrainModelController implements Initializable {
     void onTestClick(ActionEvent event) {
         if(testPanelCheck.isSelected()){
             testPane.setDisable(false);
+            testPane2.setDisable(false);
         }else if(!testPanelCheck.isSelected()){
             testPane.setDisable(true);
+            testPane2.setDisable(true);
         }
         
     }

@@ -36,6 +36,10 @@ public class TrainControllerController implements Initializable {
     
     private TrainApplication ta;
     public Train t;
+    
+    double currSpeedVal;
+    public double setpointSpeedVal = 0;
+    public double powerVal;
 
     public TrainControllerController(){
         
@@ -48,33 +52,16 @@ public class TrainControllerController implements Initializable {
     public void setTrainApp(TrainApplication ta, Train t) {
         this.ta = ta;
         this.t = t;
+        
     }
     
     /**
      * Initializes the controller class.
      */
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
-        //TODO: need a for loop that will go through database and add all of the trains
-//        Train t = new Train("red",1,2,3,4,5,6,7,8,9,10,11,12);
-//        track.setCellValueFactory(new PropertyValueFactory<>("line"));
-//        number.setCellValueFactory(new PropertyValueFactory<>("number"));
-//        length.setCellValueFactory(new PropertyValueFactory<>("length"));
-//        width.setCellValueFactory(new PropertyValueFactory<>("width"));
-//        height.setCellValueFactory(new PropertyValueFactory<>("height"));
-//        mass.setCellValueFactory(new PropertyValueFactory<>("mass"));
-//        crewNum.setCellValueFactory(new PropertyValueFactory<>("crewNum"));
-//        passNum.setCellValueFactory(new PropertyValueFactory<>("passNum"));
-//        maxCap.setCellValueFactory(new PropertyValueFactory<>("maxCap"));
-//        carNum.setCellValueFactory(new PropertyValueFactory<>("carNum"));
-//        doorNum.setCellValueFactory(new PropertyValueFactory<>("doorNum"));
-//        accelLimit.setCellValueFactory(new PropertyValueFactory<>("accelLimit"));
-//        deccelLimit.setCellValueFactory(new PropertyValueFactory<>("deccelLimit"));
-//        //trainTable.getItems().add(t);
-//        trainTable.getItems().add(t);
-//        train1 = new Train("red",1,0.0,1,1,1);
-        
-        
+    public void initialize(URL url, ResourceBundle rb) { 
+        setSetPointSpeed(t.getSpeed());
+//        setpointSpeedLabel.setText(String.valueOf(t.getSpeed()));
 
     }
 
@@ -176,9 +163,7 @@ public class TrainControllerController implements Initializable {
     
     
     
-    double currSpeedVal;
-    public double setpointSpeedVal = 0;
-    public double powerVal;
+    
     
     public void setSetPointSpeed(double newSpeed){
         setpointSpeedVal = newSpeed;

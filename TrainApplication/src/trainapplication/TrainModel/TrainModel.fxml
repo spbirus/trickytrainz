@@ -14,7 +14,7 @@
 
 <AnchorPane id="AnchorPane" prefHeight="698.0" prefWidth="915.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <AnchorPane layoutX="26.0" layoutY="425.0" prefHeight="78.0" prefWidth="358.0" style="-fx-background-color: #bdc3c7;">
+      <AnchorPane fx:id="testPane2" disable="true" layoutX="26.0" layoutY="425.0" prefHeight="78.0" prefWidth="358.0" style="-fx-background-color: #bdc3c7;">
          <children>
             <Label layoutX="23.0" layoutY="13.0" text="Setpoint Speed (mph)" />
             <TextField id="speedLimit" fx:id="setpointSpeedBox" layoutX="192.0" layoutY="9.0" prefHeight="26.0" prefWidth="62.0" />

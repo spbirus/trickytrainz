@@ -51,6 +51,8 @@ public class TrainApplication <E> extends Application {
     public ArrayList<TrainControllerController> trainctrs = new ArrayList<TrainControllerController>();
     
     private DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
+    
+    public int timeMultiplier = 1;
 
 //    private ArrayList<TrainModelMain> trainmodels;
 //    private ArrayList<TrainController> trainctls;
@@ -166,20 +168,12 @@ public class TrainApplication <E> extends Application {
         trainCtrStage.show();
     }
     
-    public void stuff() {
-        System.out.println("HELLO FROM STUFF");
-    }
-    
-    public void potatoes() {
-        System.out.println("oahgoaishgoaishaosihgaosihgaoishoaivhviob");
-    }
-    
         /*
     sets the active system time based on the multipler (default 1)
     also tries to dispatch a train every 30 seconds (30 is subject to change)
      */
     public void setTime(int multiplier) {
-
+        timeMultiplier = multiplier;
         ctc.timeline = new Timeline(
                 new KeyFrame(
                         Duration.millis(1000), event -> {

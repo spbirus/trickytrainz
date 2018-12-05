@@ -20,7 +20,9 @@ public class Train {
     private final double MPH_TO_MiPS = 0.000277778; //miles per hr to miles to miles per second
     private final double serviceBrakeDecel = 1.2 * 3.2808399; //ft/s^2
     private final double emergencyBrakeDecel = 2.73 * 3.2808399; //ft/s^2
-    private final double deltaT = 0.017; //deltaT is a change in time that helps us not miss the beacon   
+    private double multiplier = 1;
+    private final double origDeltaT = 0.017;
+    private double deltaT = 0.017; //deltaT is a change in time that helps us not miss the beacon   
     private final int seatCap = 74;
     private final int standCap = 148;
     private final int maxCap = seatCap + standCap;
@@ -61,6 +63,15 @@ public class Train {
         this.speed = speed;
         this.target = target;
         this.authority = authority;
+    }
+
+    public double getMultiplier() {
+        return multiplier;
+    }
+
+    public void setMultiplier(double multiplier) {
+        this.multiplier = multiplier;
+        deltaT = origDeltaT * multiplier;
     }
 
     public int getBrakes() {

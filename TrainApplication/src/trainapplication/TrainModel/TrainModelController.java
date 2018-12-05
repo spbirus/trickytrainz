@@ -345,6 +345,7 @@ public class TrainModelController implements Initializable {
 //                    for(int i = 0; i < 100; i++){
                         Platform.runLater(new Runnable() {
                             @Override public void run() {
+//                                long start = System.nanoTime();
         //                           curSpeed = storedVelocity; //Double.parseDouble(currentSpeedNumber.getText());
         //                           power = storedPower; //Double.parseDouble(requestedPowerNumber.getText());
                                    if(storedPower > 120){ //check for the max power
@@ -364,6 +365,8 @@ public class TrainModelController implements Initializable {
 
                                    currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
                                    requestedPowerNumber.setText(String.valueOf(Math.round(100*storedPower)/100.0));
+//                                   long end = System.nanoTime();
+//                                   System.out.println("Time: " + (start-end));
                                }
 
                         });

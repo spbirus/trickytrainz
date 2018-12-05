@@ -355,7 +355,7 @@ public class TrainModelController implements Initializable {
 //                                   System.out.println(storedPower);
                                    int passengers = Integer.parseInt(passengerNumber.getText());
 
-                                   double newSpeed = t.calculateVelocity(storedPower, storedVelocity, 0, 0, 300, passengers);
+                                   double newSpeed = t.calculateVelocity(storedPower, storedVelocity, curr.getBlockGrade(), 0, curr.getSpeedLimit(), passengers);
                                    storedVelocity = newSpeed;
                                    tc.setCurrentSpeed(storedVelocity); //send stuff to steve
                                    tc.calculatePower();
@@ -377,10 +377,11 @@ public class TrainModelController implements Initializable {
                     //set at yard
                     if(t.getBlock() == t.getTarget()){
                         atAuthority = true;
+                        tc.onTargetArrival(); //done to reset the distance values to move again
                     }
                 }
 
-              return null;
+                return null;
             }
                 
          };
@@ -395,6 +396,8 @@ public class TrainModelController implements Initializable {
         Thread thread = new Thread(task);
         thread.setDaemon(true);
         thread.start();
+        
+        
         
     }
     
@@ -574,7 +577,14 @@ public class TrainModelController implements Initializable {
     @FXML
     void onSubmitOther(ActionEvent event) {
         if(!"".equals(authorityBox.getText())){
-            authorityId.setText(String.valueOf(authorityBox.getText()));
+            int target = Integer.parseInt(authorityBox.getText());
+            authorityId.setText(String.valueOf(target));
+            
+            double distance = ta.trkMdl.getDistance(t.getBlock(), target);
+            System.out.println("Distance: " + distance);
+            t.setTarget(target);
+            t.setAuthority(distance);
+            runTrain();
         } 
         
         if(!"".equals(trackElevationBox.getText())){

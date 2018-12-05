@@ -278,7 +278,7 @@ public class Train {
         return authority;
     }
 
-    public void setAuthority(int authority) {
+    public void setAuthority(double authority) {
         this.authority = authority;
     }
 
@@ -307,7 +307,7 @@ public class Train {
         
         /*
                                                                                    F             a         vel
-        (1000)*power(.0006214)/(currentSpeed) X (.22481)/(currentSpeed*.000277778) X 1/totalMass X 1*deltaT
+        (1000)*power(.0006214)/(currentSpeed) X (.22481)/(currentSpeed*.000277778) X 1/totalMass X 1*deltaT*multiplier
                       to mi                     to ft lbs            to mi per sec
         
         
@@ -368,6 +368,10 @@ public class Train {
         //prevent it from going backwards
         if(velActual < 0){
             velActual = 0;
+        }
+        
+        if(velActual > speedLimit){
+            velActual = speedLimit;
         }
         
 //        System.out.println("velocity: " + velActual +" MPH");

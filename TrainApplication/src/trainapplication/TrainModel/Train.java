@@ -20,7 +20,7 @@ public class Train {
     private final double MPH_TO_MiPS = 0.000277778; //miles per hr to miles to miles per second
     private final double serviceBrakeDecel = 1.2 * 3.2808399; //ft/s^2
     private final double emergencyBrakeDecel = 2.73 * 3.2808399; //ft/s^2
-    private final double deltaT = 1; //deltaT is a change in time that helps us not miss the beacon   
+    private final double deltaT = 0.017; //deltaT is a change in time that helps us not miss the beacon   
     private final int seatCap = 74;
     private final int standCap = 148;
     private final int maxCap = seatCap + standCap;

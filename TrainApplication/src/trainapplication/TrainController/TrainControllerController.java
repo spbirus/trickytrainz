@@ -395,6 +395,15 @@ public class TrainControllerController implements Initializable {
         double d_ft = d_m/.3048;
         return d_ft;
     }
+    
+    public void onTargetArrival(){
+        //needed to reset the distance stuff to make a train go again
+        System.out.println("Reset the distances");
+        distanceTraveledInBlock = 0;
+        distanceLeft = 0;
+        distanceTraveled = 0;
+        isDistanceLeft = true;
+    }
     @FXML
     void turnLightsOff(ActionEvent event) {
 

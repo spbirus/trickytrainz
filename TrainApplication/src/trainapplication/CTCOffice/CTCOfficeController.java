@@ -96,12 +96,10 @@ public class CTCOfficeController implements Initializable {
         //init train table
         trainTableAllLine.setCellValueFactory(new PropertyValueFactory<>("line"));
         trainTableAllNumber.setCellValueFactory(new PropertyValueFactory<>("number"));
-        trainTableAllSpeed.setCellValueFactory(new PropertyValueFactory<>("speed"));
         trainTableAllCurrent.setCellValueFactory(new PropertyValueFactory<>("block"));
         trainTableAllTarget.setCellValueFactory(new PropertyValueFactory<>("target"));
         trainTableAllLine.setStyle("-fx-alignment: CENTER;");
         trainTableAllNumber.setStyle("-fx-alignment: CENTER;");
-        trainTableAllSpeed.setStyle("-fx-alignment: CENTER;");
         trainTableAllCurrent.setStyle("-fx-alignment: CENTER;");
         trainTableAllTarget.setStyle("-fx-alignment: CENTER;");
 
@@ -183,9 +181,6 @@ public class CTCOfficeController implements Initializable {
 
     @FXML
     private TableColumn<Train, Integer> trainTableAllNumber;
-
-    @FXML
-    private TableColumn<Train, Integer> trainTableAllSpeed;
 
     @FXML
     private TableColumn<Train, Integer> trainTableAllCurrent;

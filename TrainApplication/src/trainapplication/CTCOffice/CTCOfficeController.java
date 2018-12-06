@@ -652,8 +652,10 @@ public class CTCOfficeController implements Initializable {
     }
 
     //updates outbound table when a train reaches its target
-    public void updateTrainTable() {
-
+    public void updateTrainTable(Train train) {
+        int tIndex = trainTableAll.getItems().indexOf(train);
+        trainTableAll.getItems().set(tIndex, train);
+        trainTableAll.refresh();
     }
     
     //updates tracks as trains move on it
@@ -667,7 +669,7 @@ public class CTCOfficeController implements Initializable {
     }
     
     //when a train returns to the yard after driving for long enough
-    public void removeTrainFromOutbound() {
+    private void removeTrainFromOutbound() {
         
     }
 

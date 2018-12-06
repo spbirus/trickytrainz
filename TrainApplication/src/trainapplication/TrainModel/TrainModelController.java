@@ -325,6 +325,7 @@ public class TrainModelController implements Initializable {
     private double storedVelocity = 0;
     private double storedPower = 0;
     
+    // method calls
     
     public void runTrain(){
         tc = (TrainControllerController) ta.trainctrs.get(t.getNumber());
@@ -377,6 +378,8 @@ public class TrainModelController implements Initializable {
                     Block next = ta.trkMdl.getNextBlock(t.getLine(), t.getBlock(), t.getPreviousBlock());
                     System.out.println("Next block: " + next.getBlockNumber());
                     t.setBlock(next.getBlockNumber());
+                    //set the ctc stuff to show where the train is
+                    ta.ctc.updateTrainTable(t);
                     //set at yard
                     if(t.getBlock() == t.getTarget()){
                         atAuthority = true;
@@ -403,6 +406,30 @@ public class TrainModelController implements Initializable {
         
         
     }
+    
+    public void onBrake(int brake){
+        if(brake == 0){
+            brakeId.setText("disengaged");
+            emergencyBrakeId.setText("disengaged");
+        }else if(brake == 1){
+            brakeId.setText("engaged");
+        }else if(brake == 3){
+            emergencyBrakeId.setText("engaged");
+        }
+    }
+    
+    public void onDoors(String side){
+        if(side.toLowerCase().equals("left")){
+            leftdoorId.setText("Open");
+        }else if(side.toLowerCase().equals("right")){
+            rightdoorId.setText("Open");
+        }else{
+            leftdoorId.setText("Closed");
+            rightdoorId.setText("Closed");
+        }
+    }
+    
+    // Button trigger events
     
     @FXML
     void onRefreshSpeed(ActionEvent event) {

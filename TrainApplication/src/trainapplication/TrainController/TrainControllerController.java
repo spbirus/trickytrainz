@@ -5,6 +5,9 @@
  */
 package trainapplication;
 
+import trainapplication.Train;
+import trainapplication.TrainModel.TrainModelController;
+
 import java.awt.Color;
 import java.awt.Paint;
 import java.net.URL;
@@ -344,8 +347,12 @@ public class TrainControllerController implements Initializable {
         if(distanceNeededToStop_ft > (t.getAuthority()-distanceTraveled-distanceTraveledInBlock)){
             System.out.println("\t\tService brakes engaged");
             t.setBrakes(1); //set the service brake
+            TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
+            train.onBrake(1);
         }else{
 //            System.out.println("\t\tService brakes disengaged");
+            TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
+            train.onBrake(0);
             t.setBrakes(0);
         }
         

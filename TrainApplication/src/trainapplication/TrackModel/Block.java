@@ -66,15 +66,15 @@ public class Block {
     }
     
     public int calculatePassengers(){
-        return (int)Math.random()*100;
+        double num = Math.random()*100.00;
+        return (int)num + 1;
     }
-            
-    
+             
     public boolean isStation() {
         return stationPresent;
     }
     
-    public int getPassengersBoard(int onBoard) {
+    public int getPassengersBoard() {
         passengersStation = calculatePassengers();
         return (int)Math.random()*passengersStation;
     }
@@ -82,6 +82,9 @@ public class Block {
     public void setPassengersRemaining(int remaining){
         passengersStation += remaining;
     }
+    
+    // Empty Block for testing 
+    public Block(){}
     
     //Data from csv file
     public Block(String line, String section, int blockNumber, double blockLength, double blockGrade, double speedLimit, String infrastructure, int nextInbound, int nextOutbound, double elevation, double cumElevation) {
@@ -114,7 +117,6 @@ public class Block {
         if(this.nextInboundBlock == nextOutboundBlock) blockDirection = 1;
         else blockDirection = 2;
         this.passengersStation = calculatePassengers();
-        this.stationPresent = (infrastructure.split(";", 2)[0].equals("STATION"));
     }
     
     //Jon Galaxy  - CTC   
@@ -126,7 +128,6 @@ public class Block {
         this.speedLimit = speedLimit;
         this.blockState = blockState;
         this.passengersStation = calculatePassengers();
-        this.stationPresent = (infrastructure.split(";", 2)[0].equals("STATION"));
     }
    
     //Track Controller 
@@ -321,9 +322,6 @@ public class Block {
         this.passengersStation = passengersStation;
     }
 
-    public int getPassengersBoard() {
-        return passengersBoard;
-    }
 
     public void setPassengersBoard(int passengersBoard) {
         this.passengersBoard = passengersBoard;

@@ -9,6 +9,9 @@ import com.sun.deploy.util.StringUtils;
 import java.net.URL;
 import java.util.*;
 import javafx.fxml.FXML;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -21,6 +24,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -66,6 +70,8 @@ public class TrackModelController implements Initializable {
             .observableArrayList("A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K");
     ObservableList<Integer> trackBlockList = FXCollections
             .observableArrayList(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18);
+    ObservableList<String> trackControllerList = FXCollections
+            .observableArrayList("Green - 1", "Green - 2", "Green - 3", "Green - 4", "Green - 5", "Green - 6");
     /**
      * Initializes the controller class.
      */
@@ -75,6 +81,7 @@ public class TrackModelController implements Initializable {
         trackLineComboBox.setItems(trackLineList);
         trackSectionComboBox.setItems(trackSectionList);
         trackBlockComboBox.setItems(trackBlockList);
+        tcSelect.setItems(trackControllerList);
         
         line.setCellValueFactory(new PropertyValueFactory<>("line"));
         blockNumber.setCellValueFactory(new PropertyValueFactory<>("blockNumber"));
@@ -87,6 +94,7 @@ public class TrackModelController implements Initializable {
         blockState.setCellValueFactory(new PropertyValueFactory<>("blockState"));
         occupancy.setCellValueFactory(new PropertyValueFactory<>("occupancy"));
         blockHeat.setCellValueFactory(new PropertyValueFactory<>("blockHeat"));
+        
        
     } 
     
@@ -290,7 +298,7 @@ public class TrackModelController implements Initializable {
         
     }
     
-    public void FiltersButtonClicked() throws InterruptedException{
+    public void FiltersButtonClicked() throws InterruptedException, IOException{
         
 //        ArrayList<Block> temp = trackList;
 //        String selectedLine = (String)trackLineComboBox.getValue();
@@ -306,15 +314,10 @@ public class TrackModelController implements Initializable {
 //        }
 //        
 //        trackList = temp;
-
-
-    Block b = greenTrack.getOccupiedBlock();
-    Block prev = greenTrack.getPreviousBlock();
-    while(!b.getInfrastructure().equals("SWITCH") || b.getBlockNumber() != 57){
-        b = getNextBlock("Green", b.getBlockNumber(), prev.getBlockNumber());
-        prev = b;
-    }
-    //Open switch on Block b
+          String val = (String)tcSelect.getValue();
+          int num = Integer.parseInt(val.split(" ", 3)[2]);
+          ta.createTrackControllerGUI(num);
+    
     
     }
     
@@ -462,6 +465,9 @@ public class TrackModelController implements Initializable {
     public void BlockSelected(){
             
     }
+    
+    @FXML
+    private ComboBox tcSelect;
     
     @FXML
     private TableView<Block> trackTable;

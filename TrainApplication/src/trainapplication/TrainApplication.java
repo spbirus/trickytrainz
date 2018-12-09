@@ -34,6 +34,13 @@ import javafx.util.Duration;
  */
 public class TrainApplication <E> extends Application {
     
+    private Stage trkCtrStage1;
+    private Stage trkCtrStage2;
+    private Stage trkCtrStage3;
+    private Stage trkCtrStage4;
+    private Stage trkCtrStage5;
+    private Stage trkCtrStage6;
+    
     private static TrainApplication ta;
     public static CTCOfficeController ctc = new CTCOfficeController();
     public static TrackControllerController trkCtr1 = new TrackControllerController();
@@ -115,12 +122,12 @@ public class TrainApplication <E> extends Application {
     
     private void runThis() throws IOException{
         Stage ctcStage = createStage("CTCOffice/CTCOffice.fxml", "CTC Office", (E) ctc);
-        Stage trkCtrStage1 = createStage("TrackController/TrackController.fxml", "Track Controller 1", (E) trkCtr1);
-        Stage trkCtrStage2 = createStage("TrackController/TrackController.fxml", "Track Controller 1", (E) trkCtr2);
-        Stage trkCtrStage3 = createStage("TrackController/TrackController.fxml", "Track Controller 1", (E) trkCtr3);
-        Stage trkCtrStage4 = createStage("TrackController/TrackController.fxml", "Track Controller 1", (E) trkCtr4);
-        Stage trkCtrStage5 = createStage("TrackController/TrackController.fxml", "Track Controller 1", (E) trkCtr5);
-        Stage trkCtrStage6 = createStage("TrackController/TrackController.fxml", "Track Controller 1", (E) trkCtr6);
+        trkCtrStage1 = createStage("TrackController/TrackController.fxml", "Track Controller 1", (E) trkCtr1);
+        trkCtrStage2 = createStage("TrackController/TrackController.fxml", "Track Controller 1", (E) trkCtr2);
+        trkCtrStage3 = createStage("TrackController/TrackController.fxml", "Track Controller 1", (E) trkCtr3);
+        trkCtrStage4 = createStage("TrackController/TrackController.fxml", "Track Controller 1", (E) trkCtr4);
+        trkCtrStage5 = createStage("TrackController/TrackController.fxml", "Track Controller 1", (E) trkCtr5);
+        trkCtrStage6 = createStage("TrackController/TrackController.fxml", "Track Controller 1", (E) trkCtr6);
         //will need more track controllers
         Stage trkMdlStage = createStage("TrackModel/TrackModel.fxml", "Track Model", (E) trkMdl);
         
@@ -168,6 +175,36 @@ public class TrainApplication <E> extends Application {
         trainCtrStage.show();
     }
     
+    public void createTrackControllerGUI(int id) throws IOException{
+        trkCtrStage1.hide();
+        trkCtrStage2.hide();
+        trkCtrStage3.hide();
+        trkCtrStage4.hide();
+        trkCtrStage5.hide();
+        trkCtrStage6.hide();
+        
+        switch(id){
+            case 1:
+                trkCtrStage1.show();
+                break;
+            case 2:
+                trkCtrStage2.show();
+                break;
+            case 3:
+                trkCtrStage3.show();
+                break;
+            case 4:
+                trkCtrStage4.show();
+                break;
+            case 5:
+                trkCtrStage5.show();
+                break;
+            case 6:
+                trkCtrStage6.show();
+                break;
+        }      
+        
+    }
         /*
     sets the active system time based on the multipler (default 1)
     also tries to dispatch a train every 30 seconds (30 is subject to change)

@@ -465,11 +465,6 @@ public class CTCOfficeController implements Initializable {
     }
 
     @FXML
-    void menuCloseClick(ActionEvent event) {
-
-    }
-
-    @FXML
     void menuDispatchClick(ActionEvent event) throws IOException {
         dispatchButtonClick(event);
     }
@@ -486,7 +481,10 @@ public class CTCOfficeController implements Initializable {
 
     @FXML
     void menuUserManualClick(ActionEvent event) {
-
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("User Manual?");
+        alert.setHeaderText("There should probably be a user's manual here, but there isn't");
+        alert.show();
     }
     
     @FXML
@@ -498,17 +496,17 @@ public class CTCOfficeController implements Initializable {
     
     @FXML
     void getThroughputButtonClick(ActionEvent event) {
-        //get throughput information from Track Controller
-        /*
-        do stuff here
-        */
+        //this will display all the metrics needed (throughput, ticket sales, passengers...
+        int totalThroughput = 0;
+        int totalTicketSales = 0;
+        int totalPassengerCount = 0; //this is the same as ticket sales
         
         //display throughput information
         Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Displaying Throughput");
-        alert.setHeaderText("Throughput across all lines: " + allLineThroughput);
-        alert.setContentText("Throughput across red line: " + redLineThroughput + 
-                "Throughput across green line: " + greenLineThroughput);
+        alert.setTitle("Displaying Metrics");
+        alert.setHeaderText("Total Throughput: " + totalThroughput);
+        alert.setContentText("\nTotal Ticket Sales: " + totalTicketSales + 
+                "\nTotal Passenger Count: " + totalPassengerCount);
         alert.show();
     }
 

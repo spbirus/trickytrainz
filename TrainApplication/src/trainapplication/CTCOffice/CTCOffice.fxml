@@ -41,16 +41,18 @@
                                     <Font size="22.0" />
                                  </font>
                               </Text>
-                              <Button fx:id="changeTrackStateButton" layoutX="239.0" layoutY="561.0" mnemonicParsing="false" onAction="#changeTrackStateButtonClick" text="Change Track State">
+                              <Button fx:id="changeTrackStateButton" layoutX="270.0" layoutY="562.0" mnemonicParsing="false" onAction="#changeTrackStateButtonClick" text="Set Maintenance">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
                               </Button>
-                              <Button fx:id="getTrackInfoButton" layoutX="36.0" layoutY="558.0" mnemonicParsing="false" onAction="#getTrackInfoClick" prefHeight="37.0" prefWidth="166.0" text="Get Tracks" textAlignment="CENTER" wrapText="true">
+                              <Button fx:id="getTrackInfoButton" layoutX="13.0" layoutY="10.0" mnemonicParsing="false" onAction="#getTrackInfoClick" prefHeight="37.0" prefWidth="98.0" text="Get Tracks" textAlignment="CENTER" wrapText="true">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Button>
+                              <ChoiceBox fx:id="switchChoiceBox" layoutX="14.0" layoutY="564.0" prefWidth="150.0" />
+                              <Button fx:id="moveSwitchButton" layoutX="163.0" layoutY="565.0" mnemonicParsing="false" onAction="#clickSwitchButton" text="Move Switch" />
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="865.0" layoutY="16.0" prefHeight="605.0" prefWidth="408.0" style="-fx-background-color: #bdc3c7;">

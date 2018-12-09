@@ -54,6 +54,8 @@ public class TrackControllerController implements Initializable {
     private boolean occupied = false;
     private boolean signalBool = true;
     private boolean crossingBool = true;
+    private boolean crossingPresent = false;
+    int crossingNum = 0;
     private TrainApplication ta;
     private String plcFile;
     private int authority = 0;
@@ -96,6 +98,12 @@ public class TrackControllerController implements Initializable {
             mergeNum = Integer.parseInt(scan.nextLine());
             defaultNum = Integer.parseInt(scan.nextLine());
         }
+        if(scan.hasNextLine()){
+            if(scan.nextLine().equals("crossing")){
+                crossingNum = Integer.parseInt(scan.nextLine());
+                crossingPresent = true;
+            }
+        }
         plc = new WaysidePLC(mergePresent, splitPresent);
     }
 
@@ -126,10 +134,20 @@ public class TrackControllerController implements Initializable {
         } else {
             outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #" + mergeBlock.getText());
         }
-        if (crossingBool) {
-            crossingState.setText("Raised");
-        } else {
-            crossingState.setText("Lowered");
+        if(crossingPresent){
+            crossingMurphyLabel.setVisible(true);
+            raiseCrossing.setVisible(true);
+            lowerCrossing.setVisible(true);
+            if (crossingBool) {
+                crossingState.setText("Raised");
+            } else {
+                crossingState.setText("Lowered");
+            }
+        }else{
+            crossingState.setText("No Crossing");
+            crossingMurphyLabel.setVisible(false);
+            raiseCrossing.setVisible(false);
+            lowerCrossing.setVisible(false);
         }
         outputSpeed.setText(Double.toString(speed));
         outputAuthority.setText(Integer.toString(authority));
@@ -387,6 +405,7 @@ public class TrackControllerController implements Initializable {
                         } else {
                             outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #" + mergeBlock.getText());
                         }
+
 //                        try {
 //                            Thread.sleep(3000);
 //                        } catch (InterruptedException ex) {

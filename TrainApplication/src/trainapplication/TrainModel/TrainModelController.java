@@ -326,6 +326,9 @@ public class TrainModelController implements Initializable {
     private double storedPower = 0;
     
     // method calls
+    public void setTrackInfo(){
+        
+    }
     
     public void runTrain(){
         tc = (TrainControllerController) ta.trainctrs.get(t.getNumber());
@@ -380,10 +383,17 @@ public class TrainModelController implements Initializable {
                     t.setBlock(next.getBlockNumber());
                     //set the ctc stuff to show where the train is
                     ta.ctc.updateTrainTable(t);
-                    //set at yard
                     if(t.getBlock() == t.getTarget()){
                         atAuthority = true;
-                        tc.onTargetArrival(); //done to reset the distance values to move again
+                        //at a station so deal with the passengers
+                        if(t.getBlock().isStation()){
+                            dealWithPassengers();
+                            //open the doors here too
+                            leftdoorId.setText("Open");
+                            Thread.sleep(2000);
+                            leftdoorId.setText("Closed");
+                        }
+                        tc.onTargetArrival(); //done to reset the distance values in train controller to move again
                     }
                 }
 
@@ -405,6 +415,20 @@ public class TrainModelController implements Initializable {
         
         
         
+    }
+    
+    public void dealWithPassengers(){
+        int passOnTrain = t.getPassNum();
+        int wantToGetOn =  t.getBlock().getPassengersBoard();
+        int spotsLeft = t.getSpotsLeft();
+        if(spotsLeft > wantToGetOn){
+            t.setPassNum(passOnTrain + wantToGetOn);
+        }else{
+            //not enough space
+            t.setPassNum(passOnTrain + spotsLeft);
+            t.getBlock().setPassengersRemaining(wantToGetOn - spotsLeft);
+        }
+        passengerNumber.setText(t.getPassNum());
     }
     
     public void onBrake(int brake){

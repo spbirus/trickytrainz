@@ -268,12 +268,13 @@ public class CTCOfficeController implements Initializable {
 
     @FXML
     private Button changeTrackStateButton;
+    
+    @FXML
+    private Button multiplierButton;
 
     //GUI ActionEvent Handlers
     @FXML
     void autoModeButtonClick(ActionEvent event) {
-        //TODO later
-        timeline.stop();
         
         if (autoMode) { //turns off auto mode (multiplier back to 1)
             autoModeButton.setText("Enter Automatic Mode");
@@ -282,9 +283,13 @@ public class CTCOfficeController implements Initializable {
         } else { //turns on auto mode based on multiplier value
             autoModeButton.setText("Enter Manual Mode");
             autoMode = true;
-            dispatchTimeCheck = currentTime + 30000; //dispatch Trains every 30 seconds
+            dispatchTimeCheck = currentTime + 210000; //try to dispatch trains every 3 minutes
         }
-
+    }
+    
+    @FXML
+    void changeMultiplierClick(ActionEvent event) {
+        timeline.stop();
         int multiplier = Integer.parseInt(multiplierTextField.getText());
         ta.setTime(multiplier);
     }
@@ -598,13 +603,20 @@ public class CTCOfficeController implements Initializable {
 
         String line = schedule.line;
         int number = schedule.trainID;
-        int speed = 25; //temp value, not sure how I'm setting this yet
+        double suggestedSpeed;
+        if (line.equalsIgnoreCase("red")) {
+            suggestedSpeed = 24;
+        }
+        else {
+            suggestedSpeed = 43;
+        }
         int targetBlock = schedule.targetBlock[schedule.scheduleIndex];
-        double authority = 100;
+        
+        double authority = 1000; //100 used for testing, gets overwritten anyways
         TrackModelController trackModel = (TrackModelController) ta.trkMdl;
         authority = trackModel.getDistance(0, targetBlock);
 
-        ta.addTrain(number, line, speed, targetBlock, authority); //dummy 100 as authority for now
+        ta.addTrain(number, line, suggestedSpeed, targetBlock, authority); //dummy 100 as authority for now
         Train train = ta.getTrain(number);
         
         addTrainToQueue(train);

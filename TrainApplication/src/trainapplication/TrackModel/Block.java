@@ -38,12 +38,25 @@ public class Block {
     private int switchDefault;
     private String blockState;
     private boolean blockOccupancy;
-    private boolean stationPresent;
+
     private boolean crossingPresent;
     private boolean crossingState= true;
     private boolean circuitState= true;
     private boolean railState = true;
 
+    private String signal = "Green";
+    private String beacon;
+    
+    private boolean stationPresent;
+    private int passengersStation;
+    private int passengersBoard;
+    
+    
+    private String blockHeat;
+    private String occupancy;
+    private int blockDirection;
+    
+    
     public boolean isRailState() {
         return railState;
     }
@@ -51,14 +64,24 @@ public class Block {
     public void setRailState(boolean railState) {
         this.railState = railState;
     }
-    private String signal="Green";
-    private String beacon;
-    private int passengersStation;
-    private int passengersBoard;
-    private String blockHeat;
-    private String occupancy;
-    private int blockDirection;
     
+    public int calculatePassengers(){
+        return (int)Math.random()*100;
+    }
+            
+    
+    public boolean isStation() {
+        return stationPresent;
+    }
+    
+    public int getPassengersBoard() {
+        passengersStation = calculatePassengers();
+        return (int)Math.random()*passengersStation;
+    }
+    
+    public void setPassengersRemaining(int remaining){
+        passengersStation += remaining;
+    }
     
     //Data from csv file
     public Block(String line, String section, int blockNumber, double blockLength, double blockGrade, double speedLimit, String infrastructure, int nextInbound, int nextOutbound, double elevation, double cumElevation) {
@@ -75,6 +98,8 @@ public class Block {
         this.nextOutboundBlock = nextOutbound;
         if(this.nextInboundBlock == nextOutboundBlock) blockDirection = 1;
         else blockDirection = 2;
+        this.passengersStation = calculatePassengers();
+        this.stationPresent = (infrastructure.split(";", 2)[0].equals("STATION"));
     }
     //Jon Gramley - Block Controller
     public Block(String line, String section, int blockNumber, int nextInboundBlock, int nextOutboundBlock, boolean switchPresent, boolean stationPresent, boolean crossingPresent) {
@@ -88,6 +113,8 @@ public class Block {
         this.crossingPresent = crossingPresent;
         if(this.nextInboundBlock == nextOutboundBlock) blockDirection = 1;
         else blockDirection = 2;
+        this.passengersStation = calculatePassengers();
+        this.stationPresent = (infrastructure.split(";", 2)[0].equals("STATION"));
     }
     
     //Jon Galaxy  - CTC   
@@ -98,6 +125,8 @@ public class Block {
         this.blockLength = blockLength;
         this.speedLimit = speedLimit;
         this.blockState = blockState;
+        this.passengersStation = calculatePassengers();
+        this.stationPresent = (infrastructure.split(";", 2)[0].equals("STATION"));
     }
    
     //Track Controller 
@@ -290,10 +319,6 @@ public class Block {
 
     public void setPassengersStation(int passengersStation) {
         this.passengersStation = passengersStation;
-    }
-
-    public int getPassengersBoard() {
-        return passengersBoard;
     }
 
     public void setPassengersBoard(int passengersBoard) {

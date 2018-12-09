@@ -44,7 +44,6 @@ public class Train {
     private int target; //destination block
     private int temperature;
     
-    private int maxCapacity = 148 + 74;
     private double trainMass = 81800; //lbs
     private double totalMass; //mass of car and people
     private double velActual = 0; //thing to return to train controller
@@ -378,6 +377,10 @@ public class Train {
 
         
         return velActual;
+    }
+    
+    public int getSpotsLeft(){
+        return maxCap - passNum;
     }
     
     

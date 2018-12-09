@@ -405,11 +405,12 @@ public class TrackControllerController implements Initializable {
                         } else {
                             outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #" + mergeBlock.getText());
                         }
-                        try {
-                            Thread.sleep(3000);
-                        } catch (InterruptedException ex) {
-                            Logger.getLogger(TrackControllerController.class.getName()).log(Level.SEVERE, null, ex);
-                        }
+
+//                        try {
+//                            Thread.sleep(3000);
+//                        } catch (InterruptedException ex) {
+//                            Logger.getLogger(TrackControllerController.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
                     }
                 });
 
@@ -422,11 +423,11 @@ public class TrackControllerController implements Initializable {
             } else {
                 outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #" + mergeBlock.getText());
             }
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException ex) {
-                Logger.getLogger(TrackControllerController.class.getName()).log(Level.SEVERE, null, ex);
-            }
+//            try {
+//                Thread.sleep(5000);
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(TrackControllerController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         });
         Thread thread = new Thread(task);
         thread.setDaemon(true);

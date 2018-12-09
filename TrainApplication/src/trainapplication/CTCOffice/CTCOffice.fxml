@@ -118,7 +118,7 @@
             <Font size="32.0" />
          </font>
       </Text>
-      <Button fx:id="autoModeButton" layoutX="1050.0" layoutY="721.0" mnemonicParsing="false" onAction="#autoModeButtonClick" prefHeight="43.0" prefWidth="204.0" text="Enter Automatic Mode">
+      <Button fx:id="autoModeButton" layoutX="194.0" layoutY="737.0" mnemonicParsing="false" onAction="#autoModeButtonClick" prefHeight="43.0" prefWidth="204.0" text="Enter Automatic Mode">
          <font>
             <Font size="16.0" />
          </font>
@@ -187,6 +187,11 @@
          </children>
       </AnchorPane>
       <Button fx:id="getThroughputButton" layoutX="68.0" layoutY="743.0" mnemonicParsing="false" onAction="#getThroughputButtonClick" text="Get Throughput">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <Button fx:id="multiplierButton" layoutX="1114.0" layoutY="737.0" mnemonicParsing="false" onAction="#changeMultiplierClick" prefHeight="30.0" prefWidth="132.0" text="Change Multiplier">
          <font>
             <Font size="14.0" />
          </font>

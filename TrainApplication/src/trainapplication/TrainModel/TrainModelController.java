@@ -45,8 +45,9 @@ import trainapplication.TrainApplication;
  * @author burri
  */
 public class TrainModelController implements Initializable {
+
     //will need to get this data from somewhere
-    private Train t; 
+    private Train t;
     private TrainControllerController tc;
 
     public Train getT() {
@@ -63,19 +64,18 @@ public class TrainModelController implements Initializable {
 //        this.ta = ta;
 //        t = new Train(line, id, suggestedSpeed, targetBlock);
 //    }
-    
     public TrainModelController() {
-        
+
     }
-    
+
     public void setTrainApp(TrainApplication ta, int id, String line, double suggestedSpeed, int targetBlock, double authority) {
         this.ta = ta;
         t = new Train(line, id, suggestedSpeed, targetBlock, authority);
     }
-    
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+
         //initialize the information in the main section 
         trackId.setText(String.valueOf(t.getLine()));
         lengthId.setText(String.valueOf(Math.floor(t.getLength() * 100) / 100));
@@ -97,8 +97,8 @@ public class TrainModelController implements Initializable {
 //        setpointSpeedBox.setText(String.valueOf(t.getSpeed()));
         //power requested will come from train controller
 
-    }   
-    
+    }
+
     @FXML
     private Button refresh;
 
@@ -134,7 +134,7 @@ public class TrainModelController implements Initializable {
 
     @FXML
     private AnchorPane testPane;
-    
+
     @FXML
     private AnchorPane testPane2;
 
@@ -247,6 +247,12 @@ public class TrainModelController implements Initializable {
     private Label enteringpassengersId;
 
     @FXML
+    private Label waitingpassengersId;
+    
+    @FXML
+    private Label blockId;
+
+    @FXML
     private Label trackelevationId;
 
     @FXML
@@ -263,7 +269,7 @@ public class TrainModelController implements Initializable {
 
     @FXML
     private Label mode;
-    
+
     @FXML
     private Label trainId;
 
@@ -275,11 +281,10 @@ public class TrainModelController implements Initializable {
 
     @FXML
     private TableView<Train> trainTable;
-   
-    
+
     @FXML
     private TableColumn<Train, String> track;
-    
+
     @FXML
     private TableColumn<Train, Integer> number;
 
@@ -315,61 +320,71 @@ public class TrainModelController implements Initializable {
 
     @FXML
     private TableColumn<Train, Integer> deccelLimit;
-    
+
     @FXML
     private Button refreshSpeed;
-    
+
     @FXML
     private Button submitOther;
-    
+
     private double storedVelocity = 0;
     private double storedPower = 0;
-    
+
     // method calls
-    
-    public void runTrain(){
+    public void setTrackInfo() {
+
+    }
+
+    public void runTrain() {
         tc = (TrainControllerController) ta.trainctrs.get(t.getNumber());
-        Task <Void> task = new Task<Void>() {
-            @Override public Void call() throws InterruptedException {
+        Task<Void> task = new Task<Void>() {
+            @Override
+            public Void call() throws InterruptedException {
                 Thread.sleep(2000); // needed to load the first block
                 boolean atAuthority = false;
-                while(!atAuthority){
+                while (!atAuthority) {
                     //set the block of the train
-                    
+
                     Block curr = ta.trkMdl.getCurrentBlock(t.getLine(), t.getBlock());
                     System.out.println("Current block: " + curr.getBlockNumber());
                     double bLength = curr.getBlockLength();
                     tc.setBlockDistance(bLength);
                     t.setBlock(curr.getBlockNumber());
-                    
+
+                    //update the track model info
+                    Platform.runLater(new Runnable() {
+                        @Override
+                        public void run() {
+                            updateBlockFromTrackModel(curr);
+                        }
+                    });
                     //run until there is no distance left
-                    // TODO: need to talk to steve about this
                     tc.isDistanceLeft = true;
-                    while(tc.isDistanceLeft){
+                    while (tc.isDistanceLeft) {
 //                    for(int i = 0; i < 100; i++){
                         Platform.runLater(new Runnable() {
-                            @Override public void run() {
+                            @Override
+                            public void run() {
                                 t.setMultiplier(ta.timeMultiplier);
-        //                           curSpeed = storedVelocity; //Double.parseDouble(currentSpeedNumber.getText());
-        //                           power = storedPower; //Double.parseDouble(requestedPowerNumber.getText());
-                                   if(storedPower > 120){ //check for the max power
-                                       storedPower = 120.00;
-                                   }
-                                
+                                //                           curSpeed = storedVelocity; //Double.parseDouble(currentSpeedNumber.getText());
+                                //                           power = storedPower; //Double.parseDouble(requestedPowerNumber.getText());
+                                if (storedPower > 120) { //check for the max power
+                                    storedPower = 120.00;
+                                }
+
 //                                   System.out.println(storedPower);
-                                   int passengers = Integer.parseInt(passengerNumber.getText());
+                                int passengers = Integer.parseInt(passengerNumber.getText());
 
-                                   double newSpeed = t.calculateVelocity(storedPower, storedVelocity, curr.getBlockGrade(), 0, curr.getSpeedLimit(), passengers);
-                                   storedVelocity = newSpeed;
-                                   tc.setCurrentSpeed(storedVelocity); //send stuff to steve
-                                   tc.calculatePower();
-                                   storedPower = tc.powerVal; //send stuff to steve
-                           //        System.out.println("velocity: "+ newSpeed + "mph");
-                                  
+                                double newSpeed = t.calculateVelocity(storedPower, storedVelocity, curr.getBlockGrade(), 0, curr.getSpeedLimit(), passengers);
+                                storedVelocity = newSpeed;
+                                tc.setCurrentSpeed(storedVelocity); //send stuff to steve
+                                tc.calculatePower();
+                                storedPower = tc.powerVal; //send stuff to steve
+                                //        System.out.println("velocity: "+ newSpeed + "mph");
 
-                                   currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
-                                   requestedPowerNumber.setText(String.valueOf(Math.round(100*storedPower)/100.0));
-                               }
+                                currentSpeedNumber.setText(String.valueOf(Math.round(100 * newSpeed) / 100.0));
+                                requestedPowerNumber.setText(String.valueOf(Math.round(100 * storedPower) / 100.0));
+                            }
 
                         });
                         Thread.sleep(10);
@@ -380,172 +395,205 @@ public class TrainModelController implements Initializable {
                     t.setBlock(next.getBlockNumber());
                     //set the ctc stuff to show where the train is
                     ta.ctc.updateTrainTable(t);
-                    //set at yard
-                    if(t.getBlock() == t.getTarget()){
+                    if (t.getBlock() == t.getTarget()) {
                         atAuthority = true;
-                        tc.onTargetArrival(); //done to reset the distance values to move again
+                        //at a station so deal with the passengers
+                        if (next.isStation()) {
+                            System.out.println("At a station");
+                            Platform.runLater(new Runnable() {
+                                @Override
+                                public void run() {
+                                    dealWithPassengers();
+                                    //open the doors here too
+                                    leftdoorId.setText("Open");
+//                            Thread.sleep(2000);
+                                    leftdoorId.setText("Closed");
+                                }
+
+                            });
+                        }
+                        tc.onTargetArrival(); //done to reset the distance values in train controller to move again
                     }
                 }
 
                 return null;
             }
-                
-         };
-        
+
+        };
+
         task.setOnSucceeded(e -> {
 //            label.textProperty().unbind();
             // this message will be seen.
-            currentSpeedNumber.setText(String.valueOf(Math.round(100*storedVelocity)/100.0));
-            requestedPowerNumber.setText(String.valueOf(Math.round(100*storedPower)/100.0));
-         });
-        
+            currentSpeedNumber.setText(String.valueOf(Math.round(100 * storedVelocity) / 100.0));
+            requestedPowerNumber.setText(String.valueOf(Math.round(100 * storedPower) / 100.0));
+        });
+
         Thread thread = new Thread(task);
         thread.setDaemon(true);
         thread.start();
-        
-        
-        
+
     }
-    
-    public void onBrake(int brake){
-        if(brake == 0){
+
+    public void updateBlockFromTrackModel(Block curr) {
+        speedlimitId.setText("" + curr.getSpeedLimit());
+        enteringpassengersId.setText("" + curr.getPassengersBoard());
+        waitingpassengersId.setText("" + curr.getPassengersStation());
+        trackelevationId.setText("" + curr.getElevation());
+        gradeId.setText("" + curr.getBlockGrade());
+        blockId.setText("" + curr.getBlockNumber());
+    }
+
+    public void dealWithPassengers() {
+        Block block = ta.trkMdl.getCurrentBlock(t.getLine(), t.getBlock());;
+        int passOnTrain = t.getPassNum();
+        int wantToGetOn = block.getPassengersBoard();
+        int spotsLeft = t.getSpotsLeft();
+        if (spotsLeft > wantToGetOn) {
+            t.setPassNum(passOnTrain + wantToGetOn);
+        } else {
+            //not enough space
+            t.setPassNum(passOnTrain + spotsLeft);
+            block.setPassengersRemaining(wantToGetOn - spotsLeft);
+        }
+        System.out.println("Passenger stuff: " + passOnTrain + ", " + wantToGetOn + ", " + spotsLeft);
+        passengerNumber.setText("" + t.getPassNum());
+    }
+
+    public void onBrake(int brake) {
+        if (brake == 0) {
             brakeId.setText("disengaged");
             emergencyBrakeId.setText("disengaged");
-        }else if(brake == 1){
+        } else if (brake == 1) {
             brakeId.setText("engaged");
-        }else if(brake == 3){
+        } else if (brake == 3) {
             emergencyBrakeId.setText("engaged");
         }
     }
-    
-    public void onDoors(String side){
-        if(side.toLowerCase().equals("left")){
+
+    public void onDoors(String side) {
+        if (side.toLowerCase().equals("left")) {
             leftdoorId.setText("Open");
-        }else if(side.toLowerCase().equals("right")){
+        } else if (side.toLowerCase().equals("right")) {
             rightdoorId.setText("Open");
-        }else{
+        } else {
             leftdoorId.setText("Closed");
             rightdoorId.setText("Closed");
         }
     }
-    
+
     // Button trigger events
-    
     @FXML
     void onRefreshSpeed(ActionEvent event) {
         tc = (TrainControllerController) ta.trainctrs.get(t.getNumber());
 //        double curSpeed = 0;
 //        double power = 0;
-        Task <Void> task = new Task<Void>() {
-            @Override public Void call() throws InterruptedException {
-                
-                for(int i = 0; i < 5000; i++){
+        Task<Void> task = new Task<Void>() {
+            @Override
+            public Void call() throws InterruptedException {
+
+                for (int i = 0; i < 5000; i++) {
                     Platform.runLater(new Runnable() {
-                        @Override public void run() {
-    //                           curSpeed = storedVelocity; //Double.parseDouble(currentSpeedNumber.getText());
-    //                           power = storedPower; //Double.parseDouble(requestedPowerNumber.getText());
-                               if(storedPower > 120){ //check for the max power
-                                   storedPower = 120.00;
-                               }
-                               System.out.println(storedPower);
-                               int passengers = Integer.parseInt(passengerNumber.getText());
+                        @Override
+                        public void run() {
+                            //                           curSpeed = storedVelocity; //Double.parseDouble(currentSpeedNumber.getText());
+                            //                           power = storedPower; //Double.parseDouble(requestedPowerNumber.getText());
+                            if (storedPower > 120) { //check for the max power
+                                storedPower = 120.00;
+                            }
+                            System.out.println(storedPower);
+                            int passengers = Integer.parseInt(passengerNumber.getText());
 
-                               double newSpeed = t.calculateVelocity(storedPower, storedVelocity, 0, 0, 300, passengers);
-                               storedVelocity = newSpeed;
-                               tc.setCurrentSpeed(storedVelocity); //send stuff to steve
-                               storedPower = tc.powerVal; //send stuff to steve
-                       //        System.out.println("velocity: "+ newSpeed + "mph");
+                            double newSpeed = t.calculateVelocity(storedPower, storedVelocity, 0, 0, 300, passengers);
+                            storedVelocity = newSpeed;
+                            tc.setCurrentSpeed(storedVelocity); //send stuff to steve
+                            storedPower = tc.powerVal; //send stuff to steve
+                            //        System.out.println("velocity: "+ newSpeed + "mph");
 
-                               currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
-                               requestedPowerNumber.setText(String.valueOf(Math.round(100*storedPower)/100.0));
-                           }
+                            currentSpeedNumber.setText(String.valueOf(Math.round(100 * newSpeed) / 100.0));
+                            requestedPowerNumber.setText(String.valueOf(Math.round(100 * storedPower) / 100.0));
+                        }
 
                     });
                     Thread.sleep(10);
                 }
-                
 
-              return null;
+                return null;
             }
-         };
-        
+        };
+
         task.setOnSucceeded(e -> {
 //            label.textProperty().unbind();
             // this message will be seen.
-            currentSpeedNumber.setText(String.valueOf(Math.round(100*storedVelocity)/100.0));
-            requestedPowerNumber.setText(String.valueOf(Math.round(100*storedPower)/100.0));
-         });
-        
+            currentSpeedNumber.setText(String.valueOf(Math.round(100 * storedVelocity) / 100.0));
+            requestedPowerNumber.setText(String.valueOf(Math.round(100 * storedPower) / 100.0));
+        });
+
         Thread thread = new Thread(task);
         thread.setDaemon(true);
         thread.start();
-        
+
     }
 
     @FXML
     void leftdoorsClick(ActionEvent event) {
-        if(leftdoorsButton.isSelected()){
+        if (leftdoorsButton.isSelected()) {
             leftdoorId.setText("Open");
-        }else{
+        } else {
             leftdoorId.setText("Closed");
         }
     }
-    
+
     @FXML
     void rightdoorsClick(ActionEvent event) {
-        if(rightdoorsButton.isSelected()){
+        if (rightdoorsButton.isSelected()) {
             rightdoorId.setText("Open");
-        }else{
+        } else {
             rightdoorId.setText("Closed");
         }
     }
 
     @FXML
     void onBrakeClick(ActionEvent event) {
-        if(brakeButton.isSelected()){
+        if (brakeButton.isSelected()) {
             double curSpeed = Double.parseDouble(currentSpeedNumber.getText());
             double power = Double.parseDouble(requestedPowerNumber.getText());
             int passengers = Integer.parseInt(passengerNumber.getText());
 
-            
             double newSpeed = t.calculateVelocity(power, curSpeed, 0, 1, 300, passengers); //1 is the normal brake
 
-
-            currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
+            currentSpeedNumber.setText(String.valueOf(Math.round(100 * newSpeed) / 100.0));
             brakeId.setText("engaged");
-        }else{
+        } else {
             brakeId.setText("disengaged");
         }
     }
 
     @FXML
     void onEmergencyBrakeClick(ActionEvent event) {
-        if(emergencyBrakeButton.isSelected()){
+        if (emergencyBrakeButton.isSelected()) {
             double curSpeed = Double.parseDouble(currentSpeedNumber.getText());
             double power = Double.parseDouble(requestedPowerNumber.getText());
             int passengers = Integer.parseInt(passengerNumber.getText());
 
             double newSpeed = t.calculateVelocity(power, curSpeed, 0, 3, 300, passengers); //3 is the emergency brake
 
-
-            currentSpeedNumber.setText(String.valueOf(Math.round(100*newSpeed)/100.0));
+            currentSpeedNumber.setText(String.valueOf(Math.round(100 * newSpeed) / 100.0));
             emergencyBrakeId.setText("engaged");
-        }else{
+        } else {
             emergencyBrakeId.setText("disengaged");
         }
     }
-    
+
     @FXML
     void onBrakeFailure(ActionEvent event) {
 
     }
 
-
     @FXML
     void onEngineFailure(ActionEvent event) {
 
     }
-    
+
     @FXML
     void onSignalFailure(ActionEvent event) {
 
@@ -553,9 +601,9 @@ public class TrainModelController implements Initializable {
 
     @FXML
     void onLightsClick(ActionEvent event) {
-        if(lightsButton.isSelected()){
+        if (lightsButton.isSelected()) {
             lightId.setText("On");
-        }else{
+        } else {
             lightId.setText("Off");
         }
     }
@@ -563,29 +611,28 @@ public class TrainModelController implements Initializable {
     @FXML
     void onSetpointSpeedSubmit(ActionEvent event) {
         tc = (TrainControllerController) ta.trainctrs.get(t.getNumber());
-        if(!"".equals(setpointSpeedBox.getText())){
+        if (!"".equals(setpointSpeedBox.getText())) {
             tc.setSetPointSpeed(Double.parseDouble(setpointSpeedBox.getText()));
         }
     }
-    
+
     @FXML
     void onPassengersLeavingSubmit(ActionEvent event) {
-        if(Integer.parseInt(passengerNumber.getText()) - Integer.parseInt(passengersLeavingBox.getText()) < 0){
+        if (Integer.parseInt(passengerNumber.getText()) - Integer.parseInt(passengersLeavingBox.getText()) < 0) {
             passengerNumber.setText(String.valueOf(0));
             passengerId.setText(String.valueOf(0));
-        }else{
+        } else {
             passengerNumber.setText(String.valueOf(Integer.parseInt(passengerNumber.getText()) - Integer.parseInt(passengersLeavingBox.getText())));
             passengerId.setText(String.valueOf(Integer.parseInt(passengerNumber.getText()) - Integer.parseInt(passengersLeavingBox.getText())));
         }
     }
-    
 
     @FXML
     void onSubmit(ActionEvent event) throws IOException {
-        if(!"".equals(currentSpeedBox.getText()) && !"".equals(powerRequestBox.getText())){
+        if (!"".equals(currentSpeedBox.getText()) && !"".equals(powerRequestBox.getText())) {
             double curSpeed = Double.parseDouble(currentSpeedBox.getText());
             double power = Double.parseDouble(powerRequestBox.getText());
-            if(power > 120){ //check for the max power
+            if (power > 120) { //check for the max power
                 power = 120.00;
             }
 //            System.out.println(power);
@@ -593,39 +640,38 @@ public class TrainModelController implements Initializable {
 //
 //            double newSpeed = t.calculateVelocity(power, curSpeed, 0, 0, 300, passengers);
 //    //        System.out.println("velocity: "+ newSpeed + "mph");
-    
+
             storedVelocity = curSpeed;
             storedPower = power;
 
-            currentSpeedNumber.setText(String.valueOf(Math.round(100*curSpeed)/100.0));
-            requestedPowerNumber.setText(String.valueOf(Math.round(100*power)/100.0));
+            currentSpeedNumber.setText(String.valueOf(Math.round(100 * curSpeed) / 100.0));
+            requestedPowerNumber.setText(String.valueOf(Math.round(100 * power) / 100.0));
         }
-        
-               
+
     }
-    
+
     @FXML
-    void onSubmitOther(ActionEvent event) {
-        if(!"".equals(authorityBox.getText())){
+    void onSubmitOther(ActionEvent event) throws InterruptedException {
+        if (!"".equals(authorityBox.getText())) {
             int target = Integer.parseInt(authorityBox.getText());
-            authorityId.setText(String.valueOf(target));
-            
+//            authorityId.setText(String.valueOf(target));
+
             double distance = ta.trkMdl.getDistance(t.getBlock(), target);
             System.out.println("Distance: " + distance);
             t.setTarget(target);
             t.setAuthority(distance);
             runTrain();
-        } 
-        
-        if(!"".equals(trackElevationBox.getText())){
+        }
+
+        if (!"".equals(trackElevationBox.getText())) {
             trackelevationId.setText(String.valueOf(trackElevationBox.getText()));
         }
-        
-        if(!"".equals(temperatureBox.getText())){
+
+        if (!"".equals(temperatureBox.getText())) {
             tempId.setText(String.valueOf(temperatureBox.getText()));
         }
-        
-        if(!"".equals(announcementBox.getText())){
+
+        if (!"".equals(announcementBox.getText())) {
             announcementId.setText(String.valueOf(announcementBox.getText()));
         }
     }
@@ -634,19 +680,19 @@ public class TrainModelController implements Initializable {
     void onTrainSelectionClick(ActionEvent event) {
 
     }
-    
+
     @FXML
     void onTestClick(ActionEvent event) {
-        if(testPanelCheck.isSelected()){
+        if (testPanelCheck.isSelected()) {
             testPane.setDisable(false);
             testPane2.setDisable(false);
-        }else if(!testPanelCheck.isSelected()){
+        } else if (!testPanelCheck.isSelected()) {
             testPane.setDisable(true);
             testPane2.setDisable(true);
         }
-        
+
     }
-    
+
 //    @FXML
 //    void onRefresh(ActionEvent event) {
 //        //TODO: need a for loop that will go through database and add all of the trains      
@@ -665,5 +711,4 @@ public class TrainModelController implements Initializable {
 //        deccelLimit.setCellValueFactory(new PropertyValueFactory<>("deccelLimit"));
 //        trainTable.getItems().add(t);
 //    }
-    
 }

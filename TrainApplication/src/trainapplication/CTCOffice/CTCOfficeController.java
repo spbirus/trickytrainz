@@ -275,8 +275,6 @@ public class CTCOfficeController implements Initializable {
     //GUI ActionEvent Handlers
     @FXML
     void autoModeButtonClick(ActionEvent event) {
-        //TODO later
-        //timeline.stop();
         
         if (autoMode) { //turns off auto mode (multiplier back to 1)
             autoModeButton.setText("Enter Automatic Mode");
@@ -287,9 +285,6 @@ public class CTCOfficeController implements Initializable {
             autoMode = true;
             dispatchTimeCheck = currentTime + 210000; //try to dispatch trains every 3 minutes
         }
-
-//        int multiplier = Integer.parseInt(multiplierTextField.getText());
-//        ta.setTime(multiplier);
     }
     
     @FXML

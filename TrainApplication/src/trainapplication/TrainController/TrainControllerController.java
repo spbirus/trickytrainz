@@ -441,6 +441,40 @@ public class TrainControllerController implements Initializable {
     void setSetpointSpeed_Test(ActionEvent event) {
         setpointSpeedLabel.setText(String.format("%.2f",Double.parseDouble(test_setpointSpeedVal.getText())));
     }
+    
+    @FXML
+    void onBrakeFailActivate(ActionEvent event) {
+        t.setBrakeFailure(true);
+        TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
+        train.onBrakeFailure(true);
+    }
+
+    @FXML
+    void onBrakeFailDeactivate(ActionEvent event) {
+        t.setBrakeFailure(false);
+        TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
+        train.onBrakeFailure(false);
+    }
+    
+    @FXML
+    void onEngineFailActivate(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onEngineFailDeactivate(ActionEvent event) {
+
+    }
+    
+    @FXML
+    void onSignalFailActivate(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onSignalFailDeactivate(ActionEvent event) {
+
+    }
 
     
 }

@@ -83,7 +83,7 @@ public class TrainModelController implements Initializable {
         widthId.setText(String.valueOf(Math.floor(t.getWidth() * 100) / 100));
         massId.setText(String.valueOf(Math.floor(t.getTotalMass() * 100) / 100));
         crewId.setText(String.valueOf(t.getCrewNum()));
-        passengerId.setText(String.valueOf(t.getPassNum()));
+//        passengerId.setText(String.valueOf(t.getPassNum()));
         maxCapId.setText(String.valueOf(t.getMaxCap()));
         carId.setText(String.valueOf(t.getCarNum()));
         doorId.setText(String.valueOf(t.getDoorNum()));
@@ -101,7 +101,7 @@ public class TrainModelController implements Initializable {
     }
 
     @FXML
-    private Button refresh;
+    private AnchorPane testPane2;
 
     @FXML
     private TextField setpointSpeedBox;
@@ -116,28 +116,16 @@ public class TrainModelController implements Initializable {
     private TextField passengersLeavingBox;
 
     @FXML
-    private Button activateBrakeFailure;
+    private Text brakeActivated;
 
     @FXML
-    private Button dactivateBrakeFailure;
+    private Text engineActivated;
 
     @FXML
-    private Button activateEngineFailure;
-
-    @FXML
-    private Button dectivateEngineFailure;
-
-    @FXML
-    private Button deactivateSignalFailure;
-
-    @FXML
-    private Button activateSignalFailure;
+    private Text signalActivated;
 
     @FXML
     private AnchorPane testPane;
-
-    @FXML
-    private AnchorPane testPane2;
 
     @FXML
     private TextField trackElevationBox;
@@ -176,10 +164,13 @@ public class TrainModelController implements Initializable {
     private Button submitButton;
 
     @FXML
-    private Label advertisement;
+    private Button refreshSpeed;
 
     @FXML
-    private MenuButton trainNumDropdown;
+    private Button submitOther;
+
+    @FXML
+    private Label advertisement;
 
     @FXML
     private Label trackId;
@@ -195,9 +186,6 @@ public class TrainModelController implements Initializable {
 
     @FXML
     private Label crewId;
-
-    @FXML
-    private Label passengerId;
 
     @FXML
     private Label maxCapId;
@@ -242,10 +230,13 @@ public class TrainModelController implements Initializable {
     private Label speedlimitId;
 
     @FXML
-    private Label authorityId;
+    private Label enteringpassengersId;
 
     @FXML
-    private Label enteringpassengersId;
+    private Label trackelevationId;
+
+    @FXML
+    private Label gradeId;
 
     @FXML
     private Label waitingpassengersId;
@@ -254,10 +245,7 @@ public class TrainModelController implements Initializable {
     private Label blockId;
 
     @FXML
-    private Label trackelevationId;
-
-    @FXML
-    private Label gradeId;
+    private Label trainId;
 
     @FXML
     private Label passengerNumber;
@@ -272,70 +260,10 @@ public class TrainModelController implements Initializable {
     private Label mode;
 
     @FXML
-    private Label trainId;
-
-    @FXML
-    private Text brakeActivated;
-
-    @FXML
-    private Text engineActivated;
-
-    @FXML
-    private Text signalActivated;
-
-    @FXML
     private MenuBar menuBar;
 
     @FXML
     private CheckBox testPanelCheck;
-
-    @FXML
-    private TableView<Train> trainTable;
-
-    @FXML
-    private TableColumn<Train, String> track;
-
-    @FXML
-    private TableColumn<Train, Integer> number;
-
-    @FXML
-    private TableColumn<Train, Integer> length;
-
-    @FXML
-    private TableColumn<Train, Integer> width;
-
-    @FXML
-    private TableColumn<Train, Integer> height;
-
-    @FXML
-    private TableColumn<Train, Integer> mass;
-
-    @FXML
-    private TableColumn<Train, Integer> crewNum;
-
-    @FXML
-    private TableColumn<Train, Integer> passNum;
-
-    @FXML
-    private TableColumn<Train, Integer> maxCap;
-
-    @FXML
-    private TableColumn<Train, Integer> carNum;
-
-    @FXML
-    private TableColumn<Train, Integer> doorNum;
-
-    @FXML
-    private TableColumn<Train, Integer> accelLimit;
-
-    @FXML
-    private TableColumn<Train, Integer> deccelLimit;
-
-    @FXML
-    private Button refreshSpeed;
-
-    @FXML
-    private Button submitOther;
 
     private double storedVelocity = 0;
     private double storedPower = 0;
@@ -642,10 +570,10 @@ public class TrainModelController implements Initializable {
     void onPassengersLeavingSubmit(ActionEvent event) {
         if (Integer.parseInt(passengerNumber.getText()) - Integer.parseInt(passengersLeavingBox.getText()) < 0) {
             passengerNumber.setText(String.valueOf(0));
-            passengerId.setText(String.valueOf(0));
+//            passengerId.setText(String.valueOf(0));
         } else {
             passengerNumber.setText(String.valueOf(Integer.parseInt(passengerNumber.getText()) - Integer.parseInt(passengersLeavingBox.getText())));
-            passengerId.setText(String.valueOf(Integer.parseInt(passengerNumber.getText()) - Integer.parseInt(passengersLeavingBox.getText())));
+//            passengerId.setText(String.valueOf(Integer.parseInt(passengerNumber.getText()) - Integer.parseInt(passengersLeavingBox.getText())));
         }
     }
 

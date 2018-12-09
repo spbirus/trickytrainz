@@ -363,9 +363,9 @@ public class Train {
                 trainAccel -= serviceBrakeDecel;
             }
         } else if (brakeFailure) {
-            if (brakes == 3) {
-                trainAccel -= emergencyBrakeDecel;
-            }
+
+            trainAccel -= emergencyBrakeDecel;
+
         }
 
 //        System.out.println("accel: " + trainAccel +" ft/s^2");
@@ -384,7 +384,7 @@ public class Train {
 //        System.out.println("velocity: " + velActual +" MPH");
         return velActual;
     }
-    
+
     public int getSpotsLeft() {
         return maxCap - passNum;
     }

@@ -278,16 +278,16 @@
             </Label>
             <Label layoutX="48.0" layoutY="281.0" text="Brake Failure" />
             <Separator layoutX="25.0" layoutY="276.0" prefHeight="5.0" prefWidth="126.0" />
-            <Button layoutX="89.0" layoutY="245.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="84.0" text="Deactivate" />
-            <Button layoutX="5.0" layoutY="245.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="83.0" text="Activate" />
+            <Button layoutX="89.0" layoutY="245.0" mnemonicParsing="false" onAction="#onBrakeFailDeactivate" prefHeight="27.0" prefWidth="84.0" text="Deactivate" />
+            <Button layoutX="5.0" layoutY="245.0" mnemonicParsing="false" onAction="#onBrakeFailActivate" prefHeight="27.0" prefWidth="83.0" text="Activate" />
             <Label layoutX="48.0" layoutY="334.0" text="Engine Failure" />
             <Separator layoutX="25.0" layoutY="329.0" prefHeight="5.0" prefWidth="126.0" />
-            <Button layoutX="89.0" layoutY="298.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="84.0" text="Deactivate" />
-            <Button layoutX="5.0" layoutY="298.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="83.0" text="Activate" />
+            <Button layoutX="89.0" layoutY="298.0" mnemonicParsing="false" onAction="#onEngineFailDeactivate" prefHeight="27.0" prefWidth="84.0" text="Deactivate" />
+            <Button layoutX="5.0" layoutY="298.0" mnemonicParsing="false" onAction="#onEngineFailActivate" prefHeight="27.0" prefWidth="83.0" text="Activate" />
             <Label layoutX="48.0" layoutY="387.0" text="Signal Failure" />
             <Separator layoutX="25.0" layoutY="382.0" prefHeight="5.0" prefWidth="126.0" />
-            <Button layoutX="89.0" layoutY="351.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="84.0" text="Deactivate" />
-            <Button layoutX="5.0" layoutY="351.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="83.0" text="Activate" />
+            <Button layoutX="89.0" layoutY="351.0" mnemonicParsing="false" onAction="#onSignalFailDeactivate" prefHeight="27.0" prefWidth="84.0" text="Deactivate" />
+            <Button layoutX="5.0" layoutY="351.0" mnemonicParsing="false" onAction="#onSignalFailActivate" prefHeight="27.0" prefWidth="83.0" text="Activate" />
             <Label layoutX="59.0" layoutY="8.0" prefHeight="19.0" prefWidth="72.0" text="TESTING" underline="true">
                <font>
                   <Font size="15.0" />

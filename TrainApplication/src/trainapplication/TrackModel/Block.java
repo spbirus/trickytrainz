@@ -76,7 +76,8 @@ public class Block {
     
     public int getPassengersBoard() {
         passengersStation = calculatePassengers();
-        return (int)Math.random()*passengersStation;
+        double num = Math.random()*passengersStation;
+        return (int)num + 1;
     }
     
     public void setPassengersRemaining(int remaining){

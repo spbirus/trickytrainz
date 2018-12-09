@@ -35,6 +35,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import trainapplication.TrackModel.Block;
 import trainapplication.TrainApplication;
@@ -248,7 +249,7 @@ public class TrainModelController implements Initializable {
 
     @FXML
     private Label waitingpassengersId;
-    
+
     @FXML
     private Label blockId;
 
@@ -272,6 +273,15 @@ public class TrainModelController implements Initializable {
 
     @FXML
     private Label trainId;
+
+    @FXML
+    private Text brakeActivated;
+
+    @FXML
+    private Text engineActivated;
+
+    @FXML
+    private Text signalActivated;
 
     @FXML
     private MenuBar menuBar;
@@ -479,6 +489,18 @@ public class TrainModelController implements Initializable {
             leftdoorId.setText("Closed");
             rightdoorId.setText("Closed");
         }
+    }
+
+    public void onBrakeFailure(boolean activated) {
+        brakeActivated.setVisible(activated);
+    }
+
+    public void onEngineFailure(boolean activated) {
+        engineActivated.setVisible(activated);
+    }
+
+    public void onSignalFailure(boolean activated) {
+        signalActivated.setVisible(activated);
     }
 
     // Button trigger events

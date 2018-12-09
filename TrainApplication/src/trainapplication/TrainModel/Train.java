@@ -10,8 +10,8 @@ package trainapplication;
  * @author burri
  */
 public class Train {
-    
-    private final double M_TO_FT = 3.281; 
+
+    private final double M_TO_FT = 3.281;
     private final double M_TO_MI = 0.0006214;
     private final double N_TO_FTLBS = 0.22481;
     private final double GRAVITY = 32.17405; //ft/s^2
@@ -28,14 +28,14 @@ public class Train {
     private final int maxCap = seatCap + standCap;
     private String line; //red or green line
     private int number; //train id number
-    private double length = 32.2*M_TO_FT; //ft
-    private double height = 3.42*M_TO_FT; //ft
-    private double width = 2.65*M_TO_FT; //ft
+    private double length = 32.2 * M_TO_FT; //ft
+    private double height = 3.42 * M_TO_FT; //ft
+    private double width = 2.65 * M_TO_FT; //ft
     private int crewNum = 1;
     private int passNum = 0;
     private int carNum = 1;
     private int doorNum = 8;
-    private double accelLimit =  0.5 * 3.2808399;  //ft/s
+    private double accelLimit = 0.5 * 3.2808399;  //ft/s
     private double deccelLimit = 0; //ft/s
     private double speed;       //
     private double authority; // total distance
@@ -43,17 +43,18 @@ public class Train {
     private int previousBlock = 0;
     private int target; //destination block
     private int temperature;
-    
+
     private double trainMass = 81800; //lbs
     private double totalMass; //mass of car and people
     private double velActual = 0; //thing to return to train controller
     private double trainAccel = 0; //accelteration to return to train controller in ft/s^2
     private double force;
-    
+
     private int numberOfWheels = 12; //will probably need to change
     private final double coefficientOfFriction = 0.00035; //from  https://en.wikipedia.org/wiki/Rolling_resistance#Rolling_resistance_coefficient_examples
     private int direction; // 0 and 1
     private int brakes = 0;
+    private boolean brakeFailure = false;
 
     //for CTC
     public Train(String line, int number, double speed, int target, double authority) {
@@ -71,6 +72,14 @@ public class Train {
     public void setMultiplier(double multiplier) {
         this.multiplier = multiplier;
         deltaT = origDeltaT * multiplier;
+    }
+
+    public boolean isBrakeFailure() {
+        return brakeFailure;
+    }
+
+    public void setBrakeFailure(boolean brakeFailure) {
+        this.brakeFailure = brakeFailure;
     }
 
     public int getBrakes() {
@@ -172,7 +181,7 @@ public class Train {
     public void setTemperature(int temperature) {
         this.temperature = temperature;
     }
-    
+
     public String getLine() {
         return line;
     }
@@ -212,7 +221,7 @@ public class Train {
     public void setWidth(int width) {
         this.width = width;
     }
-    
+
     public double getDeccelLimit() {
         return deccelLimit;
     }
@@ -297,92 +306,87 @@ public class Train {
     public void setTarget(int target) {
         this.target = target;
     }
-    
-    
-    public double calculateVelocity(double power, double currentSpeed,double grade,int brake,double speedLimit,int passengers){
-        
-        
-        totalMass = trainMass + 150*passengers; //might need to add 1 for the operator
-        
+
+    public double calculateVelocity(double power, double currentSpeed, double grade, int brake, double speedLimit, int passengers) {
+
+        totalMass = trainMass + 150 * passengers; //might need to add 1 for the operator
+
         /*
                                                                                    F             a         vel
         (1000)*power(.0006214)/(currentSpeed) X (.22481)/(currentSpeed*.000277778) X 1/totalMass X 1*deltaT*multiplier
                       to mi                     to ft lbs            to mi per sec
         
         
-        */
-        
+         */
 //        System.out.println("current speed: " + currentSpeed);
-
         //FORCE
-        if(currentSpeed == 0){
+        if (currentSpeed == 0) {
             //train is stopped therefore can't divide by 0
 //            System.out.println("speed is 0");
-            force = (power*1000)*(N_TO_FTLBS)/1; //convert from kW to Watts
-        }else{
-            force = (power*1000)*(N_TO_FTLBS/currentSpeed);
+            force = (power * 1000) * (N_TO_FTLBS) / 1; //convert from kW to Watts
+        } else {
+            force = (power * 1000) * (N_TO_FTLBS / currentSpeed);
         }
-        
+
         //to downward force
         double slope = Math.atan2(grade, 100); //given in radians
         double angle = Math.toDegrees(slope);
 //        System.out.println("Slope: " + slope + " Angle: " + angle);
-        
+
         //get all forces acting in the x plane that will counteract the force in the positive direction
-        double normalForce = (totalMass/numberOfWheels) * GRAVITY * Math.sin(angle*Math.PI/180);
-        double downwardForce = (totalMass/numberOfWheels) * GRAVITY * Math.cos(angle*Math.PI/180);
-        
+        double normalForce = (totalMass / numberOfWheels) * GRAVITY * Math.sin(angle * Math.PI / 180);
+        double downwardForce = (totalMass / numberOfWheels) * GRAVITY * Math.cos(angle * Math.PI / 180);
+
         //frictional force
-        double frictionalForce = (coefficientOfFriction*downwardForce) + normalForce;
+        double frictionalForce = (coefficientOfFriction * downwardForce) + normalForce;
 //        System.out.println("Frictionalforce: " +frictionalForce + " ftlbs");
 //        System.out.println("Friction: " + force);
-        
+
         force = force - frictionalForce;
-        
+
 //        System.out.println("force: " + force + " ftlbs");
-        
-        trainAccel = force/totalMass;
-        
-        
+        trainAccel = force / totalMass;
+
         //ACCEL
         //check to make sure train does not exceed max
-        if(trainAccel >= accelLimit){
+        if (trainAccel >= accelLimit) {
             trainAccel = accelLimit;
         }
-        
+
         //brakes = 3 emergency brake is pulled
         //brakes = 1 service brake is pulled
-        if(brakes == 3){
+        if (brakes == 3) {
             trainAccel -= emergencyBrakeDecel;
         }
-        if(brakes == 1){
-            trainAccel -= serviceBrakeDecel;
+        if (!brakeFailure) {
+            if (brakes == 1) {
+                trainAccel -= serviceBrakeDecel;
+            }
+        } else if (brakeFailure) {
+            if (brakes == 3) {
+                trainAccel -= emergencyBrakeDecel;
+            }
         }
-        
+
 //        System.out.println("accel: " + trainAccel +" ft/s^2");
-        
         //VELOCITY
-        velActual = currentSpeed + (trainAccel * deltaT)*FTPS_TO_MPH; //deltaT is a change in time that helps us not miss the beacon
-        
+        velActual = currentSpeed + (trainAccel * deltaT) * FTPS_TO_MPH; //deltaT is a change in time that helps us not miss the beacon
+
         //prevent it from going backwards
-        if(velActual < 0){
+        if (velActual < 0) {
             velActual = 0;
         }
-        
-        if(velActual > speedLimit){
+
+        if (velActual > speedLimit) {
             velActual = speedLimit;
         }
-        
-//        System.out.println("velocity: " + velActual +" MPH");
 
-        
+//        System.out.println("velocity: " + velActual +" MPH");
         return velActual;
     }
     
-    public int getSpotsLeft(){
+    public int getSpotsLeft() {
         return maxCap - passNum;
     }
-    
-    
-    
+
 }

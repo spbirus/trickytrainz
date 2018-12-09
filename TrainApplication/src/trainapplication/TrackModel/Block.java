@@ -66,10 +66,10 @@ public class Block {
     }
     
     public int calculatePassengers(){
-        return (int)Math.random()*100;
+        double num = Math.random()*100.00;
+        return (int)num + 1;
     }
-            
-    
+             
     public boolean isStation() {
         return stationPresent;
     }
@@ -82,7 +82,10 @@ public class Block {
     public void setPassengersRemaining(int remaining){
         passengersStation += remaining;
     }
-    
+    // Empty Block for testing 
+    public Block(){
+        
+    }
     //Data from csv file
     public Block(String line, String section, int blockNumber, double blockLength, double blockGrade, double speedLimit, String infrastructure, int nextInbound, int nextOutbound, double elevation, double cumElevation) {
         this.line = line;

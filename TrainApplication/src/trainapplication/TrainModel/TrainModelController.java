@@ -386,11 +386,11 @@ public class TrainModelController implements Initializable {
                     if(t.getBlock() == t.getTarget()){
                         atAuthority = true;
                         //at a station so deal with the passengers
-                        if(t.getBlock().isStation()){
+                        if(curr.isStation()){
                             dealWithPassengers();
                             //open the doors here too
                             leftdoorId.setText("Open");
-                            Thread.sleep(2000);
+//                            Thread.sleep(2000);
                             leftdoorId.setText("Closed");
                         }
                         tc.onTargetArrival(); //done to reset the distance values in train controller to move again
@@ -418,17 +418,18 @@ public class TrainModelController implements Initializable {
     }
     
     public void dealWithPassengers(){
+        Block block = ta.trkMdl.getCurrentBlock(t.getLine(), t.getBlock());;
         int passOnTrain = t.getPassNum();
-        int wantToGetOn =  t.getBlock().getPassengersBoard();
+        int wantToGetOn =  block.getPassengersBoard();
         int spotsLeft = t.getSpotsLeft();
         if(spotsLeft > wantToGetOn){
             t.setPassNum(passOnTrain + wantToGetOn);
         }else{
             //not enough space
             t.setPassNum(passOnTrain + spotsLeft);
-            t.getBlock().setPassengersRemaining(wantToGetOn - spotsLeft);
+            block.setPassengersRemaining(wantToGetOn - spotsLeft);
         }
-        passengerNumber.setText(t.getPassNum());
+        passengerNumber.setText("" + t.getPassNum());
     }
     
     public void onBrake(int brake){
@@ -629,7 +630,7 @@ public class TrainModelController implements Initializable {
     }
     
     @FXML
-    void onSubmitOther(ActionEvent event) {
+    void onSubmitOther(ActionEvent event) throws InterruptedException {
         if(!"".equals(authorityBox.getText())){
             int target = Integer.parseInt(authorityBox.getText());
             authorityId.setText(String.valueOf(target));

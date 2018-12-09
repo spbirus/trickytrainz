@@ -91,7 +91,7 @@ public class TrackModelController implements Initializable {
     } 
     
         // Function used by CTC to get te distance to the destination block 
-    public double getDistance(int start, int end){
+    public double getDistance(int start, int end) throws InterruptedException{
         Block b = getBlockAt("Green", start);
         Block target = getBlockAt("Green", end);
         Block prev = getBlockAt("Green", 0);
@@ -118,7 +118,7 @@ public class TrackModelController implements Initializable {
     
     // Function that will return the next block to the Train Model 
     // Also called from getDistance 
-    public Block getNextBlock(String line, int number, int prevBlock){
+    public Block getNextBlock(String line, int number, int prevBlock) throws InterruptedException{
         Block b = getBlockAt(line, number);
         Block prev = getBlockAt(line, prevBlock);
         Block next = null;
@@ -290,7 +290,7 @@ public class TrackModelController implements Initializable {
         
     }
     
-    public void FiltersButtonClicked(){
+    public void FiltersButtonClicked() throws InterruptedException{
         
 //        ArrayList<Block> temp = trackList;
 //        String selectedLine = (String)trackLineComboBox.getValue();

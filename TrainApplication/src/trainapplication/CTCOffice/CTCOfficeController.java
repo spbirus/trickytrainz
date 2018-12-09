@@ -308,7 +308,7 @@ public class CTCOfficeController implements Initializable {
 
     //schedule loaded in will be one train per file
     @FXML
-    void loadScheduleButtonClick(ActionEvent event) {
+    void loadScheduleButtonClick(ActionEvent event) throws InterruptedException {
         String csvFile;
 
         FileChooser fileChooser = new FileChooser();
@@ -460,7 +460,7 @@ public class CTCOfficeController implements Initializable {
     }
 
     @FXML
-    void menuLoadScheduleClick(ActionEvent event) {
+    void menuLoadScheduleClick(ActionEvent event) throws InterruptedException {
         loadScheduleButtonClick(event);
     }
 
@@ -599,7 +599,7 @@ public class CTCOfficeController implements Initializable {
     line, section(not used), current block, target block(=authority), time to target
     sends train to be added to the queue
      */
-    private void createTrainFromSchedule(Schedule schedule) throws IOException {
+    private void createTrainFromSchedule(Schedule schedule) throws IOException, InterruptedException {
 
         String line = schedule.line;
         int number = schedule.trainID;

@@ -74,7 +74,7 @@ public class Block {
         return stationPresent;
     }
     
-    public int getPassengersBoard(int onBoard) {
+    public int getPassengersBoard() {
         passengersStation = calculatePassengers();
         return (int)Math.random()*passengersStation;
     }
@@ -319,10 +319,6 @@ public class Block {
 
     public void setPassengersStation(int passengersStation) {
         this.passengersStation = passengersStation;
-    }
-
-    public int getPassengersBoard() {
-        return passengersBoard;
     }
 
     public void setPassengersBoard(int passengersBoard) {

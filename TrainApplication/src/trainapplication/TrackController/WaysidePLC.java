@@ -72,6 +72,12 @@ public class WaysidePLC {
          }
          return switchState;
      }
-    
+    public boolean calculateSignalCrossing(boolean occupancy){
+        if(occupancy){
+            return false;
+        }else{
+            return true;
+        }
+    }
     
 }

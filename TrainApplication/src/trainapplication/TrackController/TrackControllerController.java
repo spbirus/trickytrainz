@@ -9,8 +9,12 @@ import trainapplication.Train;
 import java.util.*;
 import java.io.*;
 import java.net.URL;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
@@ -30,7 +34,6 @@ import javafx.stage.FileChooser;
 import trainapplication.TrackModel.Block;
 import trainapplication.TrainApplication;
 
-
 /**
  * FXML Controller class
  *
@@ -41,106 +44,132 @@ public class TrackControllerController implements Initializable {
     /**
      * Initializes the controller class.
      */
-    private boolean switchState=true;
-    private int mergeNum=0;
-    private int splitNum=0;
-    private int defaultNum=0;
-    private int id=0;
-    private boolean mergePresent=false;
-    private boolean splitPresent=false;
-    private boolean occupied=false;
-    private boolean signalBool=true;
-    private boolean crossingBool= true;
+    private boolean switchState = true;
+    private int mergeNum = 0;
+    private int splitNum = 0;
+    private int defaultNum = 0;
+    private int id = 0;
+    private boolean mergePresent = false;
+    private boolean splitPresent = false;
+    private boolean occupied = false;
+    private boolean signalBool = true;
+    private boolean crossingBool = true;
+    private boolean crossingPresent = false;
+    int crossingNum = 0;
     private TrainApplication ta;
     private String plcFile;
-    private int authority=0;
-    private double speed=0;
+    private int authority = 0;
+    private double speed = 0;
     private WaysidePLC plc;
     int titleNum;
     @FXML
     private Label title;
-    
-    public void setTrainApp(TrainApplication ta, String plcFile, int titleNum)throws IOException{
+
+    public void setTrainApp(TrainApplication ta, String plcFile, int titleNum) throws IOException {
         this.ta = ta;
         this.plcFile = plcFile;
         this.titleNum = titleNum;
         readPLC(plcFile);
     }
-    void readPLC(String plcFile)throws IOException{
+
+    void readPLC(String plcFile) throws IOException {
         File plcF = new File(plcFile);
         Scanner scan = new Scanner(plcF);
         String test = scan.nextLine().trim().toLowerCase();
-        if(test.equals("merge")){
-            mergePresent=true;
-            mergeNum=Integer.parseInt(scan.nextLine());
-            test=scan.nextLine().trim().toLowerCase();
-            if(test.equals("split")){
-                splitPresent=true;
-                splitNum=Integer.parseInt(scan.nextLine());
+        if (test.equals("merge")) {
+            mergePresent = true;
+            mergeNum = Integer.parseInt(scan.nextLine());
+            test = scan.nextLine().trim().toLowerCase();
+            if (test.equals("split")) {
+                splitPresent = true;
+                splitNum = Integer.parseInt(scan.nextLine());
                 scan.nextLine();
-                defaultNum=Integer.parseInt(scan.nextLine());
-            }else{
-                splitPresent=false;
+                defaultNum = Integer.parseInt(scan.nextLine());
+            } else {
+                splitPresent = false;
                 splitNum = Integer.parseInt(scan.nextLine());
                 defaultNum = Integer.parseInt(scan.nextLine());
             }
-        }else if(test.equals("split")){
-            mergePresent=false;
-            splitPresent=true;
+        } else if (test.equals("split")) {
+            mergePresent = false;
+            splitPresent = true;
             splitNum = Integer.parseInt(scan.nextLine());
             scan.nextLine();
             mergeNum = Integer.parseInt(scan.nextLine());
             defaultNum = Integer.parseInt(scan.nextLine());
         }
+        if(scan.hasNextLine()){
+            if(scan.nextLine().equals("crossing")){
+                crossingNum = Integer.parseInt(scan.nextLine());
+                crossingPresent = true;
+            }
+        }
         plc = new WaysidePLC(mergePresent, splitPresent);
     }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         String line = "Green";
-        if(mergePresent && splitPresent)
+        if (mergePresent && splitPresent) {
             line = "Red";
+        }
         trackName.setText(line);
         title.setText("Wayside Controller: " + line + " " + titleNum);
         reset();
-    }  
-    public void reset(){
+    }
+
+    public void reset() {
         mergeBlock.setText(Integer.toString(this.mergeNum));
         splitBlock.setText(Integer.toString(this.splitNum));
         defaultBlock.setText(Integer.toString(this.defaultNum));
         mergeBool.setText(Boolean.toString(this.mergePresent));
         splitBool.setText(Boolean.toString(this.splitPresent));
-        if(signalBool)
+        if (signalBool) {
             signalState.setText("Green");
-        else
+        } else {
             signalState.setText("Red");
-        if(switchState)
-            outputSwitch.setText("Block #" +splitBlock.getText() + " is Connected to Block #"+ defaultBlock.getText());
-        else
-            outputSwitch.setText("Block #" +splitBlock.getText() + " is Connected to Block #"+ mergeBlock.getText());
-        if(crossingBool)
-            crossingState.setText("Raised");
-        else
-            crossingState.setText("Lowered");
+        }
+        if (switchState) {
+            outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #" + defaultBlock.getText());
+        } else {
+            outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #" + mergeBlock.getText());
+        }
+        if(crossingPresent){
+            crossingMurphyLabel.setVisible(true);
+            raiseCrossing.setVisible(true);
+            lowerCrossing.setVisible(true);
+            if (crossingBool) {
+                crossingState.setText("Raised");
+            } else {
+                crossingState.setText("Lowered");
+            }
+        }else{
+            crossingState.setText("No Crossing");
+            crossingMurphyLabel.setVisible(false);
+            raiseCrossing.setVisible(false);
+            lowerCrossing.setVisible(false);
+        }
         outputSpeed.setText(Double.toString(speed));
         outputAuthority.setText(Integer.toString(authority));
         commandedSpeed.setText(Double.toString(speed));
         commandedAuthority.setText(Integer.toString(authority));
-        if(occupied)
+        if (occupied) {
             trackOccupancy.setText("Occupied");
-        else
+        } else {
             trackOccupancy.setText("Not Occupied");
+        }
         changeColor();
     }
     @FXML
     private RadioButton manualMode;
     @FXML
     private Label switchMurphyLabel;
-    
+
     @FXML
     private Label crossingMurphyLabel;
     @FXML
     private Label signalMurphyLabel;
-    
+
 //    @FXML
 //    private MenuBar waysideMenuBar;
 //    
@@ -185,98 +214,99 @@ public class TrackControllerController implements Initializable {
 //    
     @FXML
     private Label trackName;
-    
+
     @FXML
     private Label mergeBool;
-    
+
     @FXML
     private Label splitBool;
-    
+
     @FXML
     private Label mergeBlock;
-    
+
     @FXML
     private Label splitBlock;
-    
+
     @FXML
     private Label defaultBlock;
-    
+
     @FXML
     private Label crossingState;
-    
+
     @FXML
     private Label signalState;
-    
+
     @FXML
     private Label outputSpeed;
-    
+
     @FXML
     private Label outputAuthority;
-    
+
     @FXML
     private Label outputLights;
-    
+
     @FXML
     private Label outputSwitch;
-    
+
     @FXML
     private Label trackOccupancy;
-    
+
     @FXML
     private Label commandedSpeed;
-    
+
     @FXML
     private Label commandedAuthority;
-    
+
     @FXML
     private Button defaultSwitch;
-    
+
     @FXML
     private Button notDefaultSwitch;
-    
+
     @FXML
     private Button raiseCrossing;
-    
+
     @FXML
     private Button lowerCrossing;
-    
+
     @FXML
     private Button greenLightSet;
-    
+
     @FXML
     private Button redLightSet;
-    
+
     @FXML
     private Circle greenLight;
-    
+
     @FXML
     private Circle redLight;
-    
+
     @FXML
     private Button importPLC;
-    
-      
+
     @FXML
-    void onPLCClick(ActionEvent event)throws IOException {
+    void onPLCClick(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Browse for PLC file");
-        File file =fileChooser.showOpenDialog(null);
+        File file = fileChooser.showOpenDialog(null);
         String plcFile = file.getPath();
         readPLC(plcFile);
         reset();
     }
+
     private void changeColor() {
-        if(outputLights.getText().equals("Green")){
+        if (outputLights.getText().equals("Green")) {
             redLight.setVisible(false);
             greenLight.setVisible(true);
-        }else{
+        } else {
             redLight.setVisible(true);
             greenLight.setVisible(false);
         }
     }
+
     @FXML
-    void setManualMode(ActionEvent event){
-        if(manualMode.isSelected()){
+    void setManualMode(ActionEvent event) {
+        if (manualMode.isSelected()) {
             switchMurphyLabel.setVisible(true);
             crossingMurphyLabel.setVisible(true);
             signalMurphyLabel.setVisible(true);
@@ -286,7 +316,7 @@ public class TrackControllerController implements Initializable {
             lowerCrossing.setVisible(true);
             greenLightSet.setVisible(true);
             redLightSet.setVisible(true);
-        }else{
+        } else {
             switchMurphyLabel.setVisible(false);
             crossingMurphyLabel.setVisible(false);
             signalMurphyLabel.setVisible(false);
@@ -298,26 +328,31 @@ public class TrackControllerController implements Initializable {
             redLightSet.setVisible(false);
         }
     }
+
     @FXML
     void manDefaultSwitchClick(ActionEvent event) {
-            outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #"+ defaultBlock.getText());
-            switchState = true;
+        outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #" + defaultBlock.getText());
+        switchState = true;
     }
+
     @FXML
     void manNotDefaultSwitchClick(ActionEvent event) {
-            outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #"+mergeBlock.getText());
-            switchState = false;
+        outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #" + mergeBlock.getText());
+        switchState = false;
     }
+
     @FXML
     void manRaiseCrossingClick(ActionEvent event) {
         crossingState.setText("Raised");
         crossingBool = true;
     }
+
     @FXML
     void manLowerCrossingClick(ActionEvent event) {
         crossingState.setText("Lowered");
         crossingBool = false;
     }
+
     @FXML
     void manGreenSignalClick(ActionEvent event) {
         signalState.setText("Green");
@@ -325,6 +360,7 @@ public class TrackControllerController implements Initializable {
         signalBool = true;
         changeColor();
     }
+
     @FXML
     void manRedSignalClick(ActionEvent event) {
         signalState.setText("Red");
@@ -332,39 +368,78 @@ public class TrackControllerController implements Initializable {
         signalBool = false;
         changeColor();
     }
-    public boolean calculateSwitch(){
+
+    public boolean calculateSwitch() throws InterruptedException {
         String line = "Green";
-        if(mergePresent&&splitPresent){
+        if (mergePresent && splitPresent) {
             line = "Red";
         }
         boolean toYard = true;
-        if(splitPresent){
+        if (splitPresent) {
             double distToYard = ta.trkMdl.getDistance(57, 0);
             double authority = ta.getTrain(id).getAuthority();
-            if(authority>distToYard){
-                toYard=false;
+            if (authority > distToYard) {
+                toYard = false;
             }
         }
-        
-        boolean test1= plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
+
+        boolean test1 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
         //boolean test2 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
         //boolean test3 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
         //if(test1==test2)
-            switchState = test1;
+        switchState = test1;
         //else if(test1==test3)
-          //  switchState = test3;
+        //  switchState = test3;
         //else
-          //  switchState = test2;
+        //  switchState = test2;
+        Task<Void> task = new Task<Void>() {
+
+            @Override
+            protected Void call() throws Exception {
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (switchState) {
+                            outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #" + defaultBlock.getText());
+                        } else {
+                            outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #" + mergeBlock.getText());
+                        }
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(TrackControllerController.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    }
+                });
+
+                return null;
+            }
+        };
+        task.setOnSucceeded(e -> {
+            if (switchState) {
+                outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #" + defaultBlock.getText());
+            } else {
+                outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #" + mergeBlock.getText());
+            }
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(TrackControllerController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        });
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
         return switchState;
-                
-        
 
     }
-    public void setSpeedAuthority(int id, double speed, int authority){
+
+    public void setSpeedAuthority(int id, double speed, int authority) {
         this.id = id;
         this.speed = speed;
         this.authority = authority;
         reset();
     }
-   
+
 }

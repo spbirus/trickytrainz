@@ -128,18 +128,28 @@ public class TrainControllerController implements Initializable {
     }
     @FXML
     void onServBrakeButtonClick(ActionEvent event) {
+        TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
         if(servBrakeLabel.getText().equalsIgnoreCase("Engaged")){
-                    servBrakeLabel.setText("Disengaged");
+            servBrakeLabel.setText("Disengaged");
+            //t.setBrakes(0); //disengage the service brake
+            train.onBrake(0);
         }else if(servBrakeLabel.getText().equalsIgnoreCase("Disengaged")){
             servBrakeLabel.setText("Engaged");
+            train.onBrake(1);
+            //t.setBrakes(1); //set the service brake
         }
     }
      @FXML
     void onEmergBrakeButtonClick(ActionEvent event) {
+        TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
         if(emergBrakeLabel.getText().equalsIgnoreCase("Engaged")){
-                    emergBrakeLabel.setText("Disengaged");
+            emergBrakeLabel.setText("Disengaged");
+            train.onBrake(0);
+            //t.setBrakes(0); //disengage the e brake
         }else if(emergBrakeLabel.getText().equalsIgnoreCase("Disengaged")){
             emergBrakeLabel.setText("Engaged");
+            //t.setBrakes(3); //set the e brake
+            train.onBrake(3);
         }
     }
      
@@ -158,7 +168,7 @@ public class TrainControllerController implements Initializable {
     double ki;
     double kp;
     double DEFAULT_KP = 50;
-    double DEFAULT_KI = .0038; //.0052 for 10 mph .004 for 25 mph .0038 for 50 mph
+    double DEFAULT_KI = .004; //.0052 for 10 mph .004 for 25 mph .0038 for 50 mph
     public boolean isDistanceLeft = true;
     public double distanceLeft;
     public double distanceTraveled = 0;
@@ -201,7 +211,8 @@ public class TrainControllerController implements Initializable {
         setKValsButton.setDisable(true);
         kpVal.setEditable(false);
         kiVal.setEditable(false);
-        runSimulationButton.setDisable(false);
+        runSimulationButton.setDisable(true);
+        
     }
     @FXML
     void setKVals(ActionEvent event) {
@@ -223,9 +234,10 @@ public class TrainControllerController implements Initializable {
             kiVal.setText(String.format("%.4f",ki));
         }
         setKValsButton.setDisable(true);
+        setDefaultKValsButton.setDisable(true);
         kpVal.setEditable(false);
         kiVal.setEditable(false);
-        runSimulationButton.setDisable(false);
+        runSimulationButton.setDisable(true);
        
             
     }

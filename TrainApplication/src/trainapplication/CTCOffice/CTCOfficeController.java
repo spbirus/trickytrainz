@@ -603,13 +603,20 @@ public class CTCOfficeController implements Initializable {
 
         String line = schedule.line;
         int number = schedule.trainID;
-        int speed = 25; //temp value, not sure how I'm setting this yet
+        double suggestedSpeed;
+        if (line.equalsIgnoreCase("red")) {
+            suggestedSpeed = 24;
+        }
+        else {
+            suggestedSpeed = 43;
+        }
         int targetBlock = schedule.targetBlock[schedule.scheduleIndex];
-        double authority = 100;
+        
+        double authority = 1000; //100 used for testing, gets overwritten anyways
         TrackModelController trackModel = (TrackModelController) ta.trkMdl;
         authority = trackModel.getDistance(0, targetBlock);
 
-        ta.addTrain(number, line, speed, targetBlock, authority); //dummy 100 as authority for now
+        ta.addTrain(number, line, suggestedSpeed, targetBlock, authority); //dummy 100 as authority for now
         Train train = ta.getTrain(number);
         
         addTrainToQueue(train);

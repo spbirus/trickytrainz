@@ -141,13 +141,12 @@ public class CTCOfficeController implements Initializable {
                 "(U)First Ave:45", "Station Square:48", "South Hills Jct:60");
         stationChoiceBox.getSelectionModel().select("Select...");
         
+        switchChoiceBox.getItems().addAll("Green12", "Green16", "Green29", "Green58(ToYard)", "Green62(FromYard)", "Green76", "Green86",
+                "Red09(Yard)", "Red15", "Red27(U)", "Red32(U)", "Red38(U)", "Red52");
+        
         //hide newTrainPane. will appear on add train button press
         newTrainPane.setVisible(false);
 
-//        **testing of clock feature
-//        long offsetTime = (long) (System.currentTimeMillis() + 3.7*60*1000);
-//        System.out.println(timeFormat.format(System.currentTimeMillis()));
-//        System.out.println(timeFormat.format(offsetTime));
     }
 
     //track table information for all lines
@@ -271,6 +270,12 @@ public class CTCOfficeController implements Initializable {
     
     @FXML
     private Button multiplierButton;
+    
+    @FXML
+    private Button moveSwitchButton;
+
+    @FXML
+    private ChoiceBox<String> switchChoiceBox;
 
     //GUI ActionEvent Handlers
     @FXML
@@ -278,7 +283,6 @@ public class CTCOfficeController implements Initializable {
         
         if (autoMode) { //turns off auto mode (multiplier back to 1)
             autoModeButton.setText("Enter Automatic Mode");
-            multiplierTextField.setText("1");
             autoMode = false;
         } else { //turns on auto mode based on multiplier value
             autoModeButton.setText("Enter Manual Mode");
@@ -300,10 +304,13 @@ public class CTCOfficeController implements Initializable {
         //get selected train from the train table and dispatch it
         Train train = queueTrainTable.getSelectionModel().getSelectedItem();
         
-        dispatchTrain(train);
-
-           
-        
+        dispatchTrain(train);        
+    }
+    
+    @FXML
+    void clickSwitchButton(ActionEvent event) {
+        String selectedSwitch = switchChoiceBox.getSelectionModel().getSelectedItem();
+        System.out.println(selectedSwitch);
     }
 
     //schedule loaded in will be one train per file
@@ -403,12 +410,22 @@ public class CTCOfficeController implements Initializable {
     }
 
     @FXML
-    void newTrainSubmitClick(ActionEvent event) throws IOException {
+    void newTrainSubmitClick(ActionEvent event) throws Exception {
         try {
             int newTrainNumber = trainIDIterator++;
             String newTrainLine = newTrainLineBox.getValue();
             double newTrainSpeed = (int) suggestedSpeedSlider.getValue();
+            if ((newTrainLine.equalsIgnoreCase("red") && newTrainSpeed > 24) || 
+                    (newTrainLine.equalsIgnoreCase("green") && newTrainSpeed > 43)) {
+                throw new Exception("Speed Limit Exceeded on the selected line\n"
+                        + "Speed Limit Red: 24mph... Speed Limit Green: 43mph\n");
+            }
             int newTrainTarget = getTargetBlockFromStation();
+            if ((newTrainLine.equalsIgnoreCase("red") && newTrainTarget > 60) || 
+                    (newTrainLine.equalsIgnoreCase("green") && newTrainTarget > 141)) {
+                throw new Exception("Authority Limit Exceeded on the selected line\n"
+                        + "Max on Red: 60... Max on Green: 141\n");
+            }
             double newTrainAuthority = 1000; //100 is a dummy variable for now. have to work with trkMdl get actual distance
             
             TrackModelController trackModel = (TrackModelController) ta.trkMdl;
@@ -427,15 +444,13 @@ public class CTCOfficeController implements Initializable {
             newTrainPane.setVisible(false);
         } catch (Exception ex) {
             Alert alert = new Alert(AlertType.INFORMATION);
-            //alert.setTitle("Train Target Invalid!");
-            alert.setTitle("Something is wrong with the data entered!");
+            alert.setTitle("Something is Invalid!");
             System.out.println("Something went wrong with the data entered!");
-//            alert.setContentText(ex.getMessage());
-//            alert.showAndWait();
+            alert.setContentText(ex.getMessage());
+            alert.showAndWait();
             trainIDIterator--; //have to reset the trainID value so things don't screw up
             //newTrainPane.setVisible(false);
         }
-
     }
     
     @FXML
@@ -476,7 +491,9 @@ public class CTCOfficeController implements Initializable {
     
     @FXML
     void changeTrackStateButtonClick(ActionEvent event) {
-        //change state of selected track from open to maintenance or vice versa
+        //track state is blank if open, otherwise says 'maint' or 'train'
+        Block block = trackTableAll.getSelectionModel().getSelectedItem();
+        
     }
     
     @FXML
@@ -574,7 +591,6 @@ public class CTCOfficeController implements Initializable {
         TrackControllerController tContCont = (TrackControllerController) ta.trkCtr6;
         tContCont.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
         
-        //
         Schedule schedule = getScheduleInfoFromTrainTableSelected(train);
         schedule.dispatchTime = System.currentTimeMillis();
         
@@ -666,8 +682,8 @@ public class CTCOfficeController implements Initializable {
     }
     
     //updates tracks as trains move on it
-    public void updateTrackTable() {
-        
+    private void updateTrackTable(Train train) {
+        //i might not implement this
     }
     
     //dispatch a train that is already outbound and not in the yard
@@ -675,9 +691,9 @@ public class CTCOfficeController implements Initializable {
         
     }
     
-    //when a train returns to the yard after driving for long enough
-    private void removeTrainFromOutbound() {
-        
+    //when a train returns to the yard after driving for long enough, remove it from the table
+    public void removeTrainFromOutbound(Train train) {
+        trainTableAll.getItems().remove(train);
     }
 
     //get the schedule associated with the selected train

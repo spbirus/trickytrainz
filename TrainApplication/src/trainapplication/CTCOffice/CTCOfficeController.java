@@ -268,12 +268,15 @@ public class CTCOfficeController implements Initializable {
 
     @FXML
     private Button changeTrackStateButton;
+    
+    @FXML
+    private Button multiplierButton;
 
     //GUI ActionEvent Handlers
     @FXML
     void autoModeButtonClick(ActionEvent event) {
         //TODO later
-        timeline.stop();
+        //timeline.stop();
         
         if (autoMode) { //turns off auto mode (multiplier back to 1)
             autoModeButton.setText("Enter Automatic Mode");
@@ -282,9 +285,16 @@ public class CTCOfficeController implements Initializable {
         } else { //turns on auto mode based on multiplier value
             autoModeButton.setText("Enter Manual Mode");
             autoMode = true;
-            dispatchTimeCheck = currentTime + 30000; //dispatch Trains every 30 seconds
+            dispatchTimeCheck = currentTime + 210000; //try to dispatch trains every 3 minutes
         }
 
+//        int multiplier = Integer.parseInt(multiplierTextField.getText());
+//        ta.setTime(multiplier);
+    }
+    
+    @FXML
+    void changeMultiplierClick(ActionEvent event) {
+        timeline.stop();
         int multiplier = Integer.parseInt(multiplierTextField.getText());
         ta.setTime(multiplier);
     }

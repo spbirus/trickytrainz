@@ -131,12 +131,12 @@ public class TrainControllerController implements Initializable {
         TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
         if(servBrakeLabel.getText().equalsIgnoreCase("Engaged")){
             servBrakeLabel.setText("Disengaged");
-            //t.setBrakes(0); //disengage the service brake
+            t.setBrakes(0); //disengage the service brake
             train.onBrake(0);
         }else if(servBrakeLabel.getText().equalsIgnoreCase("Disengaged")){
             servBrakeLabel.setText("Engaged");
             train.onBrake(1);
-            //t.setBrakes(1); //set the service brake
+            t.setBrakes(1); //set the service brake
         }
     }
      @FXML
@@ -145,10 +145,10 @@ public class TrainControllerController implements Initializable {
         if(emergBrakeLabel.getText().equalsIgnoreCase("Engaged")){
             emergBrakeLabel.setText("Disengaged");
             train.onBrake(0);
-            //t.setBrakes(0); //disengage the e brake
+            t.setBrakes(0); //disengage the e brake
         }else if(emergBrakeLabel.getText().equalsIgnoreCase("Disengaged")){
             emergBrakeLabel.setText("Engaged");
-            //t.setBrakes(3); //set the e brake
+            t.setBrakes(3); //set the e brake
             train.onBrake(3);
         }
     }
@@ -364,8 +364,11 @@ public class TrainControllerController implements Initializable {
         }else{
 //            System.out.println("\t\tService brakes disengaged");
             TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
-            train.onBrake(0);
-            t.setBrakes(0);
+            if(servBrakeLabel.getText().equalsIgnoreCase("Disengaged") && emergBrakeLabel.getText().equalsIgnoreCase("Disengaged")){
+                train.onBrake(0);
+                t.setBrakes(0);
+            }
+           
         }
         
         //========FOR TESTING PURPOSES================

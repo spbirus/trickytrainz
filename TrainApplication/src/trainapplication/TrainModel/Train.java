@@ -55,6 +55,8 @@ public class Train {
     private int direction; // 0 and 1
     private int brakes = 0;
     private boolean brakeFailure = false;
+    private boolean engineFailure = false;
+    private boolean signalFailure = false;
 
     //for CTC
     public Train(String line, int number, double speed, int target, double authority) {
@@ -80,6 +82,22 @@ public class Train {
 
     public void setBrakeFailure(boolean brakeFailure) {
         this.brakeFailure = brakeFailure;
+    }
+
+    public boolean isEngineFailure() {
+        return engineFailure;
+    }
+
+    public void setEngineFailure(boolean engineFailure) {
+        this.engineFailure = engineFailure;
+    }
+
+    public boolean isSignalFailure() {
+        return signalFailure;
+    }
+
+    public void setSignalFailure(boolean signalFailure) {
+        this.signalFailure = signalFailure;
     }
 
     public int getBrakes() {
@@ -310,7 +328,10 @@ public class Train {
     public double calculateVelocity(double power, double currentSpeed, double grade, int brake, double speedLimit, int passengers) {
 
         totalMass = trainMass + 150 * passengers; //might need to add 1 for the operator
-
+        
+        if(engineFailure){
+            power = 0;
+        }
         /*
                                                                                    F             a         vel
         (1000)*power(.0006214)/(currentSpeed) X (.22481)/(currentSpeed*.000277778) X 1/totalMass X 1*deltaT*multiplier
@@ -363,7 +384,7 @@ public class Train {
                 trainAccel -= serviceBrakeDecel;
             }
         } else if (brakeFailure) {
-
+            //on a brake failure engage the emergency brakes
             trainAccel -= emergencyBrakeDecel;
 
         }

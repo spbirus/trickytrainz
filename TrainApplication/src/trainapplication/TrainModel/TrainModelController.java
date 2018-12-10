@@ -11,6 +11,7 @@ import trainapplication.TrainControllerController;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,6 +51,7 @@ public class TrainModelController implements Initializable {
     //will need to get this data from somewhere
     private Train t;
     private TrainControllerController tc;
+    private String[] ads = {"Buy Thomas and Friends TODAY!!!!!", "How much wood could a wood chuck chuck??", "Save now on your new recliner"};
 
     public Train getT() {
         return t;
@@ -240,6 +242,9 @@ public class TrainModelController implements Initializable {
 
     @FXML
     private Label waitingpassengersId;
+    
+    @FXML
+    private Button changeAd;
 
     @FXML
     private Label blockId;
@@ -431,7 +436,20 @@ public class TrainModelController implements Initializable {
         signalActivated.setVisible(activated);
     }
 
+    public void rotateThroughAds(){
+        Random rand = new Random();
+        int r = rand.nextInt((2 - 0) + 1);
+        advertisement.setText(ads[r]);
+    }
+    
     // Button trigger events
+    
+    @FXML
+    void changeAdAction(ActionEvent event) {
+        rotateThroughAds();
+    }
+    
+    
     @FXML
     void onRefreshSpeed(ActionEvent event) {
         tc = (TrainControllerController) ta.trainctrs.get(t.getNumber());

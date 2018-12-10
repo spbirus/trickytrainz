@@ -123,6 +123,20 @@ public class TrackModelController implements Initializable {
         prevBlock.setBlockOccupancy(false);
         trackTable.refresh();    
     }
+    // Blocks off sections of the track when a train is on it
+    // to set the signal for other trains 
+    public void setSectionOccupancy(String line, Block block){
+      if(line.equals("Green")){
+          for(int i = 0; i < 6; i++){
+              if(block.getBlockNumber() == greenTrack.getSections()[i]){
+                  if(!greenTrack.getSectionOccupancy()[i]){
+                    ta.trkCtr[i].calculateSignal(true);
+                    ta.trkCtr[(i-1)%6].calculateSignal(false);
+                  }
+              }
+          }
+      } 
+    }
     
     // Function that will return the next block to the Train Model 
     // Also called from getDistance 
@@ -181,6 +195,14 @@ public class TrackModelController implements Initializable {
                 return next;
             }
         }
+        
+        // If entering a new section of the track, set that signal to red 
+        // to block off other trains 
+        for(int i: greenTrack.getSections()){
+            if(b.nextBlock.getBlockNumber() == i){
+                setSectionOccupancy(line, b.nextBlock);
+            }
+        }       
         return b.nextBlock;
     }
     

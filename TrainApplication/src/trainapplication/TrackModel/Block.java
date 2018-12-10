@@ -44,7 +44,7 @@ public class Block {
     private boolean circuitState= true;
     private boolean railState = true;
 
-    private String signal = "Green";
+    private boolean signal;
     private String beacon;
     
     private boolean stationPresent;
@@ -104,6 +104,7 @@ public class Block {
         else blockDirection = 2;
         this.passengersStation = calculatePassengers();
         this.stationPresent = (infrastructure.split(";", 2)[0].equals("STATION"));
+        this.signal = true;
     }
     //Jon Gramley - Block Controller
     public Block(String line, String section, int blockNumber, int nextInboundBlock, int nextOutboundBlock, boolean switchPresent, boolean stationPresent, boolean crossingPresent) {
@@ -119,6 +120,7 @@ public class Block {
         else blockDirection = 2;
         this.passengersStation = calculatePassengers();
         this.stationPresent = (infrastructure.split(";", 2)[0].equals("STATION"));
+        this.signal = true;
     }
     
     //Jon Galaxy  - CTC   
@@ -131,6 +133,7 @@ public class Block {
         this.blockState = blockState;
         this.passengersStation = calculatePassengers();
         this.stationPresent = (infrastructure.split(";", 2)[0].equals("STATION"));
+        this.signal = true;
     }
    
     //Track Controller 

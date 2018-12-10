@@ -41,7 +41,7 @@
                                     <Font size="22.0" />
                                  </font>
                               </Text>
-                              <Button fx:id="changeTrackStateButton" layoutX="270.0" layoutY="562.0" mnemonicParsing="false" onAction="#changeTrackStateButtonClick" text="Set Maintenance">
+                              <Button fx:id="changeTrackStateButton" layoutX="256.0" layoutY="563.0" mnemonicParsing="false" onAction="#changeTrackStateButtonClick" text="Toggle Maintenance">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -52,7 +52,7 @@
                                  </font>
                               </Button>
                               <ChoiceBox fx:id="switchChoiceBox" layoutX="14.0" layoutY="564.0" prefWidth="150.0" />
-                              <Button fx:id="moveSwitchButton" layoutX="163.0" layoutY="565.0" mnemonicParsing="false" onAction="#clickSwitchButton" text="Move Switch" />
+                              <Button fx:id="moveSwitchButton" layoutX="163.0" layoutY="565.0" mnemonicParsing="false" onAction="#clickSwitchButton" text="Flip Switch" />
                            </children>
                         </AnchorPane>
                         <AnchorPane layoutX="865.0" layoutY="16.0" prefHeight="605.0" prefWidth="408.0" style="-fx-background-color: #bdc3c7;">
@@ -187,7 +187,7 @@
             </Text>
          </children>
       </AnchorPane>
-      <Button fx:id="getThroughputButton" layoutX="68.0" layoutY="743.0" mnemonicParsing="false" onAction="#getThroughputButtonClick" text="Get Throughput">
+      <Button fx:id="getThroughputButton" layoutX="68.0" layoutY="743.0" mnemonicParsing="false" onAction="#getThroughputButtonClick" text="DIsplay Metrics">
          <font>
             <Font size="14.0" />
          </font>

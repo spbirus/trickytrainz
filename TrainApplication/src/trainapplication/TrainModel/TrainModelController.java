@@ -51,7 +51,7 @@ public class TrainModelController implements Initializable {
     //will need to get this data from somewhere
     private Train t;
     private TrainControllerController tc;
-    private String[] ads = {"Buy Thomas and Friends TODAY!!!!!", "How much wood could a wood chuck chuck??", "Save now on your new recliner"};
+    private String[] ads = {"Buy Thomas and Friends TODAY!!!!!", "How much wood could a wood chuck chuck??", "GET HEALTHCARE BY DECEMBER 15th!"};
 
     public Train getT() {
         return t;
@@ -393,12 +393,14 @@ public class TrainModelController implements Initializable {
         int spotsLeft = t.getSpotsLeft();
         if (spotsLeft > wantToGetOn) {
             t.setPassNum(passOnTrain + wantToGetOn);
+            ta.ctc.incrementThroughput(wantToGetOn);
         } else {
             //not enough space
             t.setPassNum(passOnTrain + spotsLeft);
+            ta.ctc.incrementThroughput(spotsLeft);
             block.setPassengersRemaining(wantToGetOn - spotsLeft);
         }
-        System.out.println("Passenger stuff: " + passOnTrain + ", " + wantToGetOn + ", " + spotsLeft);
+//        System.out.println("Passenger stuff: " + passOnTrain + ", " + wantToGetOn + ", " + spotsLeft);
         passengerNumber.setText("" + t.getPassNum());
     }
 

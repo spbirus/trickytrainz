@@ -141,6 +141,9 @@ public class TrainControllerController implements Initializable {
     }
      @FXML
     void onEmergBrakeButtonClick(ActionEvent event) {
+        toggleEmergBrake();
+    }
+    public void toggleEmergBrake(){
         TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
         if(emergBrakeLabel.getText().equalsIgnoreCase("Engaged")){
             emergBrakeLabel.setText("Disengaged");
@@ -150,8 +153,7 @@ public class TrainControllerController implements Initializable {
             emergBrakeLabel.setText("Engaged");
             t.setBrakes(3); //set the e brake
             train.onBrake(3);
-        }
-    }
+        }    }
      
     //==========================Speed and Power Variables ======================
     private final double MAX_POWER = 120; //kW
@@ -458,22 +460,36 @@ public class TrainControllerController implements Initializable {
     
     @FXML
     void onEngineFailActivate(ActionEvent event) {
-
+        toggleEmergBrake();
+        TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
+        train.onEngineFailure(true);
+        train.onBrake(3);
+//        t.setEngineFailure(true);
+//        t.setBrakes(3);
     }
 
     @FXML
     void onEngineFailDeactivate(ActionEvent event) {
-
+        toggleEmergBrake();
+        TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
+        train.onEngineFailure(false);
+        train.onBrake(0);
+//        t.setEngineFailure(false);
+//        t.setBrakes(0);
     }
     
     @FXML
     void onSignalFailActivate(ActionEvent event) {
 
+        TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
+        train.onSignalFailure(true);
     }
 
     @FXML
     void onSignalFailDeactivate(ActionEvent event) {
 
+        TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
+        train.onSignalFailure(false);
     }
 
     

@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -32,6 +34,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Slider;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -56,11 +59,8 @@ import trainapplication.TrackModel.*;
 public class CTCOfficeController implements Initializable {
 
     private int trainIDIterator = 0;
-    private int redLineThroughput = 0;
-    private int greenLineThroughput = 0;
-    private int allLineThroughput = 0;
-    private int hourlyPassengers = 0;
-    private int hourlyTicketSales = 0;
+    private int totalThroughput = 0;
+    private int totalTicketSales = 0;
     private Schedule[] scheduleArray = new Schedule[1]; //array of schedules, will hold all schedules loaded in
     private Train[] trainArray = new Train[1]; //array of trains, will hold all trains that were ever created
     private DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
@@ -102,6 +102,22 @@ public class CTCOfficeController implements Initializable {
         trainTableAllNumber.setStyle("-fx-alignment: CENTER;");
         trainTableAllCurrent.setStyle("-fx-alignment: CENTER;");
         trainTableAllTarget.setStyle("-fx-alignment: CENTER;");
+        
+//        trainTableAll.setRowFactory(tv -> {
+//            TableRow<Train> row = new TableRow<>();
+//            row.setOnMouseClicked(event -> {
+//                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+//                    Train clickedTrain = row.getItem();
+//                    System.out.println("Double click on train: "+clickedTrain.getNumber());
+//                    try {
+//                        ta.createTrainGUI(clickedTrain.getNumber());
+//                    } catch (IOException ex) {
+//                        Logger.getLogger(CTCOfficeController.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//                }
+//            });
+//            return row ;
+//        });
 
         //init queue table
         queueTableLine.setCellValueFactory(new PropertyValueFactory<>("line"));
@@ -112,6 +128,22 @@ public class CTCOfficeController implements Initializable {
         queueTableNumber.setStyle("-fx-alignment: CENTER;");
         queueTableSpeed.setStyle("-fx-alignment: CENTER;");
         queueTableTarget.setStyle("-fx-alignment: CENTER;");
+        
+//        queueTrainTable.setRowFactory(tv -> {
+//            TableRow<Train> row = new TableRow<>();
+//            row.setOnMouseClicked(event -> {
+//                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+//                    Train clickedTrain = row.getItem();
+//                    System.out.println("Double click on train: "+clickedTrain.getNumber());
+//                    try {
+//                        ta.createTrainGUI(clickedTrain.getNumber());
+//                    } catch (IOException ex) {
+//                        Logger.getLogger(CTCOfficeController.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//                }
+//            });
+//            return row ;
+//        });
 
         //init track table
         trackTableAllLine.setCellValueFactory(new PropertyValueFactory<>("line"));
@@ -119,7 +151,7 @@ public class CTCOfficeController implements Initializable {
         trackTableAllBlock.setCellValueFactory(new PropertyValueFactory<>("blockNumber"));
         trackTableAllLength.setCellValueFactory(new PropertyValueFactory<>("blockLength"));
         trackTableAllLimit.setCellValueFactory(new PropertyValueFactory<>("speedLimit"));
-        trackTableAllState.setCellValueFactory(new PropertyValueFactory<>("occupancy"));
+        trackTableAllState.setCellValueFactory(new PropertyValueFactory<>("blockState"));
         trackTableAllLine.setStyle("-fx-alignment: CENTER;");
         trackTableAllSection.setStyle("-fx-alignment: CENTER;");
         trackTableAllBlock.setStyle("-fx-alignment: CENTER;");
@@ -310,7 +342,51 @@ public class CTCOfficeController implements Initializable {
     @FXML
     void clickSwitchButton(ActionEvent event) {
         String selectedSwitch = switchChoiceBox.getSelectionModel().getSelectedItem();
-        System.out.println(selectedSwitch);
+        //System.out.println(selectedSwitch);
+        switch(selectedSwitch) 
+        { 
+            case "Green12": 
+                System.out.println("Green12"); 
+                break; 
+            case "Green16": 
+                System.out.println("Green16"); 
+                break; 
+            case "Green29": 
+                System.out.println("Green29"); 
+                break;
+            case "Green58(ToYard)": 
+                System.out.println("Green58"); 
+                break; 
+            case "Green62(FromYard)": 
+                System.out.println("Green62"); 
+                break; 
+            case "Green76": 
+                System.out.println("Green76"); 
+                break; 
+            case "Green86": 
+                System.out.println("Green86"); 
+                break; 
+            case "Red09(Yard)": 
+                System.out.println("Red09"); 
+                break; 
+            case "Red15": 
+                System.out.println("Red15"); 
+                break; 
+            case "Red27(U)": 
+                System.out.println("Red27"); 
+                break; 
+            case "Red32(U)": 
+                System.out.println("Red32"); 
+                break; 
+            case "Red38(U)": 
+                System.out.println("Red38"); 
+                break; 
+            case "Red52": 
+                System.out.println("Red52"); 
+                break; 
+            default: 
+                System.out.println("not sure what happened"); 
+        } 
     }
 
     //schedule loaded in will be one train per file
@@ -491,22 +567,34 @@ public class CTCOfficeController implements Initializable {
     void changeTrackStateButtonClick(ActionEvent event) {
         //track state is blank if open, otherwise says 'maint' or 'train'
         Block block = trackTableAll.getSelectionModel().getSelectedItem();
+        if (block.getBlockState().equalsIgnoreCase("")){
+            block.setBlockState("Maint");
+            System.out.println("Switching to Main");
+        }
+        else if (block.getBlockState().equalsIgnoreCase("Maint")) {
+            block.setBlockState("");
+            System.out.println("Switching to not main");
+        }
+        else {
+            //do nothing here?
+            System.out.println("Why am I here?");
+        }
+        
+        int bIndex = trackTableAll.getItems().indexOf(block);
+        trackTableAll.getItems().set(bIndex, block);
+        trackTableAll.refresh();
         
     }
     
     @FXML
     void getThroughputButtonClick(ActionEvent event) {
-        //this will display all the metrics needed (throughput, ticket sales, passengers...
-        int totalThroughput = 0;
-        int totalTicketSales = 0;
-        int totalPassengerCount = 0; //this is the same as ticket sales
+        //this will display all the metrics needed (throughput, ticket sales)
         
         //display throughput information
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Displaying Metrics");
         alert.setHeaderText("Total Throughput: " + totalThroughput);
-        alert.setContentText("\nTotal Ticket Sales: " + totalTicketSales + 
-                "\nTotal Passenger Count: " + totalPassengerCount);
+        alert.setContentText("\nTotal Ticket Sales: " + totalTicketSales);
         alert.show();
     }
 
@@ -517,10 +605,14 @@ public class CTCOfficeController implements Initializable {
         //track data will be returned as an arrayList
         TrackModelController trackModel = (TrackModelController) ta.trkMdl;
         
+        trackTableAll.getItems().clear();
+        
         for (Block block : trackModel.redTrack.blockList) {
+            block.setBlockState("");
             trackTableAll.getItems().add(block);
         }
         for (Block block : trackModel.greenTrack.blockList) {
+            block.setBlockState("");
             trackTableAll.getItems().add(block);
         }
         
@@ -531,7 +623,7 @@ public class CTCOfficeController implements Initializable {
 //            trackTableAll.getItems().add(block1);
 //            trackTableAll.getItems().add(block2);
 
-            getTrackInfoButton.setVisible(false);
+//            getTrackInfoButton.setVisible(false);
         } catch (Exception ex) {
             System.out.println("I believe we should have the track model load in tracks first");
         }
@@ -725,4 +817,12 @@ public class CTCOfficeController implements Initializable {
             return Integer.parseInt(splitString[1]);
         }
     } 
+    
+    public void incrementThroughput(int current) {
+        totalThroughput += current;
+    }
+    
+    public void incrementTicketSales(int current) {
+        totalTicketSales += current;
+    }
 }

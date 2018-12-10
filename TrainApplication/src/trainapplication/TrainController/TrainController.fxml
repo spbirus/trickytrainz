@@ -9,12 +9,11 @@
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="979.0" prefWidth="940.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane id="AnchorPane" prefHeight="695.0" prefWidth="778.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane layoutX="10.0" layoutY="73.0" prefHeight="200.0" prefWidth="150.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
@@ -299,7 +298,7 @@
             <Button id="setKiKpVals" fx:id="setSetpointButton" layoutX="28.0" layoutY="105.0" mnemonicParsing="false" onAction="#setSetpointSpeed_Test" prefHeight="27.0" prefWidth="120.0" text="Set " />
          </children>
       </AnchorPane>
-      <AnchorPane layoutX="194.0" layoutY="574.0" prefHeight="112.0" prefWidth="564.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
+      <AnchorPane layoutX="194.0" layoutY="574.0" prefHeight="112.0" prefWidth="574.0" style="-fx-background-color: #bdc3c7#bdc3c7;">
          <children>
             <Label layoutX="212.0" layoutY="9.0" prefHeight="19.0" prefWidth="141.0" text="ANNOUNCEMENTS" underline="true">
                <font>
@@ -314,25 +313,14 @@
             <SplitPane layoutX="8.0" layoutY="40.0" prefHeight="46.0" prefWidth="548.0" />
          </children>
       </AnchorPane>
-      <Label layoutX="841.0" layoutY="121.0" text="Mode" />
-      <Separator layoutX="795.0" layoutY="116.0" prefHeight="5.0" prefWidth="126.0" style="-fx-background-color: #bdc3c7#bdc3c7 #bdc3c7#bdc3c7;" />
-      <Label layoutX="807.0" layoutY="79.0" text="Manual">
+      <Label layoutX="464.0" layoutY="43.0" text="Mode:" />
+      <Separator layoutX="526.0" layoutY="58.0" prefHeight="5.0" prefWidth="80.0" style="-fx-background-color: #bdc3c7#bdc3c7 #bdc3c7#bdc3c7;" />
+      <Label layoutX="515.0" layoutY="24.0" text="Manual">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <ImageView fitHeight="345.0" fitWidth="148.0" layoutX="777.0" layoutY="130.0" pickOnBounds="true" preserveRatio="true" />
-      <Label layoutX="826.0" layoutY="201.0" text="YOUR">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="839.0" layoutY="262.0" text="AD">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Label layoutX="825.0" layoutY="319.0" text="HERE">
+      <Label layoutX="42.0" layoutY="40.0" text="GO BUY HEALTHCARE BY DECEMBER 15th">
          <font>
             <Font size="20.0" />
          </font>

@@ -55,7 +55,9 @@ public class TrackControllerController implements Initializable {
     private boolean signalBool = true;
     private boolean crossingBool = true;
     private boolean crossingPresent = false;
-    int crossingNum = 0;
+    private int crossingNum = 0;
+    private boolean signalPresent = true;
+    private int signalNum = 0;
     private TrainApplication ta;
     private String plcFile;
     private int authority = 0;
@@ -99,9 +101,18 @@ public class TrackControllerController implements Initializable {
             defaultNum = Integer.parseInt(scan.nextLine());
         }
         if(scan.hasNextLine()){
-            if(scan.nextLine().equals("crossing")){
+            test = scan.nextLine();
+            if(test.equals("crossing")){
                 crossingNum = Integer.parseInt(scan.nextLine());
                 crossingPresent = true;
+                if(scan.nextLine().equals("signal")){
+                    signalNum = Integer.parseInt(scan.nextLine());
+                    signalPresent = true;
+                }
+            }
+            if(test.equals("signal")){
+                signalNum = Integer.parseInt(scan.nextLine());
+                signalPresent = true;
             }
         }
         plc = new WaysidePLC(mergePresent, splitPresent);
@@ -135,9 +146,7 @@ public class TrackControllerController implements Initializable {
             outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #" + mergeBlock.getText());
         }
         if(crossingPresent){
-            crossingMurphyLabel.setVisible(true);
-            raiseCrossing.setVisible(true);
-            lowerCrossing.setVisible(true);
+            
             if (crossingBool) {
                 crossingState.setText("Raised");
             } else {
@@ -145,9 +154,6 @@ public class TrackControllerController implements Initializable {
             }
         }else{
             crossingState.setText("No Crossing");
-            crossingMurphyLabel.setVisible(false);
-            raiseCrossing.setVisible(false);
-            lowerCrossing.setVisible(false);
         }
         outputSpeed.setText(Double.toString(speed));
         outputAuthority.setText(Integer.toString(authority));
@@ -308,22 +314,26 @@ public class TrackControllerController implements Initializable {
     void setManualMode(ActionEvent event) {
         if (manualMode.isSelected()) {
             switchMurphyLabel.setVisible(true);
-            crossingMurphyLabel.setVisible(true);
             signalMurphyLabel.setVisible(true);
             defaultSwitch.setVisible(true);
             notDefaultSwitch.setVisible(true);
-            raiseCrossing.setVisible(true);
-            lowerCrossing.setVisible(true);
+            if(crossingPresent){
+                crossingMurphyLabel.setVisible(true);
+                raiseCrossing.setVisible(true);
+                lowerCrossing.setVisible(true);
+            }
             greenLightSet.setVisible(true);
             redLightSet.setVisible(true);
         } else {
             switchMurphyLabel.setVisible(false);
-            crossingMurphyLabel.setVisible(false);
             signalMurphyLabel.setVisible(false);
             defaultSwitch.setVisible(false);
             notDefaultSwitch.setVisible(false);
-            raiseCrossing.setVisible(false);
-            lowerCrossing.setVisible(false);
+            if(crossingPresent){
+                crossingMurphyLabel.setVisible(false);
+                raiseCrossing.setVisible(false);
+                lowerCrossing.setVisible(false);
+            }
             greenLightSet.setVisible(false);
             redLightSet.setVisible(false);
         }
@@ -368,7 +378,7 @@ public class TrackControllerController implements Initializable {
         signalBool = false;
         changeColor();
     }
-
+//    public void setSwitch(boolean )
     public boolean calculateSwitch() throws InterruptedException {
         String line = "Green";
         if (mergePresent && splitPresent) {
@@ -384,14 +394,14 @@ public class TrackControllerController implements Initializable {
         }
 
         boolean test1 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
-        //boolean test2 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
-        //boolean test3 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
-        //if(test1==test2)
-        switchState = test1;
-        //else if(test1==test3)
-        //  switchState = test3;
-        //else
-        //  switchState = test2;
+        boolean test2 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
+        boolean test3 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
+        if(test1==test2)
+            switchState = test1;
+        else if(test1==test3)
+            switchState = test3;
+        else
+            switchState = test2;
         Task<Void> task = new Task<Void>() {
 
             @Override
@@ -435,7 +445,76 @@ public class TrackControllerController implements Initializable {
         return switchState;
 
     }
+    public boolean calculateSignal(boolean sectionOccupancy) throws InterruptedException {
+        occupied = sectionOccupancy;
+        boolean test1 = plc.calculateSignalCrossing(occupied);
+        boolean test2 = plc.calculateSignalCrossing(occupied);
+        boolean test3 = plc.calculateSignalCrossing(occupied);
+        if(test1==test2)
+            signalBool = test1;
+        else if(test1==test3)
+            signalBool = test3;
+        else
+            signalBool = test2;
+        crossingBool = signalBool;
+        Task<Void> task = new Task<Void>() {
 
+            @Override
+            protected Void call() throws Exception {
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (signalBool) {
+                            outputLights.setText("Green");
+                        } else {
+                            outputLights.setText("Red");
+                        }
+                        if(crossingPresent){
+                            if(crossingBool){
+                                crossingState.setText("Raised");
+                            }else{
+                                crossingState.setText("Lowered");
+                            }
+                        }
+                        changeColor();
+
+//                        try {
+//                            Thread.sleep(3000);
+//                        } catch (InterruptedException ex) {
+//                            Logger.getLogger(TrackControllerController.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+                    }
+                });
+
+                return null;
+            }
+        };
+        task.setOnSucceeded(e -> {
+            if (signalBool) {
+                outputLights.setText("Green");
+            } else {
+                outputLights.setText("Red");
+            }
+            if(crossingPresent){
+                if(crossingBool){
+                    crossingState.setText("Raised");
+                }else{
+                    crossingState.setText("Lowered");
+                }
+            }
+            changeColor();
+//            try {
+//                Thread.sleep(5000);
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(TrackControllerController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+        });
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
+        return signalBool;
+    }
     public void setSpeedAuthority(int id, double speed, int authority) {
         this.id = id;
         this.speed = speed;

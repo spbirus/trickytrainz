@@ -313,7 +313,6 @@ public class Train {
     }
 
     public void setBlock(int block) {
-        this.previousBlock = this.block;
         this.block = block;
     }
 

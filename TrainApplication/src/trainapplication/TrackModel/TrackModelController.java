@@ -109,9 +109,10 @@ public class TrackModelController implements Initializable {
         System.out.println("Target; " + end);
         while(b.getBlockNumber() != target.getBlockNumber()){
             length += b.getBlockLength();
+            Block curr = b;
             b = getNextBlock("Green", b.getBlockNumber(), prev.getBlockNumber());
-            System.out.println("Distance Block: " + b.getBlockNumber());
-            prev = b;
+            prev = curr;
+            System.out.println("Distance Block: " + b.getBlockNumber() + " Previous Block: " + prev.getBlockNumber());
         }
         return length;
     }
@@ -152,10 +153,10 @@ public class TrackModelController implements Initializable {
             if(b.getBlockDirection() == 2 && b.getSection().equals("N")){
                if(prev.getBlockNumber() < b.getBlockNumber()){
                    //outbound (towards O)
-                   next = b.previousBlock;
+                   next = b.nextBlock;
                }else{
                    //inbound (towards R)
-                   next = b.nextBlock;
+                   next = b.previousBlock;
                }
             }else if(b.getBlockDirection() == 2){
                 //Train is on section D, E, or F
@@ -186,17 +187,17 @@ public class TrackModelController implements Initializable {
             }
         }
         
-        if(switchPresent){
-            if(switchState){
-                next = getBlockAt("Green", 58);
-                next.setOccupancy("Train");
-                next.setBlockOccupancy(true);
-                greenTrack.setOccupiedBlock(next);
-                getBlockAt("Green",0).setOccupancy("");
-                getBlockAt("Green",0).setBlockOccupancy(false);
-                return next;
-            }
-        }
+//        if(switchPresent){
+//            if(switchState){
+//                next = getBlockAt("Green", 58);
+//                next.setOccupancy("Train");
+//                next.setBlockOccupancy(true);
+//                greenTrack.setOccupiedBlock(next);
+//                getBlockAt("Green",0).setOccupancy("");
+//                getBlockAt("Green",0).setBlockOccupancy(false);
+//                return next;
+//            }
+//        }
         
         // If entering a new section of the track, set that signal to red 
         // to block off other trains 
@@ -205,7 +206,7 @@ public class TrackModelController implements Initializable {
                 setSectionOccupancy(line, b.nextBlock);
             }
         }       
-        return b.nextBlock;
+        return next;
     }
     
 

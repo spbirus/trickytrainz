@@ -122,6 +122,30 @@ public class TrainControllerController implements Initializable {
     @FXML
     private Button setDefaultKValsButton;
     
+    @FXML
+    private Label fld;
+
+    @FXML
+    private Label frd;
+
+    @FXML
+    private Label fmld;
+
+    @FXML
+    private Label fmrd;
+
+    @FXML
+    private Label bmld;
+
+    @FXML
+    private Label bmrd;
+
+    @FXML
+    private Label bld;
+
+    @FXML
+    private Label brd;
+    
      @FXML
     void onTrainSelectionClick(ActionEvent event) {
 
@@ -491,6 +515,126 @@ public class TrainControllerController implements Initializable {
         TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
         train.onSignalFailure(false);
     }
+    
+    //============LEFT DOORS=============
+    @FXML
+    void openFLD(ActionEvent event) {
+        int[] arr = {0};
+        operateDoors(arr,1);
+    }
+    @FXML
+    void closeFLD(ActionEvent event) {
+        int[] arr = {0};
+        operateDoors(arr,0);
+    }
+    @FXML
+    void openFMLD(ActionEvent event) {
+        int[] arr = {1};
+        operateDoors(arr,1);
+    }
+     @FXML
+    void closeFMLD(ActionEvent event) {
+        int[] arr = {1};
+        operateDoors(arr,0);
+    }
+    @FXML
+    void openBMLD(ActionEvent event) {
+        int[] arr = {2};
+        operateDoors(arr,1);
+    }
+    @FXML
+    void closeBMLD(ActionEvent event) {
+        int[] arr = {2};
+        operateDoors(arr,0);
+    }
+    @FXML
+    void openBLD(ActionEvent event) {
+        int[] arr = {3};
+        operateDoors(arr,1);
+    }
+    @FXML
+    void closeBLD(ActionEvent event) {
+        int[] arr = {3};
+        operateDoors(arr,0);
+    }
+//============RIGHT DOORS=============
+    @FXML
+    void openFRD(ActionEvent event) {
+        int[] arr = {4};
+        operateDoors(arr,1);
+    }
+    @FXML
+    void closeFRD(ActionEvent event) {
+        int[] arr = {4};
+        operateDoors(arr,0);
+    }
+    @FXML
+    void openFMRD(ActionEvent event) {
+        int[] arr = {5};
+        operateDoors(arr,1);
+    }
+     @FXML
+    void closeFMRD(ActionEvent event) {
+        int[] arr = {5};
+        operateDoors(arr,0);
+    }
+    @FXML
+    void openBMRD(ActionEvent event) {
+        int[] arr = {6};
+        operateDoors(arr,1);
+    }
+    @FXML
+    void closeBMRD(ActionEvent event) {
+        int[] arr = {6};
+        operateDoors(arr,0);
+    }
+    @FXML
+    void openBRD(ActionEvent event) {
+        int[] arr = {7};
+        operateDoors(arr,1);
+    }
+    @FXML
+    void closeBRD(ActionEvent event) {
+        int[] arr = {7};
+        operateDoors(arr,0);
+    }
 
+    public void operateDoors(int[] doorIDs, int doorOp){
+        String text = "OPEN";
+        if(doorOp == 0){
+            text = "CLOSED";
+        }else if(doorOp == 1){
+            text = "OPEN";
+        }
+        for(int i = 0; i < doorIDs.length; i++){
+            switch(doorIDs[i]){
+                case 0: 
+                    fld.setText(text);
+                    break;
+                case 1:
+                    fmld.setText(text);
+                    break;
+                case 2: 
+                    bmld.setText(text);
+                    break;
+                case 3:
+                    bld.setText(text);
+                    break;
+                case 4: 
+                    frd.setText(text);
+                    break;
+                case 5:
+                    fmrd.setText(text);
+                    break;
+                case 6: 
+                    bmrd.setText(text);
+                    break;
+                case 7:
+                    brd.setText(text);
+                    break;
+            }
+        }
+        
+    }
     
 }

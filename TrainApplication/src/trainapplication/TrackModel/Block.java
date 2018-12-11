@@ -45,7 +45,7 @@ public class Block {
     private boolean railState = true;
 
     private boolean signal;
-    private String beacon;
+    private int beacon;
     
     private boolean stationPresent;
     private int passengersStation;
@@ -104,6 +104,7 @@ public class Block {
         else blockDirection = 2;
         this.passengersStation = calculatePassengers();
         this.stationPresent = (infrastructure.split(";", 2)[0].equals("STATION"));
+        if(stationPresent) setBeacon(blockNumber);
         this.signal = true;
     }
     //Jon Gramley - Block Controller
@@ -120,6 +121,7 @@ public class Block {
         else blockDirection = 2;
         this.passengersStation = calculatePassengers();
         this.stationPresent = (infrastructure.split(";", 2)[0].equals("STATION"));
+        if(stationPresent) setBeacon(blockNumber);
         this.signal = true;
     }
     
@@ -133,6 +135,7 @@ public class Block {
         this.blockState = blockState;
         this.passengersStation = calculatePassengers();
         this.stationPresent = (infrastructure.split(";", 2)[0].equals("STATION"));
+        if(stationPresent) setBeacon(blockNumber);
         this.signal = true;
     }
    
@@ -232,13 +235,19 @@ public class Block {
 
     //Beacon can only send 64 bits, so if a beacon is set to be longer than
     //8 acii characters, it will be trimmed to the appropriate length
-    public String getBeacon() {
-        return beacon.substring(0, Math.min(beacon.length(), 8));
+    public int getBeacon() {
+        //return beacon.substring(0, Math.min(beacon.length(), 8));
+        return beacon;
     }
 
-    public void setBeacon(String beacon) {
-        String trimmedBeacon = beacon.substring(0, Math.min(beacon.length(), 8));
-        this.beacon = trimmedBeacon;    }
+    public void setBeacon(int beacon) {
+        //String trimmedBeacon = beacon.substring(0, Math.min(beacon.length(), 8));
+        //this.beacon = trimmedBeacon; 
+        int[] greenStations = {73, 88, 96, 105, 114, 123, 132, 141, 2, 9, 16, 22, 31, 39, 48, 57, 65};
+        for(int i = 0; i < 17; i++){
+            if(greenStations[i] == beacon) this.beacon = greenStations[(i + 1)%17];
+        }
+    }
 
     public int getNextInboundBlock() {
         return nextInboundBlock;

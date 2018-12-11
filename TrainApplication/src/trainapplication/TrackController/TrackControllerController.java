@@ -447,9 +447,9 @@ public class TrackControllerController implements Initializable {
     }
     public boolean calculateSignal(boolean sectionOccupancy) throws InterruptedException {
         occupied = sectionOccupancy;
-        boolean test1 = plc.calculateSignalCrossing(occupied);
-        boolean test2 = plc.calculateSignalCrossing(occupied);
-        boolean test3 = plc.calculateSignalCrossing(occupied);
+        boolean test1 = plc.calculateSignalCrossing(sectionOccupancy);
+        boolean test2 = plc.calculateSignalCrossing(sectionOccupancy);
+        boolean test3 = plc.calculateSignalCrossing(sectionOccupancy);
         if(test1==test2)
             signalBool = test1;
         else if(test1==test3)

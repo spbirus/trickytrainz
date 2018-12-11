@@ -15,19 +15,19 @@ public class Schedule {
     int trainID;
     int[] targetBlock;
     long dispatchTime; //not sure what type of variable, but this will be used for knowing when a train is supposed to arrive at the next block
-    double[] timeToNextBlock; //array to hold all of timing information for one train
+    double[] dwellTime; //array to hold all of timing information for one train
     int scheduleIndex;
 
     public Schedule() {
         
     }
 
-    public Schedule(String line, int trainID, int[] targetBlock, long dispatchTime, double[] timeToNextBlock, int scheduleIndex) {
+    public Schedule(String line, int trainID, int[] targetBlock, long dispatchTime, double[] dwellTime, int scheduleIndex) {
         this.line = line;
         this.trainID = trainID;
         this.targetBlock = targetBlock;
         this.dispatchTime = dispatchTime;
-        this.timeToNextBlock = timeToNextBlock;
+        this.dwellTime = dwellTime;
         this.scheduleIndex = scheduleIndex;
     }
     
@@ -57,12 +57,12 @@ public class Schedule {
         this.dispatchTime = dispatchTime;
     }
 
-    public double[] getTimeToNextBlock() {
-        return timeToNextBlock;
+    public double[] getDwellTime() {
+        return dwellTime;
     }
 
-    public void setTimeToNextBlock(double[] timeToNextBlock) {
-        this.timeToNextBlock = timeToNextBlock;
+    public void setDwellTime(double[] dwellTime) {
+        this.dwellTime = dwellTime;
     }
 
     public String getLine() {

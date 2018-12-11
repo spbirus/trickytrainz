@@ -312,11 +312,11 @@ public class Block {
         this.circuitState = circuitState;
     }
 
-    public String getSignal() {
+    public boolean getSignal() {
         return signal;
     }
 
-    public void setSignal(String signal) {
+    public void setSignal(boolean signal) {
         this.signal = signal;
     }
 

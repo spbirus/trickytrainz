@@ -52,6 +52,8 @@ public class TrackModelController implements Initializable {
     ArrayList<Track> trackList = new ArrayList<Track>();
     ArrayList<Block> sortedTrackList = new ArrayList<Block>();
     public int[] keyBlocks = {62, 76, 100, 29, 1, 57};
+    public int[] greenSections = {58, 63, 77, 101, 28, 29};
+    public boolean[] greenSectionOccupancy = {false, false, false, false, false, false};
     //TODO
     //Update to make new tracks "configurable"
     public Track greenTrack = new Track("green");
@@ -125,11 +127,11 @@ public class TrackModelController implements Initializable {
     }
     // Blocks off sections of the track when a train is on it
     // to set the signal for other trains 
-    public void setSectionOccupancy(String line, Block block){
+    public void setSectionOccupancy(String line, Block block) throws InterruptedException{
       if(line.equals("Green")){
           for(int i = 0; i < 6; i++){
-              if(block.getBlockNumber() == greenTrack.getSections()[i]){
-                  if(!greenTrack.getSectionOccupancy()[i]){
+              if(block.getBlockNumber() == greenSections[i]){
+                  if(!greenSectionOccupancy[i]){
                     ta.trkCtr[i].calculateSignal(true);
                     ta.trkCtr[(i-1)%6].calculateSignal(false);
                   }
@@ -198,7 +200,7 @@ public class TrackModelController implements Initializable {
         
         // If entering a new section of the track, set that signal to red 
         // to block off other trains 
-        for(int i: greenTrack.getSections()){
+        for(int i: greenSections){
             if(b.nextBlock.getBlockNumber() == i){
                 setSectionOccupancy(line, b.nextBlock);
             }

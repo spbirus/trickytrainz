@@ -517,6 +517,12 @@ public class TrainControllerController implements Initializable {
     }
     
     //============LEFT DOORS=============
+    
+    @FXML
+    void openLD(ActionEvent event) {
+        int[] arr = {0,1,2,3};
+        operateDoors(arr,1);
+    }
     @FXML
     void openFLD(ActionEvent event) {
         int[] arr = {0};
@@ -558,6 +564,11 @@ public class TrainControllerController implements Initializable {
         operateDoors(arr,0);
     }
 //============RIGHT DOORS=============
+    @FXML
+    void openRD(ActionEvent event) {
+        int[] arr = {4,5,6,7};
+        operateDoors(arr,1);
+    }
     @FXML
     void openFRD(ActionEvent event) {
         int[] arr = {4};

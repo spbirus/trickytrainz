@@ -61,6 +61,8 @@ public class CTCOfficeController implements Initializable {
     private int trainIDIterator = 0;
     private int totalThroughput = 0;
     private int totalTicketSales = 0;
+    private int hourlyThroughput = 0;
+    private int hourlyTicketSales = 0;
     private Schedule[] scheduleArray = new Schedule[1]; //array of schedules, will hold all schedules loaded in
     private Train[] trainArray = new Train[1]; //array of trains, will hold all trains that were ever created
     private DateFormat timeFormat = new SimpleDateFormat("HH:mm:ss");
@@ -68,6 +70,7 @@ public class CTCOfficeController implements Initializable {
     private long dispatchTimeCheck = System.currentTimeMillis(); //used to try and auto dispatch a train every 30 seconds
     public boolean autoMode = false; //if true, system is in auto mode
     public Timeline timeline = new Timeline();
+    private long hourlyResetTime = System.currentTimeMillis() + 3600000;
     
     
     private TrainApplication ta;
@@ -593,8 +596,8 @@ public class CTCOfficeController implements Initializable {
         //display throughput information
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Displaying Metrics");
-        alert.setHeaderText("Total Throughput: " + totalThroughput);
-        alert.setContentText("\nTotal Ticket Sales: " + totalTicketSales);
+        alert.setHeaderText("Total Throughput: " + totalThroughput + "\nTotal Ticket Sales: " + totalTicketSales);
+        alert.setContentText("Hourly Throughput Sales: " + hourlyThroughput + "\nHourly Ticket Sales: " + hourlyTicketSales);
         alert.show();
     }
 
@@ -819,10 +822,24 @@ public class CTCOfficeController implements Initializable {
     } 
     
     public void incrementThroughput(int current) {
+        if (currentTime > hourlyResetTime) {
+            resetHourly();
+        }
         totalThroughput += current;
+        hourlyThroughput += current;
     }
     
     public void incrementTicketSales(int current) {
+        if (currentTime > hourlyResetTime) {
+            resetHourly();
+        }
         totalTicketSales += current;
+        hourlyTicketSales += current;
+    }
+    
+    private void resetHourly() {
+        hourlyThroughput = 0;
+        hourlyTicketSales = 0;
+        hourlyResetTime += 3600000;
     }
 }

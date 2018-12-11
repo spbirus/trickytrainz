@@ -522,17 +522,11 @@ public class TrainControllerController implements Initializable {
     void openLD(ActionEvent event) {
         int[] arr = {0,1,2,3};
         operateDoors(arr,1);
-        TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
-        train.operateDoors("left",1);
-
     }
      @FXML
     void closeLD(ActionEvent event) {
         int[] arr = {0,1,2,3};
         operateDoors(arr,0);
-        TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
-        train.operateDoors("left",0);
-
     }
     @FXML
     void openFLD(ActionEvent event) {
@@ -579,15 +573,11 @@ public class TrainControllerController implements Initializable {
     void openRD(ActionEvent event) {
         int[] arr = {4,5,6,7};
         operateDoors(arr,1);
-        TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
-        train.operateDoors("right",1);
     }
     @FXML
     void closeRD(ActionEvent event) {
         int[] arr = {4,5,6,7};
         operateDoors(arr,0);
-        TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
-        train.operateDoors("right",0);
     }
     @FXML
     void openFRD(ActionEvent event) {
@@ -632,6 +622,8 @@ public class TrainControllerController implements Initializable {
 
     public void operateDoors(int[] doorIDs, int doorOp){
         String text = "OPEN";
+        boolean rightDoorOpen = false;
+        boolean leftDoorOpen = false;
         if(doorOp == 0){
             text = "CLOSED";
         }else if(doorOp == 1){
@@ -665,6 +657,43 @@ public class TrainControllerController implements Initializable {
                     break;
             }
         }
+        if(fld.getText().equalsIgnoreCase("OPEN"))
+            leftDoorOpen = true;
+            
+        if(fmld.getText().equalsIgnoreCase("OPEN"))
+           leftDoorOpen = true;
+        
+        if(bmld.getText().equalsIgnoreCase("OPEN"))
+            leftDoorOpen = true;
+            
+        if(bld.getText().equalsIgnoreCase("OPEN"))
+            leftDoorOpen = true;
+            
+        if(frd.getText().equalsIgnoreCase("OPEN"))
+            rightDoorOpen = true;
+           
+        if(fmrd.getText().equalsIgnoreCase("OPEN"))
+            rightDoorOpen = true;
+            
+        if(bmrd.getText().equalsIgnoreCase("OPEN"))
+            rightDoorOpen = true;
+            
+        if(brd.getText().equalsIgnoreCase("OPEN"))
+            rightDoorOpen = true;
+           
+        
+        TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
+        if(rightDoorOpen){
+            train.operateDoors("right",1);
+        }else{
+            train.operateDoors("right",0);
+        }
+        if(leftDoorOpen){
+            train.operateDoors("left",1);
+        }else{
+            train.operateDoors("left",0);
+        }
+        
         
     }
     

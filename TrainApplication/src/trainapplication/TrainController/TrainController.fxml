@@ -151,7 +151,7 @@
             </Label>
             <Separator layoutX="8.0" layoutY="114.0" prefHeight="5.0" prefWidth="80.0" />
             <Label layoutX="33.0" layoutY="117.0" text="Front " />
-            <Label fx:id="fld" layoutX="10.0" layoutY="87.0" text="OPEN">
+            <Label fx:id="fld" layoutX="10.0" layoutY="87.0" text="CLOSED">
                <font>
                   <Font size="20.0" />
                </font>
@@ -170,7 +170,7 @@
             </Label>
             <Separator layoutX="215.0" layoutY="115.0" prefHeight="5.0" prefWidth="80.0" />
             <Label layoutX="242.0" layoutY="117.0" text="Front" />
-            <Label fx:id="frd" layoutX="215.0" layoutY="87.0" text="OPEN">
+            <Label fx:id="frd" layoutX="215.0" layoutY="87.0" text="CLOSED">
                <font>
                   <Font size="20.0" />
                </font>
@@ -184,7 +184,7 @@
             </Label>
             <Separator layoutX="7.0" layoutY="166.0" prefHeight="5.0" prefWidth="80.0" />
             <Label layoutX="14.0" layoutY="168.0" text="Front Middle" />
-            <Label fx:id="fmld" layoutX="10.0" layoutY="139.0" text="OPEN">
+            <Label fx:id="fmld" layoutX="10.0" layoutY="139.0" text="CLOSED">
                <font>
                   <Font size="20.0" />
                </font>
@@ -198,7 +198,7 @@
             </Label>
             <Separator layoutX="214.0" layoutY="167.0" prefHeight="5.0" prefWidth="80.0" />
             <Label layoutX="219.0" layoutY="169.0" text="Front Middle" />
-            <Label fx:id="fmrd" layoutX="215.0" layoutY="142.0" text="OPEN">
+            <Label fx:id="fmrd" layoutX="215.0" layoutY="142.0" text="CLOSED">
                <font>
                   <Font size="20.0" />
                </font>
@@ -212,7 +212,7 @@
             </Label>
             <Separator layoutX="7.0" layoutY="218.0" prefHeight="5.0" prefWidth="80.0" />
             <Label layoutX="13.0" layoutY="220.0" text="Back Middle" />
-            <Label fx:id="bmld" layoutX="10.0" layoutY="192.0" text="OPEN">
+            <Label fx:id="bmld" layoutX="10.0" layoutY="192.0" text="CLOSED">
                <font>
                   <Font size="20.0" />
                </font>
@@ -226,7 +226,7 @@
             </Label>
             <Separator layoutX="214.0" layoutY="219.0" prefHeight="5.0" prefWidth="80.0" />
             <Label layoutX="220.0" layoutY="221.0" text="Back Middle" />
-            <Label fx:id="bmrd" layoutX="215.0" layoutY="192.0" text="OPEN">
+            <Label fx:id="bmrd" layoutX="215.0" layoutY="192.0" text="CLOSED">
                <font>
                   <Font size="20.0" />
                </font>
@@ -240,7 +240,7 @@
             </Label>
             <Separator layoutX="6.0" layoutY="273.0" prefHeight="5.0" prefWidth="80.0" />
             <Label layoutX="35.0" layoutY="276.0" text="Back" />
-            <Label fx:id="bld" layoutX="10.0" layoutY="247.0" text="OPEN">
+            <Label fx:id="bld" layoutX="10.0" layoutY="247.0" text="CLOSED">
                <font>
                   <Font size="20.0" />
                </font>
@@ -254,7 +254,7 @@
             </Label>
             <Separator layoutX="213.0" layoutY="274.0" prefHeight="5.0" prefWidth="80.0" />
             <Label layoutX="240.0" layoutY="276.0" text="Back" />
-            <Label fx:id="brd" layoutX="215.0" layoutY="247.0" text="OPEN">
+            <Label fx:id="brd" layoutX="215.0" layoutY="247.0" text="CLOSED">
                <font>
                   <Font size="20.0" />
                </font>
@@ -269,7 +269,7 @@
             <Button fx:id="frontLeftDoorOpen1" layoutX="46.0" layoutY="26.0" mnemonicParsing="false" onAction="#openLD" prefHeight="27.0" prefWidth="126.0" text="Open Left Doors" />
             <Button fx:id="frontLeftDoorOpen11" layoutX="259.0" layoutY="26.0" mnemonicParsing="false" onAction="#openRD" prefHeight="27.0" prefWidth="132.0" text="Open Right Doors" />
             <Button fx:id="frontLeftDoorOpen12" layoutX="47.0" layoutY="53.0" mnemonicParsing="false" onAction="#closeLD" prefHeight="27.0" prefWidth="125.0" text="Close Left Doors" />
-            <Button fx:id="frontLeftDoorOpen121" layoutX="259.0" layoutY="53.0" mnemonicParsing="false" onAction="#closeLD" prefHeight="27.0" prefWidth="132.0" text="Close Right Doors" />
+            <Button fx:id="frontLeftDoorOpen121" layoutX="259.0" layoutY="53.0" mnemonicParsing="false" onAction="#closeRD" prefHeight="27.0" prefWidth="132.0" text="Close Right Doors" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="testPane" disable="true" layoutX="10.0" layoutY="279.0" prefHeight="407.0" prefWidth="177.0" style="-fx-background-color: #bdc3c7#bdc3c7;">

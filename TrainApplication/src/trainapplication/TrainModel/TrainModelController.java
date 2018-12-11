@@ -284,14 +284,17 @@ public class TrainModelController implements Initializable {
             @Override
             public Void call() throws InterruptedException {
                 Thread.sleep(2000); // needed to load the first block
+                int prev = 0;
                 boolean atAuthority = false;
                 while (!atAuthority) {
                     //set the block of the train
 
                     Block curr = ta.trkMdl.getCurrentBlock(t.getLine(), t.getBlock());
-                    System.out.println("Current block: " + curr.getBlockNumber());
+//                    System.out.println("Current block: " + curr.getBlockNumber());
                     double bLength = curr.getBlockLength();
                     tc.setBlockDistance(bLength);
+                    prev = curr.getBlockNumber();
+//                    t.setPreviousBlock(t.getBlock());
                     t.setBlock(curr.getBlockNumber());
 
                     //update the track model info
@@ -334,8 +337,10 @@ public class TrainModelController implements Initializable {
                     }
                     //get the next block
                     Block next = ta.trkMdl.getNextBlock(t.getLine(), t.getBlock(), t.getPreviousBlock());
+                    System.out.println("Current block: " + t.getBlock() + " Previous Block: " + t.getPreviousBlock());
                     System.out.println("Next block: " + next.getBlockNumber());
                     t.setBlock(next.getBlockNumber());
+                    t.setPreviousBlock(prev);
                     //set the ctc stuff to show where the train is
                     ta.ctc.updateTrainTable(t);
                     if (t.getBlock() == t.getTarget()) {

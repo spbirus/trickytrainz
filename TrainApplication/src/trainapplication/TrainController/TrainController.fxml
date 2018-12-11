@@ -53,7 +53,7 @@
                </font>
             </Label>
             <Separator layoutX="7.0" layoutY="67.0" prefHeight="5.0" prefWidth="120.0" />
-            <Button layoutX="4.0" layoutY="100.0" mnemonicParsing="false" onAction="#onServBrakeButtonClick" prefHeight="46.0" prefWidth="126.0" text="Service Brake" />
+            <Button fx:id="servBrakeButton" layoutX="4.0" layoutY="100.0" mnemonicParsing="false" onAction="#onServBrakeButtonClick" prefHeight="46.0" prefWidth="126.0" text="Service Brake" />
             <Button fx:id="emergBrakeButton" layoutX="130.0" layoutY="101.0" mnemonicParsing="false" onAction="#onEmergBrakeButtonClick" prefHeight="46.0" prefWidth="126.0" style="-fx-background-color: #e74c3c#e74c3c;" text="Emergency Brake" textFill="WHITE" />
             <Label layoutX="137.0" layoutY="73.0" text="Emergency Brake" />
             <Label fx:id="emergBrakeLabel" layoutX="136.0" layoutY="43.0" text="Disengaged">

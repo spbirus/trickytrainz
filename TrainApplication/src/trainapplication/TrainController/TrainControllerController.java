@@ -522,6 +522,17 @@ public class TrainControllerController implements Initializable {
     void openLD(ActionEvent event) {
         int[] arr = {0,1,2,3};
         operateDoors(arr,1);
+        TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
+        train.operateDoors("left",1);
+
+    }
+     @FXML
+    void closeLD(ActionEvent event) {
+        int[] arr = {0,1,2,3};
+        operateDoors(arr,0);
+        TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
+        train.operateDoors("left",0);
+
     }
     @FXML
     void openFLD(ActionEvent event) {
@@ -568,6 +579,15 @@ public class TrainControllerController implements Initializable {
     void openRD(ActionEvent event) {
         int[] arr = {4,5,6,7};
         operateDoors(arr,1);
+        TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
+        train.operateDoors("right",1);
+    }
+    @FXML
+    void closeRD(ActionEvent event) {
+        int[] arr = {4,5,6,7};
+        operateDoors(arr,0);
+        TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
+        train.operateDoors("right",0);
     }
     @FXML
     void openFRD(ActionEvent event) {

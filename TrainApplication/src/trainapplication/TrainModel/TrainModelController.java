@@ -421,7 +421,19 @@ public class TrainModelController implements Initializable {
             emergencyBrakeId.setText("engaged");
         }
     }
-
+    public void operateDoors(String side, int open){
+        String text = "Open";
+        if(open == 1){
+            text = "Open";
+        }else if(open == 0){
+            text = "Closed";
+        }
+        if (side.toLowerCase().equals("left")) {
+            leftdoorId.setText(text);
+        } else if (side.toLowerCase().equals("right")) {
+            rightdoorId.setText(text);
+        }
+    }
     public void onDoors(String side) {
         if (side.toLowerCase().equals("left")) {
             leftdoorId.setText("Open");

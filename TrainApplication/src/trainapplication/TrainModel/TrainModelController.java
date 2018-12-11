@@ -363,7 +363,9 @@ public class TrainModelController implements Initializable {
                         tc.onTargetArrival(); //done to reset the distance values in train controller to move again
                     }
                 }
-
+                
+                ta.ctc.continueTrain(t);
+                
                 return null;
             }
 

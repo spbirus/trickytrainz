@@ -301,7 +301,7 @@ public class TrackControllerController implements Initializable {
     }
 
     private void changeColor() {
-        if (outputLights.getText().equals("Green")) {
+        if (signalBool) {
             redLight.setVisible(false);
             greenLight.setVisible(true);
         } else {
@@ -415,7 +415,7 @@ public class TrackControllerController implements Initializable {
                         } else {
                             outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #" + mergeBlock.getText());
                         }
-
+                        
 //                        try {
 //                            Thread.sleep(3000);
 //                        } catch (InterruptedException ex) {
@@ -478,7 +478,10 @@ public class TrackControllerController implements Initializable {
                             }
                         }
                         changeColor();
-
+                        if(occupied)
+                            trackOccupancy.setText("Occupied");
+                        else
+                            trackOccupancy.setText("Not Occupied");
 //                        try {
 //                            Thread.sleep(3000);
 //                        } catch (InterruptedException ex) {
@@ -504,6 +507,10 @@ public class TrackControllerController implements Initializable {
                 }
             }
             changeColor();
+            if(occupied)
+                trackOccupancy.setText("Occupied");
+            else
+                trackOccupancy.setText("Not Occupied");
 //            try {
 //                Thread.sleep(5000);
 //            } catch (InterruptedException ex) {
@@ -519,7 +526,43 @@ public class TrackControllerController implements Initializable {
         this.id = id;
         this.speed = speed;
         this.authority = authority;
-        reset();
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        commandedSpeed.setText(speed+" mph");
+                        commandedAuthority.setText("Block " + authority);
+                        outputSpeed.setText(speed+" mph");
+                        outputAuthority.setText("Block " + authority);
+
+//                        try {
+//                            Thread.sleep(3000);
+//                        } catch (InterruptedException ex) {
+//                            Logger.getLogger(TrackControllerController.class.getName()).log(Level.SEVERE, null, ex);
+//                        }
+                    }
+                });
+
+                return null;
+            }
+        };
+        task.setOnSucceeded(e -> {
+            commandedSpeed.setText(speed+" mph");
+            commandedAuthority.setText(authority + " ft");
+            outputSpeed.setText(speed+" mph");
+            outputAuthority.setText(authority + " ft");
+//            try {
+//                Thread.sleep(5000);
+//            } catch (InterruptedException ex) {
+//                Logger.getLogger(TrackControllerController.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+        });
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
+        
     }
 
 }

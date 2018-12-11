@@ -85,6 +85,9 @@ public class TrainControllerController implements Initializable {
 
     @FXML
     private Button emergBrakeButton;
+    
+    @FXML
+    private Button servBrakeButton;
 
     @FXML
     private Label emergBrakeLabel;
@@ -364,6 +367,7 @@ public class TrainControllerController implements Initializable {
             powerVal = MAX_POWER;
             
         }
+        
 //        System.out.println("Old Power Val: " + oldPowerVal);
 //        System.out.println("Power Val: " + powerVal);
         
@@ -402,7 +406,9 @@ public class TrainControllerController implements Initializable {
         double currSpeedValNew = t.calculateVelocity(powerVal, currSpeedVal, 0, 0, setpointSpeedVal, 50);
 //        System.out.println("\t\tCurrent Speed according to Train Model: "+currSpeedValNew);
         //============================================
-                
+        if(t.isBrakeFailure() || t.isEngineFailure()){
+            powerVal = 0;
+        }
         //=====================set my GUI values================================
         powerLabel.setText(String.format("%.3f",powerVal));
         
@@ -470,21 +476,40 @@ public class TrainControllerController implements Initializable {
     
     @FXML
     void onBrakeFailActivate(ActionEvent event) {
-        t.setBrakeFailure(true);
+        if(emergBrakeLabel.getText().equalsIgnoreCase("Disengaged")){
+            toggleEmergBrake();
+        }
         TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
         train.onBrakeFailure(true);
+        train.onBrake(3);
+        servBrakeButton.setDisable(true);
+        t.setBrakeFailure(true);
+        
+        
+        
+        
+
     }
 
     @FXML
     void onBrakeFailDeactivate(ActionEvent event) {
-        t.setBrakeFailure(false);
+        if(emergBrakeLabel.getText().equalsIgnoreCase("Engaged")){
+            toggleEmergBrake();
+        }
         TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
         train.onBrakeFailure(false);
+        train.onBrake(0);
+        servBrakeButton.setDisable(false);
+        t.setBrakeFailure(false);
+        
+        
     }
     
     @FXML
     void onEngineFailActivate(ActionEvent event) {
-        toggleEmergBrake();
+        if(emergBrakeLabel.getText().equalsIgnoreCase("Disengaged")){
+            toggleEmergBrake();
+        }
         TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
         train.onEngineFailure(true);
         train.onBrake(3);
@@ -494,7 +519,9 @@ public class TrainControllerController implements Initializable {
 
     @FXML
     void onEngineFailDeactivate(ActionEvent event) {
-        toggleEmergBrake();
+        if(emergBrakeLabel.getText().equalsIgnoreCase("Engaged")){
+            toggleEmergBrake();
+        }
         TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
         train.onEngineFailure(false);
         train.onBrake(0);

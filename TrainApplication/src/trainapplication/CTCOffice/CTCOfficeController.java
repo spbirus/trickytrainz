@@ -106,21 +106,21 @@ public class CTCOfficeController implements Initializable {
         trainTableAllCurrent.setStyle("-fx-alignment: CENTER;");
         trainTableAllTarget.setStyle("-fx-alignment: CENTER;");
         
-//        trainTableAll.setRowFactory(tv -> {
-//            TableRow<Train> row = new TableRow<>();
-//            row.setOnMouseClicked(event -> {
-//                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
-//                    Train clickedTrain = row.getItem();
-//                    System.out.println("Double click on train: "+clickedTrain.getNumber());
-//                    try {
-//                        ta.createTrainGUI(clickedTrain.getNumber());
-//                    } catch (IOException ex) {
-//                        Logger.getLogger(CTCOfficeController.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                }
-//            });
-//            return row ;
-//        });
+        trainTableAll.setRowFactory(tv -> {
+            TableRow<Train> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    Train clickedTrain = row.getItem();
+                    System.out.println("Double click on train: "+clickedTrain.getNumber());
+                    try {
+                        ta.createTrainGUI(clickedTrain.getNumber());
+                    } catch (IOException ex) {
+                        Logger.getLogger(CTCOfficeController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+            return row ;
+        });
 
         //init queue table
         queueTableLine.setCellValueFactory(new PropertyValueFactory<>("line"));
@@ -132,21 +132,21 @@ public class CTCOfficeController implements Initializable {
         queueTableSpeed.setStyle("-fx-alignment: CENTER;");
         queueTableTarget.setStyle("-fx-alignment: CENTER;");
         
-//        queueTrainTable.setRowFactory(tv -> {
-//            TableRow<Train> row = new TableRow<>();
-//            row.setOnMouseClicked(event -> {
-//                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
-//                    Train clickedTrain = row.getItem();
-//                    System.out.println("Double click on train: "+clickedTrain.getNumber());
-//                    try {
-//                        ta.createTrainGUI(clickedTrain.getNumber());
-//                    } catch (IOException ex) {
-//                        Logger.getLogger(CTCOfficeController.class.getName()).log(Level.SEVERE, null, ex);
-//                    }
-//                }
-//            });
-//            return row ;
-//        });
+        queueTrainTable.setRowFactory(tv -> {
+            TableRow<Train> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+                    Train clickedTrain = row.getItem();
+                    System.out.println("Double click on train: "+clickedTrain.getNumber());
+                    try {
+                        ta.createTrainGUI(clickedTrain.getNumber());
+                    } catch (IOException ex) {
+                        Logger.getLogger(CTCOfficeController.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            });
+            return row ;
+        });
 
         //init track table
         trackTableAllLine.setCellValueFactory(new PropertyValueFactory<>("line"));
@@ -167,13 +167,17 @@ public class CTCOfficeController implements Initializable {
         ta.setTime(Integer.parseInt(multiplierTextField.getText()));
 
         //init line choicebox in the new train popup screen
-        newTrainLineBox.getItems().addAll("Red", "Green");
-        newTrainLineBox.getSelectionModel().select("Red");
+        newTrainLineBox.getItems().addAll("Green", "Red");
+        newTrainLineBox.getSelectionModel().select("Green");
         
-        //init station choicebox in the new train popup screen
-        stationChoiceBox.getItems().addAll("Select...", "Shadyside:7", "Herron Ave:16", "Swissville:21",
-                "(U)Penn Station:25", "(U)Steel Plaza:35",
-                "(U)First Ave:45", "Station Square:48", "South Hills Jct:60");
+        //init station choicebox (green line) in the new train popup screen
+//        stationChoiceBox.getItems().addAll("Select...", "Shadyside:7", "Herron Ave:16", "Swissville:21",
+//                "(U)Penn Station:25", "(U)Steel Plaza:35",
+//                "(U)First Ave:45", "Station Square:48", "South Hills Jct:60");
+        stationChoiceBox.getItems().addAll("Select...", "Pioneer:2", "Edgebrook:9", "Sussex:16", "Whited:22", "South Bank:31",
+                    "(U)Central:39", "(U)Inglewood:48", "(U)Overbrook:57", "Glenbury:65", "Dormont:73", "Mt Lebanon:77",
+                    "Poplar:88", "Castle Shannon:96", "Dormont:105", "Glenbury:114",
+                    "(U)Overbrook:123", "(U)Inglewood:132", "(U)Central:141");
         stationChoiceBox.getSelectionModel().select("Select...");
         
         switchChoiceBox.getItems().addAll("Green12", "Green16", "Green29", "Green58(ToYard)", "Green62(FromYard)", "Green76", "Green86",
@@ -445,7 +449,7 @@ public class CTCOfficeController implements Initializable {
     @FXML
     void newTrainButtonClick(ActionEvent event) {
         newTrainPane.setVisible(true);
-        newTrainLineBox.getSelectionModel().select("Red");
+        newTrainLineBox.getSelectionModel().select("Green");
         stationChoiceBox.getSelectionModel().select("Select...");
         suggestedSpeedSlider.setValue(0);
         suggestedSpeedLabel.setText("0");

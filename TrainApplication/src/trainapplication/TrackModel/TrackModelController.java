@@ -134,7 +134,9 @@ public class TrackModelController implements Initializable {
               if(block.getBlockNumber() == greenSections[i]){
                   if(!greenSectionOccupancy[i]){
                     ta.trkCtr[i].calculateSignal(true);
+                    greenSectionOccupancy[i] = true;
                     ta.trkCtr[(i-1)%6].calculateSignal(false);
+                    greenSectionOccupancy[(i-1)%6] = false;
                   }
               }
           }

@@ -104,7 +104,7 @@ public class Block {
         else blockDirection = 2;
         this.passengersStation = calculatePassengers();
         this.stationPresent = (infrastructure.split(";", 2)[0].equals("STATION"));
-        if(stationPresent) setBeacon(blockNumber);
+        if(this.stationPresent) setBeacon(blockNumber);
         this.signal = true;
     }
     //Jon Gramley - Block Controller
@@ -121,7 +121,7 @@ public class Block {
         else blockDirection = 2;
         this.passengersStation = calculatePassengers();
         this.stationPresent = (infrastructure.split(";", 2)[0].equals("STATION"));
-        if(stationPresent) setBeacon(blockNumber);
+        if(this.stationPresent) setBeacon(blockNumber);
         this.signal = true;
     }
     
@@ -135,7 +135,9 @@ public class Block {
         this.blockState = blockState;
         this.passengersStation = calculatePassengers();
         this.stationPresent = (infrastructure.split(";", 2)[0].equals("STATION"));
-        if(stationPresent) setBeacon(blockNumber);
+        if(this.stationPresent) {
+            setBeacon(blockNumber);
+        }
         this.signal = true;
     }
    
@@ -243,9 +245,11 @@ public class Block {
     public void setBeacon(int beacon) {
         //String trimmedBeacon = beacon.substring(0, Math.min(beacon.length(), 8));
         //this.beacon = trimmedBeacon; 
-        int[] greenStations = {73, 88, 96, 105, 114, 123, 132, 141, 2, 9, 16, 22, 31, 39, 48, 57, 65};
-        for(int i = 0; i < 17; i++){
-            if(greenStations[i] == beacon) this.beacon = greenStations[(i + 1)%17];
+        int[] greenStations = {73, 77, 88, 96, 105, 114, 123, 132, 141, 2, 9, 31, 39, 48, 57, 65};
+        for(int i = 0; i < 16; i++){
+            if(greenStations[i] == beacon){
+                this.beacon = greenStations[(i + 1)%16];
+            }
         }
     }
 

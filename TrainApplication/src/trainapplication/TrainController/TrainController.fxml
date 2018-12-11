@@ -151,13 +151,13 @@
             </Label>
             <Separator layoutX="13.0" layoutY="83.0" prefHeight="5.0" prefWidth="72.0" />
             <Label layoutX="30.0" layoutY="86.0" text="Front " />
-            <Label layoutX="24.0" layoutY="56.0" text="Open">
+            <Label fx:id="fld" layoutX="24.0" layoutY="56.0" text="Open">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button layoutX="147.0" layoutY="72.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Close" />
-            <Button layoutX="90.0" layoutY="72.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Open " />
+            <Button fx:id="frontLeftDoorClose" layoutX="147.0" layoutY="72.0" mnemonicParsing="false" onAction="#closeFLD" prefHeight="27.0" prefWidth="56.0" text="Close" />
+            <Button fx:id="frontLeftDoorOpen" layoutX="90.0" layoutY="72.0" mnemonicParsing="false" onAction="#openFLD" prefHeight="27.0" prefWidth="56.0" text="Open " />
             <Label layoutX="185.0" layoutY="13.0">
                <font>
                   <Font size="30.0" />
@@ -170,13 +170,13 @@
             </Label>
             <Separator layoutX="220.0" layoutY="84.0" prefHeight="5.0" prefWidth="72.0" />
             <Label layoutX="239.0" layoutY="86.0" text="Front" />
-            <Label layoutX="231.0" layoutY="57.0" text="Open">
+            <Label fx:id="frd" layoutX="231.0" layoutY="57.0" text="Open">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button layoutX="351.0" layoutY="72.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Close" />
-            <Button layoutX="294.0" layoutY="72.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Open " />
+            <Button layoutX="351.0" layoutY="72.0" mnemonicParsing="false" onAction="#closeFRD" prefHeight="27.0" prefWidth="56.0" text="Close" />
+            <Button layoutX="294.0" layoutY="72.0" mnemonicParsing="false" onAction="#openFRD" prefHeight="27.0" prefWidth="56.0" text="Open " />
             <Label layoutX="17.0" layoutY="127.0">
                <font>
                   <Font size="30.0" />
@@ -184,13 +184,13 @@
             </Label>
             <Separator layoutX="12.0" layoutY="135.0" prefHeight="5.0" prefWidth="72.0" />
             <Label layoutX="11.0" layoutY="137.0" text="Front Middle" />
-            <Label layoutX="23.0" layoutY="108.0" text="Open">
+            <Label fx:id="fmld" layoutX="23.0" layoutY="108.0" text="Open">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button layoutX="146.0" layoutY="124.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Close" />
-            <Button layoutX="89.0" layoutY="124.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Open " />
+            <Button fx:id="frontMiddleDoorClose" layoutX="146.0" layoutY="124.0" mnemonicParsing="false" onAction="#closeFMLD" prefHeight="27.0" prefWidth="56.0" text="Close" />
+            <Button fx:id="frontMiddleDoorOpen" layoutX="89.0" layoutY="124.0" mnemonicParsing="false" onAction="#openFMLD" prefHeight="27.0" prefWidth="56.0" text="Open " />
             <Label layoutX="224.0" layoutY="130.0">
                <font>
                   <Font size="30.0" />
@@ -198,13 +198,13 @@
             </Label>
             <Separator layoutX="219.0" layoutY="136.0" prefHeight="5.0" prefWidth="72.0" />
             <Label layoutX="216.0" layoutY="138.0" text="Front Middle" />
-            <Label layoutX="230.0" layoutY="109.0" text="Open">
+            <Label fx:id="fmrd" layoutX="230.0" layoutY="109.0" text="Open">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button layoutX="350.0" layoutY="124.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Close" />
-            <Button layoutX="293.0" layoutY="124.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Open " />
+            <Button layoutX="350.0" layoutY="124.0" mnemonicParsing="false" onAction="#closeFMRD" prefHeight="27.0" prefWidth="56.0" text="Close" />
+            <Button layoutX="293.0" layoutY="124.0" mnemonicParsing="false" onAction="#openFMRD" prefHeight="27.0" prefWidth="56.0" text="Open " />
             <Label layoutX="17.0" layoutY="179.0">
                <font>
                   <Font size="30.0" />
@@ -212,13 +212,13 @@
             </Label>
             <Separator layoutX="12.0" layoutY="187.0" prefHeight="5.0" prefWidth="72.0" />
             <Label layoutX="10.0" layoutY="189.0" text="Back Middle" />
-            <Label layoutX="23.0" layoutY="160.0" text="Open">
+            <Label fx:id="bmld" layoutX="23.0" layoutY="160.0" text="Open">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button layoutX="146.0" layoutY="176.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Close" />
-            <Button layoutX="89.0" layoutY="176.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Open " />
+            <Button layoutX="146.0" layoutY="176.0" mnemonicParsing="false" onAction="#closeBMLD" prefHeight="27.0" prefWidth="56.0" text="Close" />
+            <Button fx:id="BackMiddleDoorOpen" layoutX="89.0" layoutY="176.0" mnemonicParsing="false" onAction="#openBMLD" prefHeight="27.0" prefWidth="56.0" text="Open " />
             <Label layoutX="224.0" layoutY="180.0">
                <font>
                   <Font size="30.0" />
@@ -226,13 +226,13 @@
             </Label>
             <Separator layoutX="219.0" layoutY="188.0" prefHeight="5.0" prefWidth="72.0" />
             <Label layoutX="217.0" layoutY="190.0" text="Back Middle" />
-            <Label layoutX="230.0" layoutY="161.0" text="Open">
+            <Label fx:id="bmrd" layoutX="230.0" layoutY="161.0" text="Open">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button layoutX="350.0" layoutY="176.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Close" />
-            <Button layoutX="293.0" layoutY="176.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Open " />
+            <Button layoutX="350.0" layoutY="176.0" mnemonicParsing="false" onAction="#closeBMRD" prefHeight="27.0" prefWidth="56.0" text="Close" />
+            <Button layoutX="293.0" layoutY="176.0" mnemonicParsing="false" onAction="#openBMRD" prefHeight="27.0" prefWidth="56.0" text="Open " />
             <Label layoutX="16.0" layoutY="234.0">
                <font>
                   <Font size="30.0" />
@@ -240,13 +240,13 @@
             </Label>
             <Separator layoutX="11.0" layoutY="242.0" prefHeight="5.0" prefWidth="72.0" />
             <Label layoutX="32.0" layoutY="245.0" text="Back" />
-            <Label layoutX="22.0" layoutY="215.0" text="Open">
+            <Label fx:id="bld" layoutX="22.0" layoutY="215.0" text="Open">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button layoutX="145.0" layoutY="231.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Close" />
-            <Button layoutX="88.0" layoutY="231.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Open " />
+            <Button layoutX="145.0" layoutY="231.0" mnemonicParsing="false" onAction="#closeBLD" prefHeight="27.0" prefWidth="56.0" text="Close" />
+            <Button layoutX="88.0" layoutY="231.0" mnemonicParsing="false" onAction="#openBLD" prefHeight="27.0" prefWidth="56.0" text="Open " />
             <Label layoutX="223.0" layoutY="235.0">
                <font>
                   <Font size="30.0" />
@@ -254,13 +254,13 @@
             </Label>
             <Separator layoutX="218.0" layoutY="243.0" prefHeight="5.0" prefWidth="72.0" />
             <Label layoutX="237.0" layoutY="245.0" text="Back" />
-            <Label layoutX="229.0" layoutY="216.0" text="Open">
+            <Label fx:id="brd" layoutX="229.0" layoutY="216.0" text="Open">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Button layoutX="349.0" layoutY="231.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Close" />
-            <Button layoutX="292.0" layoutY="231.0" mnemonicParsing="false" prefHeight="27.0" prefWidth="56.0" text="Open " />
+            <Button layoutX="349.0" layoutY="231.0" mnemonicParsing="false" onAction="#closeBRD" prefHeight="27.0" prefWidth="56.0" text="Close" />
+            <Button layoutX="292.0" layoutY="231.0" mnemonicParsing="false" onAction="#openBRD" prefHeight="27.0" prefWidth="56.0" text="Open " />
             <Label layoutX="271.0" layoutY="7.0" prefHeight="19.0" prefWidth="108.0" text="RIGHT DOORS" underline="true">
                <font>
                   <Font size="15.0" />

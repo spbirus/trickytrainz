@@ -39,6 +39,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.control.cell.TextFieldTreeTableCell;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyEvent;
@@ -46,6 +47,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
+import javafx.util.converter.IntegerStringConverter;
 import trainapplication.TrackController.*;
 import trainapplication.TrainApplication;
 import trainapplication.TrainModel.*;
@@ -106,47 +108,56 @@ public class CTCOfficeController implements Initializable {
         trainTableAllCurrent.setStyle("-fx-alignment: CENTER;");
         trainTableAllTarget.setStyle("-fx-alignment: CENTER;");
         
-        trainTableAll.setRowFactory(tv -> {
-            TableRow<Train> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
-                    Train clickedTrain = row.getItem();
-                    System.out.println("Double click on train: "+clickedTrain.getNumber());
-                    try {
-                        ta.createTrainGUI(clickedTrain.getNumber());
-                    } catch (IOException ex) {
-                        Logger.getLogger(CTCOfficeController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            });
-            return row ;
-        });
+        //this is buggy so we disabled it(reopening moving train makes power negative and we're not fully sure why)
+//        trainTableAll.setRowFactory(tv -> {
+//            TableRow<Train> row = new TableRow<>();
+//            row.setOnMouseClicked(event -> {
+//                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+//                    Train clickedTrain = row.getItem();
+//                    System.out.println("Double click on train: "+clickedTrain.getNumber());
+//                    try {
+//                        ta.createTrainGUI(clickedTrain.getNumber());
+//                    } catch (IOException ex) {
+//                        Logger.getLogger(CTCOfficeController.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//                }
+//            });
+//            return row ;
+//        });
 
         //init queue table
         queueTableLine.setCellValueFactory(new PropertyValueFactory<>("line"));
         queueTableNumber.setCellValueFactory(new PropertyValueFactory<>("number"));
         queueTableSpeed.setCellValueFactory(new PropertyValueFactory<>("speed"));
         queueTableTarget.setCellValueFactory(new PropertyValueFactory<>("target"));
+        //changes to speed and authority change on the model side after intial creation, so ignore the lines below
+        queueTableTarget.setOnEditCommit(
+                (TableColumn.CellEditEvent<Train, Integer> t) ->
+                    ( t.getTableView().getItems().get(
+                            t.getTablePosition().getRow())
+                    ).setSpeed(t.getNewValue())
+                );
         queueTableLine.setStyle("-fx-alignment: CENTER;");
         queueTableNumber.setStyle("-fx-alignment: CENTER;");
         queueTableSpeed.setStyle("-fx-alignment: CENTER;");
         queueTableTarget.setStyle("-fx-alignment: CENTER;");
         
-        queueTrainTable.setRowFactory(tv -> {
-            TableRow<Train> row = new TableRow<>();
-            row.setOnMouseClicked(event -> {
-                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
-                    Train clickedTrain = row.getItem();
-                    System.out.println("Double click on train: "+clickedTrain.getNumber());
-                    try {
-                        ta.createTrainGUI(clickedTrain.getNumber());
-                    } catch (IOException ex) {
-                        Logger.getLogger(CTCOfficeController.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
-            });
-            return row ;
-        });
+        //add doubleclick functionality to open a train object
+//        queueTrainTable.setRowFactory(tv -> {
+//            TableRow<Train> row = new TableRow<>();
+//            row.setOnMouseClicked(event -> {
+//                if (event.getClickCount() == 2 && (! row.isEmpty()) ) {
+//                    Train clickedTrain = row.getItem();
+//                    System.out.println("Double click on train: "+clickedTrain.getNumber());
+//                    try {
+//                        ta.createTrainGUI(clickedTrain.getNumber());
+//                    } catch (IOException ex) {
+//                        Logger.getLogger(CTCOfficeController.class.getName()).log(Level.SEVERE, null, ex);
+//                    }
+//                }
+//            });
+//            return row ;
+//        });
 
         //init track table
         trackTableAllLine.setCellValueFactory(new PropertyValueFactory<>("line"));
@@ -171,15 +182,13 @@ public class CTCOfficeController implements Initializable {
         newTrainLineBox.getSelectionModel().select("Green");
         
         //init station choicebox (green line) in the new train popup screen
-//        stationChoiceBox.getItems().addAll("Select...", "Shadyside:7", "Herron Ave:16", "Swissville:21",
-//                "(U)Penn Station:25", "(U)Steel Plaza:35",
-//                "(U)First Ave:45", "Station Square:48", "South Hills Jct:60");
         stationChoiceBox.getItems().addAll("Select...", "Pioneer:2", "Edgebrook:9", "Sussex:16", "Whited:22", "South Bank:31",
                     "(U)Central:39", "(U)Inglewood:48", "(U)Overbrook:57", "Glenbury:65", "Dormont:73", "Mt Lebanon:77",
                     "Poplar:88", "Castle Shannon:96", "Dormont:105", "Glenbury:114",
                     "(U)Overbrook:123", "(U)Inglewood:132", "(U)Central:141");
         stationChoiceBox.getSelectionModel().select("Select...");
         
+        //init switch choice box for CTC functionality to change switch states
         switchChoiceBox.getItems().addAll("Green12", "Green16", "Green29", "Green58(ToYard)", "Green62(FromYard)", "Green76", "Green86",
                 "Red09(Yard)", "Red15", "Red27(U)", "Red32(U)", "Red38(U)", "Red52");
         
@@ -326,7 +335,7 @@ public class CTCOfficeController implements Initializable {
         } else { //turns on auto mode based on multiplier value
             autoModeButton.setText("Enter Manual Mode");
             autoMode = true;
-            dispatchTimeCheck = currentTime + 210000; //try to dispatch trains every 3 minutes
+            dispatchTimeCheck = currentTime + 600000; //try to dispatch trains every 10 minutes
         }
     }
     
@@ -655,7 +664,7 @@ public class CTCOfficeController implements Initializable {
     */
     public void tryToDispatchTrain() {
         if (currentTime > dispatchTimeCheck) {
-            dispatchTimeCheck += 30000; // increment 30 seconds
+            dispatchTimeCheck += 600000; // increment 10 minutes
             //its time to try and dispatch again
             //check queue for train (dispatch if possible), and increment dispatchTimeCheck by x(TBD) sec
             try{
@@ -692,7 +701,7 @@ public class CTCOfficeController implements Initializable {
         schedule.dispatchTime = System.currentTimeMillis();
         
         //time to next block is actually dwell time. gotta do something about that eventually (make an enum of dictionary-like thing with block/dwell
-        long arrivalTime = (long) (schedule.dispatchTime + schedule.timeToNextBlock[schedule.scheduleIndex] * 60 * 1000);
+        long arrivalTime = (long) (schedule.dispatchTime + schedule.dwellTime[schedule.scheduleIndex] * 60 * 1000);
         System.out.println("departure time: " + timeFormat.format(schedule.dispatchTime));
         System.out.println("arrival time: " + timeFormat.format(arrivalTime));
 
@@ -742,7 +751,7 @@ public class CTCOfficeController implements Initializable {
         schedule.trainID = trainIDIterator;
         schedule.targetBlock[index] = Integer.parseInt(trainAttributes[3]);
         schedule.dispatchTime = System.currentTimeMillis();
-        schedule.timeToNextBlock[index] = Double.parseDouble(trainAttributes[4]);
+        schedule.dwellTime[index] = Double.parseDouble(trainAttributes[4]);
 
         return schedule;
     }
@@ -750,7 +759,7 @@ public class CTCOfficeController implements Initializable {
     //increase the index of the schedule component arrays to avoid null pointer exceptions while adding schedule elements
     private Schedule resizeScheduleArray(Schedule schedule) {
         schedule.targetBlock = Arrays.copyOf(schedule.targetBlock, schedule.targetBlock.length + 1);
-        schedule.timeToNextBlock = Arrays.copyOf(schedule.timeToNextBlock, schedule.timeToNextBlock.length + 1);
+        schedule.dwellTime = Arrays.copyOf(schedule.dwellTime, schedule.dwellTime.length + 1);
         return schedule;
     }
 
@@ -808,7 +817,7 @@ public class CTCOfficeController implements Initializable {
         schedule.trainID = train.getNumber();
         schedule.targetBlock[0] = train.getTarget();
         schedule.dispatchTime = currentTime;
-        schedule.timeToNextBlock[0] = 1.5; //dont really have a number for this yet...
+        schedule.dwellTime[0] = 1.5; //dont really have a number for this yet...
         schedule.scheduleIndex = 0;
         return schedule;
     }
@@ -845,5 +854,57 @@ public class CTCOfficeController implements Initializable {
         hourlyThroughput = 0;
         hourlyTicketSales = 0;
         hourlyResetTime += 3600000;
+    }
+    
+    public void continueTrain(Train t) {
+        //called if train.block = train.target
+        //how are things done when Sam gives a new target location?
+        //if the train was created via schedule, use the schedule to keep moving
+        //if the train was not created via schedule (manual), use beacon to get next station
+        
+        Schedule currentSchedule = scheduleArray[t.getNumber()];
+        currentSchedule.scheduleIndex++;
+        currentSchedule.dwellTime[currentSchedule.scheduleIndex] *= 60000; //convert dwell time to milliseconds
+        long dispatchTime = currentTime + (long) currentSchedule.dwellTime[currentSchedule.scheduleIndex]; //continue at this time
+        
+        try {
+            int target;
+            if (currentSchedule.targetBlock.length > 5) {
+                target = 0; //to be determined by beacon
+            }
+            else {
+                target = currentSchedule.targetBlock[currentSchedule.scheduleIndex];
+            }
+
+
+            double distance = ta.trkMdl.getDistance(t.getBlock(), target);
+            System.out.println("Distance to new target: " + distance);
+            t.setTarget(target);
+            t.setAuthority(distance);
+//            trainTimeline = new Timeline(
+//                new KeyFrame(
+//                        Duration.millis(1000), event -> {
+//                            if (currentTime > dispatchTime) {
+//                                TrainModelController tModelCont = (TrainModelController) ta.trainmodels.get(t.getNumber());
+//                                tModelCont.runTrain();
+//                                trainTimeline.stop();
+//                            }
+//                
+//                        }
+//                )
+//            );
+//            trainTimeline.setCycleCount(Animation.INDEFINITE);
+//            trainTimeline.play();
+            TrainModelController tModelCont = (TrainModelController) ta.trainmodels.get(t.getNumber());
+            tModelCont.runTrain();
+        }
+        catch (Exception ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+    }
+    
+    private void stopTrainTimeline(Timeline timeline) {
+        timeline.stop();
     }
 }

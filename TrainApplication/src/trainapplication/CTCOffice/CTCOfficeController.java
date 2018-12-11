@@ -694,8 +694,8 @@ public class CTCOfficeController implements Initializable {
         TrainModelController tModelCont = (TrainModelController) ta.trainmodels.get(dispatchNumber);
         tModelCont.runTrain();
         
-        TrackControllerController tContCont = (TrackControllerController) ta.trkCtr6;
-        tContCont.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
+        //send S/A to the track controllers
+        sendToTrackControllers(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
         
         Schedule schedule = getScheduleInfoFromTrainTableSelected(train);
         schedule.dispatchTime = System.currentTimeMillis();
@@ -788,7 +788,7 @@ public class CTCOfficeController implements Initializable {
     }
     
     //updates tracks as trains move on it
-    private void updateTrackTable(Train train) {
+    private void updateTrackTable() {
         //i might not implement this
     }
     
@@ -861,6 +861,7 @@ public class CTCOfficeController implements Initializable {
         //how are things done when Sam gives a new target location?
         //if the train was created via schedule, use the schedule to keep moving
         //if the train was not created via schedule (manual), use beacon to get next station
+        System.out.println("Called continue train");
         
         Schedule currentSchedule = scheduleArray[t.getNumber()];
         currentSchedule.scheduleIndex++;
@@ -869,11 +870,13 @@ public class CTCOfficeController implements Initializable {
         
         try {
             int target;
-            if (currentSchedule.targetBlock.length > 5) {
+            //System.out.println("asfoiasgfoiashfoash" + currentSchedule.targetBlock.length);
+            if (currentSchedule.targetBlock.length < 5) {
                 target = 0; //to be determined by beacon
             }
             else {
                 target = currentSchedule.targetBlock[currentSchedule.scheduleIndex];
+                System.out.println("This is the schedule target... " + target);
             }
 
 
@@ -881,13 +884,12 @@ public class CTCOfficeController implements Initializable {
             System.out.println("Distance to new target: " + distance);
             t.setTarget(target);
             t.setAuthority(distance);
-//            trainTimeline = new Timeline(
+//            Timeline trainTimeline = new Timeline(
 //                new KeyFrame(
 //                        Duration.millis(1000), event -> {
 //                            if (currentTime > dispatchTime) {
 //                                TrainModelController tModelCont = (TrainModelController) ta.trainmodels.get(t.getNumber());
 //                                tModelCont.runTrain();
-//                                trainTimeline.stop();
 //                            }
 //                
 //                        }
@@ -895,6 +897,10 @@ public class CTCOfficeController implements Initializable {
 //            );
 //            trainTimeline.setCycleCount(Animation.INDEFINITE);
 //            trainTimeline.play();
+//            if (currentTime > dispatchTime) {
+//                trainTimeline.stop();
+//            }
+            
             TrainModelController tModelCont = (TrainModelController) ta.trainmodels.get(t.getNumber());
             tModelCont.runTrain();
         }
@@ -906,5 +912,22 @@ public class CTCOfficeController implements Initializable {
     
     private void stopTrainTimeline(Timeline timeline) {
         timeline.stop();
+    }
+
+    private void sendToTrackControllers(int dispatchNumber, double dispatchSpeed, int dispatchTargetBlock) {
+        
+        TrackControllerController t1 = (TrackControllerController) ta.trkCtr1;
+        t1.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
+        TrackControllerController t2 = (TrackControllerController) ta.trkCtr2;
+        t2.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
+        TrackControllerController t3 = (TrackControllerController) ta.trkCtr3;
+        t3.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
+        TrackControllerController t4 = (TrackControllerController) ta.trkCtr4;
+        t4.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
+        TrackControllerController t5 = (TrackControllerController) ta.trkCtr5;
+        t5.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
+        TrackControllerController t6 = (TrackControllerController) ta.trkCtr6;
+        t6.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
+        
     }
 }

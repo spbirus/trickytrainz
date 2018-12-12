@@ -16,6 +16,7 @@ public class Block {
     public Block previousBlock; 
     public Block switchBlock;
     
+    
     //Physical Block Parameters Determined by the Excel or csv input
     private String line;
     private String section;
@@ -33,11 +34,12 @@ public class Block {
 
     
     //Track State Parameters Determined by the state of the system
-    private boolean switchState= false;
+    private boolean switchState = false;
     private boolean switchPresent;
     private int switchDefault;
     private String blockState;
     private boolean blockOccupancy;
+    private int switchCount = 0;
 
     private boolean crossingPresent;
     private boolean crossingState= true;
@@ -48,6 +50,9 @@ public class Block {
     private int beacon;
     
     private boolean stationPresent;
+    private String stationName;
+    private int stBlockNumber;
+    private String stSection;
     private int passengersStation;
     private int passengersBoard;
     
@@ -83,6 +88,16 @@ public class Block {
     public void setPassengersRemaining(int remaining){
         passengersStation += remaining;
     }
+
+    public String getStationName() {
+        return stationName;
+    }
+
+    public void setStationName(String stationName) {
+        this.stationName = stationName;
+    }
+    
+    
     // Empty Block for testing 
     public Block(){
         
@@ -104,7 +119,12 @@ public class Block {
         else blockDirection = 2;
         this.passengersStation = calculatePassengers();
         this.stationPresent = (infrastructure.split(";", 2)[0].equals("STATION"));
-        if(this.stationPresent) setBeacon(blockNumber);
+        if(this.stationPresent){
+            setBeacon(blockNumber);
+            this.stationName = infrastructure.split(";",3)[1];
+            this.stBlockNumber = blockNumber;
+            this.stSection = section;
+        }
         this.signal = true;
     }
     //Jon Gramley - Block Controller
@@ -245,7 +265,7 @@ public class Block {
     public void setBeacon(int beacon) {
         //String trimmedBeacon = beacon.substring(0, Math.min(beacon.length(), 8));
         //this.beacon = trimmedBeacon; 
-        int[] greenStations = {73, 77, 88, 96, 105, 114, 123, 132, 141, 2, 9, 31, 39, 48, 57, 65};
+        int[] greenStations = {65, 73, 77, 88, 96,105, 114, 123, 132, 141, 9, 2, 16, 22, 31, 39, 48, 57, 0};
         for(int i = 0; i < 16; i++){
             if(greenStations[i] == beacon){
                 this.beacon = greenStations[(i + 1)%16];

@@ -216,7 +216,7 @@ public class TrackModelController implements Initializable {
             length += b.getBlockLength();
             Block curr = b;
             flag = true;
-            b = getNextBlock("Green", b.getBlockNumber(), prev.getBlockNumber());
+            b = getNextBlock("Green", b.getBlockNumber(), prev.getBlockNumber(), b.getBlockNumber());
             flag = false;
             prev = curr;
             System.out.println("Distance Block: " + b.getBlockNumber() + " Previous Block: " + prev.getBlockNumber());

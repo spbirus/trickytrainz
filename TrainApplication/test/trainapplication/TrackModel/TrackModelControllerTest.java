@@ -14,6 +14,8 @@ import static org.junit.Assert.*;
  */
 public class TrackModelControllerTest {
     
+    public TrackModelController tm = new TrackModelController();
+    
     
     public TrackModelControllerTest() {
     
@@ -35,16 +37,16 @@ public class TrackModelControllerTest {
 
     /**
      * Test of getDistance method, of class TrackModelController.
-//     */
-//    @Test
-//    public void testGetDistance() throws Exception {
-//        Block sw = new Block("Green","D",13,150,0,70,"",14,12,0,0.5);
-//        Block mer = new Block("Green","C",12,100,-3,55,"SWITCH",11,11,-3,0.5);
-//        Block def = new Block("Green","A",1,100,0.5,55,"",13,13,0.5,0.5);
-//        
-//        getNextBlock
-//        
-//    }
+     */
+    @Test
+    public void testGetDistance() throws InterruptedException{
+        tm.LoadButtonClicked();
+        double expResult = 100.0;
+        double result = tm.getDistance(56,0);
+        System.out.println(result);
+        assertEquals(expResult, result);
+        
+    }
 
     /**
      * Test of setTrackOccupancy method, of class TrackModelController.

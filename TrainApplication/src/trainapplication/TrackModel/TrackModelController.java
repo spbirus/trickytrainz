@@ -54,7 +54,8 @@ public class TrackModelController implements Initializable {
     
     ArrayList<Block> sortedTrackList = new ArrayList<Block>();
     public int[] keyBlocks = {62, 76, 100, 29, 1, 57};
-    public int[] greenSections = {58, 63, 77, 101, 28, 29};
+    public int[] greenSections = {60, 67, 83, 106, 21, 32};
+    public int[] greenSignals = {36, 59, 74, 99, 143, 3};
     public boolean[] greenSectionOccupancy = {false, false, false, false, false, false};
     public boolean flag = false;
     //TODO
@@ -118,12 +119,18 @@ public class TrackModelController implements Initializable {
        
     } 
     
-    public void readTrackFile(){
-
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Browse for Train Schedule");
-        File file = fileChooser.showOpenDialog(null);
-        String csvFile = file.getPath();
+    public void readTrackFile(String filename){
+        
+        String csvFile;
+        
+        if(filename.equals("")){
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Browse for Train Schedule");
+            File file = fileChooser.showOpenDialog(null);
+            csvFile = file.getPath();
+        }else {
+            csvFile = filename;
+        }
         BufferedReader br = null;
         String line = "";
         String csvSplitBy = ",";
@@ -171,10 +178,7 @@ public class TrackModelController implements Initializable {
                     greenTrack.switchList.add(newBlock);
                     switchTable.getItems().add(newBlock);
                 }
-                System.out.println("STATION: " + trackInfrastructure);;
-                //sortedTrackList.add(newTrack);
-                
-                
+                //sortedTrackList.add(newTrack);               
 
             }
 
@@ -232,13 +236,15 @@ public class TrackModelController implements Initializable {
     // Blocks off sections of the track when a train is on it
     // to set the signal for other trains 
     public void setSectionOccupancy(String line, Block block) throws InterruptedException{
-      if(line.equals("Green")){
+        if(line.equals("Green")){
           for(int i = 0; i < 6; i++){
               if(block.getBlockNumber() == greenSections[i]){
                   if(!greenSectionOccupancy[i]){
-                    ta.trkCtr[i].calculateSignal(true);
+                    boolean temp = ta.trkCtr[i].calculateSignal(true);
+                    getBlockAt("Green", greenSignals[i]).setSignal(temp);
                     greenSectionOccupancy[i] = true;
-                    ta.trkCtr[(i-1)%6].calculateSignal(false);
+                    temp = ta.trkCtr[(i-1)%6].calculateSignal(false);
+                    getBlockAt("Green", greenSignals[(i-1)%6]).setSignal(temp);
                     greenSectionOccupancy[(i-1)%6] = false;
                   }
               }
@@ -399,8 +405,8 @@ public class TrackModelController implements Initializable {
     
     public void LoadButtonClicked(){
         
-        readTrackFile();
-        
+        readTrackFile("");
+        //CSV Tracks/GreenTestData.csv
     }
     
     public void MainteneceButtonClicked(){

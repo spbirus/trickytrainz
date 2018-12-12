@@ -103,6 +103,9 @@ public class TrainModelController implements Initializable {
         //power requested will come from train controller
 
     }
+    
+    @FXML
+    private Label passLeaving;
 
     @FXML
     private AnchorPane testPane2;
@@ -279,11 +282,8 @@ public class TrainModelController implements Initializable {
     private double storedPower = 0;
     private int[] allDoors = {0, 1, 2, 3, 4, 5, 6, 7};
 
-    // method calls
-    public void setTrackInfo() {
-
-    }
-
+    // used to run the train 
+    // this is the meat and the potatoes of the train model
     public void runTrain() {
         tc = (TrainControllerController) ta.trainctrs.get(t.getNumber());
 
@@ -376,7 +376,7 @@ public class TrainModelController implements Initializable {
                                     dealWithPassengers();
                                     //open the doors 
                                     tc.operateDoors(allDoors, 1);
-
+                                    tc.setAnnouncements(t.getLine(), t.getBlock());
                                     //close the doors
 //                                    tc.operateDoors(allDoors, 0);
                                 }
@@ -408,6 +408,7 @@ public class TrainModelController implements Initializable {
 
     }
 
+    //updated the block information in gui from the track model
     public void updateBlockFromTrackModel(Block curr) {
         speedlimitId.setText("" + curr.getSpeedLimit());
         enteringpassengersId.setText("" + curr.getPassengersBoard());
@@ -417,9 +418,17 @@ public class TrainModelController implements Initializable {
         blockId.setText("" + curr.getBlockNumber());
     }
 
+    //deal with passengers entering and leaving the train
     public void dealWithPassengers() {
         Block block = ta.trkMdl.getCurrentBlock(t.getLine(), t.getBlock());;
         int passOnTrain = t.getPassNum();
+        //passangers leaving
+        Random rand = new Random();
+        int leaving = rand.nextInt((passOnTrain - 0) + 1);
+        passOnTrain -= leaving;
+        passLeaving.setText(String.valueOf(leaving));
+        
+        //passangers entering
         int wantToGetOn = block.getPassengersBoard();
         int spotsLeft = t.getSpotsLeft();
         if (spotsLeft > wantToGetOn) {
@@ -435,6 +444,7 @@ public class TrainModelController implements Initializable {
         passengerNumber.setText("" + t.getPassNum());
     }
 
+    //set the brake to engaged or disengaged
     public void onBrake(int brake) {
         if (brake == 0) {
             brakeId.setText("disengaged");
@@ -446,6 +456,7 @@ public class TrainModelController implements Initializable {
         }
     }
 
+    //operate the doors
     public void operateDoors(String side, int open) {
         String text = "Open";
         if (open == 1) {
@@ -460,6 +471,7 @@ public class TrainModelController implements Initializable {
         }
     }
 
+    //operate the doors
     public void onDoors(String side) {
         if (side.toLowerCase().equals("left")) {
             leftdoorId.setText("Open");
@@ -471,6 +483,7 @@ public class TrainModelController implements Initializable {
         }
     }
 
+    //murphy failure methods
     public void onBrakeFailure(boolean activated) {
         brakeActivated.setVisible(activated);
     }
@@ -489,13 +502,30 @@ public class TrainModelController implements Initializable {
         
         
     }
-
+    
+    //set the temperature
+    public void setTemp(double temperature){
+        tempId.setText(String.format("%.0f",temperature));
+    }
+    
+    //set the lights
+    public void setLights(boolean lights){
+        if(lights){
+            lightId.setText("On");
+        }else{
+            lightId.setText("Off");
+        }
+        
+    }
+    
+    //deal with the ads
     public void rotateThroughAds() {
         Random rand = new Random();
         int r = rand.nextInt((2 - 0) + 1);
         advertisement.setText(ads[r]);
     }
 
+    //set the automode text
     public void setAutoMode(boolean auto) {
         if (auto) {
             mode.setText("Auto");

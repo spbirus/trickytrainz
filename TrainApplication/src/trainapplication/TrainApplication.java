@@ -134,7 +134,7 @@ public class TrainApplication <E> extends Application {
         
         
         ctcStage.show();
-        trkCtrStage2.show();
+//        trkCtrStage2.show();
         trkMdlStage.show();
         
         

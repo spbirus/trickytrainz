@@ -411,19 +411,11 @@ public class TrackControllerController implements Initializable {
         thread.setDaemon(true);
         thread.start();
     }
-    public boolean calculateSwitch() throws InterruptedException {
+    public boolean calculateSwitch(boolean toYard) throws InterruptedException {
         String line = "Green";
         if (mergePresent && splitPresent) {
             line = "Red";
         }
-        boolean toYard = true;
-//        if (splitPresent) {
-//            double distToYard = ta.trkMdl.getDistance(57, 0);
-//                double authority = ta.getTrain(id).getAuthority();
-//                if (authority > distToYard) {
-//                    toYard = false;
-//                }
-//        }
 
         boolean test1 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
         boolean test2 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);

@@ -149,10 +149,18 @@ public class TrainControllerController implements Initializable {
     @FXML
     private Label brd;
     
-     @FXML
-    void onTrainSelectionClick(ActionEvent event) {
-
+    @FXML
+    private Label modeLabel;
+    
+    public void setAutoMode(boolean ifAuto){
+        if(ifAuto){
+            modeLabel.setText("Auto");
+        }else{
+            modeLabel.setText("Manual");
+        }
     }
+    
+    //==========activates and disactivates service brake=======
     @FXML
     void onServBrakeButtonClick(ActionEvent event) {
         TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
@@ -166,6 +174,7 @@ public class TrainControllerController implements Initializable {
             t.setBrakes(1); //set the service brake
         }
     }
+    //==========toggles emergency brake=======
      @FXML
     void onEmergBrakeButtonClick(ActionEvent event) {
         toggleEmergBrake();
@@ -182,7 +191,7 @@ public class TrainControllerController implements Initializable {
             train.onBrake(3);
         }    }
      
-    //==========================Speed and Power Variables ======================
+    //==========================Speed,Power, Distance Variables ================
     private final double MAX_POWER = 120; //kW
     private final double serviceBrakeDecel = 1.2 * 3.2808399; //ft/s^2
     final double FPS_MS = 0.3048;
@@ -202,10 +211,7 @@ public class TrainControllerController implements Initializable {
     public double distanceLeft;
     public double distanceTraveled = 0;
     public double distanceTraveledInBlock = 0;
-    
-    
-    
-    
+    public double blockDistance = 0;
     
     public void setSetPointSpeed(double newSpeed){
         setpointSpeedVal = newSpeed;
@@ -270,62 +276,63 @@ public class TrainControllerController implements Initializable {
        
             
     }
-     @FXML
-    void runSim(ActionEvent event) {
-        runSimulationButton.setDisable(true);
-        test_setpointSpeedVal.setDisable(true);
-        setSetpointButton.setDisable(true);
-        initPower();
-        System.out.println("Current Speed(mph): "+currSpeedVal);
-        System.out.println("Setpoint speed(mph): "+setpointSpeedVal);
-        
-        //======================MULTI THREAD CALL===============================
-        Task <Void> task = new Task<Void>() {
-            @Override public Void call() throws InterruptedException {
-                while(currSpeedVal < setpointSpeedVal){
-                    Platform.runLater(new Runnable() {
-                      @Override public void run() {
-                          //=================function call======================
-                           
-                          //calculatePower();
-                          
-                          
-                          //====================================================
-                      }
-                        
-                    }); 
-                    Thread.sleep(10);
-                }
-                return null;
-            }
-        };
-        
-         task.setOnSucceeded(e -> {
-
-            // this message will be seen.
-            powerLabel.setText(String.format("%.3f",powerVal));
-        
-            currentSpeedLabel.setText(String.format("%.2f",currSpeedVal));
-            
-         });
-        
-        Thread thread = new Thread(task);
-        thread.setDaemon(true);
-        thread.start();
-        
-        //======================================================================
-//        for(int i = 0; i < TIME_MULTIPLIER; i++)   {
-//            calculatePower();
-//        }
-    }
+    // DELETE WHEN DONE
+//     @FXML DELETE 
+//    void runSim(ActionEvent event) {
+//        runSimulationButton.setDisable(true);
+//        test_setpointSpeedVal.setDisable(true);
+//        setSetpointButton.setDisable(true);
+//        initPower();
+//        System.out.println("Current Speed(mph): "+currSpeedVal);
+//        System.out.println("Setpoint speed(mph): "+setpointSpeedVal);
+//        
+//        //======================MULTI THREAD CALL===============================
+//        Task <Void> task = new Task<Void>() {
+//            @Override public Void call() throws InterruptedException {
+//                while(currSpeedVal < setpointSpeedVal){
+//                    Platform.runLater(new Runnable() {
+//                      @Override public void run() {
+//                          //=================function call======================
+//                           
+//                          //calculatePower();
+//                          
+//                          
+//                          //====================================================
+//                      }
+//                        
+//                    }); 
+//                    Thread.sleep(10);
+//                }
+//                return null;
+//            }
+//        };
+//        
+//         task.setOnSucceeded(e -> {
+//
+//            // this message will be seen.
+//            powerLabel.setText(String.format("%.3f",powerVal));
+//        
+//            currentSpeedLabel.setText(String.format("%.2f",currSpeedVal));
+//            
+//         });
+//        
+//        Thread thread = new Thread(task);
+//        thread.setDaemon(true);
+//        thread.start();
+//        
+//        //======================================================================
+////        for(int i = 0; i < TIME_MULTIPLIER; i++)   {
+////            calculatePower();
+////        }
+//    }
     
-    public double blockDistance = 0;
+    
 
     public void setBlockDistance(double blockDistance) {
         this.blockDistance = blockDistance;
     }
     
-    
+    //=================calculates Power using Control Law=======================
     public void calculatePower(){
         
         
@@ -425,6 +432,11 @@ public class TrainControllerController implements Initializable {
         
         
         
+    }
+    
+    public void showTrainIdleSpeed(){
+        double speed = 0;
+        currentSpeedLabel.setText(String.format("%.2f",speed));
     }
     double calculateDistanceToStop(double currentSpeed){
         double s_mph = currentSpeed;

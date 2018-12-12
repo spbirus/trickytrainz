@@ -129,7 +129,7 @@
             <Button layoutX="14.0" layoutY="148.0" mnemonicParsing="false" onAction="#setTemperature" prefHeight="27.0" prefWidth="125.0" text="Set " />
             <Label layoutX="29.0" layoutY="75.0" text="Temperature (F)" />
             <TextField fx:id="temperatureVal" layoutX="14.0" layoutY="110.0" prefHeight="27.0" prefWidth="125.0" />
-            <Label fx:id="temperatureLabel" layoutX="47.0" layoutY="35.0" text="45 ">
+            <Label fx:id="temperatureLabel" layoutX="47.0" layoutY="35.0" text="70">
                <font>
                   <Font size="30.0" />
                </font>

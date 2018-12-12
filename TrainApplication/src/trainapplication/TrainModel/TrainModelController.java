@@ -92,7 +92,7 @@ public class TrainModelController implements Initializable {
         accelId.setText(String.valueOf(Math.floor(t.getAccelLimit() * 100) / 100));
         decelId.setText(String.valueOf(Math.floor(t.getDeccelLimit() * 100) / 100));
         trainId.setText(String.valueOf(t.getNumber()));
-        tempId.setText(String.valueOf(t.getTemperature()));
+        tempId.setText(String.valueOf(70));
 
         //initialize some of the other data
         passengerNumber.setText(String.valueOf(t.getPassNum()));

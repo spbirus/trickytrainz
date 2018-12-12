@@ -98,7 +98,7 @@ public class TrackModelController implements Initializable {
         infrastructure.setCellValueFactory(new PropertyValueFactory<>("infrastructure"));
         elevation.setCellValueFactory(new PropertyValueFactory<>("elevation"));
         blockDirection.setCellValueFactory(new PropertyValueFactory<>("blockDirection"));
-        blockState.setCellValueFactory(new PropertyValueFactory<>("blockState"));
+        blockState.setCellValueFactory(new PropertyValueFactory<>("signal"));
         occupancy.setCellValueFactory(new PropertyValueFactory<>("occupancy"));
         blockHeat.setCellValueFactory(new PropertyValueFactory<>("blockHeat"));
         
@@ -254,7 +254,13 @@ public class TrackModelController implements Initializable {
     
     // Function that will return the next block to the Train Model 
     // Also called from getDistance 
-    public Block getNextBlock(String line, int number, int prevBlock) throws InterruptedException{
+    public Block getNextBlock(String line, int number, int prevBlock, int target) throws InterruptedException{
+        
+        boolean toYard = false;
+        if(target == 0){
+            toYard = true;
+        }
+        
         Block b = getBlockAt(line, number);
         Block prev = getBlockAt(line, prevBlock);
         Block next = null;
@@ -292,7 +298,7 @@ public class TrackModelController implements Initializable {
         if(!flag){
             for( int i = 0; i < keyBlocks.length; i++){
                 if(next.getBlockNumber() == keyBlocks[i] || b.getBlockNumber() == keyBlocks[i]){
-                    switchState = ta.trkCtr[i].calculateSwitch();
+                    switchState = ta.trkCtr[i].calculateSwitch(toYard);
                     System.out.print("\n\n\n\n" + switchState + "\n\n\n\n\n\n");
                     switchPresent = (i == 5);
                 }
@@ -304,20 +310,6 @@ public class TrackModelController implements Initializable {
                 }
             }  
         }
-//        if(switchPresent){
-//            if(switchState){
-//                next = getBlockAt("Green", 58);
-//                next.setOccupancy("Train");
-//                next.setBlockOccupancy(true);
-//                greenTrack.setOccupiedBlock(next);
-//                getBlockAt("Green",0).setOccupancy("");
-//                getBlockAt("Green",0).setBlockOccupancy(false);
-//                return next;
-//            }
-//        }
-        
-        // If entering a new section of the track, set that signal to red 
-        // to block off other trains 
              
         
         return next;
@@ -411,6 +403,10 @@ public class TrackModelController implements Initializable {
     
     public void MainteneceButtonClicked(){
         
+        Block b = trackTable.getSelectionModel().getSelectedItem();
+        b.setSignal(false);
+        trackTable.refresh();
+        
 //        int selectedBlock = (int)trackBlockComboBox.getValue();
 //        
 //        for(Block track : sortedTrackList){
@@ -436,7 +432,10 @@ public class TrackModelController implements Initializable {
     }
     
     public void TrackCircuitButtonClicked(){
-      
+        
+        Block b = trackTable.getSelectionModel().getSelectedItem();
+        b.setBlockOccupancy(false);
+        trackTable.refresh();
 //        int selectedBlock = (int)trackBlockComboBox.getValue();
 //         
 //        
@@ -455,7 +454,9 @@ public class TrackModelController implements Initializable {
     }
     
     public void PowerButtonClicked(){
-        
+        Block b = trackTable.getSelectionModel().getSelectedItem();
+        b.setBlockHeat("No Heat"); 
+        trackTable.refresh();
 //        int selectedBlock = (int)trackBlockComboBox.getValue();
 //         
 //        for(Block track : sortedTrackList){
@@ -484,6 +485,10 @@ public class TrackModelController implements Initializable {
     }
     
     public void FixPowerButtonClicked(){
+
+        Block b = trackTable.getSelectionModel().getSelectedItem();
+        b.setBlockHeat(""); 
+        trackTable.refresh();
 //        
 //        int selectedBlock = (int)trackBlockComboBox.getValue();
 //        
@@ -516,12 +521,7 @@ public class TrackModelController implements Initializable {
     
     public void ResetButtonClicked(){
         
-        for(Block track : sortedTrackList){
-            if(track.getBlockNumber() == 13)track.setOccupancy("Train");
-            else track.setOccupancy("Open");
-            track.setBlockHeat("ON");
-            track.setBlockState("Open");            
-        }
+
         
     }    
     

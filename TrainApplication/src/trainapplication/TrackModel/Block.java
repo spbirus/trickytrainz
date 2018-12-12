@@ -67,6 +67,7 @@ public class Block {
         for(int i = 0; i < 6; i++){
             if(blockNum == greenSignals[i]){
                 this.signalPresent = true;
+                break;
             } else {
                 this.signalPresent = false;
             }
@@ -281,9 +282,9 @@ public class Block {
         //String trimmedBeacon = beacon.substring(0, Math.min(beacon.length(), 8));
         //this.beacon = trimmedBeacon; 
         int[] greenStations = {65, 73, 77, 88, 96,105, 114, 123, 132, 141, 9, 2, 16, 22, 31, 39, 48, 57, 0};
-        for(int i = 0; i < 16; i++){
+        for(int i = 0; i < 19; i++){
             if(greenStations[i] == beacon){
-                this.beacon = greenStations[(i + 1)%16];
+                this.beacon = greenStations[(i + 1)%19];
             }
         }
     }

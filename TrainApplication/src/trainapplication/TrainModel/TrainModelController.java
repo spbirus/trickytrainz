@@ -97,13 +97,13 @@ public class TrainModelController implements Initializable {
         //initialize some of the other data
         passengerNumber.setText(String.valueOf(t.getPassNum()));
         currentSpeedNumber.setText(String.valueOf(t.getSpeed()));
-        
+
         setPointSpeed.setText(String.valueOf(t.getSpeed()));
 //        setpointSpeedBox.setText(String.valueOf(t.getSpeed()));
         //power requested will come from train controller
 
     }
-    
+
     @FXML
     private Label passLeaving;
 
@@ -271,7 +271,7 @@ public class TrainModelController implements Initializable {
 
     @FXML
     private MenuBar menuBar;
-    
+
     @FXML
     private Label setPointSpeed;
 
@@ -310,16 +310,18 @@ public class TrainModelController implements Initializable {
                     prev = curr.getBlockNumber();
 //                    t.setPreviousBlock(t.getBlock());
                     t.setBlock(curr.getBlockNumber());
-                    
+
                     //check if the current block has a signal
-                    if(curr.isSignalPresent()){
-                       if(!curr.getSignal()){
-                           onBrake(3);
-                           t.setBrakes(3);
-                       }else{
-                           onBrake(0);
-                           t.setBrakes(0);
-                       }
+                    if (curr.isSignalPresent()) {
+                        while (!curr.getSignal()) {
+//                            System.out.println("Signal is red");
+                            onBrake(3);
+                            t.setBrakes(3);
+                        }
+//                        System.out.println("Signal is now green");
+                        onBrake(0);
+                        t.setBrakes(0);
+
                     }
 
                     //update the track model info
@@ -438,7 +440,7 @@ public class TrainModelController implements Initializable {
         int leaving = rand.nextInt((passOnTrain - 0) + 1);
         passOnTrain -= leaving;
         passLeaving.setText(String.valueOf(leaving));
-        
+
         //passangers entering
         int wantToGetOn = block.getPassengersBoard();
         int spotsLeft = t.getSpotsLeft();
@@ -505,30 +507,29 @@ public class TrainModelController implements Initializable {
 
     public void onSignalFailure(boolean activated) {
         signalActivated.setVisible(activated);
-        if(activated){
+        if (activated) {
             setPointSpeed.setText("NaN");
-        }else{
+        } else {
             setPointSpeed.setText(String.valueOf(t.getSpeed()));
         }
-        
-        
+
     }
-    
+
     //set the temperature
-    public void setTemp(double temperature){
-        tempId.setText(String.format("%.0f",temperature));
+    public void setTemp(double temperature) {
+        tempId.setText(String.format("%.0f", temperature));
     }
-    
+
     //set the lights
-    public void setLights(boolean lights){
-        if(lights){
+    public void setLights(boolean lights) {
+        if (lights) {
             lightId.setText("On");
-        }else{
+        } else {
             lightId.setText("Off");
         }
-        
+
     }
-    
+
     //deal with the ads
     public void rotateThroughAds() {
         Random rand = new Random();

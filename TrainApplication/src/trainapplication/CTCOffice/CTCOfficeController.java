@@ -30,11 +30,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
-import trainapplication.TrackController.*;
 import trainapplication.TrainApplication;
-import trainapplication.TrainModel.*;
+import trainapplication.TrackController.*;
 import trainapplication.TrackModel.*;
-import trainapplication.TrainController.*;
+import trainapplication.TrainModel.*;
+import trainapplication.TrainControllerController;
 
 /**
  * FXML Controller class
@@ -276,13 +276,15 @@ public class CTCOfficeController implements Initializable {
         }
         
         //send current state of auto mode to train model/controller
-        ta.trainmodels.stream().forEach((tModel) -> {
-            tModel.setAutoMode(autoMode);
-        });
+        for (int i = 0; i < ta.trainmodels.size(); i++) {
+            TrainModelController tModelCont = (TrainModelController) ta.trainmodels.get(i);
+            tModelCont.setAutoMode(autoMode);
+        }
         
-        ta.trainctrs.stream().forEach((tModel) -> {
-            tModel.setAutoMode(autoMode);
-        });
+        for (int i = 0; i < ta.trainctrs.size(); i++) {
+            TrainControllerController tContCont = (TrainControllerController) ta.trainctrs.get(i);
+            tContCont.setAutoMode(autoMode);
+        }
         
     }
     

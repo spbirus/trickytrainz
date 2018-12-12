@@ -310,6 +310,17 @@ public class TrainModelController implements Initializable {
                     prev = curr.getBlockNumber();
 //                    t.setPreviousBlock(t.getBlock());
                     t.setBlock(curr.getBlockNumber());
+                    
+                    //check if the current block has a signal
+                    if(curr.isSignalPresent()){
+                       if(!curr.getSignal()){
+                           onBrake(3);
+                           t.setBrakes(3);
+                       }else{
+                           onBrake(0);
+                           t.setBrakes(0);
+                       }
+                    }
 
                     //update the track model info
                     Platform.runLater(new Runnable() {

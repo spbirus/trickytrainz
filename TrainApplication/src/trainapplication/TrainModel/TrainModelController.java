@@ -362,7 +362,7 @@ public class TrainModelController implements Initializable {
                         Thread.sleep(10);
                     }
                     //get the next block
-                    Block next = ta.trkMdl.getNextBlock(t.getLine(), t.getBlock(), t.getPreviousBlock());
+                    Block next = ta.trkMdl.getNextBlock(t.getLine(), t.getBlock(), t.getPreviousBlock(), t.getTarget());
                     System.out.println("Current block: " + t.getBlock() + " Previous Block: " + t.getPreviousBlock());
                     System.out.println("Next block: " + next.getBlockNumber());
                     t.setBlock(next.getBlockNumber());

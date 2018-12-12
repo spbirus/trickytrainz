@@ -149,6 +149,9 @@ public class TrainControllerController implements Initializable {
     @FXML
     private Label modeLabel;
     
+    @FXML
+    private Label announcementLabel;
+    
     public void setAutoMode(boolean ifAuto){
         if(ifAuto){
             modeLabel.setText("Auto");
@@ -401,12 +404,15 @@ public class TrainControllerController implements Initializable {
     }
     @FXML
     void turnLightsOff(ActionEvent event) {
-
+        TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
+        train.setLights(false);
         lightStatusCircle.setFill(javafx.scene.paint.Color.RED);
     }
 
     @FXML
     void turnLightsOn(ActionEvent event) {
+        TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
+        train.setLights(true);
         lightStatusCircle.setFill(javafx.scene.paint.Color.web("#2bff1f"));
     }
 
@@ -421,7 +427,9 @@ public class TrainControllerController implements Initializable {
     }
     @FXML
     void setTemperature(ActionEvent event) {
+        TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
         double temp = Double.parseDouble(temperatureVal.getText());
+        train.setTemp(temp);
         temperatureLabel.setText(String.format("%.0f",temp));
     }
     
@@ -687,6 +695,39 @@ public class TrainControllerController implements Initializable {
         }
         
         
+        
     }
+    //===============announcements===============
+    private int[] greenBlockIDs = {2,9,16,22,31,39,48,57,65,73,77,88,96,105,114,123,132,141};
+    private String[] greenBlockNames = {"Pioneer","Edgebrook","Sussex","Whited","South Bank","(U)Central","(U)Inglewood","(U)Overbrook","Glenbury","Dormont","Mt Lebanon","Poplar","Castle Shannon","Dormont","Glenbury","(U)Overbrook","(U)Inglewood","(U)Central"};
+    private int[] redBlockIDs = {7,16,21,25,35,45,48,60};
+    private String[] redBlockNames = {"Shadyside","Herron Ave","Swissville","(U)Penn Station","(U)Steel Plaza","(U)First Ave","Station Square","South Hills Jct"};
+
+    public void setAnnouncements(String line, int blockNum){
+        int index = -1;
+
+        if(line.equalsIgnoreCase("green")){
+            for(int i = 0; i < greenBlockIDs.length; i++){
+                if(greenBlockIDs[i] == blockNum){
+                    index = i;
+                    break;
+                }
+            }
+            if(index != -1){
+                announcementLabel.setText(greenBlockNames[index]);
+            }
+        }else if(line.equalsIgnoreCase("red")){
+            for(int i = 0; i < redBlockIDs.length; i++){
+               if(redBlockIDs[i] == blockNum){
+                   index = i;
+                   break;
+               }
+            }
+            if(index != -1){
+                announcementLabel.setText(redBlockNames[index]);
+            }
+        }
+    }
+    
     
 }

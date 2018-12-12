@@ -13,6 +13,10 @@ import java.util.ArrayList;
  */
 public class Track {
     
+    public ArrayList<Block> blockList = new ArrayList<Block>();
+    public ArrayList<Block> switchList = new ArrayList<Block>();
+    public ArrayList<Block> stationList = new ArrayList<Block>();
+    
     private String line;
     private int[] switches;
     private int[] stations;
@@ -62,7 +66,7 @@ public class Track {
     public void setPreviousBlock(Block previousBlock) {
         this.previousBlock = previousBlock;
     }
-    public ArrayList<Block> blockList = new ArrayList<Block>();
+    
     
     
     public Track(String line){

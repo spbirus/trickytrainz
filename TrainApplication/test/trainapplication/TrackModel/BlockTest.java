@@ -52,6 +52,15 @@ public class BlockTest {
         boolean result = (num < 100 && num > 0);
         assertEquals(expResult, result);
     }
+    
+    @Test 
+    public void testBeacon(){
+        Block instance = new Block("Green","L",73,328.1,3.281,180.455,"STATION; PIONEER",1,1,3.281,4.9215);
+        int expResult = 77;
+        int result = instance.getBeacon();
+        assertEquals(result, expResult);
+    }
+        
 
    
 }

@@ -242,7 +242,7 @@ public class TrainModelController implements Initializable {
 
     @FXML
     private Label waitingpassengersId;
-    
+
     @FXML
     private Button changeAd;
 
@@ -272,6 +272,7 @@ public class TrainModelController implements Initializable {
 
     private double storedVelocity = 0;
     private double storedPower = 0;
+    private int[] allDoors = {0, 1, 2, 3, 4, 5, 6, 7};
 
     // method calls
     public void setTrackInfo() {
@@ -280,12 +281,20 @@ public class TrainModelController implements Initializable {
 
     public void runTrain() {
         tc = (TrainControllerController) ta.trainctrs.get(t.getNumber());
+
         Task<Void> task = new Task<Void>() {
             @Override
             public Void call() throws InterruptedException {
                 Thread.sleep(2000); // needed to load the first block
                 int prev = 0;
                 boolean atAuthority = false;
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        //close the doors
+                        tc.operateDoors(allDoors, 0);
+                    }
+                });
                 while (!atAuthority) {
                     //set the block of the train
 
@@ -307,7 +316,6 @@ public class TrainModelController implements Initializable {
                     //run until there is no distance left
                     tc.isDistanceLeft = true;
                     while (tc.isDistanceLeft) {
-//                    for(int i = 0; i < 100; i++){
                         Platform.runLater(new Runnable() {
                             @Override
                             public void run() {
@@ -345,17 +353,27 @@ public class TrainModelController implements Initializable {
                     ta.ctc.updateTrainTable(t);
                     if (t.getBlock() == t.getTarget()) {
                         atAuthority = true;
-                        //at a station so deal with the passengers
+
+//                        Platform.runLater(new Runnable() {
+//                            @Override
+//                            public void run() {
+//                                //show the speed as 0
+//                                currentSpeedNumber.setText("0");
+//                                tc.showTrainIdleSpeed();
+//                            }
+//                        });
+                        //at a station so deal with the passengers and doors
                         if (next.isStation()) {
                             System.out.println("At a station");
                             Platform.runLater(new Runnable() {
                                 @Override
                                 public void run() {
                                     dealWithPassengers();
-                                    //open the doors here too
-                                    leftdoorId.setText("Open");
-//                            Thread.sleep(2000);
-                                    leftdoorId.setText("Closed");
+                                    //open the doors 
+                                    tc.operateDoors(allDoors, 1);
+
+                                    //close the doors
+//                                    tc.operateDoors(allDoors, 0);
                                 }
 
                             });
@@ -363,9 +381,10 @@ public class TrainModelController implements Initializable {
                         tc.onTargetArrival(); //done to reset the distance values in train controller to move again
                     }
                 }
-                
+
+                //continue running train if on a schedule or auto mode
                 ta.ctc.continueTrain(t);
-                
+
                 return null;
             }
 
@@ -421,11 +440,12 @@ public class TrainModelController implements Initializable {
             emergencyBrakeId.setText("engaged");
         }
     }
-    public void operateDoors(String side, int open){
+
+    public void operateDoors(String side, int open) {
         String text = "Open";
-        if(open == 1){
+        if (open == 1) {
             text = "Open";
-        }else if(open == 0){
+        } else if (open == 0) {
             text = "Closed";
         }
         if (side.toLowerCase().equals("left")) {
@@ -434,6 +454,7 @@ public class TrainModelController implements Initializable {
             rightdoorId.setText(text);
         }
     }
+
     public void onDoors(String side) {
         if (side.toLowerCase().equals("left")) {
             leftdoorId.setText("Open");
@@ -457,20 +478,26 @@ public class TrainModelController implements Initializable {
         signalActivated.setVisible(activated);
     }
 
-    public void rotateThroughAds(){
+    public void rotateThroughAds() {
         Random rand = new Random();
         int r = rand.nextInt((2 - 0) + 1);
         advertisement.setText(ads[r]);
     }
-    
+
+    public void setAutoMode(boolean auto) {
+        if (auto) {
+            mode.setText("Auto");
+        } else {
+            mode.setText("Manual");
+        }
+    }
+
     // Button trigger events
-    
     @FXML
     void changeAdAction(ActionEvent event) {
         rotateThroughAds();
     }
-    
-    
+
     @FXML
     void onRefreshSpeed(ActionEvent event) {
         tc = (TrainControllerController) ta.trainctrs.get(t.getNumber());

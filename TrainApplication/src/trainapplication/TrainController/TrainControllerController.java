@@ -272,57 +272,6 @@ public class TrainControllerController implements Initializable {
         
     }
    
-//     @FXML 
-//    void runSim(ActionEvent event) {
-//        runSimulationButton.setDisable(true);
-//        test_setpointSpeedVal.setDisable(true);
-//        setSetpointButton.setDisable(true);
-//        initPower();
-//        System.out.println("Current Speed(mph): "+currSpeedVal);
-//        System.out.println("Setpoint speed(mph): "+setpointSpeedVal);
-//        
-//        //======================MULTI THREAD CALL===============================
-//        Task <Void> task = new Task<Void>() {
-//            @Override public Void call() throws InterruptedException {
-//                while(currSpeedVal < setpointSpeedVal){
-//                    Platform.runLater(new Runnable() {
-//                      @Override public void run() {
-//                          //=================function call======================
-//                           
-//                          //calculatePower();
-//                          
-//                          
-//                          //====================================================
-//                      }
-//                        
-//                    }); 
-//                    Thread.sleep(10);
-//                }
-//                return null;
-//            }
-//        };
-//        
-//         task.setOnSucceeded(e -> {
-//
-//            // this message will be seen.
-//            powerLabel.setText(String.format("%.3f",powerVal));
-//        
-//            currentSpeedLabel.setText(String.format("%.2f",currSpeedVal));
-//            
-//         });
-//        
-//        Thread thread = new Thread(task);
-//        thread.setDaemon(true);
-//        thread.start();
-//        
-//        //======================================================================
-////        for(int i = 0; i < TIME_MULTIPLIER; i++)   {
-////            calculatePower();
-////        }
-//    }
-    
-    
-
     public void setBlockDistance(double blockDistance) {
         this.blockDistance = blockDistance;
     }

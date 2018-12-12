@@ -378,7 +378,39 @@ public class TrackControllerController implements Initializable {
         signalBool = false;
         changeColor();
     }
-//    public void setSwitch(boolean )
+    public void setSwitch(){
+        switchState = !switchState;
+        Task<Void> task = new Task<Void>() {
+
+            @Override
+            protected Void call() throws Exception {
+
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (switchState) {
+                            outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #" + defaultBlock.getText());
+                        } else {
+                            outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #" + mergeBlock.getText());
+                        }
+    
+                    }
+                });
+
+                return null;
+            }
+        };
+        task.setOnSucceeded(e -> {
+            if (switchState) {
+                outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #" + defaultBlock.getText());
+            } else {
+                outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #" + mergeBlock.getText());
+            }
+        });
+        Thread thread = new Thread(task);
+        thread.setDaemon(true);
+        thread.start();
+    }
     public boolean calculateSwitch() throws InterruptedException {
         String line = "Green";
         if (mergePresent && splitPresent) {

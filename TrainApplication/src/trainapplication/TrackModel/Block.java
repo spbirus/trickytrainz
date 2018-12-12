@@ -67,6 +67,7 @@ public class Block {
         for(int i = 0; i < 6; i++){
             if(blockNum == greenSignals[i]){
                 this.signalPresent = true;
+                break;
             } else {
                 this.signalPresent = false;
             }

@@ -864,26 +864,39 @@ public class CTCOfficeController implements Initializable {
         System.out.println("Called continue train");
         
         Schedule currentSchedule = scheduleArray[t.getNumber()];
-        currentSchedule.scheduleIndex++;
-        currentSchedule.dwellTime[currentSchedule.scheduleIndex] *= 60000; //convert dwell time to milliseconds
-        long dispatchTime = currentTime + (long) currentSchedule.dwellTime[currentSchedule.scheduleIndex]; //continue at this time
+        
         
         try {
             int target;
             //System.out.println("asfoiasgfoiashfoash" + currentSchedule.targetBlock.length);
             if (currentSchedule.targetBlock.length < 5) {
-                target = 0; //to be determined by beacon
+//                target = 0; //to be determined by beacon
+                Block b = ta.trkMdl.getBlockAt(t.getLine(), t.getBlock());
+                target = b.getBeacon();
+                System.out.println("Beacon Target: " + target);
+                double distance = ta.trkMdl.getDistance(t.getBlock(), target);
+                System.out.println("Distance to new target: " + distance);
+                t.setTarget(target);
+                t.setAuthority(distance);
+                TrainModelController tModelCont = (TrainModelController) ta.trainmodels.get(t.getNumber());
+                tModelCont.runTrain();
             }
             else {
+                currentSchedule.scheduleIndex++;
+                currentSchedule.dwellTime[currentSchedule.scheduleIndex] *= 60000; //convert dwell time to milliseconds
+                long dispatchTime = currentTime + (long) currentSchedule.dwellTime[currentSchedule.scheduleIndex]; //continue at this time
                 target = currentSchedule.targetBlock[currentSchedule.scheduleIndex];
                 System.out.println("This is the schedule target... " + target);
+                double distance = ta.trkMdl.getDistance(t.getBlock(), target);
+                System.out.println("Distance to new target: " + distance);
+                t.setTarget(target);
+                t.setAuthority(distance);
+                TrainModelController tModelCont = (TrainModelController) ta.trainmodels.get(t.getNumber());
+                tModelCont.runTrain();
             }
 
 
-            double distance = ta.trkMdl.getDistance(t.getBlock(), target);
-            System.out.println("Distance to new target: " + distance);
-            t.setTarget(target);
-            t.setAuthority(distance);
+            
 //            Timeline trainTimeline = new Timeline(
 //                new KeyFrame(
 //                        Duration.millis(1000), event -> {
@@ -901,8 +914,7 @@ public class CTCOfficeController implements Initializable {
 //                trainTimeline.stop();
 //            }
             
-            TrainModelController tModelCont = (TrainModelController) ta.trainmodels.get(t.getNumber());
-            tModelCont.runTrain();
+            
         }
         catch (Exception ex) {
             System.out.println(ex.getMessage());

@@ -107,9 +107,6 @@ public class TrainControllerController implements Initializable {
     @FXML
     private Button setKValsButton;
     
-    @FXML
-    private Button runSimulationButton;
-    
      @FXML
     private TextField temperatureVal;
 
@@ -246,7 +243,7 @@ public class TrainControllerController implements Initializable {
         setKValsButton.setDisable(true);
         kpVal.setEditable(false);
         kiVal.setEditable(false);
-        runSimulationButton.setDisable(true);
+        
         
     }
     @FXML
@@ -272,12 +269,10 @@ public class TrainControllerController implements Initializable {
         setDefaultKValsButton.setDisable(true);
         kpVal.setEditable(false);
         kiVal.setEditable(false);
-        runSimulationButton.setDisable(true);
-       
-            
+        
     }
-    // DELETE WHEN DONE
-//     @FXML DELETE 
+   
+//     @FXML 
 //    void runSim(ActionEvent event) {
 //        runSimulationButton.setDisable(true);
 //        test_setpointSpeedVal.setDisable(true);

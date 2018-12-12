@@ -124,7 +124,7 @@ public class CTCOfficeController implements Initializable {
         stationChoiceBox.getSelectionModel().select("Select...");
         
         //init switch choice box for CTC functionality to change switch states
-        switchChoiceBox.getItems().addAll("Green12", "Green16", "Green29", "Green58(ToYard)", "Green62(FromYard)", "Green76", "Green86",
+        switchChoiceBox.getItems().addAll("Green12", "Green29", "Green58(ToYard)", "Green62(FromYard)", "Green76", "Green86",
                 "Red09(Yard)", "Red15", "Red27(U)", "Red32(U)", "Red38(U)", "Red52");
         
         //hide newTrainPane. will appear on add train button press
@@ -315,28 +315,38 @@ public class CTCOfficeController implements Initializable {
     void clickSwitchButton(ActionEvent event) {
         String selectedSwitch = switchChoiceBox.getSelectionModel().getSelectedItem();
         //System.out.println(selectedSwitch);
+        TrackControllerController t1 = (TrackControllerController) ta.trkCtr1;
+        TrackControllerController t2 = (TrackControllerController) ta.trkCtr2;
+        TrackControllerController t3 = (TrackControllerController) ta.trkCtr3;
+        TrackControllerController t4 = (TrackControllerController) ta.trkCtr4;
+        TrackControllerController t5 = (TrackControllerController) ta.trkCtr5;
+        TrackControllerController t6 = (TrackControllerController) ta.trkCtr6;
+        
         switch(selectedSwitch) 
         { 
             case "Green12": 
-                System.out.println("Green12"); 
-                break; 
-            case "Green16": 
-                System.out.println("Green16"); 
-                break; 
+                System.out.println("Green12");
+                t5.setSwitch();
+                break;
             case "Green29": 
-                System.out.println("Green29"); 
+                System.out.println("Green29");
+                t4.setSwitch();
                 break;
             case "Green58(ToYard)": 
-                System.out.println("Green58"); 
+                System.out.println("Green58");
+                t6.setSwitch();
                 break; 
             case "Green62(FromYard)": 
                 System.out.println("Green62"); 
+                t1.setSwitch();
                 break; 
             case "Green76": 
-                System.out.println("Green76"); 
+                System.out.println("Green76");
+                t2.setSwitch();
                 break; 
             case "Green86": 
-                System.out.println("Green86"); 
+                System.out.println("Green86");
+                t3.setSwitch();
                 break; 
             case "Red09(Yard)": 
                 System.out.println("Red09"); 
@@ -847,19 +857,24 @@ public class CTCOfficeController implements Initializable {
 
     //send speed and authority of the train to the track controller
     private void sendToTrackControllers(int dispatchNumber, double dispatchSpeed, int dispatchTargetBlock) {
+//        
+//        TrackControllerController t1 = (TrackControllerController) ta.trkCtr1;
+//        t1.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
+//        TrackControllerController t2 = (TrackControllerController) ta.trkCtr2;
+//        t2.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
+//        TrackControllerController t3 = (TrackControllerController) ta.trkCtr3;
+//        t3.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
+//        TrackControllerController t4 = (TrackControllerController) ta.trkCtr4;
+//        t4.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
+//        TrackControllerController t5 = (TrackControllerController) ta.trkCtr5;
+//        t5.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
+//        TrackControllerController t6 = (TrackControllerController) ta.trkCtr6;
+//        t6.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
         
-        TrackControllerController t1 = (TrackControllerController) ta.trkCtr1;
-        t1.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
-        TrackControllerController t2 = (TrackControllerController) ta.trkCtr2;
-        t2.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
-        TrackControllerController t3 = (TrackControllerController) ta.trkCtr3;
-        t3.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
-        TrackControllerController t4 = (TrackControllerController) ta.trkCtr4;
-        t4.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
-        TrackControllerController t5 = (TrackControllerController) ta.trkCtr5;
-        t5.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
-        TrackControllerController t6 = (TrackControllerController) ta.trkCtr6;
-        t6.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
+        for (int i = 0; i < ta.trkCtr.length; i++) {
+            TrackControllerController t = (TrackControllerController) ta.trkCtr[i];
+            t.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
+        }
         
     }
 }

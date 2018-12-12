@@ -538,16 +538,25 @@ public class TrainControllerController implements Initializable {
     
     @FXML
     void onSignalFailActivate(ActionEvent event) {
-
+        if(emergBrakeLabel.getText().equalsIgnoreCase("Disengaged")){
+            toggleEmergBrake();
+        }
         TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
         train.onSignalFailure(true);
+        train.onBrake(3);
+        setpointSpeedLabel.setText("NaN");
+        
     }
 
     @FXML
     void onSignalFailDeactivate(ActionEvent event) {
-
+        if(emergBrakeLabel.getText().equalsIgnoreCase("Engaged")){
+            toggleEmergBrake();
+        }
         TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
         train.onSignalFailure(false);
+        train.onBrake(0);
+        setpointSpeedLabel.setText(String.format("%.2f",setpointSpeedVal));
     }
     
     //============LEFT DOORS=============

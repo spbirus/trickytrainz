@@ -47,6 +47,7 @@ public class Block {
     private boolean railState = true;
 
     private boolean signal;
+    private boolean signalPresent;
     private int beacon;
     
     private boolean stationPresent;
@@ -60,8 +61,21 @@ public class Block {
     private String blockHeat;
     private String occupancy;
     private int blockDirection;
+
+    public void setSignalPresent(int blockNum) {
+        int[] greenSignals = {36, 59, 74, 99, 143, 3};
+        for(int i = 0; i < 6; i++){
+            if(blockNum == greenSignals[i]){
+                this.signalPresent = true;
+            } else {
+                this.signalPresent = false;
+            }
+        }
+    }
     
-    
+    public boolean isSignalPresent(){
+        return signalPresent;
+    }
     public boolean isRailState() {
         return railState;
     }
@@ -125,6 +139,7 @@ public class Block {
             this.stBlockNumber = blockNumber;
             this.stSection = section;
         }
+        setSignalPresent(this.blockNumber);
         this.signal = true;
     }
     //Jon Gramley - Block Controller

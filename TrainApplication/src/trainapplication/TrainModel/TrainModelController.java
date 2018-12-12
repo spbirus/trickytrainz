@@ -97,6 +97,8 @@ public class TrainModelController implements Initializable {
         //initialize some of the other data
         passengerNumber.setText(String.valueOf(t.getPassNum()));
         currentSpeedNumber.setText(String.valueOf(t.getSpeed()));
+        
+        setPointSpeed.setText(String.valueOf(t.getSpeed()));
 //        setpointSpeedBox.setText(String.valueOf(t.getSpeed()));
         //power requested will come from train controller
 
@@ -266,6 +268,9 @@ public class TrainModelController implements Initializable {
 
     @FXML
     private MenuBar menuBar;
+    
+    @FXML
+    private Label setPointSpeed;
 
     @FXML
     private CheckBox testPanelCheck;
@@ -476,6 +481,13 @@ public class TrainModelController implements Initializable {
 
     public void onSignalFailure(boolean activated) {
         signalActivated.setVisible(activated);
+        if(activated){
+            setPointSpeed.setText("NaN");
+        }else{
+            setPointSpeed.setText(String.valueOf(t.getSpeed()));
+        }
+        
+        
     }
 
     public void rotateThroughAds() {

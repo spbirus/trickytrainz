@@ -307,7 +307,25 @@ public class TrainControllerController implements Initializable {
        //================power calc===============
        
         
-        double testPower = (kp*speedErr*MPH_MS)+(ki*uVal);
+//========SAFETY CRITICAL SECTION=========
+        double testPower;
+        double testPower1 = (kp*speedErr*MPH_MS)+(ki*uVal);
+        double testPower2 = (kp*speedErr*MPH_MS)+(ki*uVal);
+        double testPower3 = (kp*speedErr*MPH_MS)+(ki*uVal);
+        
+        
+        if(testPower1 == testPower2)
+            testPower = testPower1;
+        else if(testPower2==testPower3)
+            testPower = testPower2;
+        else if(testPower1==testPower3)
+            testPower = testPower3;
+        else{
+            testPower = 0; //safety critical section failed
+            System.out.println("SAFETY CRITICAL FAILURE!!!!!!!!");
+        }
+        
+        //========SAFETY CRITICAL SECTION END=========
         //powerVal = (kp*speedErr)+(ki*uVal);
         if(testPower < MAX_POWER){
             powerVal = testPower;

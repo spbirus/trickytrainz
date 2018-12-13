@@ -11,6 +11,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
@@ -67,23 +68,20 @@
                         <Label layoutX="14.0" layoutY="58.0" text="Select Track:" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="309.0" layoutY="14.0" prefHeight="106.0" prefWidth="618.0" style="-fx-background-color: #bdc3c7;">
+                  <AnchorPane layoutX="316.0" layoutY="14.0" prefHeight="106.0" prefWidth="572.0" style="-fx-background-color: #bdc3c7;">
                      <children>
-                        <Button id="powerButton" fx:id="powerButton" layoutX="495.0" layoutY="17.0" mnemonicParsing="false" onAction="#PowerButtonClicked" prefHeight="30.0" prefWidth="102.0" text="Power" />
-                        <Button id="trackCircuitButton" fx:id="trackCircuitButton" layoutX="379.0" layoutY="17.0" mnemonicParsing="false" onAction="#TrackCircuitButtonClicked" prefHeight="30.0" prefWidth="102.0" text="Track Circuit" />
+                        <Button id="powerButton" fx:id="powerButton" layoutX="433.0" layoutY="20.0" mnemonicParsing="false" onAction="#PowerButtonClicked" prefHeight="30.0" prefWidth="102.0" text="Power" />
+                        <Button id="trackCircuitButton" fx:id="trackCircuitButton" layoutX="293.0" layoutY="20.0" mnemonicParsing="false" onAction="#TrackCircuitButtonClicked" prefHeight="30.0" prefWidth="102.0" text="Track Circuit" />
                         <Label layoutX="14.0" layoutY="18.0" text="Failure Testing:" />
-                        <Button id="fixButton" fx:id="fixButton" layoutX="262.0" layoutY="61.0" mnemonicParsing="false" onAction="#FixButtonClicked" prefHeight="30.0" prefWidth="102.0" text="Fix Rail" />
-                        <Button id="mainteneceButton" fx:id="maitenenceButton" layoutX="262.0" layoutY="17.0" mnemonicParsing="false" onAction="#MainteneceButtonClicked" prefHeight="30.0" prefWidth="102.0" text="Broken Rail" />
-                        <ComboBox id="trackBlockComboBox" fx:id="trackBlockComboBox" accessibleText="Block" layoutX="136.0" layoutY="17.0" onAction="#BlockSelected" prefHeight="30.0" prefWidth="102.0" promptText="Block" />
-                        <Button fx:id="fixCircuitButton" layoutX="379.0" layoutY="61.0" mnemonicParsing="false" onAction="#FixCircuitButtonClicked" prefHeight="30.0" prefWidth="102.0" text="Fix Circuit" />
-                        <Button fx:id="fixPowerButton" layoutX="495.0" layoutY="62.0" mnemonicParsing="false" onAction="#FixPowerButtonClicked" prefHeight="30.0" prefWidth="102.0" text="Fix Power" />
+                        <Button id="fixButton" fx:id="fixButton" layoutX="151.0" layoutY="62.0" mnemonicParsing="false" onAction="#FixButtonClicked" prefHeight="30.0" prefWidth="102.0" text="Fix Rail" />
+                        <Button id="mainteneceButton" fx:id="maitenenceButton" layoutX="151.0" layoutY="17.0" mnemonicParsing="false" onAction="#MainteneceButtonClicked" prefHeight="30.0" prefWidth="102.0" text="Broken Rail" />
+                        <Button fx:id="fixCircuitButton" layoutX="293.0" layoutY="62.0" mnemonicParsing="false" onAction="#FixCircuitButtonClicked" prefHeight="30.0" prefWidth="102.0" text="Fix Circuit" />
+                        <Button fx:id="fixPowerButton" layoutX="433.0" layoutY="62.0" mnemonicParsing="false" onAction="#FixPowerButtonClicked" prefHeight="30.0" prefWidth="102.0" text="Fix Power" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="11.0" layoutY="133.0" prefHeight="454.0" prefWidth="852.0" style="-fx-background-color: #bdc3c7;">
+                  <AnchorPane layoutY="219.0" prefHeight="447.0" prefWidth="906.0" style="-fx-background-color: #bdc3c7;">
                      <children>
-                        <Button id="FilterButton" layoutX="781.0" layoutY="15.0" mnemonicParsing="false" onAction="#FiltersButtonClicked" prefHeight="30.0" prefWidth="124.0" text="Show" />
-                        <ComboBox id="tcSelect" fx:id="tcSelect" layoutX="610.0" layoutY="16.0" prefHeight="30.0" prefWidth="150.0" promptText="Track Controller " />
-                        <TabPane id="tabsTable" fx:id="tabsTable" layoutY="51.0" prefHeight="376.0" prefWidth="898.0" tabClosingPolicy="UNAVAILABLE">
+                        <TabPane id="tabsTable" fx:id="tabsTable" layoutX="4.0" layoutY="-7.0" prefHeight="442.0" prefWidth="898.0" tabClosingPolicy="UNAVAILABLE">
                           <tabs>
                             <Tab text="Blocks">
                                  <content>
@@ -97,7 +95,7 @@
                                         <TableColumn id="infrastructure" fx:id="infrastructure" prefWidth="108.0" text="Infrastructure" />
                                         <TableColumn id="elevation" fx:id="elevation" prefWidth="100.00009155273438" text="Elevation" />
                                         <TableColumn id="blockDirection" fx:id="blockDirection" prefWidth="87.9998779296875" text="Direction" />
-                                        <TableColumn id="blockState" fx:id="blockState" prefWidth="88.0" text="Signal" />
+                                        <TableColumn id="blockState" fx:id="displaySignal" prefWidth="88.0" text="Signal" />
                                         <TableColumn id="occupancy" fx:id="occupancy" prefWidth="90.5999755859375" text="Occupancy" />
                                         <TableColumn id="blockHeat" fx:id="blockHeat" minWidth="75.0" prefWidth="79.2000732421875" text="Heat" />
                                       </columns>
@@ -136,8 +134,25 @@
                     <AnchorPane layoutX="186.0" layoutY="225.0" minHeight="0.0" minWidth="0.0" prefHeight="202.0" prefWidth="578.0" />
                      </children>
                   </AnchorPane>
+                  <AnchorPane layoutX="13.0" layoutY="132.0" prefHeight="70.0" prefWidth="290.0" style="-fx-background-color: #bdc3c7;">
+                     <children>
+                        <ComboBox id="tcSelect" fx:id="tcSelect" layoutX="14.0" layoutY="22.0" prefHeight="30.0" prefWidth="150.0" promptText="Track Controller " />
+                        <Button id="FilterButton" layoutX="173.0" layoutY="22.0" mnemonicParsing="false" onAction="#FiltersButtonClicked" prefHeight="30.0" prefWidth="102.0" text="Show" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane layoutX="316.0" layoutY="132.0" prefHeight="70.0" prefWidth="572.0" style="-fx-background-color: #bdc3c7;">
+                     <children>
+                        <Button fx:id="heatSetButton" layoutX="276.0" layoutY="20.0" mnemonicParsing="false" onAction="#heatSetButtonPressed" prefHeight="30.0" prefWidth="46.0" text="Set" />
+                        <Button fx:id="heatOnButton" layoutX="449.0" layoutY="23.0" mnemonicParsing="false" onAction="#heatOnButtonPressed" text="ON" />
+                        <Button fx:id="heatOffButton" layoutX="498.0" layoutY="23.0" mnemonicParsing="false" onAction="#heatOffButtonPressed" text="OFF" />
+                        <TextField fx:id="heatField" layoutX="210.0" layoutY="20.0" prefHeight="30.0" prefWidth="54.0" />
+                        <Label layoutX="25.0" layoutY="27.0" text="Environmental Temperature:" />
+                        <Label layoutX="345.0" layoutY="26.0" prefHeight="18.0" prefWidth="73.0" text="Heat: " />
+                     </children>
+                  </AnchorPane>
             </children>
           </AnchorPane>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #bdc3c7;" />
         </children>
       </VBox>
    </children>

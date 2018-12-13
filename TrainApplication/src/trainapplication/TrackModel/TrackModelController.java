@@ -98,7 +98,7 @@ public class TrackModelController implements Initializable {
         infrastructure.setCellValueFactory(new PropertyValueFactory<>("infrastructure"));
         elevation.setCellValueFactory(new PropertyValueFactory<>("elevation"));
         blockDirection.setCellValueFactory(new PropertyValueFactory<>("blockDirection"));
-        blockState.setCellValueFactory(new PropertyValueFactory<>("signal"));
+        displaySignal.setCellValueFactory(new PropertyValueFactory<>("displaySignal"));
         occupancy.setCellValueFactory(new PropertyValueFactory<>("occupancy"));
         blockHeat.setCellValueFactory(new PropertyValueFactory<>("blockHeat"));
         
@@ -115,7 +115,7 @@ public class TrackModelController implements Initializable {
         fromBlock.setCellValueFactory(new PropertyValueFactory<>("fromBlock"));
         toBlock.setCellValueFactory(new PropertyValueFactory<>("toBlock"));
         switchState.setCellValueFactory(new PropertyValueFactory<>("switchState"));
-        signal.setCellValueFactory(new PropertyValueFactory<>("signal"));
+        //signal.setCellValueFactory(new PropertyValueFactory<>("signal"));
        
     } 
     
@@ -173,6 +173,7 @@ public class TrackModelController implements Initializable {
                 if(newBlock.isStation()){
                     greenTrack.stationList.add(newBlock);
                     stationTable.getItems().add(newBlock);
+                    ta.ctc.incrementTicketSales(newBlock.getPassengersStation());
                 }
                 if(newBlock.isSwitchPresent()){
                     greenTrack.switchList.add(newBlock);
@@ -249,6 +250,11 @@ public class TrackModelController implements Initializable {
                   }
               }
           }
+          if(block.getBlockNumber() == 0){
+            boolean temp = ta.trkCtr[5].calculateSignal(false);
+            getBlockAt("Green", greenSignals[5]).setSignal(temp);
+            greenSectionOccupancy[5] = false;
+          }
       } 
     }
     
@@ -310,8 +316,9 @@ public class TrackModelController implements Initializable {
                 }
             }  
         }
-             
-        
+        if(next.getInfrastructure().split(";", 2)[0].equals("STATION")){
+            ta.ctc.incrementTicketSales(next.getBlockNumber());
+        } 
         return next;
     }
     
@@ -401,34 +408,39 @@ public class TrackModelController implements Initializable {
         //CSV Tracks/GreenTestData.csv
     }
     
-    public void MainteneceButtonClicked(){
+    public void MainteneceButtonClicked() throws InterruptedException{
+        
+        
         
         Block b = trackTable.getSelectionModel().getSelectedItem();
-        b.setSignal(false);
-        trackTable.refresh();
+        int num = b.getBlockNumber();
         
-//        int selectedBlock = (int)trackBlockComboBox.getValue();
-//        
-//        for(Block track : sortedTrackList){
-//            System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
-//            
-//            if(selectedBlock == track.getBlockNumber()){
-//                track.setBlockState("Red");
-//                trackTable.refresh();
-//            }
-//        }
-
-//
-//    int selectedBlock = (int)trackBlockComboBox.getValue();
-//    
-//    for(Block blk : greenTrack.blockList){
-//        trackTable.getItems().remove(blk);
-//        if(blk.getBlockNumber() == selectedBlock){
-//            sortedTrackList = greenTrack.getBlockNeighbors(blk);
-//            for(Block neighbor : sortedTrackList) trackTable.getItems().add(neighbor);
-//        }
-//    }
-
+        if(num >= 58 && num <= 62){
+            boolean temp = ta.trkCtr[0].calculateSignal(true);
+            getBlockAt("Green", greenSignals[0]).setSignal(temp);
+            greenSectionOccupancy[0] = true;
+        }else if(num >= 63 && num <= 76){
+            boolean temp = ta.trkCtr[1].calculateSignal(true);
+            getBlockAt("Green", greenSignals[1]).setSignal(temp);
+            greenSectionOccupancy[1] = true;
+        }else if(num >= 77 && num <= 100){
+            boolean temp = ta.trkCtr[2].calculateSignal(true);
+            getBlockAt("Green", greenSignals[2]).setSignal(temp);
+            greenSectionOccupancy[2] = true;
+        }else if(num >= 101 && num <= 150){
+            boolean temp = ta.trkCtr[3].calculateSignal(true);
+            getBlockAt("Green", greenSignals[3]).setSignal(temp);
+            greenSectionOccupancy[3]= true;
+        }else if(num >= 1 && num <= 28){
+            boolean temp = ta.trkCtr[4].calculateSignal(true);
+            getBlockAt("Green", greenSignals[4]).setSignal(temp);
+            greenSectionOccupancy[4] = true;
+        }else if(num >= 29 && num <= 57){
+             boolean temp = ta.trkCtr[5].calculateSignal(true);
+            getBlockAt("Green", greenSignals[5]).setSignal(temp);
+            greenSectionOccupancy[5] = true;
+        }
+        trackTable.refresh();           
     }
     
     public void TrackCircuitButtonClicked(){
@@ -469,19 +481,37 @@ public class TrackModelController implements Initializable {
 //        }    
     }
     
-    public void FixButtonClicked(){
-//       
-//        int selectedBlock = (int)trackBlockComboBox.getValue();
-//        
-//        for(Block track : sortedTrackList){
-//            System.out.println("Selected: " + selectedBlock + "\nCurrent: " + track.getBlockNumber());
-//            
-//            if(selectedBlock == track.getBlockNumber()){
-//                track.setBlockState("Green");
-//                trackTable.refresh();
-//            }
-//        }
-            
+    public void FixButtonClicked() throws InterruptedException{
+        Block b = trackTable.getSelectionModel().getSelectedItem();
+        int num = b.getBlockNumber();
+        
+        if(num >= 58 && num <= 62){
+            boolean temp = ta.trkCtr[0].calculateSignal(false);
+            getBlockAt("Green", greenSignals[0]).setSignal(temp);
+            greenSectionOccupancy[0] = false;
+        }else if(num >= 63 && num <= 76){
+            boolean temp = ta.trkCtr[1].calculateSignal(false);
+            getBlockAt("Green", greenSignals[1]).setSignal(temp);
+            greenSectionOccupancy[1] = false;
+        }else if(num >= 77 && num <= 100){
+            boolean temp = ta.trkCtr[2].calculateSignal(false);
+            getBlockAt("Green", greenSignals[2]).setSignal(temp);
+            greenSectionOccupancy[2] = false;
+        }else if(num >= 101 && num <= 150){
+            boolean temp = ta.trkCtr[3].calculateSignal(false);
+            getBlockAt("Green", greenSignals[3]).setSignal(temp);
+            greenSectionOccupancy[3]= false;
+        }else if(num >= 1 && num <= 28){
+            boolean temp = ta.trkCtr[4].calculateSignal(false);
+            getBlockAt("Green", greenSignals[4]).setSignal(temp);
+            greenSectionOccupancy[4] = false;
+        }else if(num >= 29 && num <= 57){
+             boolean temp = ta.trkCtr[5].calculateSignal(false);
+            getBlockAt("Green", greenSignals[5]).setSignal(temp);
+            greenSectionOccupancy[5] = false;
+        }
+        trackTable.refresh();
+        
     }
     
     public void FixPowerButtonClicked(){
@@ -538,6 +568,26 @@ public class TrackModelController implements Initializable {
             
     }
     
+    public void heatSetButtonPressed(){
+        int heat = Integer.parseInt(heatField.getText());
+        if (heat <= 32){
+            heatOnButtonPressed();
+        } else {
+            heatOffButtonPressed();
+        }
+    } 
+    
+    public void heatOnButtonPressed(){
+       heatOnButton.setDisable(true);
+       heatOffButton.setDisable(false);
+       trackTable.refresh();
+    }
+    
+    public void heatOffButtonPressed(){
+       heatOffButton.setDisable(true);
+       heatOnButton.setDisable(false);
+        
+    }
     
     @FXML
     private ComboBox tcSelect;
@@ -609,7 +659,7 @@ public class TrackModelController implements Initializable {
     private TableColumn<Block, Double> blockDirection;
 
     @FXML
-    private TableColumn<Block, String> blockState;
+    private TableColumn<Block, String> displaySignal;
     
     @FXML
     private TableColumn<Block, String> occupancy;
@@ -649,5 +699,17 @@ public class TrackModelController implements Initializable {
     
     @FXML
     private TabPane tabsTable;
+   
+    @FXML
+    private Button heatSetButton;
     
+    @FXML
+    private Button heatOnButton;
+    
+    @FXML
+    private Button heatOffButton;
+    
+    @FXML
+    private TextField heatField;
+   
 }

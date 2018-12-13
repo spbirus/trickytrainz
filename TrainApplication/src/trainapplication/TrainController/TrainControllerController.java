@@ -251,12 +251,7 @@ public class TrainControllerController implements Initializable {
     }
     @FXML
     void setKVals(ActionEvent event) {
-//         set:
-//        SpeedErr - check
-//        Uval
-//        PowerVal 
-        
-        //int passengers = Integer.parseInt(passengerNumber.getText());
+
         
         //===============grab values from UI======
         
@@ -285,25 +280,14 @@ public class TrainControllerController implements Initializable {
         
         speedErr = setpointSpeedVal*MPH_MS - currSpeedVal*MPH_MS;
         
-        
-        //========for testing purposes:======
-//        System.out.println("CurrentSpeed(m/s): "+currSpeedVal*MPH_MS);
-//        System.out.println("Setpoint Speed(m/s): "+setpointSpeedVal*MPH_MS);
-        
-//        System.out.println("Speed Error(m/s): "+speedErr);
-//        System.out.println("(Delta T)/2 Should be .005: " + t.getDeltaT()/2.0);
+     
         //==============uVal calc===========
           if(oldPowerVal < MAX_POWER){
-//              System.out.println(String.format("uVal Calculation: %f = %f + (%f/(2.0))*(%f*%f + %f*%f)",uVal,oldUval,t.getDeltaT(),speedErr,MPH_MS,oldSpeedErr,MPH_MS));
-//              System.out.println(String.format("uVal Calculation: %f = %f + (%f)*(%f + %f)",uVal,oldUval,t.getDeltaT()/2.0,speedErr*MPH_MS,oldSpeedErr*MPH_MS));
+
               uVal = oldUval + (t.getDeltaT()/(2.0))*(speedErr*MPH_MS + oldSpeedErr*MPH_MS);
           }else{
               uVal = oldUval;
           }
-        
-//        System.out.println("oldUval: "+oldUval);
-//        System.out.println("uVal: "+ uVal);
-
        //================power calc===============
        
         
@@ -329,26 +313,16 @@ public class TrainControllerController implements Initializable {
         //powerVal = (kp*speedErr)+(ki*uVal);
         if(testPower < MAX_POWER){
             powerVal = testPower;
-//            System.out.println(String.format("Test Power Calculation: %f = %f*%f*%f+%f*%f",testPower,kp,speedErr,MPH_MS,ki,uVal));
-//            System.out.println(String.format("Test Power Calculation: %f = %f+%f",testPower,kp*speedErr*MPH_MS,ki*uVal));
             
         }else{
-//            System.out.println(String.format("Test Power Calculation: %f = %f*%f*%f+%f*%f",testPower,kp,speedErr,MPH_MS,ki,uVal));
-//            System.out.println(String.format("Test Power Calculation: %f = %f+%f",testPower,kp*speedErr*MPH_MS,ki*uVal));
-//            System.out.println("Power larger than 120 kW.... reducing to 120 kw...");
             powerVal = MAX_POWER;
             
         }
         
-//        System.out.println("Old Power Val: " + oldPowerVal);
-//        System.out.println("Power Val: " + powerVal);
         
         distanceTraveledInBlock += currSpeedVal * MPH_FPS * t.getDeltaT();
         distanceLeft = blockDistance - distanceTraveledInBlock;
-//        System.out.println("\tblockDistance: "+blockDistance);
-//        System.out.println("\tdistanceTraveled: "+distanceTraveled);
-//        System.out.println("\tdistanceTraveledInBlock: " + distanceTraveledInBlock);
-//        System.out.println("\tdistanceLeft: " + distanceLeft);
+
         if(distanceLeft <= 0){
             isDistanceLeft = false;
             distanceTraveled+=blockDistance;
@@ -357,14 +331,12 @@ public class TrainControllerController implements Initializable {
             
         double distanceNeededToStop_ft = calculateDistanceToStop(currSpeedVal);
         
-//        System.out.println("\tdistance stopping: " + distanceNeededToStop_ft + "    " + (t.getAuthority()-distanceTraveled-distanceTraveledInBlock));
         if(distanceNeededToStop_ft > (t.getAuthority()-distanceTraveled-distanceTraveledInBlock)){
             System.out.println("\t\tService brakes engaged");
             t.setBrakes(1); //set the service brake
             TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
             train.onBrake(1);
         }else{
-//            System.out.println("\t\tService brakes disengaged");
             TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
             if(servBrakeLabel.getText().equalsIgnoreCase("Disengaged") && emergBrakeLabel.getText().equalsIgnoreCase("Disengaged")){
                 train.onBrake(0);
@@ -376,7 +348,7 @@ public class TrainControllerController implements Initializable {
         //========FOR TESTING PURPOSES================
         
         double currSpeedValNew = t.calculateVelocity(powerVal, currSpeedVal, 0, 0, setpointSpeedVal, 50);
-//        System.out.println("\t\tCurrent Speed according to Train Model: "+currSpeedValNew);
+
         //============================================
         if(t.isBrakeFailure() || t.isEngineFailure()){
             powerVal = 0;
@@ -387,8 +359,7 @@ public class TrainControllerController implements Initializable {
         currentSpeedLabel.setText(String.format("%.2f",currSpeedValNew));
         //======================================================================
     
-//        System.out.println("=================================================");
-        
+
         oldSpeedErr = speedErr;
         oldUval = uVal; 
         oldPowerVal = powerVal;
@@ -466,10 +437,6 @@ public class TrainControllerController implements Initializable {
         train.onBrake(3);
         servBrakeButton.setDisable(true);
         t.setBrakeFailure(true);
-        
-        
-        
-        
 
     }
 
@@ -495,8 +462,6 @@ public class TrainControllerController implements Initializable {
         TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
         train.onEngineFailure(true);
         train.onBrake(3);
-//        t.setEngineFailure(true);
-//        t.setBrakes(3);
     }
 
     @FXML
@@ -507,8 +472,7 @@ public class TrainControllerController implements Initializable {
         TrainModelController train = (TrainModelController) ta.trainmodels.get(t.getNumber());
         train.onEngineFailure(false);
         train.onBrake(0);
-//        t.setEngineFailure(false);
-//        t.setBrakes(0);
+
     }
     
     @FXML
@@ -637,7 +601,8 @@ public class TrainControllerController implements Initializable {
         int[] arr = {7};
         operateDoors(arr,0);
     }
-
+    //===============generalized door function that handles train 
+    //===============controller and communicates with train model
     public void operateDoors(int[] doorIDs, int doorOp){
         String text = "OPEN";
         boolean rightDoorOpen = false;

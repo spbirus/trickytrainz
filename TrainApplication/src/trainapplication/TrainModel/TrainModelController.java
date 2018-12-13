@@ -660,20 +660,6 @@ public class TrainModelController implements Initializable {
         }
     }
 
-    @FXML
-    void onBrakeFailure(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onEngineFailure(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onSignalFailure(ActionEvent event) {
-
-    }
 
     @FXML
     void onLightsClick(ActionEvent event) {
@@ -756,23 +742,4 @@ public class TrainModelController implements Initializable {
         }
 
     }
-
-//    @FXML
-//    void onRefresh(ActionEvent event) {
-//        //TODO: need a for loop that will go through database and add all of the trains      
-//        track.setCellValueFactory(new PropertyValueFactory<>("line"));
-//        number.setCellValueFactory(new PropertyValueFactory<>("number"));
-//        length.setCellValueFactory(new PropertyValueFactory<>("length"));
-//        width.setCellValueFactory(new PropertyValueFactory<>("width"));
-//        height.setCellValueFactory(new PropertyValueFactory<>("height"));
-//        mass.setCellValueFactory(new PropertyValueFactory<>("mass"));
-//        crewNum.setCellValueFactory(new PropertyValueFactory<>("crewNum"));
-//        passNum.setCellValueFactory(new PropertyValueFactory<>("passNum"));
-//        maxCap.setCellValueFactory(new PropertyValueFactory<>("maxCap"));
-//        carNum.setCellValueFactory(new PropertyValueFactory<>("carNum"));
-//        doorNum.setCellValueFactory(new PropertyValueFactory<>("doorNum"));
-//        accelLimit.setCellValueFactory(new PropertyValueFactory<>("accelLimit"));
-//        deccelLimit.setCellValueFactory(new PropertyValueFactory<>("deccelLimit"));
-//        trainTable.getItems().add(t);
-//    }
 }

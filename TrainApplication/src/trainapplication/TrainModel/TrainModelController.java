@@ -315,11 +315,11 @@ public class TrainModelController implements Initializable {
                     if (curr.isSignalPresent()) {
                         while (!curr.getSignal()) {
 //                            System.out.println("Signal is red");
-                            onBrake(3);
+//                            onBrake(3);
                             t.setBrakes(3);
                         }
 //                        System.out.println("Signal is now green");
-                        onBrake(0);
+//                        onBrake(0);
                         t.setBrakes(0);
 
                     }
@@ -396,6 +396,11 @@ public class TrainModelController implements Initializable {
 
                             });
                         }
+                        
+                        if(next.getBlockNumber() == 0){
+                            //we are at the yard so deleted the train
+                            ta.ctc.removeTrainFromOutbound(t);
+                        }
                         tc.onTargetArrival(); //done to reset the distance values in train controller to move again
                     }
                 }
@@ -455,6 +460,7 @@ public class TrainModelController implements Initializable {
         }
 //        System.out.println("Passenger stuff: " + passOnTrain + ", " + wantToGetOn + ", " + spotsLeft);
         passengerNumber.setText("" + t.getPassNum());
+        massId.setText(String.valueOf(Math.floor(t.getTotalMass() * 100) / 100));
     }
 
     //set the brake to engaged or disengaged
@@ -731,18 +737,6 @@ public class TrainModelController implements Initializable {
             t.setTarget(target);
             t.setAuthority(distance);
             runTrain();
-        }
-
-        if (!"".equals(trackElevationBox.getText())) {
-            trackelevationId.setText(String.valueOf(trackElevationBox.getText()));
-        }
-
-        if (!"".equals(temperatureBox.getText())) {
-            tempId.setText(String.valueOf(temperatureBox.getText()));
-        }
-
-        if (!"".equals(announcementBox.getText())) {
-            announcementId.setText(String.valueOf(announcementBox.getText()));
         }
     }
 

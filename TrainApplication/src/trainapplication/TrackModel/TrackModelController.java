@@ -95,7 +95,6 @@ public class TrackModelController implements Initializable {
         blockLength.setCellValueFactory(new PropertyValueFactory<>("blockLength"));
         blockGrade.setCellValueFactory(new PropertyValueFactory<>("blockGrade"));
         speedLimit.setCellValueFactory(new PropertyValueFactory<>("speedLimit"));
-        infrastructure.setCellValueFactory(new PropertyValueFactory<>("infrastructure"));
         elevation.setCellValueFactory(new PropertyValueFactory<>("elevation"));
         blockDirection.setCellValueFactory(new PropertyValueFactory<>("blockDirection"));
         displaySignal.setCellValueFactory(new PropertyValueFactory<>("displaySignal"));
@@ -108,14 +107,19 @@ public class TrackModelController implements Initializable {
         stSection.setCellValueFactory(new PropertyValueFactory<>("blockNumber"));
         passengerTotal.setCellValueFactory(new PropertyValueFactory<>("passengersStation"));
         passengerCurrent.setCellValueFactory(new PropertyValueFactory<>("passengersBoard"));
-        trainPresent.setCellValueFactory(new PropertyValueFactory<>("blockOccupancy"));
+        trainPresent.setCellValueFactory(new PropertyValueFactory<>("occupancy"));
+        beacon.setCellValueFactory(new PropertyValueFactory<>("beacon"));
+        
         
         // Switch Table 
+        switchBlock.setCellValueFactory(new PropertyValueFactory<>("blockNumber"));
         switchNumber.setCellValueFactory(new PropertyValueFactory<>("switchNumber"));
-        fromBlock.setCellValueFactory(new PropertyValueFactory<>("fromBlock"));
-        toBlock.setCellValueFactory(new PropertyValueFactory<>("toBlock"));
-        switchState.setCellValueFactory(new PropertyValueFactory<>("switchState"));
-        //signal.setCellValueFactory(new PropertyValueFactory<>("signal"));
+        switchState.setCellValueFactory(new PropertyValueFactory<>("displaySwitchState"));
+        
+        //Crossing Table 
+        crossingNumber.setCellValueFactory(new PropertyValueFactory<>("crossingNumber"));
+        crossingBlock.setCellValueFactory(new PropertyValueFactory<>("blockNumber"));
+        crossingState.setCellValueFactory(new PropertyValueFactory<>("switchState"));
        
     } 
     
@@ -134,6 +138,7 @@ public class TrackModelController implements Initializable {
         BufferedReader br = null;
         String line = "";
         String csvSplitBy = ",";
+        int switchCount = 1;
 
         try {
 
@@ -165,19 +170,37 @@ public class TrackModelController implements Initializable {
 //                else newBlock.setOccupancy("Open");
 //                newBlock.setBlockHeat("ON");
 //                if(trackInfrastructure.equals("SWITCH"))trackInfrastructure = "SWITCH-OPEN";
-                greenMap.put(trackBlock, newBlock);
-                
-                greenTrack.blockList.add(newBlock);
-                trackTable.getItems().add(newBlock);
-                
-                if(newBlock.isStation()){
-                    greenTrack.stationList.add(newBlock);
-                    stationTable.getItems().add(newBlock);
-                    ta.ctc.incrementTicketSales(newBlock.getPassengersStation());
-                }
-                if(newBlock.isSwitchPresent()){
-                    greenTrack.switchList.add(newBlock);
-                    switchTable.getItems().add(newBlock);
+               
+                if(trackLine.equals("Green")){
+                    System.out.println(trackLine + " Track");
+                    greenMap.put(trackBlock, newBlock);
+
+                    greenTrack.blockList.add(newBlock);
+                    trackTable.getItems().add(newBlock);
+
+                    if(newBlock.isStation()){
+                        greenTrack.stationList.add(newBlock);
+                        stationTable.getItems().add(newBlock);
+                        ta.ctc.incrementTicketSales(newBlock.getPassengersStation());
+                    }
+                    if(newBlock.isSwitchPresent()){
+                        greenTrack.switchList.add(newBlock);
+                        switchTable.getItems().add(newBlock);
+                        newBlock.setSwitchNumber(switchCount);
+                        switchCount++;
+                    }
+                    if(newBlock.isCrossingPresent()){
+                        crossingTable.getItems().add(newBlock);
+                        newBlock.setCrossingNumber(1);
+                    }
+                    trackLineComboBox.setValue("Green");
+                    //LineSelected();
+                    
+                } else if(trackLine.equals("Red")){
+                    System.out.println(trackLine + " Track");
+                    redTrack.blockList.add(newBlock);
+                    trackLineComboBox.setValue("Red");
+                    //LineSelected();
                 }
                 //sortedTrackList.add(newTrack);               
 
@@ -203,7 +226,8 @@ public class TrackModelController implements Initializable {
         stationTable.refresh();
         
         //DEMO
-        trackLineComboBox.setValue("Green");
+        //trackLineComboBox.setValue("Green");
+        //LineSelected();
     }
     
         // Function used by CTC to get te distance to the destination block 
@@ -446,7 +470,7 @@ public class TrackModelController implements Initializable {
     public void TrackCircuitButtonClicked(){
         
         Block b = trackTable.getSelectionModel().getSelectedItem();
-        b.setBlockOccupancy(false);
+        b.setOccupancy("Unknown");
         trackTable.refresh();
 //        int selectedBlock = (int)trackBlockComboBox.getValue();
 //         
@@ -467,7 +491,7 @@ public class TrackModelController implements Initializable {
     
     public void PowerButtonClicked(){
         Block b = trackTable.getSelectionModel().getSelectedItem();
-        b.setBlockHeat("No Heat"); 
+        b.setBlockHeat("ERROR"); 
         trackTable.refresh();
 //        int selectedBlock = (int)trackBlockComboBox.getValue();
 //         
@@ -517,7 +541,12 @@ public class TrackModelController implements Initializable {
     public void FixPowerButtonClicked(){
 
         Block b = trackTable.getSelectionModel().getSelectedItem();
-        b.setBlockHeat(""); 
+        if(heatOnButton.isDisabled()){
+            b.setBlockHeat("On"); 
+        }else{
+            b.setBlockHeat("Off");
+        }
+        
         trackTable.refresh();
 //        
 //        int selectedBlock = (int)trackBlockComboBox.getValue();
@@ -535,6 +564,14 @@ public class TrackModelController implements Initializable {
      
     
     public void FixCircuitButtonClicked(){
+        
+        Block b = trackTable.getSelectionModel().getSelectedItem();
+        if(b.isBlockOccupancy()){
+            b.setOccupancy("Train");
+        } else {
+            b.setOccupancy("");
+        }
+        trackTable.refresh();
         
 //        int selectedBlock = (int)trackBlockComboBox.getValue();
 //        
@@ -556,6 +593,21 @@ public class TrackModelController implements Initializable {
     }    
     
     public void LineSelected(){
+        String val = (String)trackLineComboBox.getValue();
+        
+        for(Block b : trackTable.getItems()){
+            trackTable.getItems().remove(b);
+        }
+                
+        if(val.equals("Red")){
+            for(Block b : redTrack.blockList){
+                trackTable.getItems().add(b);
+            }
+        }else if(val.equals("Green")){
+            for(Block a : greenTrack.blockList){
+                trackTable.getItems().add(a);
+            }
+        }
         
         
     }
@@ -580,13 +632,23 @@ public class TrackModelController implements Initializable {
     public void heatOnButtonPressed(){
        heatOnButton.setDisable(true);
        heatOffButton.setDisable(false);
+       
+       for(Block b : greenTrack.blockList){
+            b.setBlockHeat("On");
+        }
+       
        trackTable.refresh();
     }
     
     public void heatOffButtonPressed(){
        heatOffButton.setDisable(true);
        heatOnButton.setDisable(false);
+       
+       for(Block b : greenTrack.blockList){
+            b.setBlockHeat("Off");
+        }       
         
+       trackTable.refresh();
     }
     
     @FXML
@@ -614,10 +676,16 @@ public class TrackModelController implements Initializable {
     private TableColumn<Block, String> trainPresent;
     
     @FXML
+    private TableColumn<Block, String> beacon;
+    
+    @FXML
     private TableView<Block> switchTable;
     
     @FXML
     private TableColumn<Block, Integer> switchNumber;
+    
+    @FXML
+    private TableColumn<Block, Integer> switchBlock;
     
     @FXML
     private TableColumn<Block, Integer> fromBlock;
@@ -649,8 +717,6 @@ public class TrackModelController implements Initializable {
     @FXML
     private TableColumn<Block, Integer> speedLimit;
 
-    @FXML
-    private TableColumn<Block, String> infrastructure;
 
     @FXML
     private TableColumn<Block, Double> elevation;
@@ -711,5 +777,17 @@ public class TrackModelController implements Initializable {
     
     @FXML
     private TextField heatField;
+    
+    @FXML
+    private TableView crossingTable;
+    
+    @FXML
+    private TableColumn crossingNumber;
+    
+    @FXML
+    private TableColumn crossingBlock;
+    
+    @FXML 
+    private TableColumn crossingState;
    
 }

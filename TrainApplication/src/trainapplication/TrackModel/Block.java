@@ -39,12 +39,14 @@ public class Block {
     private int switchDefault;
     private String blockState;
     private boolean blockOccupancy;
-    private int switchCount = 0;
+    private String displaySwitchState;
+    private int switchNumber;
 
     private boolean crossingPresent;
     private boolean crossingState= true;
     private boolean circuitState= true;
     private boolean railState = true;
+    private int crossingNumber;
 
     private boolean signal;
     private String displaySignal;
@@ -62,6 +64,32 @@ public class Block {
     private String blockHeat;
     private String occupancy;
     private int blockDirection;
+
+    public String getDisplaySwitchState() {
+        return displaySwitchState;
+    }
+
+    public void setDisplaySwitchState(String displaySwitchState) {
+        this.displaySwitchState = displaySwitchState;
+    }
+
+    
+    
+    public int getCrossingNumber() {
+        return crossingNumber;
+    }
+
+    public void setCrossingNumber(int crossingNumber) {
+        this.crossingNumber = crossingNumber;
+    }
+
+    public int getSwitchNumber() {
+        return switchNumber;
+    }
+
+    public void setSwitchNumber(int switchNumber) {
+        this.switchNumber = switchNumber;
+    }
 
     public void setSignalPresent(int blockNum) {
         int[] greenSignals = {36, 59, 74, 99, 143, 3};
@@ -153,6 +181,13 @@ public class Block {
             this.stBlockNumber = blockNumber;
             this.stSection = section;
         }
+        this.switchPresent = (infrastructure.split(";", 2)[0].equals("SWITCH"));
+        if(this.switchPresent){
+            this.displaySwitchState = "Deactivated";
+        } else {
+            this.displaySwitchState = "";
+        }
+        this.crossingPresent = (infrastructure.equals("RAILWAY CROSSING"));
         setSignalPresent(this.blockNumber);
     }
     //Jon Gramley - Block Controller
@@ -187,6 +222,7 @@ public class Block {
             setBeacon(blockNumber);
         }
         this.signal = true;
+        this.switchState = false;
     }
    
     //Track Controller 
@@ -281,6 +317,11 @@ public class Block {
 
     public void setSwitchState(boolean switchState) {
         this.switchState = switchState;
+        if(switchState){
+            this.displaySwitchState = "Activated";
+        } else {
+            this.displaySwitchState = "Deactivated";
+        }
     }
 
     //Beacon can only send 64 bits, so if a beacon is set to be longer than

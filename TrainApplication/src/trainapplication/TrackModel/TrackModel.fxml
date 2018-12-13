@@ -92,7 +92,6 @@
                                         <TableColumn id="blockLength" fx:id="blockLength" prefWidth="68.79998779296875" text="Length" />
                                         <TableColumn id="blockGrade" fx:id="blockGrade" prefWidth="73.5999755859375" text="Grade" />
                                         <TableColumn id="speedLimit" fx:id="speedLimit" prefWidth="84.0" text="Speed " />
-                                        <TableColumn id="infrastructure" fx:id="infrastructure" prefWidth="108.0" text="Infrastructure" />
                                         <TableColumn id="elevation" fx:id="elevation" prefWidth="100.00009155273438" text="Elevation" />
                                         <TableColumn id="blockDirection" fx:id="blockDirection" prefWidth="87.9998779296875" text="Direction" />
                                         <TableColumn id="blockState" fx:id="displaySignal" prefWidth="88.0" text="Signal" />
@@ -109,9 +108,10 @@
                                         <TableColumn id="stationName" fx:id="stationName" prefWidth="73.5999755859375" text="Station" />
                                         <TableColumn id="stBlockNumber" fx:id="stBlockNumber" prefWidth="54.40001678466797" text="Block" />
                                         <TableColumn id="stSection" fx:id="stSection" prefWidth="68.79998779296875" text="Section" />
-                                        <TableColumn id="passengerTotal" fx:id="passengerTotal" prefWidth="84.0" text="Ticket Sales" />
+                                        <TableColumn id="passengerTotal" fx:id="passengerTotal" prefWidth="125.0" text="Ticket Sales" />
                                         <TableColumn id="passengerCurrent" fx:id="passengerCurrent" prefWidth="108.0" text="Passengers" />
                                         <TableColumn id="trainPresent" fx:id="trainPresent" prefWidth="100.00009155273438" text="Train" />
+                                        <TableColumn id="beacon" fx:id="beacon" prefWidth="100.00009155273438" text="Beacon" />
                                       </columns>
                                     </TableView>
                               </content>
@@ -121,33 +121,43 @@
                                     <TableView id="switchTable" fx:id="switchTable" prefHeight="147.0" prefWidth="205.0">
                                       <columns> 
                                         <TableColumn id="switchNumber" fx:id="switchNumber" prefWidth="54.40001678466797" text="Switch" />
-                                        <TableColumn id="fromBlock" fx:id="fromBlock" prefWidth="68.79998779296875" text="From" />
-                                        <TableColumn id="toBlock" fx:id="toBlock" prefWidth="73.5999755859375" text="To" />
-                                        <TableColumn id="switchState" fx:id="switchState" prefWidth="84.0" text="Activated" />
-                                        <TableColumn id="signal" fx:id="signal" prefWidth="108.0" text="Signal" />
+                                        <TableColumn id="switchBlock" fx:id="switchBlock" prefWidth="54.40001678466797" text="Block" />
+                                        <TableColumn id="switchState" fx:id="switchState" prefWidth="100.0" text="Activated" />
                                       </columns>
                                     </TableView>
                                 </content>
                             </Tab>
+                            <Tab text="Crossings">
+                                <content>
+                                    <TableView id="crossingTable" fx:id="crossingTable" prefHeight="147.0" prefWidth="205.0">
+                                      <columns> 
+                                        <TableColumn id="crossingNumber" fx:id="crossingNumber" prefWidth="75.0" text="Crossing" />
+                                        <TableColumn id="crossingBlock" fx:id="crossingBlock" prefWidth="68.79998779296875" text="Block" />
+                                        <TableColumn id="crossingState" fx:id="crossingState" prefWidth="84.0" text="Activated" />
+                                      </columns>
+                                    </TableView>
+                                </content>
+                            </Tab>
+                           
                           </tabs>
                         </TabPane>
                     <AnchorPane layoutX="186.0" layoutY="225.0" minHeight="0.0" minWidth="0.0" prefHeight="202.0" prefWidth="578.0" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="13.0" layoutY="132.0" prefHeight="70.0" prefWidth="290.0" style="-fx-background-color: #bdc3c7;">
+                  <AnchorPane layoutX="13.0" layoutY="132.0" prefHeight="70.0" prefWidth="317.0" style="-fx-background-color: #bdc3c7;">
                      <children>
-                        <ComboBox id="tcSelect" fx:id="tcSelect" layoutX="14.0" layoutY="22.0" prefHeight="30.0" prefWidth="150.0" promptText="Track Controller " />
-                        <Button id="FilterButton" layoutX="173.0" layoutY="22.0" mnemonicParsing="false" onAction="#FiltersButtonClicked" prefHeight="30.0" prefWidth="102.0" text="Show" />
+                        <ComboBox id="tcSelect" fx:id="tcSelect" layoutX="14.0" layoutY="22.0" prefHeight="30.0" prefWidth="182.0" promptText="Track Controller " />
+                        <Button id="FilterButton" layoutX="223.0" layoutY="22.0" mnemonicParsing="false" onAction="#FiltersButtonClicked" prefHeight="30.0" prefWidth="80.0" text="Show" />
                      </children>
                   </AnchorPane>
-                  <AnchorPane layoutX="316.0" layoutY="132.0" prefHeight="70.0" prefWidth="572.0" style="-fx-background-color: #bdc3c7;">
+                  <AnchorPane layoutX="340.0" layoutY="132.0" prefHeight="70.0" prefWidth="548.0" style="-fx-background-color: #bdc3c7;">
                      <children>
-                        <Button fx:id="heatSetButton" layoutX="276.0" layoutY="20.0" mnemonicParsing="false" onAction="#heatSetButtonPressed" prefHeight="30.0" prefWidth="46.0" text="Set" />
+                        <Button fx:id="heatSetButton" layoutX="292.0" layoutY="20.0" mnemonicParsing="false" onAction="#heatSetButtonPressed" prefHeight="30.0" prefWidth="46.0" text="Set" />
                         <Button fx:id="heatOnButton" layoutX="449.0" layoutY="23.0" mnemonicParsing="false" onAction="#heatOnButtonPressed" text="ON" />
                         <Button fx:id="heatOffButton" layoutX="498.0" layoutY="23.0" mnemonicParsing="false" onAction="#heatOffButtonPressed" text="OFF" />
-                        <TextField fx:id="heatField" layoutX="210.0" layoutY="20.0" prefHeight="30.0" prefWidth="54.0" />
-                        <Label layoutX="25.0" layoutY="27.0" text="Environmental Temperature:" />
-                        <Label layoutX="345.0" layoutY="26.0" prefHeight="18.0" prefWidth="73.0" text="Heat: " />
+                        <TextField fx:id="heatField" layoutX="228.0" layoutY="20.0" prefHeight="30.0" prefWidth="54.0" />
+                        <Label layoutX="14.0" layoutY="26.0" prefHeight="18.0" prefWidth="203.0" text="Environmental Temperature:" />
+                        <Label layoutX="392.0" layoutY="26.0" prefHeight="18.0" prefWidth="54.0" text="Heat: " />
                      </children>
                   </AnchorPane>
             </children>

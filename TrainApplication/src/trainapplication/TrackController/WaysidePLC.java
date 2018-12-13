@@ -10,15 +10,18 @@ package trainapplication.TrackController;
  * @author jonat
  */
 public class WaysidePLC {
+    //boolean variables
     private boolean merge;
     private boolean split;
     private boolean switchState=true;
     private boolean crossingState;
     private boolean signalState;
+    //Constructor
     WaysidePLC(boolean merge,boolean split){
         this.merge=merge;
         this.split=split;
     }
+    //getters and setters
     public boolean isSwitchState() {
         return switchState;
     }
@@ -42,6 +45,7 @@ public class WaysidePLC {
     public void setSignalState(boolean signalState) {
         this.signalState = signalState;
     }
+    //moves switch when train is approaching
      public boolean calculateSwitch(boolean mergeTrackCircuit,boolean splitTrackCircuit,boolean toYard){
          if(merge&&split){
              if(mergeTrackCircuit){
@@ -72,6 +76,8 @@ public class WaysidePLC {
          }
          return switchState;
      }
+     //occupancy calculation dictates most of the logic in the signal calclation
+     //Crossing and signal booleans are equal
     public boolean calculateSignalCrossing(boolean occupancy){
         return !occupancy;
     }

@@ -5,33 +5,19 @@
  */
 package trainapplication.TrackController;
 
-import trainapplication.Train;
 import java.util.*;
 import java.io.*;
 import java.net.URL;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
-import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.Slider;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
-import trainapplication.TrackModel.Block;
 import trainapplication.TrainApplication;
 
 /**
@@ -44,6 +30,7 @@ public class TrackControllerController implements Initializable {
     /**
      * Initializes the controller class.
      */
+    //private variables
     private boolean switchState = true;
     private int mergeNum = 0;
     private int splitNum = 0;
@@ -66,14 +53,15 @@ public class TrackControllerController implements Initializable {
     int titleNum;
     @FXML
     private Label title;
-
+    //constructor
     public void setTrainApp(TrainApplication ta, String plcFile, int titleNum) throws IOException {
         this.ta = ta;
         this.plcFile = plcFile;
         this.titleNum = titleNum;
         readPLC(plcFile);
     }
-
+    //reads in data about switches signals and crossings
+    //plc file is a txt file with key block numbers and information
     void readPLC(String plcFile) throws IOException {
         File plcF = new File(plcFile);
         Scanner scan = new Scanner(plcF);
@@ -117,7 +105,7 @@ public class TrackControllerController implements Initializable {
         }
         plc = new WaysidePLC(mergePresent, splitPresent);
     }
-
+    //GUI initializer
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         String line = "Green";
@@ -128,7 +116,7 @@ public class TrackControllerController implements Initializable {
         title.setText("Wayside Controller: " + line + " " + titleNum);
         reset();
     }
-
+    //GUI value reset for updating
     public void reset() {
         mergeBlock.setText(Integer.toString(this.mergeNum));
         splitBlock.setText(Integer.toString(this.splitNum));
@@ -166,130 +154,7 @@ public class TrackControllerController implements Initializable {
         }
         changeColor();
     }
-    @FXML
-    private RadioButton manualMode;
-    @FXML
-    private Label switchMurphyLabel;
-
-    @FXML
-    private Label crossingMurphyLabel;
-    @FXML
-    private Label signalMurphyLabel;
-
-//    @FXML
-//    private MenuBar waysideMenuBar;
-//    
-//    @FXML
-//    private MenuItem green1;
-//    
-//    @FXML
-//    private MenuItem green2;
-//    
-//    @FXML
-//    private MenuItem green3;
-//    
-//    @FXML
-//    private MenuItem green4;
-//    
-//    @FXML
-//    private MenuItem green5;
-//    
-//    @FXML
-//    private MenuItem green6;
-//    
-//    @FXML
-//    private MenuItem red1;
-//    
-//    @FXML
-//    private MenuItem red2;
-//    
-//    @FXML
-//    private MenuItem red3;
-//    
-//    @FXML
-//    private MenuItem red4;
-//    
-//    @FXML
-//    private MenuItem red5;
-//    
-//    @FXML
-//    private MenuItem red6;
-//    
-//    @FXML
-//    private MenuItem red7;
-//    
-    @FXML
-    private Label trackName;
-
-    @FXML
-    private Label mergeBool;
-
-    @FXML
-    private Label splitBool;
-
-    @FXML
-    private Label mergeBlock;
-
-    @FXML
-    private Label splitBlock;
-
-    @FXML
-    private Label defaultBlock;
-
-    @FXML
-    private Label crossingState;
-
-    @FXML
-    private Label signalState;
-
-    @FXML
-    private Label outputSpeed;
-
-    @FXML
-    private Label outputAuthority;
-
-    @FXML
-    private Label outputLights;
-
-    @FXML
-    private Label outputSwitch;
-
-    @FXML
-    private Label trackOccupancy;
-
-    @FXML
-    private Label commandedSpeed;
-
-    @FXML
-    private Label commandedAuthority;
-
-    @FXML
-    private Button defaultSwitch;
-
-    @FXML
-    private Button notDefaultSwitch;
-
-    @FXML
-    private Button raiseCrossing;
-
-    @FXML
-    private Button lowerCrossing;
-
-    @FXML
-    private Button greenLightSet;
-
-    @FXML
-    private Button redLightSet;
-
-    @FXML
-    private Circle greenLight;
-
-    @FXML
-    private Circle redLight;
-
-    @FXML
-    private Button importPLC;
-
+    
     @FXML
     void onPLCClick(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
@@ -338,7 +203,7 @@ public class TrackControllerController implements Initializable {
             redLightSet.setVisible(false);
         }
     }
-
+    //manual buttons 
     @FXML
     void manDefaultSwitchClick(ActionEvent event) {
         outputSwitch.setText("Block #" + splitBlock.getText() + " is Connected to Block #" + defaultBlock.getText());
@@ -378,6 +243,7 @@ public class TrackControllerController implements Initializable {
         signalBool = false;
         changeColor();
     }
+    //For CTC to set switches for maintenance
     public void setSwitch(){
         switchState = !switchState;
         Task<Void> task = new Task<Void>() {
@@ -411,12 +277,13 @@ public class TrackControllerController implements Initializable {
         thread.setDaemon(true);
         thread.start();
     }
+    //for Track Model to move switches as train approaches
     public boolean calculateSwitch(boolean toYard) throws InterruptedException {
         String line = "Green";
         if (mergePresent && splitPresent) {
             line = "Red";
         }
-
+        //redundancy for vital quality
         boolean test1 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
         boolean test2 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
         boolean test3 = plc.calculateSwitch(ta.trkMdl.getBlockAt(line, mergeNum).isBlockOccupancy(), ta.trkMdl.getBlockAt(line, splitNum).isBlockOccupancy(), toYard);
@@ -469,8 +336,10 @@ public class TrackControllerController implements Initializable {
         return switchState;
 
     }
+    //For Track Model to set lights when section is occupied
     public boolean calculateSignal(boolean sectionOccupancy) throws InterruptedException {
         occupied = sectionOccupancy;
+        //redundancy for vital quality
         boolean test1 = plc.calculateSignalCrossing(sectionOccupancy);
         boolean test2 = plc.calculateSignalCrossing(sectionOccupancy);
         boolean test3 = plc.calculateSignalCrossing(sectionOccupancy);
@@ -546,6 +415,8 @@ public class TrackControllerController implements Initializable {
         thread.start();
         return signalBool;
     }
+    //Set speed and authority used by CTC to pass speed and authority to 
+    //Track Controller
     public void setSpeedAuthority(int id, double speed, int authority) {
         this.id = id;
         this.speed = speed;
@@ -588,5 +459,87 @@ public class TrackControllerController implements Initializable {
         thread.start();
         
     }
+
+    //FXML IDs
+    @FXML
+    private RadioButton manualMode;
+    @FXML
+    private Label switchMurphyLabel;
+
+    @FXML
+    private Label crossingMurphyLabel;
+    @FXML
+    private Label signalMurphyLabel;
+    @FXML
+    private Label trackName;
+
+    @FXML
+    private Label mergeBool;
+
+    @FXML
+    private Label splitBool;
+
+    @FXML
+    private Label mergeBlock;
+
+    @FXML
+    private Label splitBlock;
+
+    @FXML
+    private Label defaultBlock;
+
+    @FXML
+    private Label crossingState;
+
+    @FXML
+    private Label signalState;
+
+    @FXML
+    private Label outputSpeed;
+
+    @FXML
+    private Label outputAuthority;
+
+    @FXML
+    private Label outputLights;
+
+    @FXML
+    private Label outputSwitch;
+
+    @FXML
+    private Label trackOccupancy;
+
+    @FXML
+    private Label commandedSpeed;
+
+    @FXML
+    private Label commandedAuthority;
+
+    @FXML
+    private Button defaultSwitch;
+
+    @FXML
+    private Button notDefaultSwitch;
+
+    @FXML
+    private Button raiseCrossing;
+
+    @FXML
+    private Button lowerCrossing;
+
+    @FXML
+    private Button greenLightSet;
+
+    @FXML
+    private Button redLightSet;
+
+    @FXML
+    private Circle greenLight;
+
+    @FXML
+    private Circle redLight;
+
+    @FXML
+    private Button importPLC;
 
 }

@@ -315,11 +315,11 @@ public class TrainModelController implements Initializable {
                     if (curr.isSignalPresent()) {
                         while (!curr.getSignal()) {
 //                            System.out.println("Signal is red");
-//                            onBrake(3);
+                            onBrake(3);
                             t.setBrakes(3);
                         }
 //                        System.out.println("Signal is now green");
-//                        onBrake(0);
+                        onBrake(0);
                         t.setBrakes(0);
 
                     }
@@ -720,6 +720,7 @@ public class TrainModelController implements Initializable {
 
             double distance = ta.trkMdl.getDistance(t.getBlock(), target);
             System.out.println("Distance: " + distance);
+            tc.onTargetArrival();
             t.setTarget(target);
             t.setAuthority(distance);
             runTrain();

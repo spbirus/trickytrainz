@@ -330,7 +330,7 @@ public class TrainControllerController implements Initializable {
         }
             
         double distanceNeededToStop_ft = calculateDistanceToStop(currSpeedVal);
-        
+        System.out.println("Distance needed: " + distanceNeededToStop_ft + "    distance left: " + (t.getAuthority()-distanceTraveled-distanceTraveledInBlock));
         if(distanceNeededToStop_ft > (t.getAuthority()-distanceTraveled-distanceTraveledInBlock)){
             System.out.println("\t\tService brakes engaged");
             t.setBrakes(1); //set the service brake

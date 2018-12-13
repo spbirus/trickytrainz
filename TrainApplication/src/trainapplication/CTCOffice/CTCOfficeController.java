@@ -2,6 +2,7 @@
 CTC OFFICE
 Mostly written by Jon Galaydick
  */
+
 package trainapplication.CTCOffice;
 
 import trainapplication.Train;
@@ -184,6 +185,7 @@ public class CTCOfficeController implements Initializable {
 
     @FXML
     private TableColumn<Train, Integer> queueTableTarget;
+    
     //GUI elements (non-table) for the rest of the CTC Office
     @FXML
     private Button dispatchButton;
@@ -325,49 +327,49 @@ public class CTCOfficeController implements Initializable {
         switch(selectedSwitch) 
         { 
             case "Green12": 
-                System.out.println("Green12");
+                //System.out.println("Green12");
                 t5.setSwitch();
                 break;
             case "Green29": 
-                System.out.println("Green29");
+                //System.out.println("Green29");
                 t4.setSwitch();
                 break;
             case "Green58(ToYard)": 
-                System.out.println("Green58");
+                //System.out.println("Green58");
                 t6.setSwitch();
                 break; 
             case "Green62(FromYard)": 
-                System.out.println("Green62"); 
+                //System.out.println("Green62"); 
                 t1.setSwitch();
                 break; 
             case "Green76": 
-                System.out.println("Green76");
+                //System.out.println("Green76");
                 t2.setSwitch();
                 break; 
             case "Green86": 
-                System.out.println("Green86");
+                //System.out.println("Green86");
                 t3.setSwitch();
                 break; 
             case "Red09(Yard)": 
-                System.out.println("Red09"); 
+                //System.out.println("Red09"); 
                 break; 
             case "Red15": 
-                System.out.println("Red15"); 
+                //System.out.println("Red15"); 
                 break; 
             case "Red27(U)": 
-                System.out.println("Red27"); 
+                //System.out.println("Red27"); 
                 break; 
             case "Red32(U)": 
-                System.out.println("Red32"); 
+                //System.out.println("Red32"); 
                 break; 
             case "Red38(U)": 
-                System.out.println("Red38"); 
+                //System.out.println("Red38"); 
                 break; 
             case "Red52": 
-                System.out.println("Red52"); 
+                //System.out.println("Red52"); 
                 break; 
             default: 
-                System.out.println("not sure what happened"); 
+                //System.out.println("not sure what happened"); 
         } 
     }
 
@@ -857,19 +859,6 @@ public class CTCOfficeController implements Initializable {
 
     //send speed and authority of the train to the track controller
     private void sendToTrackControllers(int dispatchNumber, double dispatchSpeed, int dispatchTargetBlock) {
-//        
-//        TrackControllerController t1 = (TrackControllerController) ta.trkCtr1;
-//        t1.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
-//        TrackControllerController t2 = (TrackControllerController) ta.trkCtr2;
-//        t2.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
-//        TrackControllerController t3 = (TrackControllerController) ta.trkCtr3;
-//        t3.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
-//        TrackControllerController t4 = (TrackControllerController) ta.trkCtr4;
-//        t4.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
-//        TrackControllerController t5 = (TrackControllerController) ta.trkCtr5;
-//        t5.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
-//        TrackControllerController t6 = (TrackControllerController) ta.trkCtr6;
-//        t6.setSpeedAuthority(dispatchNumber, dispatchSpeed, dispatchTargetBlock);
         
         for (int i = 0; i < ta.trkCtr.length; i++) {
             TrackControllerController t = (TrackControllerController) ta.trkCtr[i];
